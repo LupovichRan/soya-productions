@@ -1,4 +1,4 @@
-/* Read It Simply — a Soya Productions film.
+/* Read It Simply — a Soyactory app.
    Paste a confusing letter; see what it says, what it asks of you, and by when.
    The letter never leaves this device and is never saved. Only the language choice is kept. */
 (function () {
@@ -12,7 +12,7 @@
     en: {
       title: 'Read It Simply',
       otherLang: 'עברית',
-      credit: 'A Soya Productions film',
+      credit: 'Made by Soyactory',
       homeTitle: 'Got a confusing letter?',
       homeLead: 'Paste it here. You will see what it asks you to do, and the dates and amounts in it.',
       label: 'The letter or message',
@@ -46,7 +46,7 @@
     he: {
       title: 'בפשטות',
       otherLang: 'English',
-      credit: 'הפקה של Soya Productions',
+      credit: 'מבית Soyactory',
       homeTitle: 'קיבלת מכתב מבלבל?',
       homeLead: 'הדביקו אותו כאן. תראו מה מבקשים מכם לעשות, ואת התאריכים והסכומים שבו.',
       label: 'המכתב או ההודעה',
@@ -193,7 +193,7 @@
   function viewHome() {
     return '<form class="card" novalidate><h1>' + esc(t('homeTitle')) + '</h1><p class="lead">' + esc(t('homeLead')) + '</p>' +
       '<label for="letter">' + esc(t('label')) + '</label>' +
-      '<textarea id="letter" dir="auto" maxlength="' + LIMIT + '" aria-describedby="letter-help" autocomplete="off" spellcheck="false">' + esc(state.text) + '</textarea>' +
+      '<textarea id="letter" dir="' + boxDir(state.text) + '" maxlength="' + LIMIT + '" aria-describedby="letter-help" autocomplete="off" spellcheck="false">' + esc(state.text) + '</textarea>' +
       '<div class="help" id="letter-help"><span>' + esc(t('help')) + '</span><span class="count" id="count" dir="ltr">' + state.text.length + ' / ' + LIMIT + '</span></div>' +
       (state.error ? '<p class="banner" role="alert">' + esc(state.error) + '</p>' : '') +
       '<button type="submit" class="wide">' + esc(t('go')) + '</button></form>' +
@@ -223,7 +223,7 @@
     html += '<h1 style="margin-bottom:12px">' + esc(t(ai ? 'saysTitle' : 'opensTitle')) + '</h1>';
 
     if (ai) html += '<section class="card"><p dir="auto">' + esc(ai.summary) + '</p><p class="mute small" style="margin:10px 0 0">' + esc(t('aiMay')) + '</p></section>';
-    else html += '<section class="card"><p class="quote" dir="auto">' + esc(s.opening) + '</p><p class="mute small" style="margin:10px 0 0">' + esc(t('stats')(s.sentences, s.asks.length)) + '</p></section>';
+    else html += '<section class="card">' + s.openingSentences.map(function (x) { return '<p class="quote" dir="auto">' + esc(x) + '</p>'; }).join('') + '<p class="mute small" style="margin:10px 0 0">' + esc(t('stats')(s.sentences, s.asks.length)) + '</p></section>';
 
     var asks = ai && ai.asks.length ? ai.asks : s.asks;
     html += section(t('asksTitle'), asks.length ? bullets(asks.map(esc)) : '<p class="empty">' + esc(t('asksNone')) + '</p>',
@@ -248,7 +248,7 @@
     var html = document.documentElement;
     html.lang = state.lang;
     html.dir = state.lang === 'he' ? 'rtl' : 'ltr';
-    document.title = t('title') + ' — Soya Productions';
+    document.title = t('title') + ' — Soyactory';
     document.getElementById('brand-title').textContent = t('title');
     document.getElementById('credit').textContent = t('credit');
     var toggle = document.getElementById('lang-toggle');
@@ -259,11 +259,16 @@
 
   /* ---------- Events ---------- */
 
+  function pageDir() { return document.documentElement.dir === 'rtl' ? 'rtl' : 'ltr'; }
+  /** An empty box follows the page; once there are letters, it follows them. */
+  function boxDir(value) { return Reader.dirFor(value) || pageDir(); }
+
   function keep() { var box = document.getElementById('letter'); if (box) state.text = box.value; }
 
   app.addEventListener('input', function (e) {
     if (e.target.id !== 'letter') return;
     state.text = e.target.value;
+    e.target.dir = boxDir(state.text);
     document.getElementById('count').textContent = state.text.length + ' / ' + LIMIT;
   });
   app.addEventListener('submit', function (e) {
@@ -286,7 +291,7 @@
     render();
   });
 
-  // Offline: this film's own service worker, scoped to its own folder.
+  // Offline: this app's own service worker, scoped to its own folder.
   if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
     window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js', { scope: './' }).catch(function () { /* works without it */ }); });
   }

@@ -1,6 +1,6 @@
-# The Soya Productions factory
+# The Soyactory playbook
 
-Soya Productions is a small software factory. On a schedule, a run reads what is happening in AI and software, turns the most useful concept into a small web app (a "film"), and opens a pull request. Ran reviews and merges. Nothing reaches `main` without that.
+Soyactory, the Soya Software Factory, is a small software factory. On a schedule, a run reads what is happening in AI and software, turns the most useful concept into a small web app (an "app"), and opens a pull request. Ran reviews and merges. Nothing reaches `main` without that.
 
 This file is the playbook. A run follows it from top to bottom.
 
@@ -10,29 +10,29 @@ One pull request containing:
 
 1. **A trend brief** — `factory/trends/YYYY-MM-DD.md`.
 2. **An updated backlog** — `factory/backlog.md`.
-3. **One new film** — `films/YYYY-MM-DD-slug/`, plus its entry at the top of `films.js`.
+3. **One new app** — `apps/YYYY-MM-DD-slug/`, plus its entry at the top of `apps.js`.
 
-If three or more factory pull requests are already open and unmerged, the run does steps 1–4 only (brief and backlog, no film) and says so in the pull request. The factory must not outrun its reviewer.
+If three or more factory pull requests are already open and unmerged, the run does steps 1–4 only (brief and backlog, no app) and says so in the pull request. The factory must not outrun its reviewer.
 
 ## The steps
 
-1. **Read first.** This file, `CLAUDE.md`, `factory/backlog.md`, the three most recent briefs, and `films.js`. Know what already exists.
+1. **Read first.** This file, `CLAUDE.md`, `factory/backlog.md`, the three most recent briefs, and `apps.js`. Know what already exists.
 2. **Research.** Search the web for what is new in AI and software, and for what day-to-day people struggle with that a small app could help. Five to eight searches. Prefer primary sources (vendor documentation, standards pages, release notes) over round-ups. Note the date of every source.
 3. **Write the brief.** Use the format below. Separate what has shipped from what is forecast. Say plainly when a source is a vendor talking about itself.
 4. **Update the backlog.** Add new candidate concepts, re-score old ones if something changed, and move the chosen one to "Built".
-5. **Pick one.** Take the three highest-scoring concepts that are not already built. If the `decide` tool from the decision maker is available and `decider_status` says the model answers, ask it to choose between them: pass the three backlog rows and the brief's "What this means for small apps" as context, the five scoring questions as criteria, `reversible: true` and `stakes: "medium"`. Build its choice. Record the table, the pre-mortem, the cautions and the decision record in the brief under "The decision". At the start of each run, look at the previous brief's decision record: if its review date has passed, add one line to the new brief saying whether that film was merged and what was learned. If you believe its choice breaks a rule in this file, build the highest-scoring concept instead and say why in the pull request. If the tool is not available or makes no decision, pick the highest total score; on a tie, the one that needs the least explaining to a non-technical person. Say in the brief which way the choice was made.
-6. **Build it** in `films/YYYY-MM-DD-slug/`, following "What makes a good film".
+5. **Pick one.** Take the three highest-scoring concepts that are not already built. If the `decide` tool from the decision maker is available and `decider_status` says the model answers, ask it to choose between them: pass the three backlog rows and the brief's "What this means for small apps" as context, the five scoring questions as criteria, `reversible: true` and `stakes: "medium"`. Build its choice. Record the table, the pre-mortem, the cautions and the decision record in the brief under "The decision". At the start of each run, look at the previous brief's decision record: if its review date has passed, add one line to the new brief saying whether that app was merged and what was learned. If you believe its choice breaks a rule in this file, build the highest-scoring concept instead and say why in the pull request. If the tool is not available or makes no decision, pick the highest total score; on a tie, the one that needs the least explaining to a non-technical person. Say in the brief which way the choice was made.
+6. **Build it** in `apps/YYYY-MM-DD-slug/`, following "What makes a good app".
 7. **Check it.** Open it in a browser at phone width, in English and Hebrew. Walk the whole flow. Reload it offline if it has a service worker. Look at a screenshot before calling it done.
-8. **List it.** Add the entry at the top of `films.js` with `folder: 'YYYY-MM-DD-slug'`.
+8. **List it.** Add the entry at the top of `apps.js` with `folder: 'YYYY-MM-DD-slug'`.
 9. **Scan.** No secrets, no keys, no real customer or bank names, no real people's personal details.
-10. **Open the pull request** from branch `factory/YYYY-MM-DD-slug` to `main`. Title: `Film N: Name`. Say what trend it came from, what was checked, and what was not. Do not merge it.
+10. **Open the pull request** from branch `factory/YYYY-MM-DD-slug` to `main`. Title: `App N: Name`. Say what trend it came from, what was checked, and what was not. Do not merge it.
 
-## What makes a good film
+## What makes a good app
 
-A film is for a day-to-day adult who is not technical, on a phone.
+An app is for a day-to-day adult who is not technical, on a phone.
 
 - **One job.** A person can say what it does in one sentence, and finish the job in under five minutes.
-- **Shows one concept from the brief.** The film exists to try a current idea in a small, honest form.
+- **Shows one concept from the brief.** The app exists to try a current idea in a small, honest form.
 - **Works with nothing set up.** No account, no key, no install. If it can use an AI model, it also has a clearly labelled sample path that works without one.
 - **Private.** No backend, no cookies, no analytics, no ads, no tracking. Anything stored stays in the browser. If a model is used, prefer one that runs on the person's own device, then the person's own model server. Never a key of ours.
 - **Honest.** Made-up content is labelled as made up. Nothing is presented as real demand, real people, or professional advice.
@@ -40,8 +40,8 @@ A film is for a day-to-day adult who is not technical, on a phone.
 - **Calm.** One filled button per screen, tap targets at least 48px, no looping motion, no nagging.
 - **Static.** HTML, CSS and JavaScript. No framework, no build step, no `package.json`.
 - **Self-contained.** Everything it needs is inside its own folder, with relative links.
-- **Does not collide.** All films share one web address, so each uses its own prefix: storage keys `soya-<slug>-…`, service worker cache `<slug>-YYYYMMDDHHMMSS`, service worker scope its own folder.
-- **Looks like a Soya film.** Same colour tokens, fonts and footer credit ("A Soya Productions film") as the front page.
+- **Does not collide.** All apps share one web address, so each uses its own prefix: storage keys `soya-<slug>-…`, service worker cache `<slug>-YYYYMMDDHHMMSS`, service worker scope its own folder.
+- **Looks like a Soyactory app.** Same colour tokens, fonts and footer credit ("Made by Soyactory") as the front page.
 
 ## What the factory does not build
 
@@ -60,7 +60,7 @@ Each from 1 (poor) to 5 (strong). Add them up.
 | Person | Would a non-technical adult understand why they want it? |
 | Trend | Does it try a concept from a recent brief in a real way? |
 | Size | Can it be built and checked in one run? |
-| Fresh | Is it different from the films already made? |
+| Fresh | Is it different from the apps already made? |
 | Private | Does it work with nothing leaving the device? |
 
 ## Brief format
@@ -72,7 +72,7 @@ Each from 1 (poor) to 5 (strong). Add them up.
 ## What has shipped
 ## What is forecast or claimed
 ## What this means for small apps
-## Concepts worth a film
+## Concepts worth an app
 ## The decision
 ## Sources
 ```
@@ -87,7 +87,7 @@ Every claim in the brief has a source with a link and a date. If the search foun
 
 Use the smallest model that does the job well, and the strongest one where a mistake is expensive.
 
-- **For the work of a run** (when a run hands parts to helper agents): a fast, cheap model for searching, reading and mechanical edits; the most capable model for choosing the concept, designing the film, and the final check before the pull request. Never pick a weaker model for the final check to save time.
+- **For the work of a run** (when a run hands parts to helper agents): a fast, cheap model for searching, reading and mechanical edits; the most capable model for choosing the concept, designing the app, and the final check before the pull request. Never pick a weaker model for the final check to save time.
 - **For the decision maker:** only models that pass `factory/decision-maker/calibrate.mjs`. A small passing model for quick choices, the smallest passing model for standard ones, the most careful available for deep ones. The measured results are in the decision maker's README; re-run the calibration when a model is changed.
 - **Say which model did what** in the brief, so a bad result can be traced to its cause.
 

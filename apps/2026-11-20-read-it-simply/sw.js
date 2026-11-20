@@ -1,6 +1,6 @@
 /* Read It Simply service worker. Scope: this folder only.
    Bump VERSION (readsimply-YYYYMMDDHHMMSS) whenever a cached file changes. */
-const VERSION = 'readsimply-20261120130000';
+const VERSION = 'readsimply-20261120150000';
 
 const PRECACHE = [
   './',
@@ -13,7 +13,7 @@ const PRECACHE = [
   'icons/read-512.png',
   'icons/read-maskable-512.png',
   'icons/read-apple-180.png',
-  'assets/soya-productions.jpg',
+  'assets/soyactory-mark.jpg',
 ];
 
 self.addEventListener('install', (event) => {
@@ -52,7 +52,7 @@ self.addEventListener('fetch', (event) => {
   const request = event.request;
   if (request.method !== 'GET') return;
   const url = new URL(request.url);
-  // Only this film's own files. Fonts and other films are left alone.
+  // Only this app's own files. Fonts and other apps are left alone.
   if (url.origin !== self.location.origin || !url.pathname.startsWith(new URL('./', self.location).pathname)) return;
   event.respondWith(networkFirst(request));
 });

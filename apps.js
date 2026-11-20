@@ -1,10 +1,10 @@
-/* The list of Soya Productions films (daily POCs), newest first.
+/* The list of apps the Soyactory has made, newest first.
    To add one: copy an entry, put it at the top, and fill it in.
-   Where the film lives — use one of:
-     folder: 'YYYY-MM-DD-slug'   a folder under films/ in this repository (factory films)
+   Where the app lives — use one of:
+     folder: 'YYYY-MM-DD-slug'   a folder under apps/ in this repository (factory apps)
      path:   'repository-name'   its own repository, published next to this site
      url:    'https://…'         anywhere else */
-window.SOYA_FILMS = [
+window.SOYA_APPS = [
   {
     number: 2,
     date: '2026-11-20',
