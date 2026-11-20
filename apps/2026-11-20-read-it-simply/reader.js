@@ -30,7 +30,16 @@
   var LINK = /\b(?:https?:\/\/|www\.)[^\s<>"')]+/gi;
   var PHONE = /(?:\+\d[\d\s-]{8,}\d|\b0\d{1,2}[\s-]?\d{3}[\s-]?\d{4}\b|\b1[-\s]?[78]00[-\s]?\d{3}[-\s]?\d{3,4}\b|\*\d{3,5})/g;
 
-  function hasHebrew(text) { return /[֐-׿]/.test(text); }
+  function hasHebrew(text) { return /[\u0590-\u05FF]/.test(text); }
+
+  /** The direction a piece of text reads in, by its first letter: 'rtl', 'ltr', or '' when it has no letters yet.
+   *  Digits and punctuation do not decide. A text box uses this so that an empty box follows the page and a box
+   *  with Hebrew in it is right-to-left even when the page is English (and the other way round). */
+  function dirFor(text) {
+    var m = /[\u0590-\u08FF\uFB1D-\uFDFF\uFE70-\uFEFF]|[A-Za-z\u00C0-\u024F]/.exec(String(text || ''));
+    if (!m) return '';
+    return /[A-Za-z\u00C0-\u024F]/.test(m[0]) ? 'ltr' : 'rtl';
+  }
   function tidy(s) { return String(s).replace(/\s+/g, ' ').trim(); }
   function clip(s, max) { s = tidy(s); return s.length > max ? s.slice(0, max - 1).trimEnd() + '…' : s; }
 
@@ -38,7 +47,7 @@
   function sentences(text) {
     return String(text).split(/\n+/).reduce(function (all, line) {
       // Do not split after short abbreviations or inside numbers such as 12.5 or 20.11.2026.
-      var parts = line.replace(/([.!?])\s+(?=[A-Z֐-׿"'(\d])/g, function (m, p, i, whole) {
+      var parts = line.replace(/([.!?])\s+(?=[A-Z\u0590-\u05FF"'(\d])/g, function (m, p, i, whole) {
         var before = whole.slice(Math.max(0, i - 4), i);
         return /\b(?:Mr|Mrs|Ms|Dr|No|St|vs|etc|e\.g|i\.e)$/i.test(before) || /\d$/.test(before) && /^\s+\d/.test(whole.slice(i + 1)) ? m : p + '\u0000';
       }).split('\u0000');
@@ -99,6 +108,8 @@
       lang: lang,
       sentences: list.length,
       opening: clip(list.slice(0, 2).join(' '), 320),
+      // The same, one sentence each: a letter can mix languages, and each sentence must take its own direction.
+      openingSentences: list.slice(0, 2).map(function (x) { return clip(x, 240); }),
       asks: asks,
       deadlines: unique(deadlines, function (d) { return d.when; }).slice(0, 8),
       amounts: unique(amounts, function (a) { return a.amount; }).slice(0, 8),
@@ -106,7 +117,7 @@
     };
   }
 
-  var api = { read: read, sentences: sentences, hasHebrew: hasHebrew };
+  var api = { read: read, sentences: sentences, hasHebrew: hasHebrew, dirFor: dirFor };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.SoyaReader = api;
 })(typeof window !== 'undefined' ? window : globalThis);

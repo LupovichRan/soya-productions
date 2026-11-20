@@ -1,6 +1,6 @@
 # Concept backlog
 
-Candidate films, highest score first. Scores are 1–5 each; see `FACTORY.md`. A run adds to this list, re-scores when something changes, and moves what it builds to "Built".
+Candidate apps, highest score first. Scores are 1–5 each; see `FACTORY.md`. A run adds to this list, re-scores when something changes, and moves what it builds to "Built".
 
 ## Candidates
 
@@ -13,11 +13,11 @@ Candidate films, highest score first. Scores are 1–5 each; see `FACTORY.md`. A
 
 ## Built
 
-| Film | Name | Date | Where |
+| App | Name | Date | Where |
 |---|---|---|---|
 | 1 | Roundtable | 2026-11-20 | Its own repository, `soya-poc-2026-11-20-roundtable` |
-| 2 | Read It Simply (from "Read It To Me Simply") | 2026-11-20 | `films/2026-11-20-read-it-simply/` |
-| — | Decision Maker (POC 2, a tool, not a film) | 2026-11-20 | `factory/decision-maker/` |
+| 2 | Read It Simply (from "Read It To Me Simply") | 2026-11-20 | `apps/2026-11-20-read-it-simply/` |
+| — | Decision Maker (POC 2, a tool, not an app) | 2026-11-20 | `factory/decision-maker/` |
 
 ## Set aside
 

@@ -1,6 +1,6 @@
 # Hosting, delivery and security — decisions
 
-Written 20 November 2026. What Soya Productions needs to run, where each piece should live, and whether to build it, use open source, or pay. Free and open source are tried first.
+Written 20 November 2026. What Soyactory needs to run, where each piece should live, and whether to build it, use open source, or pay. Free and open source are tried first.
 
 ## Where things stand
 
@@ -12,10 +12,10 @@ Written 20 November 2026. What Soya Productions needs to run, where each piece s
 
 | # | Piece | Needs | Decision | Cost |
 |---|---|---|---|---|
-| 1 | The front page and the films | Static files | **Use GitHub Pages.** Already in use. Nothing to build. | Free |
+| 1 | The front page and the apps | Static files | **Use GitHub Pages.** Already in use. Nothing to build. | Free |
 | 2 | Checks on every change | A runner | **Use GitHub Actions.** Free for public repositories. | Free |
 | 3 | Secret scanning | A scanner | **Use open source: gitleaks**, in CI, plus GitHub's own secret scanning and push protection (free on public repositories). | Free |
-| 4 | The model for the decision maker | A computer with a few GB of memory | **Use open source: llama.cpp's server**, with an open-weight model. Where it runs is the one real choice; see below. | Free to a few dollars a month |
+| 4 | The model for the decision maker | A computer with about 8 GB of memory | **Use open source: llama.cpp's server**, with Phi-3.5 mini (MIT), the smallest model that passed calibration. Where it runs is the one real choice; see below. | Free to a few dollars a month |
 | 5 | The decision maker itself | Node | Runs wherever Claude runs. Nothing to host. | Free |
 | 6 | The daily factory run | A scheduler | Already a Claude scheduled task. Nothing to host. | Part of the Claude plan |
 
@@ -26,7 +26,7 @@ Only piece 4 needs a server at all.
 | Need | Build it | Use open source | Pay for a service | Verdict |
 |---|---|---|---|---|
 | Serving a model with an OpenAI-style endpoint | Weeks of work, worse result | llama.cpp server (MIT) or Ollama (MIT) | A hosted model API | **Open source.** llama.cpp checks an API key by itself, so no gateway has to be written. Ollama has no key check and would need one in front. |
-| The model | Not realistic | Open-weight models. Default: Qwen2.5 1.5B Instruct (Apache-2.0) | A commercial model | **Open weights.** Check the licence of each size; not every size of every family is Apache-2.0. |
+| The model | Not realistic | Open-weight models. Default: Phi-3.5 mini Instruct (MIT), chosen by measurement | A commercial model | **Open weights.** Check the licence of each size; not every size of every family is permissive. Qwen2.5 1.5B and 7B are Apache-2.0, Phi-3.5 mini is MIT. |
 | Protecting the endpoint | A small proxy | llama.cpp's own key | A managed API gateway | **Built in.** One long random key, kept in the cloud's secret store. |
 | Describing the cloud set-up as code | — | OpenTofu (the open-source fork of Terraform) | Terraform Cloud | **Neither yet.** One service is deployed by one command in one workflow. Add OpenTofu when there are three or more cloud resources to keep in step. |
 | CI | — | — | GitHub Actions (free here) | **Use it.** Self-hosting a CI server would cost more than it saves. |
@@ -47,13 +47,13 @@ The workload is unusual: a handful of requests a day, each taking seconds to a m
 
 **Recommendation:** start on your own computer if one is usually on; otherwise Google Cloud Run. Use the $300 Google trial credit as a safety margin, not as the plan: the design should stay inside the always-free allowance.
 
-Rough size of the free allowance: with 2 vCPUs and 4 GB, 180,000 vCPU-seconds is about 25 hours of running time a month. How long one decision takes on that hardware is not known yet; measure it on the first deploy.
+Rough size of the free allowance: the model server asks for 4 vCPUs and 8 GiB. A decision took about two minutes on four cores in testing, so each decision uses about 480 vCPU-seconds and 960 GiB-seconds. Against the monthly free allowance of 180,000 vCPU-seconds and 360,000 GiB-seconds, that is roughly 370 decisions a month before any charge, with memory the limit. The factory makes one or two decisions a day. Check these figures against the first real deploy.
 
 ## Delivery (CI/CD)
 
 In this repository now:
 
-- **`.github/workflows/ci.yml`** — on every pull request and on `main`: the decision maker's tests, a syntax check of every script, a check that `films.js` is well formed and every listed film exists, a guard against build tooling creeping in, and a gitleaks secret scan over the full history.
+- **`.github/workflows/ci.yml`** — on every pull request and on `main`: the decision maker's tests, a syntax check of every script, a check that `apps.js` is well formed and every listed app exists, a guard against build tooling creeping in, and a gitleaks secret scan over the full history.
 - **`.github/dependabot.yml`** — weekly updates for the actions the workflows use.
 - **Deploying the sites** — GitHub Pages publishes `main`. A merge is the deploy.
 - **`.github/workflows/deploy-model.yml`** — manual only. Builds the image, pushes it, deploys to Cloud Run.

@@ -1,4 +1,4 @@
-// Run with: node --test films/2026-11-20-read-it-simply/reader.test.js
+// Run with: node --test apps/2026-11-20-read-it-simply/reader.test.js
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { read, sentences } = require('./reader.js');
@@ -56,4 +56,20 @@ test('long lists are capped and repeats are dropped', () => {
   const r = read(many);
   assert.equal(r.asks.length, 6);
   assert.equal(r.deadlines.length, 1);
+});
+
+test('a text box takes its direction from its first letter', () => {
+  const { dirFor } = require('./reader.js');
+  assert.equal(dirFor(''), '');
+  assert.equal(dirFor('   123 !?'), '');
+  assert.equal(dirFor('שלום'), 'rtl');
+  assert.equal(dirFor('12/3 שלום'), 'rtl');          // digits do not decide
+  assert.equal(dirFor('Hello שלום'), 'ltr');
+  assert.equal(dirFor('"שלום" hello'), 'rtl');       // nor do quotes
+  assert.equal(dirFor('مرحبا'), 'rtl');
+});
+
+test('a mixed-language letter gives each opening sentence on its own', () => {
+  const r = read('שלום רב. Please call us on 03-555-0123. עליך לשלם עד 15.12.2026.');
+  assert.deepEqual(r.openingSentences, ['שלום רב.', 'Please call us on 03-555-0123.']);
 });

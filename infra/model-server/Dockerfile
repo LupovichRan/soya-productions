@@ -5,8 +5,9 @@
 # The model is baked into the image so a cold start does not download it.
 FROM ghcr.io/ggml-org/llama.cpp:server
 
-# An open-weight model under the Apache-2.0 licence. Change both lines together.
-ARG MODEL_URL=https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF/resolve/main/qwen2.5-1.5b-instruct-q4_k_m.gguf
+# Phi-3.5 mini Instruct, 4-bit, MIT licence: the smallest model that passed the decision maker's calibration
+# (8 of 8; see factory/decision-maker/README.md). Change the model only after re-running calibrate.mjs.
+ARG MODEL_URL=https://huggingface.co/bartowski/Phi-3.5-mini-instruct-GGUF/resolve/main/Phi-3.5-mini-instruct-Q4_K_M.gguf
 ADD --chmod=444 ${MODEL_URL} /models/model.gguf
 
 ENV LLAMA_ARG_MODEL=/models/model.gguf \

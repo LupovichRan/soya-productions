@@ -1,4 +1,4 @@
-/* Read It Simply — a Soya Productions film. Phone-first, one column, one primary action per screen. */
+/* Read It Simply — a Soyactory app. Phone-first, one column, one primary action per screen. */
 :root{
   --bg:#0F172A;--paper:#F5F6F8;--card:#fff;--ink:#101828;--mute:#5B6472;
   --accent:#0E6B5C;--accent-soft:#E3F1EE;
@@ -36,7 +36,7 @@ label{display:block;font-weight:600;margin:0 0 6px}
 .top{display:flex;align-items:center;gap:8px;background:var(--bg);color:#F1F3F6;padding:8px 16px;padding-top:max(8px,env(safe-area-inset-top))}
 .brand{display:flex;align-items:center;gap:10px;margin-inline-end:auto;background:transparent;border-color:transparent;color:inherit;padding:0 4px;text-align:start;min-width:0}
 .brand:hover:not(:disabled){background:transparent}
-.brand img{width:40px;height:40px;border-radius:8px;object-fit:cover;object-position:50% 30%;flex:none}
+.brand img{width:40px;height:40px;border-radius:8px;flex:none}
 .brand b{display:block;font-size:16px;font-weight:650;line-height:1.2}
 .brand small{display:block;font-size:12px;font-weight:400;color:#9AA4B2;white-space:nowrap}
 .top .ghost{background:transparent;color:#C9D0DA;border-color:#334155;padding:8px 12px;font-weight:500}
@@ -56,10 +56,10 @@ main{width:100%;max-width:640px;margin:0 auto;padding:16px;flex:1}
 .pill.live{background:var(--accent-soft);color:var(--accent)}
 .empty{color:var(--mute);margin-top:6px}
 .when li{font-weight:600}
-.quote{border-inline-start:3px solid var(--line-strong);padding-inline-start:12px;color:#344054;margin-top:8px}
+.quote{border-inline-start:3px solid var(--line-strong);padding-inline-start:12px;color:#344054;margin:8px 0 0}
 .wait{text-align:center;padding:32px 20px}
 .wait .dot{width:12px;height:12px;border-radius:50%;background:var(--accent);margin:0 auto 14px}
 
 .foot{text-align:center;color:var(--mute);font-size:14px;padding:16px 16px max(24px,env(safe-area-inset-bottom))}
-.foot img{width:72px;height:40px;object-fit:cover;border-radius:6px;display:block;margin:0 auto 6px}
+.foot img{width:48px;height:48px;border-radius:10px;display:block;margin:0 auto 6px}
 .noscript{text-align:center;padding:24px}

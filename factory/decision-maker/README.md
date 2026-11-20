@@ -9,7 +9,7 @@ A small server that lets Claude ask **your own self-hosted model** to make a cho
 
 It talks to any model server with an OpenAI-style chat endpoint: Ollama, llama.cpp, LM Studio, vLLM. No paid API. No dependencies; it needs Node 18 or newer and nothing else.
 
-This is a tool for the factory, not a film: it has no screen and is not listed on the front page.
+This is a tool for the factory, not an app: it has no screen and is not listed on the front page.
 
 ## Why
 
@@ -75,7 +75,34 @@ What these runs changed in the method:
 5. Options are compared side by side on each criterion. In the first design each option was scored without seeing the others, and all three models then failed the simplest calibration case: asked alone whether 20 dollars is a "low price" for a kettle, a model cannot know. Scored the first way, the 1.5B model got 3 of 8 calibration cases right and Phi-3.5-mini got 6 of 8.
 6. Criteria must be worded so that more is better ("Low price", not "Price").
 
-Calibration results for the current method are being measured and will be added here.
+## Calibration results
+
+Eight calibration decisions, standard method, llama.cpp on four CPU cores, 20 November 2026. Each model was measured twice: first with the original method (each option scored without seeing the others), then with the current one (options compared side by side on one criterion at a time).
+
+| Model | Licence | Original method | Current method | Time per decision | Verdict now |
+|---|---|---|---|---|---|
+| Qwen2.5 1.5B Instruct, 4-bit | Apache-2.0 | 3 of 8 | 6 of 8 | about 1 minute | Quick, easy-to-undo choices only |
+| Phi-3.5 mini Instruct, 4-bit | MIT | 6 of 8 | **8 of 8** | about 2 minutes | **Good enough to decide with** |
+| Qwen2.5 7B Instruct, 4-bit | Apache-2.0 | not measured | **8 of 8** | about 2 minutes | **Good enough to decide with** |
+
+What this says:
+
+1. **The method mattered as much as the model.** Changing how the question is put took the smallest model from 3 to 6 right and the middle one from 6 to 8.
+2. **Phi-3.5 mini is the smallest model that passes.** It is the default for standard decisions. Its file is about 2.4 GB, so it fits a 4 to 8 GB server.
+3. **Qwen2.5 7B matches it on these cases but is no faster**, so on this evidence it has no advantage for standard decisions. It is the choice for deep decisions, where each criterion is asked three times; the margin may show up on harder cases than these eight.
+4. **The 1.5B model is for quick choices only.** It still failed one case where the weights decide, and one where the middle option is right.
+
+Limits of this evidence: eight cases is a small sample, the cases are ones with a clear answer, and each model was run once per case. A model that passes calibration can still be wrong on a hard, ambiguous decision. Re-run `calibrate.mjs` whenever a model is changed.
+
+Suggested set-up:
+
+| Variable | Model |
+|---|---|
+| `LLM_MODEL_QUICK` | Qwen2.5 1.5B Instruct |
+| `LLM_MODEL` | Phi-3.5 mini Instruct |
+| `LLM_MODEL_DEEP` | Qwen2.5 7B Instruct |
+
+All three can be served by one llama.cpp server with several models, or by separate small servers; the hosting guide uses one model (Phi-3.5 mini) to stay inside the free allowance.
 
 
 ## Choosing the right model

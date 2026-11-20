@@ -27,29 +27,29 @@ jobs:
           node-version: 22
       - name: Decision maker tests
         run: node --test factory/decision-maker/server.test.mjs
-      - name: Film tests
+      - name: App tests
         run: |
           set -euo pipefail
-          found=$(git ls-files 'films/**/*.test.js' 'films/**/*.test.mjs')
-          if [ -n "$found" ]; then node --test $found; else echo "no film tests"; fi
+          found=$(git ls-files 'apps/**/*.test.js' 'apps/**/*.test.mjs')
+          if [ -n "$found" ]; then node --test $found; else echo "no app tests"; fi
       - name: Every script parses
         run: |
           set -euo pipefail
           git ls-files '*.js' '*.mjs' | while read -r f; do node --check "$f"; done
-      - name: Film list is well formed
+      - name: App list is well formed
         run: |
           node -e '
             globalThis.window = {};
-            require("./films.js");
-            const films = window.SOYA_FILMS;
-            if (!Array.isArray(films) || !films.length) throw new Error("films.js has no films");
-            for (const f of films) {
-              if (!f.en?.title || !f.he?.title) throw new Error("a film is missing its English or Hebrew title");
+            require("./apps.js");
+            const apps = window.SOYA_APPS;
+            if (!Array.isArray(apps) || !apps.length) throw new Error("apps.js has no apps");
+            for (const f of apps) {
+              if (!f.en?.title || !f.he?.title) throw new Error("an app is missing its English or Hebrew title");
               if (!/^\d{4}-\d{2}-\d{2}$/.test(f.date)) throw new Error("bad date on " + f.en.title);
               if (!(f.folder || f.path || f.url)) throw new Error(f.en.title + " has nowhere to open");
-              if (f.folder && !require("fs").existsSync("films/" + f.folder + "/index.html")) throw new Error("films/" + f.folder + "/index.html is missing");
+              if (f.folder && !require("fs").existsSync("apps/" + f.folder + "/index.html")) throw new Error("apps/" + f.folder + "/index.html is missing");
             }
-            console.log(films.length + " film(s) listed");
+            console.log(apps.length + " app(s) listed");
           '
       - name: No build tooling crept in
         run: |

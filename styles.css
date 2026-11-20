@@ -1,4 +1,4 @@
-/* Soya Productions — the front page that lists every film (daily POC). Same tokens as the films. */
+/* Soyactory — the front page of the Soya Software Factory. Same tokens as the apps it makes. */
 :root{
   --bg:#0F172A;--paper:#F5F6F8;--card:#fff;--ink:#101828;--mute:#5B6472;
   --accent:#0E6B5C;--accent-soft:#E3F1EE;--line:#E2E5EA;--line-strong:#C9CED6;
@@ -10,8 +10,9 @@ body{margin:0;min-height:100vh;min-height:100dvh;display:flex;flex-direction:col
 [dir=rtl] body{font-family:"Heebo","Assistant","Rubik","Noto Sans Hebrew",Arial,system-ui,sans-serif}
 h1,h2{margin:0;font-weight:650;letter-spacing:-.015em;line-height:1.25}
 [dir=rtl] h1,[dir=rtl] h2{letter-spacing:0;font-weight:700}
-h1{font-size:14px;color:var(--mute);margin:20px 0 10px}
-h2{font-size:22px}
+h2{font-size:14px;color:var(--mute);margin:20px 0 10px}
+h3{margin:0;font-size:22px;font-weight:650;line-height:1.25}
+[dir=rtl] h3{font-weight:700}
 p{margin:0}
 
 button,.button{font:inherit;font-weight:600;min-height:var(--tap);padding:10px 18px;border-radius:10px;border:1px solid var(--ink);background:var(--ink);color:#fff;cursor:pointer;text-decoration:none;display:flex;align-items:center;justify-content:center}
@@ -19,18 +20,21 @@ button,.button{font:inherit;font-weight:600;min-height:var(--tap);padding:10px 1
 a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 
 .top{display:flex;align-items:center;gap:8px;background:var(--bg);color:#F1F3F6;padding:8px 16px;padding-top:max(8px,env(safe-area-inset-top))}
-.brand{margin-inline-end:auto;font-size:16px}.brand b{font-weight:650}
+.brand{display:flex;align-items:center;gap:10px;margin-inline-end:auto;font-size:17px}
+.brand img{width:40px;height:40px;border-radius:8px;flex:none}
+.brand b{font-weight:650}
 .top .ghost{background:transparent;color:#C9D0DA;border-color:#334155;padding:8px 12px;font-weight:500}
 .top .ghost:hover{background:#1B2537}
 .top button:focus-visible{outline-color:#7FD1C2}
 
-.hero{background:radial-gradient(circle at 50% 40%,#f4b8c8 0,#6b7bb8 45%,#0F172A 100%);padding:24px 16px 28px;text-align:center;color:#fff}
-.hero img{display:block;width:min(100%,460px);height:auto;margin:0 auto;border-radius:12px;box-shadow:0 12px 40px rgba(15,23,42,.45)}
-.hero p{max-width:460px;margin:16px auto 0;font-size:17px;text-shadow:0 1px 8px rgba(15,23,42,.6)}
+.hero{background:radial-gradient(circle at 50% 30%,#f4b8c8 0,#6b7bb8 48%,#0F172A 100%);padding:24px 16px 28px;text-align:center;color:#fff}
+.hero img{display:block;width:min(100%,420px);height:auto;margin:0 auto;border-radius:14px;box-shadow:0 12px 40px rgba(15,23,42,.45)}
+.hero h1{font-size:38px;margin:18px 0 6px;text-shadow:0 2px 14px rgba(15,23,42,.55)}
+.hero p{max-width:460px;margin:0 auto;font-size:17px;text-shadow:0 1px 8px rgba(15,23,42,.6)}
 
 main{width:100%;max-width:640px;margin:0 auto;padding:0 16px 16px;flex:1}
-.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;box-shadow:var(--shadow)}
-.film-head{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;box-shadow:var(--shadow);margin-bottom:16px}
+.app-head{display:flex;align-items:center;gap:14px;margin-bottom:10px}
 .meta{color:var(--mute);font-size:14px}
 .line{color:#344054;font-size:17px;margin-bottom:16px}
 .mark{flex:none;display:block}
@@ -40,6 +44,11 @@ main{width:100%;max-width:640px;margin:0 auto;padding:0 16px 16px;flex:1}
 .row:hover{border-color:var(--line-strong)}
 .row span{min-width:0}.row b{display:block;font-weight:600}
 .row small{display:block;color:var(--mute);font-size:14px}
+
+.steps{list-style:none;margin:10px 0 0;padding:0;counter-reset:step}
+.steps li{position:relative;padding-inline-start:40px;margin:0 0 12px;counter-increment:step}
+.steps li::before{content:counter(step);position:absolute;inset-inline-start:0;top:0;width:28px;height:28px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-weight:700;display:flex;align-items:center;justify-content:center}
+.steps li:last-child{margin-bottom:0}
 
 .foot{text-align:center;color:var(--mute);font-size:14px;padding:16px 16px max(24px,env(safe-area-inset-bottom))}
 .noscript{text-align:center;padding:24px}
