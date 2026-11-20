@@ -21,7 +21,7 @@ import { createInterface } from 'node:readline';
 import { appendFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
 
-export const SERVER = { name: 'soya-decision-maker', version: '0.1.0' };
+export const SERVER = { name: 'soya-decision-maker', version: '0.2.0' };
 const PROTOCOLS = ['2025-11-25', '2025-06-18', '2025-03-26', '2024-11-05'];
 
 export function settings(env = process.env) {
@@ -38,15 +38,19 @@ export const TOOLS = [
   {
     name: 'decide',
     title: 'Decide',
-    description: 'Ask the self-hosted model to choose exactly one of the given options. Returns the choice, how sure it is, its reasons, the main risk, and what would change its mind. With samples > 1 it asks several times and reports the vote. The model sees only what you pass here, so put everything it needs in "context". If no model is connected or its answer is unusable, the call fails; it never makes a decision up.',
+    description: 'Ask the self-hosted model to choose exactly one of the given options, using a structured method. Quick: one answer with reasons (for small choices that are easy to undo). Standard: criteria are weighted before any option is scored, each option is judged on its own with pros and cons, the totals are added up in code, then the leader gets a pre-mortem, a bias check and a "what else" check. Deep: the same, with every option scored three times and the middle score kept (for choices that are hard to undo or high stakes). Depth is picked from "reversible" and "stakes" unless you set it. Returns the choice, the full table, and a decision record with a review date. The model sees only what you pass here, so put everything it needs in "context". If no model is connected or an answer is unusable, the call fails; it never makes a decision up.',
     inputSchema: {
       type: 'object', additionalProperties: false, required: ['question', 'options'],
       properties: {
         question: { type: 'string', description: 'The decision to make, as one plain question.' },
         options: { type: 'array', minItems: 2, maxItems: 8, items: { type: 'string' }, description: 'The 2 to 8 options to choose between.' },
         context: { type: 'string', description: 'Facts the model needs: background, constraints, what has been tried.' },
-        criteria: { type: 'array', maxItems: 8, items: { type: 'string' }, description: 'What matters most, most important first.' },
-        samples: { type: 'integer', minimum: 1, maximum: 5, description: 'How many times to ask (default 1). Use 3 or 5 for a vote on a close call.' },
+        criteria: { type: 'array', maxItems: 8, items: { type: 'string' }, description: 'What matters. If left out, the model proposes 3 to 5 criteria before it sees the options.' },
+        weights: { type: 'array', maxItems: 8, items: { type: 'integer', minimum: 1, maximum: 5 }, description: 'Optional weight 1 to 5 for each criterion, in the same order. If left out, the model sets them before any option is scored.' },
+        reversible: { type: 'boolean', description: 'Can this be undone cheaply? Easy-to-undo choices get a lighter method and a one-week review; hard-to-undo ones get the deep method and a 30-day review.' },
+        stakes: { type: 'string', enum: ['low', 'medium', 'high'], description: 'How much money, time, reputation or trust is at risk.' },
+        depth: { type: 'string', enum: ['quick', 'standard', 'deep'], description: 'Override the method. Default: quick when reversible and low stakes, deep when not reversible or high stakes, otherwise standard.' },
+        samples: { type: 'integer', minimum: 1, maximum: 5, description: 'Quick method only: how many times to ask (default 1). Use 3 or 5 for a vote.' },
       },
     },
   },
@@ -78,6 +82,13 @@ export function userMessage(a) {
     (a.context ? `\n\nContext:\n${a.context}` : '');
 }
 
+/** Match the effort to the decision: light for what is easy to undo, heavy for what is not. */
+export function pickDepth(reversible, stakes) {
+  if (reversible === false || stakes === 'high') return 'deep';
+  if (reversible === true && stakes === 'low') return 'quick';
+  return 'standard';
+}
+
 /** Check and tidy what the caller sent. */
 export function checkArgs(raw) {
   const a = raw && typeof raw === 'object' ? raw : {};
@@ -90,7 +101,15 @@ export function checkArgs(raw) {
   if (text.length > 24000) return { ok: false, why: 'Question, options and context together must stay under 24,000 characters.' };
   const criteria = Array.isArray(a.criteria) ? a.criteria.filter(c => typeof c === 'string' && c.trim()).slice(0, 8).map(c => c.trim()) : [];
   const samples = Math.max(1, Math.min(5, Math.round(Number(a.samples) || 1)));
-  return { ok: true, args: { question: a.question.trim(), options, context: typeof a.context === 'string' ? a.context.trim() : '', criteria, samples } };
+  let weights = null;
+  if (a.weights !== undefined) {
+    if (!Array.isArray(a.weights) || a.weights.length !== criteria.length || !criteria.length || a.weights.some(w => !Number.isInteger(w) || w < 1 || w > 5)) return { ok: false, why: '"weights" must be one whole number from 1 to 5 for each criterion, in the same order.' };
+    weights = a.weights;
+  }
+  const reversible = typeof a.reversible === 'boolean' ? a.reversible : null;
+  const stakes = ['low', 'medium', 'high'].includes(a.stakes) ? a.stakes : null;
+  const depth = ['quick', 'standard', 'deep'].includes(a.depth) ? a.depth : pickDepth(reversible, stakes);
+  return { ok: true, args: { question: a.question.trim(), options, context: typeof a.context === 'string' ? a.context.trim() : '', criteria, weights, reversible, stakes, depth, samples } };
 }
 
 /** Pull the JSON object out of an answer that may be wrapped in a code fence or in reasoning text. */
@@ -119,7 +138,7 @@ async function chat(s, messages, temperature, fetcher, state) {
   const ask = () => fetcher(s.baseUrl + '/chat/completions', {
     method: 'POST',
     headers: { 'content-type': 'application/json', ...(s.apiKey ? { authorization: `Bearer ${s.apiKey}` } : {}) },
-    body: JSON.stringify({ model: s.model, messages, temperature, max_tokens: 900, stream: false, ...(state.format ? { response_format: { type: 'json_object' } } : {}) }),
+    body: JSON.stringify({ model: s.model, messages, temperature, max_tokens: 1200, stream: false, ...(state.format ? { response_format: { type: 'json_object' } } : {}) }),
     signal: AbortSignal.timeout(s.timeoutMs),
   });
   let res = await ask();
@@ -151,6 +170,13 @@ export async function decide(raw, s = settings(), fetcher = fetch) {
   if (!s.baseUrl || !s.model) return fail('No model is connected. Set LLM_BASE_URL and LLM_MODEL for this server. No decision was made.');
   const { args } = checked;
   const state = { format: true };
+  if (args.depth !== 'quick') {
+    let out;
+    try { out = await structured(s, args, fetcher, state); }
+    catch (err) { return fail(`Could not get a decision: ${reason(err)}. No decision was made.`); }
+    await record(s, args, out);
+    return { content: [{ type: 'text', text: JSON.stringify(out, null, 2) }], structuredContent: out };
+  }
   const runs = [], errors = [];
   for (let i = 0; i < args.samples; i++) {
     try { runs.push(await decideOnce(s, args, args.samples > 1 ? 0.7 : 0.2, fetcher, state)); }
@@ -172,12 +198,203 @@ export async function decide(raw, s = settings(), fetcher = fetch) {
     risk: best.risk,
     wouldChangeIf: best.wouldChangeIf,
     model: s.model,
+    method: 'quick',
     asked: args.samples,
     answered: runs.length,
     ...(args.samples > 1 ? { votes, tied: leaders.length > 1 } : {}),
+    record: makeRecord(args, best.choice, Math.round(mean(winner) * 100) / 100, best.wouldChangeIf, ''),
   };
-  if (s.log) await appendFile(s.log, JSON.stringify({ at: new Date().toISOString(), question: args.question, options: args.options, ...out }) + '\n').catch(() => {});
+  await record(s, args, out);
   return { content: [{ type: 'text', text: JSON.stringify(out, null, 2) }], structuredContent: out };
+}
+
+/* ---------- The structured method ----------
+   Built from Ran's own decision research (his decision-coach project and his decision-models notes):
+   - match the effort to how reversible the choice is and how much is at stake
+   - agree the criteria and their weights before scoring, so the result cannot lean toward a favourite
+   - judge each option on its own, separately, before anything is compared (this reduces noise)
+   - add the totals up in code; a model's arithmetic is not trusted
+   - run a pre-mortem on the leader, with an early warning sign for each way it could fail
+   - ask "what else?" and name the one bias most likely to matter
+   - if the leader feels wrong, say which criterion is missing instead of overriding it silently
+   - finish with a decision record and a review date; a decision nobody reviews teaches nothing */
+
+const BIASES = ['anchoring', 'recency', 'confirmation', 'sunk cost', 'loudest opinion', 'none'];
+
+const WEIGH_SYSTEM = `You help set up a decision before any option is judged. You are given a question and its context, but not the options. Say what should matter, and how much.
+
+Answer with one JSON object and nothing else.`;
+
+const SCORE_SYSTEM = `You judge one option for a decision, on its own. You are not shown the other options and must not guess at them. Base everything only on what you are given. Do not invent facts; when you do not know, score in the middle and say so in a con.
+
+Answer with one JSON object and nothing else:
+{
+  "pros": ["string"],
+  "cons": ["string"],
+  "scores": [3]
+}
+"pros" and "cons" have one to three short points each. "scores" has one whole number from 1 (poor) to 5 (strong) for each criterion, in the order given.`;
+
+const REVIEW_SYSTEM = `You stress-test a decision that is about to be made. You are given the question, the options with their scores, and the current leader. Be a sceptical friend, not a cheerleader.
+
+Answer with one JSON object and nothing else:
+{
+  "preMortem": [{ "reason": "string", "earlyWarning": "string" }],
+  "bias": "none",
+  "biasWhy": "string",
+  "whatElse": "string",
+  "leaderFeelsRight": true,
+  "missingCriterion": "string",
+  "wouldChangeIf": "string",
+  "ifThen": "string",
+  "confidence": 0.0
+}
+"preMortem": imagine it is some months later and choosing the leader failed. Give the one to three most likely reasons, each with an early warning sign that could be noticed in time.
+"bias": the one most likely to be distorting this decision: anchoring, recency, confirmation, sunk cost, loudest opinion, or none. "biasWhy": one sentence.
+"whatElse": one option that is not on the list and deserves a look, or an empty string.
+"leaderFeelsRight": false only if the leader seems wrong despite the scores; then "missingCriterion" names what the criteria failed to capture. Otherwise an empty string.
+"wouldChangeIf": the one fact that would change the decision.
+"ifThen": the next step as an if-then plan, such as "If it is Monday morning, then I will ...".
+"confidence": between 0 and 1.`;
+
+/** Ask for JSON and check it; one retry with the reason. */
+async function askJson(s, system, user, check, temperature, fetcher, state) {
+  const messages = [{ role: 'system', content: system }, { role: 'user', content: user }];
+  let why = '';
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const answer = await chat(s, messages, temperature, fetcher, state);
+    let result;
+    try { result = check(extractJson(answer)); } catch (err) { result = { ok: false, why: err.message || 'unreadable answer' }; }
+    if (result.ok) return result.value;
+    why = result.why;
+    messages.push({ role: 'assistant', content: String(answer).slice(0, 4000) }, { role: 'user', content: `That answer was not usable: ${why}. Send the complete JSON object again, corrected.` });
+  }
+  throw new Error(`the model's answer was not usable (${why})`);
+}
+
+const strings = (v, max) => (Array.isArray(v) ? v : []).filter(x => typeof x === 'string' && x.trim()).map(x => x.trim()).slice(0, max);
+const str = (v) => (typeof v === 'string' ? v.trim() : '');
+const whole15 = (n) => Number.isInteger(Number(n)) && Number(n) >= 1 && Number(n) <= 5;
+export const median = (ns) => { const a = [...ns].sort((x, y) => x - y); return a.length % 2 ? a[(a.length - 1) / 2] : (a[a.length / 2 - 1] + a[a.length / 2]) / 2; };
+
+export function checkWeights(raw, criteria) {
+  if (!raw || typeof raw !== 'object') return { ok: false, why: 'the answer is not a JSON object' };
+  if (criteria.length) {
+    if (!Array.isArray(raw.weights) || raw.weights.length !== criteria.length || !raw.weights.every(whole15)) return { ok: false, why: `"weights" must have ${criteria.length} whole numbers from 1 to 5` };
+    return { ok: true, value: criteria.map((name, i) => ({ name, weight: Number(raw.weights[i]) })) };
+  }
+  const list = (Array.isArray(raw.criteria) ? raw.criteria : []).filter(c => c && str(c.name) && whole15(c.weight)).map(c => ({ name: str(c.name), weight: Number(c.weight) }));
+  if (list.length < 2 || list.length > 6 || list.length !== (raw.criteria || []).length) return { ok: false, why: '"criteria" must have 2 to 6 entries, each with a "name" and a whole-number "weight" from 1 to 5' };
+  return { ok: true, value: list };
+}
+
+export function checkScore(raw, count) {
+  if (!raw || typeof raw !== 'object') return { ok: false, why: 'the answer is not a JSON object' };
+  if (!Array.isArray(raw.scores) || raw.scores.length !== count || !raw.scores.every(whole15)) return { ok: false, why: `"scores" must have ${count} whole numbers from 1 to 5, one per criterion` };
+  const pros = strings(raw.pros, 3), cons = strings(raw.cons, 3);
+  if (!pros.length && !cons.length) return { ok: false, why: 'give at least one pro or one con' };
+  return { ok: true, value: { pros, cons, scores: raw.scores.map(Number) } };
+}
+
+export function checkReview(raw) {
+  if (!raw || typeof raw !== 'object') return { ok: false, why: 'the answer is not a JSON object' };
+  const preMortem = (Array.isArray(raw.preMortem) ? raw.preMortem : []).filter(p => p && str(p.reason)).map(p => ({ reason: str(p.reason), earlyWarning: str(p.earlyWarning) })).slice(0, 3);
+  if (!preMortem.length) return { ok: false, why: '"preMortem" must have at least one reason the choice could fail' };
+  const confidence = Number(raw.confidence);
+  if (!Number.isFinite(confidence) || confidence < 0 || confidence > 1) return { ok: false, why: '"confidence" must be a number between 0 and 1' };
+  const bias = BIASES.includes(str(raw.bias).toLowerCase()) ? str(raw.bias).toLowerCase() : 'none';
+  return { ok: true, value: { preMortem, bias, biasWhy: str(raw.biasWhy), whatElse: str(raw.whatElse), leaderFeelsRight: raw.leaderFeelsRight !== false, missingCriterion: str(raw.missingCriterion), wouldChangeIf: str(raw.wouldChangeIf), ifThen: str(raw.ifThen), confidence } };
+}
+
+function makeRecord(args, decision, confidence, wouldChangeIf, ifThen) {
+  const days = args.reversible === false || args.stakes === 'high' ? 30 : 7;
+  const today = new Date();
+  return {
+    decision,
+    madeOn: today.toISOString().slice(0, 10),
+    confidence: confidence >= 0.75 ? 'high' : confidence >= 0.5 ? 'medium' : 'low',
+    wouldChangeIf,
+    nextStep: ifThen,
+    reviewOn: new Date(today.getTime() + days * 86400000).toISOString().slice(0, 10),
+    atReview: 'Did it work? What was learned? Keep, change or reverse.',
+  };
+}
+
+async function record(s, args, out) {
+  if (s.log) await appendFile(s.log, JSON.stringify({ at: new Date().toISOString(), question: args.question, options: args.options, ...out }) + '\n').catch(() => {});
+}
+
+async function structured(s, args, fetcher, state) {
+  const about = `Question: ${args.question}` + (args.context ? `\n\nContext:\n${args.context}` : '');
+
+  // 1. Criteria and weights first. The model is not shown the options here.
+  let criteria;
+  if (args.weights) criteria = args.criteria.map((name, i) => ({ name, weight: args.weights[i] }));
+  else {
+    const ask = args.criteria.length
+      ? `${about}\n\nCriteria:\n${args.criteria.map((c, i) => `${i + 1}. ${c}`).join('\n')}\n\nGive each criterion a weight from 1 (matters a little) to 5 (matters most): {"weights": [3]}, one number per criterion, in order.`
+      : `${about}\n\nName the 3 to 5 things that should matter most for this decision, each with a weight from 1 (matters a little) to 5 (matters most): {"criteria": [{"name": "string", "weight": 3}]}`;
+    criteria = await askJson(s, WEIGH_SYSTEM, ask, (raw) => checkWeights(raw, args.criteria), 0.2, fetcher, state);
+  }
+  const list = criteria.map((c, i) => `${i + 1}. ${c.name}`).join('\n');
+
+  // 2. Each option is judged on its own. Deep: three times, and the middle score is kept.
+  const rounds = args.depth === 'deep' ? 3 : 1;
+  const table = [];
+  for (const option of args.options) {
+    const runs = [];
+    for (let i = 0; i < rounds; i++) {
+      runs.push(await askJson(s, SCORE_SYSTEM, `${about}\n\nThe option to judge: ${option}\n\nCriteria, in order:\n${list}`, (raw) => checkScore(raw, criteria.length), rounds > 1 ? 0.7 : 0.2, fetcher, state));
+    }
+    const scores = criteria.map((_, c) => median(runs.map(r => r.scores[c])));
+    const spread = Math.max(...criteria.map((_, c) => Math.max(...runs.map(r => r.scores[c])) - Math.min(...runs.map(r => r.scores[c]))));
+    table.push({ option, scores, pros: runs[0].pros, cons: runs[0].cons, ...(rounds > 1 ? { spread } : {}) });
+  }
+
+  // 3. Totals are added up here, not by the model.
+  const max = criteria.reduce((n, c) => n + c.weight * 5, 0);
+  for (const row of table) row.total = Math.round(row.scores.reduce((n, sc, c) => n + sc * criteria[c].weight, 0) / max * 1000) / 10;
+  const ranked = [...table].sort((a, b) => b.total - a.total);
+  const leader = ranked[0], margin = Math.round((leader.total - ranked[1].total) * 10) / 10;
+  const closeCall = margin < 5;
+
+  // 4. Stress-test the leader.
+  const scoreboard = ranked.map(r => `- ${r.option}: ${r.total} out of 100. For: ${r.pros.join('; ') || 'nothing given'}. Against: ${r.cons.join('; ') || 'nothing given'}.`).join('\n');
+  let review = null, reviewNote = '';
+  try {
+    review = await askJson(s, REVIEW_SYSTEM, `${about}\n\nCriteria and weights:\n${criteria.map(c => `- ${c.name} (weight ${c.weight})`).join('\n')}\n\nOptions, best score first:\n${scoreboard}\n\nCurrent leader: ${leader.option}`, checkReview, 0.3, fetcher, state);
+  } catch (err) { reviewNote = `The stress-test could not be run: ${reason(err)}. The choice rests on the scores alone.`; }
+
+  // The scores decide. Doubts are reported, never used to swap the winner quietly.
+  let confidence = review ? review.confidence : 0.5;
+  if (closeCall) confidence = Math.min(confidence, 0.6);
+  if (review && !review.leaderFeelsRight) confidence = Math.min(confidence, 0.5);
+  confidence = Math.round(confidence * 100) / 100;
+  const cautions = [
+    closeCall ? `Close call: only ${margin} points separate "${leader.option}" from "${ranked[1].option}".` : '',
+    review && !review.leaderFeelsRight ? `The model doubts the leader despite the scores${review.missingCriterion ? `; it says the criteria miss: ${review.missingCriterion}` : ''}. Consider adding that criterion and deciding again.` : '',
+    review && review.bias !== 'none' ? `Watch for ${review.bias} bias: ${review.biasWhy}` : '',
+    review && review.whatElse ? `An option that was not on the list: ${review.whatElse}` : '',
+    rounds > 1 && table.some(r => r.spread >= 3) ? 'The model scored the same option very differently between rounds; treat the totals as rough.' : '',
+    reviewNote,
+  ].filter(Boolean);
+
+  return {
+    choice: leader.option,
+    confidence,
+    method: args.depth,
+    reasons: leader.pros,
+    risk: review?.preMortem[0]?.reason || leader.cons[0] || '',
+    wouldChangeIf: review?.wouldChangeIf || '',
+    criteria,
+    table: ranked,
+    margin,
+    closeCall,
+    preMortem: review?.preMortem || [],
+    cautions,
+    record: makeRecord(args, leader.option, confidence, review?.wouldChangeIf || '', review?.ifThen || ''),
+    model: s.model,
+  };
 }
 
 export async function status(s = settings(), fetcher = fetch) {
@@ -205,7 +422,7 @@ export async function handle(msg, deps = {}) {
     case 'initialize': {
       const asked = msg.params?.protocolVersion;
       return reply({ protocolVersion: PROTOCOLS.includes(asked) ? asked : PROTOCOLS[0], capabilities: { tools: {} }, serverInfo: SERVER,
-        instructions: 'Use "decide" to have a self-hosted model choose between options. Pass everything it needs in "context". Treat the answer as advice from a small model: check its reasons before acting on it.' });
+        instructions: 'Use "decide" to have a self-hosted model choose between options with a structured method (weights first, each option judged alone, totals added in code, then a pre-mortem and bias check). Say whether the choice is reversible and how high the stakes are. Pass everything the model needs in "context". Read the cautions and the table before acting, and keep the decision record so the choice can be reviewed on its review date.' });
     }
     case 'ping': return reply({});
     case 'tools/list': return reply({ tools: TOOLS });

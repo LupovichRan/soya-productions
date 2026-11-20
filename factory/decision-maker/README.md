@@ -4,7 +4,7 @@ A small server that lets Claude ask **your own self-hosted model** to make a cho
 
 | Tool | What it does |
 |---|---|
-| `decide` | Give it a question and 2 to 8 options. It returns one choice, how sure it is (0 to 1), up to three reasons, the main risk, and what would change its mind. |
+| `decide` | Give it a question and 2 to 8 options. It works through a structured method and returns one choice, the full scoring table, a pre-mortem, cautions, and a decision record with a review date. |
 | `decider_status` | Says whether a model is connected, which one, and whether it answers right now. |
 
 It talks to any model server with an OpenAI-style chat endpoint: Ollama, llama.cpp, LM Studio, vLLM. No paid API. No dependencies; it needs Node 18 or newer and nothing else.
@@ -22,9 +22,41 @@ The factory makes choices on every run, such as which concept to build. This giv
 - **The model sees only what it is given.** Everything it needs must be in `context`.
 - **It is advice.** A small model can be confidently wrong. Whoever calls it should read the reasons, and say so when they disagree.
 
-## Asking for a vote
+## How it decides
 
-`samples` (1 to 5) asks the model several times and counts the answers. The result includes the votes per option and whether it was tied. A tie goes to the side that was surer of itself, and is reported as a tie.
+The method comes from Ran's own decision research (his decision-coach project and his decision-models notes). The effort is matched to the decision:
+
+| Method | When | What happens |
+|---|---|---|
+| Quick | Easy to undo and low stakes | One answer with reasons. `samples` (up to 5) turns it into a vote. |
+| Standard | Everything in between | The five steps below. |
+| Deep | Hard to undo, or high stakes | The five steps, with every option scored three times and the middle score kept. |
+
+Say `reversible` and `stakes` and the method is picked for you; `depth` overrides it.
+
+The five steps:
+
+1. **Weights first.** What matters, and how much, is settled before any option is scored. The model is not shown the options at this step, so the weights cannot lean toward a favourite. You can pass your own `criteria` and `weights` instead.
+2. **Each option alone.** Every option is judged in its own separate request, with pros, cons and a score per criterion. It is not shown the other options. Judging separately before comparing reduces noise.
+3. **Totals in code.** The weighted totals are added up by the server, not by the model.
+4. **Stress-test the leader.** A pre-mortem (it is months later and this choice failed: why, and what early sign would have warned us?), the one bias most likely at work, and "what else?" — an option that was not on the list.
+5. **A record.** The decision, confidence, what would change it, an if-then next step, and a review date: one week for choices that are easy to undo, 30 days otherwise.
+
+The scores decide. If the model doubts the leader, or the top two are within five points, the answer says so under `cautions` and the confidence is lowered. The winner is never swapped quietly.
+
+### How strong is the evidence for this method
+
+From the research notes, which mostly rest on secondary sources:
+
+| Step | Evidence |
+|---|---|
+| Pre-mortem | Medium. Reported to help people find about 30% more reasons for an outcome. |
+| Judging separately before comparing | Medium. Reduces noise between judgments. |
+| Weights before scores | A standard practice of weighted decision tables; no outcome study was found. |
+| If-then plans | Strong for following through on an intention. |
+| Lighter process for reversible choices | An idea from business practice, with no outcome research. |
+
+None of this was tested with a small self-hosted model. Whether such a model scores sensibly is the open question this POC exists to answer.
 
 ## Set-up
 
@@ -74,30 +106,42 @@ Asked:
   "options": ["Say It Kindly", "Read It To Me Simply", "Plain Steps"],
   "criteria": ["A non-technical adult understands why they want it", "Can be built and checked in one run"],
   "context": "…the backlog rows and the latest brief…",
-  "samples": 3
+  "reversible": true,
+  "stakes": "medium"
 }
 ```
 
-Answered:
+Answered (shortened):
 
 ```json
 {
   "choice": "Say It Kindly",
-  "confidence": 0.74,
-  "reasons": ["…"],
-  "risk": "…",
-  "wouldChangeIf": "…",
-  "model": "qwen3:4b",
-  "asked": 3,
-  "answered": 3,
-  "votes": [
-    { "option": "Say It Kindly", "votes": 2 },
-    { "option": "Read It To Me Simply", "votes": 1 },
-    { "option": "Plain Steps", "votes": 0 }
+  "confidence": 0.6,
+  "method": "standard",
+  "criteria": [{ "name": "A non-technical adult understands why they want it", "weight": 5 }, { "name": "Can be built and checked in one run", "weight": 3 }],
+  "table": [
+    { "option": "Say It Kindly", "scores": [5, 3], "total": 85, "pros": ["…"], "cons": ["…"] },
+    { "option": "Read It To Me Simply", "scores": [5, 3], "total": 85, "pros": ["…"], "cons": ["…"] },
+    { "option": "Plain Steps", "scores": [3, 5], "total": 75, "pros": ["…"], "cons": ["…"] }
   ],
-  "tied": false
+  "margin": 0,
+  "closeCall": true,
+  "preMortem": [{ "reason": "…", "earlyWarning": "…" }],
+  "cautions": ["Close call: only 0 points separate …", "An option that was not on the list: …"],
+  "record": {
+    "decision": "Say It Kindly",
+    "madeOn": "2026-11-20",
+    "confidence": "medium",
+    "wouldChangeIf": "…",
+    "nextStep": "If …, then …",
+    "reviewOn": "2026-11-27",
+    "atReview": "Did it work? What was learned? Keep, change or reverse."
+  },
+  "model": "qwen3:4b"
 }
 ```
+
+The numbers above are illustrative, not from a real model.
 
 ## Checking it
 
@@ -105,4 +149,4 @@ Answered:
 node --test factory/decision-maker/server.test.mjs
 ```
 
-The tests use a stand-in model server. They cover the request it sends, the retry, the fallback when a server refuses the JSON setting, every way a call can fail, voting and ties, the MCP messages, and one run of the real process over stdin and stdout.
+The tests use a stand-in model server. They cover the request it sends, the retry, the fallback when a server refuses the JSON setting, every way a call can fail, voting and ties, the structured method (weights set without seeing the options, each option judged alone, totals, close calls, a doubted leader, three-round scoring, review dates), the MCP messages, and one run of the real process over stdin and stdout.
