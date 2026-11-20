@@ -292,3 +292,15 @@ test('calibration: a model that judges well passes, one that scores everything t
   assert.equal(b.summary.right, 0);
   assert.equal(b.summary.verdict, 'not good enough');
 });
+
+test('a reason that contradicts the context is called out and lowers confidence', async () => {
+  const calls = [];
+  const r = await decide({ ...full, criteria: ['Cost'], weights: [5] }, S, steps({
+    score: byOption({ Alpha: [5], Beta: [1], Gamma: [1] }, ['Cost']),
+    review: () => ({ ...okReview, doubtfulReasons: ['"Beta sends data away" but the context says it stays on the device'] }),
+  }, calls));
+  const out = r.structuredContent;
+  assert.ok(out.cautions.some(c => /looks wrong[\s\S]*stays on the device/.test(c)));
+  assert.equal(out.confidence, 0.5);
+  assert.match(calls.at(-1).user, /Cost: 5 of 5, because: Alpha on Cost/);   // the stress-test sees every reason
+});

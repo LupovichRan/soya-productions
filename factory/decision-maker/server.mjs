@@ -260,6 +260,7 @@ Answer with one JSON object and nothing else:
   "missingCriterion": "string",
   "wouldChangeIf": "string",
   "ifThen": "string",
+  "doubtfulReasons": ["string"],
   "confidence": 0.0
 }
 "preMortem": imagine it is some months later and choosing the leader failed. Give the one to three most likely reasons, each with an early warning sign that could be noticed in time.
@@ -268,6 +269,7 @@ Answer with one JSON object and nothing else:
 "leaderFeelsRight": false only if the leader seems wrong despite the scores; then "missingCriterion" names what the criteria failed to capture. Otherwise an empty string.
 "wouldChangeIf": the one fact that would change the decision.
 "ifThen": the next step as an if-then plan, such as "If it is Monday morning, then I will ...".
+"doubtfulReasons": any reason given for a score that contradicts the context or states something the context does not support, quoted briefly with what is wrong. An empty list if none.
 "confidence": between 0 and 1.`;
 
 /** Ask for JSON and check it; one retry with the reason. */
@@ -315,7 +317,7 @@ export function checkReview(raw) {
   const confidence = Number(raw.confidence);
   if (!Number.isFinite(confidence) || confidence < 0 || confidence > 1) return { ok: false, why: '"confidence" must be a number between 0 and 1' };
   const bias = BIASES.includes(str(raw.bias).toLowerCase()) ? str(raw.bias).toLowerCase() : 'none';
-  return { ok: true, value: { preMortem, bias, biasWhy: str(raw.biasWhy), whatElse: str(raw.whatElse), leaderFeelsRight: raw.leaderFeelsRight !== false, missingCriterion: str(raw.missingCriterion), wouldChangeIf: str(raw.wouldChangeIf), ifThen: str(raw.ifThen), confidence } };
+  return { ok: true, value: { preMortem, bias, biasWhy: str(raw.biasWhy), whatElse: str(raw.whatElse), leaderFeelsRight: raw.leaderFeelsRight !== false, missingCriterion: str(raw.missingCriterion), wouldChangeIf: str(raw.wouldChangeIf), ifThen: str(raw.ifThen), doubtfulReasons: strings(raw.doubtfulReasons, 4), confidence } };
 }
 
 function makeRecord(args, decision, confidence, wouldChangeIf, ifThen) {
@@ -383,7 +385,7 @@ async function structured(s, args, fetcher, state) {
   const flat = Math.max(...all) - Math.min(...all) <= 1;
 
   // 4. Stress-test the leader.
-  const scoreboard = ranked.map(r => `- ${r.option}: ${r.total} out of 100. For: ${r.pros.join('; ') || 'nothing given'}. Against: ${r.cons.join('; ') || 'nothing given'}.`).join('\n');
+  const scoreboard = ranked.map(r => `- ${r.option}: ${r.total} out of 100.\n${criteria.map((c, i) => `    ${c.name}: ${r.scores[i]} of 5, because: ${r.reasons[i]}`).join('\n')}`).join('\n');
   let review = null, reviewNote = '';
   try {
     review = await askJson(s, REVIEW_SYSTEM, `${about}\n\nCriteria and weights:\n${criteria.map(c => `- ${c.name} (weight ${c.weight})`).join('\n')}\n\nOptions, best score first:\n${scoreboard}\n\nCurrent leader: ${leader.option}`, checkReview, 0.3, fetcher, state);
@@ -394,6 +396,7 @@ async function structured(s, args, fetcher, state) {
   if (closeCall) confidence = Math.min(confidence, 0.6);
   if (tied) confidence = 0;
   if (review && !review.leaderFeelsRight) confidence = Math.min(confidence, 0.5);
+  if (review && review.doubtfulReasons.length) confidence = Math.min(confidence, 0.5);
   confidence = Math.round(confidence * 100) / 100;
   const cautions = [
     flat ? 'The model gave nearly the same score to everything, so the totals say little. It is probably too small for this decision; try a larger model.' : '',
@@ -401,6 +404,7 @@ async function structured(s, args, fetcher, state) {
     review && !review.leaderFeelsRight ? `The model doubts the leader despite the scores${review.missingCriterion ? `; it says the criteria miss: ${review.missingCriterion}` : ''}. Consider adding that criterion and deciding again.` : '',
     review && review.bias !== 'none' ? `Watch for ${review.bias} bias: ${review.biasWhy}` : '',
     review && review.whatElse ? `An option that was not on the list: ${review.whatElse}` : '',
+    ...(review ? review.doubtfulReasons.map(d => `A reason behind a score looks wrong: ${d}`) : []),
     rounds > 1 && table.some(r => r.spread >= 3) ? 'The model scored the same option very differently between rounds; treat the totals as rough.' : '',
     reviewNote,
   ].filter(Boolean);

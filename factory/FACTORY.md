@@ -83,6 +83,14 @@ Every claim in the brief has a source with a link and a date. If the search foun
 
 `factory/decision-maker/` is a small MCP server that asks Ran's own self-hosted model to choose between options. It weighs criteria before scoring, judges each option on its own, adds the totals up in code, then runs a pre-mortem and a bias check on the leader. It is a second voice, not the boss: it sees only what it is given, and a small model can be confidently wrong. Read its cautions. Use it for choices between a few clear options (which concept, which of two names, which of two layouts). Do not use it for facts, for anything involving a person's private details, or to overrule a rule in this file. See its `README.md`.
 
+## Choosing the right model
+
+Use the smallest model that does the job well, and the strongest one where a mistake is expensive.
+
+- **For the work of a run** (when a run hands parts to helper agents): a fast, cheap model for searching, reading and mechanical edits; the most capable model for choosing the concept, designing the film, and the final check before the pull request. Never pick a weaker model for the final check to save time.
+- **For the decision maker:** only models that pass `factory/decision-maker/calibrate.mjs`. A small passing model for quick choices, the smallest passing model for standard ones, the most careful available for deep ones. The measured results are in the decision maker's README; re-run the calibration when a model is changed.
+- **Say which model did what** in the brief, so a bad result can be traced to its cause.
+
 ## Asking Ran for something
 
 Keep working without waiting for approval. Stop only for what a run truly cannot do itself: opening an account, a payment, a setting only the owner can change, or a choice that is his to make. Do everything else first, then ask once.
