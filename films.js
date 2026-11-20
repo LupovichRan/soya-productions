@@ -1,6 +1,9 @@
 /* The list of Soya Productions films (daily POCs), newest first.
    To add one: copy an entry, put it at the top, and fill it in.
-   "path" is the repository name; the site lives next to this one on GitHub Pages. */
+   Where the film lives — use one of:
+     folder: 'YYYY-MM-DD-slug'   a folder under films/ in this repository (factory films)
+     path:   'repository-name'   its own repository, published next to this site
+     url:    'https://…'         anywhere else */
 window.SOYA_FILMS = [
   {
     number: 1,
