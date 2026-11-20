@@ -1,0 +1,31 @@
+{
+  "id": "soya-cat-factory",
+  "name": "Cat Factory",
+  "short_name": "Cat Factory",
+  "description": "A parody: give the cats a job and read their silly shift report.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "theme_color": "#0F172A",
+  "background_color": "#0F172A",
+  "icons": [
+    {
+      "src": "icons/cat-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/cat-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/cat-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
