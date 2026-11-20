@@ -1,0 +1,31 @@
+{
+  "slug": "kafka-check",
+  "folder": "2026-11-20-kafka-check",
+  "number": 8,
+  "day": 8,
+  "date": "2026-11-20",
+  "post_date": "2026-11-27",
+  "mascot": "owl",
+  "kind": "app",
+  "title": { "en": "Kafka Check", "he": "בדיקת קפקא" },
+  "line": {
+    "en": "Paste a Kafka config and see where messages could be lost, repeated or reordered, with a link to the Kafka docs for each point. It runs in your browser and on the command line.",
+    "he": "מדביקים הגדרות של קפקא ורואים איפה הודעות עלולות ללכת לאיבוד, לחזור או להתערבב בסדר, עם קישור לתיעוד של קפקא לכל נקודה. עובד בדפדפן ובשורת הפקודה."
+  },
+  "limit": "It reads only the settings you paste and cannot see your code, your processing time or what happens when a broker fails.",
+  "roadmap": {
+    "en": {
+      "works": ["Checks producer, consumer, broker, topic and Connect settings against 28 rules, each with a link to the Kafka docs", "Hides values that look like secrets before anything is checked, and sends nothing anywhere", "A command-line version that exits 1 on a risk, so a team can use it in CI"],
+      "next": ["A ready-made GitHub Action for the command line", "Rules for Kafka Streams and for change-data-capture setups", "Rules drawn from real incidents, with the sources"],
+      "later": ["Read a whole folder of configs and compare environments", "Explain a consumer lag or rebalance problem from a few numbers"],
+      "ask": "Which Kafka setting has bitten you in production?"
+    },
+    "he": {
+      "works": ["בודק הגדרות של יצרן, צרכן, ברוקר, נושא ו־Connect מול 28 כללים, לכל אחד קישור לתיעוד של קפקא", "מסתיר ערכים שנראים כמו סודות לפני שבודקים משהו, ולא שולח שום דבר לשום מקום", "גרסה לשורת הפקודה שמחזירה 1 כשיש סיכון, כך שצוות יכול להשתמש בה ב־CI"],
+      "next": ["GitHub Action מוכן לשורת הפקודה", "כללים ל־Kafka Streams ולהגדרות של לכידת שינויים", "כללים שנלקחו מתקלות אמיתיות, עם המקורות"],
+      "later": ["לקרוא תיקייה שלמה של הגדרות ולהשוות בין סביבות", "להסביר בעיית פיגור צרכנים או חלוקה מחדש לפי כמה מספרים"],
+      "ask": "איזו הגדרה בקפקא נשכה אתכם בייצור?"
+    }
+  },
+  "explainer": null
+}
