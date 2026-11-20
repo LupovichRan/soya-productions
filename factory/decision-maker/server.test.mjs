@@ -5,7 +5,7 @@ import { spawn } from 'node:child_process';
 import { createServer } from 'node:http';
 import { fileURLToPath } from 'node:url';
 import { calibrate, CASES } from './calibrate.mjs';
-import { modelFor, checkArgs, checkDecision, checkReview, checkScores, checkWeights, decide, extractJson, handle, median, pickDepth, status } from './server.mjs';
+import { baseUrlFor, modelFor, checkArgs, checkDecision, checkReview, checkScores, checkWeights, decide, extractJson, handle, median, pickDepth, status } from './server.mjs';
 
 const S = { baseUrl: 'http://model.test/v1', model: 'm1', apiKey: '', log: '', timeoutMs: 5000 };
 const good = (o = {}) => JSON.stringify({ choice: 2, confidence: 0.8, reasons: ['cheaper'], risk: 'slower', wouldChangeIf: 'a deadline', ...o });
@@ -37,7 +37,7 @@ function steps({ weights, score, review }, calls = []) {
     if (step === 'weigh') r = weights(user);
     else if (step === 'review') r = review(user);
     else {
-      const each = listed.map(o => score(o, criterion, round));
+      const each = listed.map(o => score(o, criterion, round, body.model));
       r = each.some(e => typeof e === 'string') ? each.find(e => typeof e === 'string') : Object.fromEntries(each.map((e, k) => [k + 1, e]));
     }
     if (r instanceof Error) throw r;
@@ -334,4 +334,58 @@ test('a model with nothing to go on gets a neutral 3, said out loud, and the dec
   assert.equal(checkScores({ 1: { why: 'a', score: 'N/A' } }, 1).value[0].unknown, true);
   assert.equal(checkScores({ 1: { score: null } }, 1).ok, false);                      // still needs a reason
   assert.equal(checkScores({ 1: { why: 'a', score: 4.5 } }, 1).ok, false);             // a made-up number is not accepted
+});
+
+// Five equal criteria: one score point on one criterion is worth 4 of 100, so options one point apart are a close call.
+const FIVE = { criteria: ['A', 'B', 'C', 'D', 'E'], weights: [1, 1, 1, 1, 1] };
+/** The standard model sees Alpha and Beta as nearly equal (Alpha ahead by 4 points). */
+const nearlyEqual = (o, c) => ({ score: o === 'Gamma' ? 1 : o === 'Alpha' ? 5 : (c === 'E' ? 4 : 5), why: 'std ' + o });
+
+test('a close standard call is asked again, the careful way, on the deep model', async () => {
+  const s = { ...S, modelDeep: 'big', baseUrlDeep: 'http://deep.test/v1' };
+  const calls = [];
+  const wise = steps({
+    // The deep model sees Beta as clearly better.
+    score: (o, c, r, model) => model === 'big' ? { score: o === 'Beta' ? 5 : o === 'Alpha' ? 3 : 1, why: 'deep ' + o } : nearlyEqual(o, c),
+    review: () => okReview,
+  }, calls);
+  const r = await decide({ ...full, ...FIVE }, s, wise);
+  const out = r.structuredContent;
+  assert.equal(out.method, 'deep');
+  assert.equal(out.model, 'big');
+  assert.equal(out.choice, 'Beta');
+  assert.equal(out.escalatedFrom.choice, 'Alpha');
+  assert.equal(out.escalatedFrom.margin, 4);
+  assert.equal(out.escalatedFrom.model, 'm1');
+  assert.deepEqual(out.escalatedFrom.totals.map(t => t.option), ['Alpha', 'Beta', 'Gamma']);
+  assert.ok(out.cautions[0].includes('close call') && out.cautions[0].includes('chose differently: "Beta"'));
+  assert.ok(calls.some(c => c.body.model === 'm1') && calls.some(c => c.body.model === 'big'));
+  assert.equal(baseUrlFor('deep', s), 'http://deep.test/v1');
+  assert.equal(baseUrlFor('standard', s), S.baseUrl);
+});
+
+test('no second look when there is no deep model, when the caller chose a depth, or when asked not to', async () => {
+  const closeCall = (s, extra = {}) => decide({ ...full, ...FIVE, ...extra }, s, steps({ score: nearlyEqual, review: () => okReview }));
+  const first = await closeCall(S);
+  assert.equal(first.structuredContent.closeCall, true);
+  assert.equal(first.structuredContent.method, 'standard');                                                   // no deep model set
+  assert.equal((await closeCall({ ...S, modelDeep: 'big' }, { depth: 'standard' })).structuredContent.method, 'standard');
+  assert.equal((await closeCall({ ...S, modelDeep: 'big' }, { escalate: false })).structuredContent.method, 'standard');
+  assert.equal((await closeCall({ ...S, modelDeep: 'big' })).structuredContent.method, 'deep');             // and with one, it does
+});
+
+test('a clear standard answer is not asked again', async () => {
+  const r = await decide({ ...full, ...FIVE }, { ...S, modelDeep: 'big' }, steps({ score: (o) => ({ score: o === 'Alpha' ? 5 : 1, why: 'w' }), review: () => okReview }));
+  assert.equal(r.structuredContent.method, 'standard');
+  assert.equal(r.structuredContent.escalatedFrom, undefined);
+});
+
+test('a failed second look is reported and the first answer stands', async () => {
+  const s = { ...S, modelDeep: 'big' };
+  const r = await decide({ ...full, ...FIVE }, s, steps({
+    score: (o, c, rd, model) => model === 'big' ? 'nonsense' : nearlyEqual(o, c), review: () => okReview }));
+  const out = r.structuredContent;
+  assert.equal(out.method, 'standard');
+  assert.equal(out.choice, 'Alpha');
+  assert.ok(out.cautions.some(c => /deeper second look was tried[\s\S]*failed/.test(c)));
 });

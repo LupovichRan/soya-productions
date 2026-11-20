@@ -7,6 +7,7 @@
 // Settings (environment variables):
 //   LLM_BASE_URL   where the model server listens, e.g. http://localhost:11434/v1
 //   LLM_MODEL      the model name on that server, e.g. qwen3:4b
+//   LLM_BASE_URL_QUICK / LLM_BASE_URL_DEEP  optional; where the quick or deep model is served, if not on LLM_BASE_URL
 //   LLM_MODEL_QUICK  optional; a smaller, faster model for quick decisions (easy to undo, low stakes)
 //   LLM_MODEL_DEEP   optional; a larger, more careful model for deep decisions (hard to undo, high stakes)
 //   LLM_API_KEY    optional; only for a gateway in front of your own server
@@ -30,6 +31,8 @@ export function settings(env = process.env) {
   return {
     baseUrl: String(env.LLM_BASE_URL || '').trim().replace(/\/+$/, ''),
     model: String(env.LLM_MODEL || '').trim(),
+    baseUrlQuick: String(env.LLM_BASE_URL_QUICK || '').trim().replace(/\/+$/, ''),
+    baseUrlDeep: String(env.LLM_BASE_URL_DEEP || '').trim().replace(/\/+$/, ''),
     modelQuick: String(env.LLM_MODEL_QUICK || '').trim(),
     modelDeep: String(env.LLM_MODEL_DEEP || '').trim(),
     apiKey: String(env.LLM_API_KEY || ''),
@@ -42,7 +45,7 @@ export const TOOLS = [
   {
     name: 'decide',
     title: 'Decide',
-    description: 'Ask the self-hosted model to choose exactly one of the given options, using a structured method. Quick: one answer with reasons (for small choices that are easy to undo). Standard: criteria are weighted before any option is scored, the options are compared on one criterion at a time, the totals are added up in code, then the leader gets a pre-mortem, a bias check and a "what else" check. Deep: the same, with every option scored three times and the middle score kept (for choices that are hard to undo or high stakes). Depth is picked from "reversible" and "stakes" unless you set it. Returns the choice, the full table, and a decision record with a review date. The model sees only what you pass here, so put everything it needs in "context". If no model is connected or an answer is unusable, the call fails; it never makes a decision up.',
+    description: 'Ask the self-hosted model to choose exactly one of the given options, using a structured method. Quick: one answer with reasons (for small choices that are easy to undo). Standard: criteria are weighted before any option is scored, the options are compared on one criterion at a time, the totals are added up in code, then the leader gets a pre-mortem, a bias check and a "what else" check. Deep: the same, with every option scored three times and the middle score kept (for choices that are hard to undo or high stakes). Depth is picked from "reversible" and "stakes" unless you set it. A standard decision that comes out as a close call (within five points, or tied) is asked again automatically with the deep method on the deep model, if one is set; set escalate to false to stop that. Returns the choice, the full table, and a decision record with a review date. The model sees only what you pass here, so put everything it needs in "context". If no model is connected or an answer is unusable, the call fails; it never makes a decision up.',
     inputSchema: {
       type: 'object', additionalProperties: false, required: ['question', 'options'],
       properties: {
@@ -53,6 +56,7 @@ export const TOOLS = [
         weights: { type: 'array', maxItems: 8, items: { type: 'integer', minimum: 1, maximum: 5 }, description: 'Optional weight 1 to 5 for each criterion, in the same order. If left out, the model sets them before any option is scored.' },
         reversible: { type: 'boolean', description: 'Can this be undone cheaply? Easy-to-undo choices get a lighter method and a one-week review; hard-to-undo ones get the deep method and a 30-day review.' },
         stakes: { type: 'string', enum: ['low', 'medium', 'high'], description: 'How much money, time, reputation or trust is at risk.' },
+        escalate: { type: 'boolean', description: 'Default true. Re-ask a close standard call with the deep method on the deep model. Ignored when depth is set.' },
         depth: { type: 'string', enum: ['quick', 'standard', 'deep'], description: 'Override the method. Default: quick when reversible and low stakes, deep when not reversible or high stakes, otherwise standard.' },
         samples: { type: 'integer', minimum: 1, maximum: 5, description: 'Quick method only: how many times to ask (default 1). Use 3 or 5 for a vote.' },
       },
@@ -84,6 +88,13 @@ export function userMessage(a) {
   return `Question: ${a.question}\n\nOptions:\n${a.options.map((o, i) => `${i + 1}. ${o}`).join('\n')}` +
     (a.criteria.length ? `\n\nWhat matters most, in order:\n${a.criteria.map(c => `- ${c}`).join('\n')}` : '') +
     (a.context ? `\n\nContext:\n${a.context}` : '');
+}
+
+/** Where each depth is served. Falls back to the main address. */
+export function baseUrlFor(depth, s) {
+  if (depth === 'quick') return s.baseUrlQuick || s.baseUrl;
+  if (depth === 'deep') return s.baseUrlDeep || s.baseUrl;
+  return s.baseUrl;
 }
 
 /** Which model answers at each depth. Falls back to the main model when no other is set. */
@@ -175,13 +186,37 @@ async function decideOnce(s, args, temperature, fetcher, state) {
   throw new Error(`the model's answer was not usable (${why})`);
 }
 
+/**
+ * Decide, and when the first pass is a close call, ask again the careful way.
+ * A standard decision that comes out within five points (or tied) is re-run with the deep method on the
+ * deep model, if one is set. The deep answer is the one returned; the first pass is kept alongside it.
+ * Not done when the caller chose a depth, or set escalate: false.
+ */
 export async function decide(raw, s = settings(), fetcher = fetch) {
+  const first = await decideAt(raw, s, fetcher);
+  const asked = raw && typeof raw === 'object' ? raw : {};
+  const out = first.structuredContent;
+  if (first.isError || !out || out.method !== 'standard' || !out.closeCall || asked.depth !== undefined || asked.escalate === false || !s.modelDeep) return first;
+  const deep = await decideAt({ ...asked, depth: 'deep' }, s, fetcher);
+  if (deep.isError) {
+    out.cautions.push(`A deeper second look was tried because this was a close call, but it failed: ${deep.content[0].text}`);
+    first.content = [{ type: 'text', text: JSON.stringify(out, null, 2) }];
+    return first;
+  }
+  const d = deep.structuredContent;
+  d.escalatedFrom = { model: out.model, method: out.method, choice: out.choice, margin: out.margin, totals: out.table.map(t => ({ option: t.option, total: t.total })) };
+  d.cautions.unshift(`The first pass (${out.model}, standard) was a close call, ${out.choice ? `choosing "${out.choice}" by ${out.margin} points` : 'an exact tie'}, so it was asked again with the deep method on ${d.model}.${out.choice && d.choice !== out.choice ? ` The deep method chose differently: "${d.choice}".` : ''}`);
+  deep.content = [{ type: 'text', text: JSON.stringify(d, null, 2) }];
+  return deep;
+}
+
+async function decideAt(raw, s, fetcher) {
   const checked = checkArgs(raw);
   if (!checked.ok) return fail(checked.why);
   if (!s.baseUrl || !s.model) return fail('No model is connected. Set LLM_BASE_URL and LLM_MODEL for this server. No decision was made.');
   const { args } = checked;
   // The right model for the job: a small one for small choices, the careful one for what is hard to undo.
-  s = { ...s, model: modelFor(args.depth, s) };
+  s = { ...s, model: modelFor(args.depth, s), baseUrl: baseUrlFor(args.depth, s) };
   const state = { format: true };
   if (args.depth !== 'quick') {
     let out;
