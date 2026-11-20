@@ -52,17 +52,57 @@ test('verdict: testing until day 14, then continue, change or stop from the scor
   assert.equal(R.verdict(mk(), end).state, 'stop');
 });
 
-test('voice: none without a seat, one with a seat, one more per accepted job, at most four', () => {
+test('voice: none without a seat, one with a seat, one more per three trust points, at most four', () => {
   let i = mk();
   assert.equal(R.voice(i), 0);
   i = Object.assign({}, i, { seat: true });
   assert.equal(R.voice(i), 1);
-  const done = (n) => Object.assign({}, i, { items: Array.from({ length: n }, (_, k) => ({ id: 'a' + k, text: 't', by: 'other', status: 'done', claimedBy: 'you' })) });
-  assert.equal(R.voice(done(2)), 3);
-  assert.equal(R.voice(done(9)), 4);
-  // Work someone else did, or work not yet accepted, adds nothing.
-  const notYou = Object.assign({}, i, { items: [{ id: 'a', text: 't', by: 'you', status: 'done', claimedBy: '' }, { id: 'b', text: 't', by: 'you', status: 'claimed', claimedBy: 'you' }] });
-  assert.equal(R.voice(notYou), 1);
+  const trust = (n) => Object.assign({}, i, { trust: [{ id: 'g', itemId: 'a', points: n, why: '' }] });
+  assert.equal(R.voice(trust(2)), 1);
+  assert.equal(R.voice(trust(3)), 2);
+  assert.equal(R.voice(trust(5)), 2);
+  assert.equal(R.voice(Object.assign({}, i, { trust: [1, 2, 3, 4, 5].map((n) => ({ id: 'g' + n, itemId: 'a' + n, points: 5, why: '' })) })), 4);
+  // Trust without a seat gives no voice.
+  assert.equal(R.voice(Object.assign({}, mk(), { trust: [{ id: 'g', itemId: 'a', points: 5, why: '' }] })), 0);
+  assert.equal(R.trustTotal(trust(4)), 4);
+  assert.equal(R.trustTotal(mk()), 0);
+});
+
+test('trust: only the owner gives it, for your accepted suggestion or accepted work, 1 to 5, at most 5 per item', () => {
+  let i = R.addItem(mk({ seat: true }), 'Draw the first screen', 'a').idea;
+  assert.deepEqual(R.awardTrust(i, 'a', 3, 'x', 'g1'), { ok: false, why: 'item' }, 'not accepted yet');
+  i = R.moveItem(i, 'a', 'accept');
+  assert.deepEqual(R.awardTrust(i, 'a', 0, 'x', 'g1'), { ok: false, why: 'points' });
+  assert.deepEqual(R.awardTrust(i, 'a', 6, 'x', 'g1'), { ok: false, why: 'points' });
+  assert.deepEqual(R.awardTrust(i, 'zzz', 2, 'x', 'g1'), { ok: false, why: 'item' });
+  let r = R.awardTrust(i, 'a', 3, 'Good first screen', 'g1');
+  assert.equal(r.ok, true);
+  i = r.idea;
+  assert.equal(R.trustTotal(i), 3);
+  assert.equal(R.voice(i), 2);
+  assert.deepEqual(R.awardTrust(i, 'a', 3, 'x', 'g2'), { ok: false, why: 'limit' });
+  assert.equal(R.awardTrust(i, 'a', 2, 'x', 'g2').ok, true);
+  // Work somebody else did cannot earn you trust.
+  const other = Object.assign(mk(), { items: [{ id: 'o', text: 't', by: 'other', status: 'done', claimedBy: '', reply: '' }] });
+  assert.deepEqual(R.awardTrust(other, 'o', 2, 'x', 'g'), { ok: false, why: 'item' });
+  // Work you did counts once it is done.
+  let w = Object.assign(mk(), { items: [{ id: 'w', text: 't', by: 'other', status: 'claimed', claimedBy: 'you', reply: '' }] });
+  assert.equal(R.awardTrust(w, 'w', 2, 'x', 'g').ok, false);
+  w = R.moveItem(w, 'w', 'done');
+  assert.equal(R.awardTrust(w, 'w', 2, 'x', 'g').ok, true);
+});
+
+test('every suggestion gets an answer: accept or decline with a reason; the count shows who is still waiting', () => {
+  let i = R.addItem(R.addItem(mk(), 'One', 'a').idea, 'Two', 'b').idea;
+  assert.deepEqual(R.heard(i), { answered: 0, total: 2 });
+  i = R.moveItem(i, 'a', 'decline', '  Not for the first version  ');
+  assert.equal(i.items[0].status, 'declined');
+  assert.equal(i.items[0].reply, 'Not for the first version');
+  assert.deepEqual(R.heard(i), { answered: 1, total: 2 });
+  assert.equal(R.moveItem(i, 'a', 'accept'), i, 'a declined suggestion stays declined');
+  assert.equal(R.moveItem(i, 'b', 'decline', 'x' .repeat(500)).items[1].reply.length <= 120, true);
+  assert.deepEqual(R.heard(R.moveItem(i, 'b', 'accept')), { answered: 2, total: 2 });
+  assert.deepEqual(R.heard(mk()), { answered: 0, total: 0 });
 });
 
 test('roadmap moves in order only: proposed, accepted, claimed, done', () => {
@@ -124,6 +164,9 @@ test('stored data is cleaned: junk is dropped, limits and enums re-applied', () 
   assert.equal(out[0].decision, '');
   assert.ok(out[0].startedAt > 0);
   assert.equal(out[1].sample, 'lineless');
+  const withTrust = R.clean([{ id: 't', name: 'n', problem: 'p', promise: 'q', items: [{ id: 'i1', text: 'x', status: 'done', claimedBy: 'you' }],
+    trust: [{ id: 'g1', itemId: 'i1', points: 3, why: 'ok' }, { id: 'g2', itemId: 'nope', points: 3 }, { id: 'g3', itemId: 'i1', points: 9 }, { id: 'g4', itemId: 'i1', points: 2.5 }, null] }]);
+  assert.deepEqual(withTrust[0].trust, [{ id: 'g1', itemId: 'i1', points: 3, why: 'ok' }]);
   assert.equal(R.clean(Array.from({ length: 30 }, (_, k) => ({ id: 'x' + k, name: 'n', problem: 'p', promise: 'q' }))).length, 12);
 });
 

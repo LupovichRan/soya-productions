@@ -58,13 +58,15 @@
       weight: function (w) { return w === 1 ? 'counts 1' : 'counts ' + w; },
       seatTitle: 'A seat', seatText: 'A seat gives you a voice in surveys. It is free: you promise a little of your time, never money.', takeSeat: 'Take a seat',
       haveSeat: function (v, m) { return 'You have a seat. Your voice counts ' + v + ' of ' + m + '.'; },
-      voiceNote: 'Doing work the owner accepts makes your voice louder. Your voice cannot be bought.',
+      voiceNote: 'Trust points make your voice louder. Only the owner gives them, for good suggestions and work they accept. They cannot be claimed or bought.',
+      trustTitle: 'Trust points', trustLine: function (n, v, m) { return n + ' trust points. Your voice counts ' + v + ' of ' + m + '.'; }, noTrust: 'None yet. Suggest something useful, or take on some work.', trustFor: function (p, why) { return '+' + p + (why ? ' · ' + why : ''); },
       surveyTitle: 'Survey', noSurvey: 'No survey yet.', needSeat: 'Take a seat to vote.', yourVote: 'Your vote', votes: 'weighted votes',
       setSurvey: 'Set the survey', question: 'Question', options: 'Options (two to four, one on each line)', saveSurvey: 'Save survey',
       errQuestion: 'Write a question.', errOptions: 'Give two to four options, one on each line.', surveyOwnerOnly: 'Only the owner sets the survey. Switch to Owner above.',
-      roadTitle: 'Roadmap', roadLead: 'Anyone can suggest. The owner accepts. Someone takes it. The owner accepts the finished work.',
+      roadTitle: 'Roadmap', roadLead: 'Every suggestion gets an answer. The owner accepts it or says why not now. Someone takes accepted work. The owner accepts the finished work and can give trust points.',
+      heard: function (a, n) { return a + ' of ' + n + ' suggestions answered'; }, decline: 'Not now', declineWhy: 'Why not now? A short reason helps.', sendDecline: 'Send the answer', cancelDecline: 'Cancel', ownerAnswer: 'Owner says', giveTrust: 'Give trust points', trustSent: function (n) { return n + ' given'; }, trustLimit: 'Most trust points for this one.',
       suggest: 'Suggest something', suggestLabel: 'A suggestion', noItems: 'Nothing suggested yet.',
-      status: { proposed: 'Suggested', accepted: 'Accepted', claimed: 'Being done', done: 'Done' },
+      status: { proposed: 'Suggested', accepted: 'Accepted', claimed: 'Being done', declined: 'Not now', done: 'Done' },
       accept: 'Accept', claim: 'I will do this', doneBtn: 'Accept the work', ownerOnly: 'The owner decides.', yourWork: 'your work',
       verdictTitle: 'Verdict', act: 'Act', times: 'Times', counts: 'Counts', total: 'Total',
       v: { testing: function (d) { return 'Still testing. Day ' + d + ' of 14.'; }, continue: 'The numbers say: carry on.', change: 'The numbers say: change direction.', stop: 'The numbers say: stop here.' },
@@ -91,13 +93,15 @@
       weight: function (w) { return 'שווה ' + w; },
       seatTitle: 'מקום ליד השולחן', seatText: 'מקום נותן לך קול בסקרים. זה בחינם: מתחייבים לקצת מהזמן, אף פעם לא לכסף.', takeSeat: 'תופסים מקום',
       haveSeat: function (v, m) { return 'יש לך מקום. הקול שלך שווה ' + v + ' מתוך ' + m + '.'; },
-      voiceNote: 'עבודה שהבעלים מקבל מחזקת את הקול שלך. אי אפשר לקנות קול.',
+      voiceNote: 'נקודות אמון מחזקות את הקול שלך. רק הבעלים נותן אותן, על הצעות טובות ועל עבודה שהוא מקבל. אי אפשר לדרוש אותן או לקנות אותן.',
+      trustTitle: 'נקודות אמון', trustLine: function (n, v, m) { return n + ' נקודות אמון. הקול שלך שווה ' + v + ' מתוך ' + m + '.'; }, noTrust: 'עדיין אין. מציעים משהו מועיל, או לוקחים על עצמנו עבודה.', trustFor: function (p, why) { return '+' + p + (why ? ' · ' + why : ''); },
       surveyTitle: 'סקר', noSurvey: 'אין עדיין סקר.', needSeat: 'תופסים מקום כדי להצביע.', yourVote: 'ההצבעה שלך', votes: 'קולות משוקללים',
       setSurvey: 'קובעים את הסקר', question: 'שאלה', options: 'אפשרויות (שתיים עד ארבע, אחת בכל שורה)', saveSurvey: 'שמירת הסקר',
       errQuestion: 'צריך לכתוב שאלה.', errOptions: 'צריך שתיים עד ארבע אפשרויות, אחת בכל שורה.', surveyOwnerOnly: 'רק הבעלים קובע את הסקר. עוברים לבעלים למעלה.',
-      roadTitle: 'מפת דרכים', roadLead: 'כל אחד יכול להציע. הבעלים מאשר. מישהו לוקח. הבעלים מקבל את העבודה שהסתיימה.',
+      roadTitle: 'מפת דרכים', roadLead: 'כל הצעה מקבלת תשובה. הבעלים מאשר אותה או אומר למה לא עכשיו. מישהו לוקח עבודה שאושרה. הבעלים מקבל את העבודה שהסתיימה ויכול לתת נקודות אמון.',
+      heard: function (a, n) { return 'ענו על ' + a + ' מתוך ' + n + ' הצעות'; }, decline: 'לא עכשיו', declineWhy: 'למה לא עכשיו? סיבה קצרה עוזרת.', sendDecline: 'שולחים את התשובה', cancelDecline: 'ביטול', ownerAnswer: 'הבעלים אומר', giveTrust: 'נותנים נקודות אמון', trustSent: function (n) { return 'ניתנו ' + n; }, trustLimit: 'המקסימום לנקודות אמון על זה.',
       suggest: 'מציעים', suggestLabel: 'הצעה', noItems: 'עדיין אין הצעות.',
-      status: { proposed: 'הוצע', accepted: 'אושר', claimed: 'בעבודה', done: 'הושלם' },
+      status: { proposed: 'הוצע', accepted: 'אושר', claimed: 'בעבודה', declined: 'לא עכשיו', done: 'הושלם' },
       accept: 'מאשרים', claim: 'אני אעשה את זה', doneBtn: 'מקבלים את העבודה', ownerOnly: 'הבעלים מחליט.', yourWork: 'העבודה שלך',
       verdictTitle: 'פסק דין', act: 'מעשה', times: 'פעמים', counts: 'שווה', total: 'סך הכול',
       v: { testing: function (d) { return 'עדיין בבדיקה. יום ' + d + ' מתוך 14.'; }, continue: 'המספרים אומרים: ממשיכים.', change: 'המספרים אומרים: משנים כיוון.', stop: 'המספרים אומרים: עוצרים כאן.' },
@@ -108,7 +112,7 @@
     }
   };
 
-  var state = { lang: loadLang(), ideas: [], screen: 'list', currentId: '', tab: 'idea', role: 'owner', draft: null, error: '', survey: { q: '', o: '' }, suggest: '', error2: '', saveFailed: false, resetAsk: false };
+  var state = { lang: loadLang(), ideas: [], screen: 'list', currentId: '', tab: 'idea', role: 'owner', draft: null, error: '', survey: { q: '', o: '' }, suggest: '', declining: '', declineText: '', error2: '', saveFailed: false, resetAsk: false };
   var app = document.getElementById('app');
 
   function loadLang() {
@@ -253,23 +257,42 @@
           (state.error2 ? '<p class="banner" role="alert">' + esc(t(state.error2)) + '</p>' : '') + '<button type="button" class="ghost wide" data-act="survey">' + esc(t('saveSurvey')) + '</button></details>'
         : '<p class="small mute">' + esc(t('surveyOwnerOnly')) + '</p>';
     }
-    return '<section class="card"><h2>' + esc(t('actsTitle')) + '</h2><div class="acts">' + acts + '</div></section>' +
+    var tr = R.trustTotal(raw);
+    var trustList = (raw.trust || []).map(function (g) { return '<li>' + esc(t('trustFor')(g.points, g.why)) + '</li>'; }).join('');
+    var trustCard = '<section class="card"><h2>' + esc(t('trustTitle')) + '</h2>' +
+      (tr ? '<p><b>' + esc(t('trustLine')(tr, v, R.MAX_VOICE)) + '</b></p><ul class="plain">' + trustList + '</ul>' : '<p class="mute">' + esc(t('noTrust')) + '</p>') + '</section>';
+    return '<section class="card"><h2>' + esc(t('actsTitle')) + '</h2><div class="acts">' + acts + '</div></section>' + trustCard +
       '<section class="card"><h2>' + esc(t('seatTitle')) + '</h2>' + seat + '<p class="small mute">' + esc(t('voiceNote')) + '</p></section>' +
       '<section class="card"><h2>' + esc(t('surveyTitle')) + '</h2>' + survey + setter + '</section>';
   }
 
   function tabRoad(raw, i) {
     var owner = state.role === 'owner';
+    var h = R.heard(raw);
     var list = raw.items.map(function (it) {
-      var btn = '';
-      if (it.status === 'proposed') btn = owner ? '<button type="button" class="ghost" data-item="' + esc(it.id) + '" data-move="accept">' + esc(t('accept')) + '</button>' : '';
-      else if (it.status === 'accepted') btn = !owner ? '<button type="button" class="ghost" data-item="' + esc(it.id) + '" data-move="claim">' + esc(t('claim')) + '</button>' : '';
-      else if (it.status === 'claimed') btn = owner ? '<button type="button" class="ghost" data-item="' + esc(it.id) + '" data-move="done">' + esc(t('doneBtn')) + '</button>' : '';
+      var id = esc(it.id), btn = '', extra = '';
+      if (it.status === 'proposed' && owner) {
+        if (state.declining === it.id) {
+          extra = '<div class="field"><label for="f-decline">' + esc(t('declineWhy')) + '</label><input type="text" id="f-decline" maxlength="' + R.LIMITS.reply + '" dir="' + boxDir(state.declineText) + '" value="' + esc(state.declineText) + '" autocomplete="off"></div>' +
+            '<div class="row-actions"><button type="button" class="ghost" data-act="declinesend" data-item="' + id + '">' + esc(t('sendDecline')) + '</button><button type="button" class="ghost" data-act="declinecancel">' + esc(t('cancelDecline')) + '</button></div>';
+        } else btn = '<div class="row-actions"><button type="button" class="ghost" data-item="' + id + '" data-move="accept">' + esc(t('accept')) + '</button><button type="button" class="ghost" data-item="' + id + '" data-decline="' + id + '">' + esc(t('decline')) + '</button></div>';
+      } else if (it.status === 'accepted' && !owner) btn = '<button type="button" class="ghost" data-item="' + id + '" data-move="claim">' + esc(t('claim')) + '</button>';
+      else if (it.status === 'claimed' && owner) btn = '<button type="button" class="ghost" data-item="' + id + '" data-move="done">' + esc(t('doneBtn')) + '</button>';
+      var yours = (it.by === 'you' && (it.status === 'accepted' || it.status === 'claimed' || it.status === 'done')) || (it.claimedBy === 'you' && it.status === 'done');
+      if (owner && yours) {
+        var given = (raw.trust || []).filter(function (g) { return g.itemId === it.id; }).reduce(function (n, g) { return n + g.points; }, 0);
+        var left = R.MAX_TRUST_ITEM - given;
+        extra += '<div class="trustrow"><span class="small mute">' + esc(t('giveTrust')) + (given ? ' · ' + esc(t('trustSent')(given)) : '') + '</span>' +
+          (left > 0 ? '<span class="row-actions">' + [1, 3, 5].filter(function (n) { return n <= left; }).map(function (n) { return '<button type="button" class="ghost" data-item="' + id + '" data-trust="' + n + '">+' + n + '</button>'; }).join('') + '</span>' : '<span class="small mute">' + esc(t('trustLimit')) + '</span>') + '</div>';
+      }
       var mineWork = it.claimedBy === 'you' && (it.status === 'claimed' || it.status === 'done');
+      var reply = it.status === 'declined' && it.reply ? '<p class="small reply"><b>' + esc(t('ownerAnswer')) + ':</b> <bdi dir="' + boxDir(it.reply) + '">' + esc(it.reply) + '</bdi></p>' : '';
       return '<li class="item"><div><span class="chip ' + it.status + '">' + esc(t('status')[it.status]) + '</span>' + (mineWork ? ' <span class="chip you">' + esc(t('yourWork')) + '</span>' : '') +
-        '<p dir="' + boxDir(itemText(raw, it)) + '"><bdi>' + esc(itemText(raw, it)) + '</bdi></p></div>' + btn + '</li>';
+        '<p dir="' + boxDir(itemText(raw, it)) + '"><bdi>' + esc(itemText(raw, it)) + '</bdi></p>' + reply + '</div>' + btn + extra + '</li>';
     }).join('');
-    return '<section class="card"><h2>' + esc(t('roadTitle')) + '</h2><p class="small mute">' + esc(t('roadLead')) + '</p><ul class="items">' + (list || '<li class="mute">' + esc(t('noItems')) + '</li>') + '</ul></section>' +
+    return '<section class="card"><h2>' + esc(t('roadTitle')) + '</h2><p class="small mute">' + esc(t('roadLead')) + '</p>' +
+      (h.total ? '<p class="small"><b>' + esc(t('heard')(h.answered, h.total)) + '</b></p>' : '') +
+      '<ul class="items">' + (list || '<li class="mute">' + esc(t('noItems')) + '</li>') + '</ul></section>' +
       '<form id="suggest-form" class="card" novalidate><label for="f-suggest">' + esc(t('suggestLabel')) + '</label><input type="text" id="f-suggest" maxlength="' + R.LIMITS.item + '" dir="' + boxDir(state.suggest) + '" value="' + esc(state.suggest) + '" autocomplete="off">' +
       '<div class="actions"><button type="submit" class="wide">' + esc(t('suggest')) + '</button></div></form>';
   }
@@ -302,7 +325,7 @@
     var h = app.querySelector('h1'); if (h) { h.setAttribute('tabindex', '-1'); }
   }
   function go(screen) { state.screen = screen; state.error = ''; state.error2 = ''; state.resetAsk = false; render(); window.scrollTo(0, 0); }
-  function openRoom(id) { state.currentId = id; state.tab = 'idea'; state.role = 'owner'; state.survey = { q: '', o: '' }; state.suggest = ''; go('room'); }
+  function openRoom(id) { state.currentId = id; state.tab = 'idea'; state.role = 'owner'; state.survey = { q: '', o: '' }; state.suggest = ''; state.declining = ''; state.declineText = ''; go('room'); }
 
   /* Typing keeps drafts, and each box keeps its own direction. */
   app.addEventListener('input', function (e) {
@@ -314,6 +337,7 @@
     else if (id === 's-q') state.survey.q = el.value;
     else if (id === 's-o') state.survey.o = el.value;
     else if (id === 'f-suggest') state.suggest = el.value;
+    else if (id === 'f-decline') state.declineText = el.value;
     el.dir = boxDir(el.value);
   });
 
@@ -339,11 +363,15 @@
     if (el.dataset.mascot) { state.draft.mascot = el.dataset.mascot; return render(); }
     if (el.dataset.signal && raw) { update(R.toggleSignal(raw, el.dataset.signal)); return render(); }
     if (el.dataset.vote && raw) { update(R.vote(raw, Number(el.dataset.vote))); return render(); }
+    if (el.dataset.decline) { state.declining = el.dataset.decline; state.declineText = ''; return render(); }
+    if (el.dataset.trust && raw && state.role === 'owner') { var g = R.awardTrust(raw, el.dataset.item, Number(el.dataset.trust), '', newId()); if (g.ok) { var item = raw.items.filter(function (x) { return x.id === el.dataset.item; })[0]; g.idea.trust[g.idea.trust.length - 1].why = item ? (itemText(raw, item) || '').slice(0, R.LIMITS.why) : ''; update(g.idea); } return render(); }
     if (el.dataset.move && raw) { update(R.moveItem(raw, el.dataset.item, el.dataset.move)); return render(); }
     if (el.dataset.decide && raw && state.role === 'owner') { update(Object.assign({}, raw, { decision: el.dataset.decide })); return render(); }
     switch (el.dataset.act) {
       case 'new': state.draft = { name: '', problem: '', promise: '', mascot: 'fox' }; return go('new');
       case 'cancel': case 'back': return go('list');
+      case 'declinecancel': state.declining = ''; return render();
+      case 'declinesend': if (raw) { update(R.moveItem(raw, el.dataset.item, 'decline', state.declineText)); state.declining = ''; state.declineText = ''; render(); } return;
       case 'reset':
         if (!state.resetAsk) { state.resetAsk = true; return render(); }
         state.ideas = seedSamples().concat(state.ideas.filter(function (i) { return !i.sample; })).slice(0, R.LIMITS.ideas); save(); state.resetAsk = false; return render();
