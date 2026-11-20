@@ -439,3 +439,18 @@ test('escalateBelow lets the caller be more careful: a clear answer under the ch
   assert.match(careful.structuredContent.cautions[0], /margin under 60 points/);
   assert.equal((await clear({ escalateBelow: 10 })).structuredContent.method, 'standard');
 });
+
+test('onDisagreement: deep uses the second model when the caller has measured it to be the more reliable', async () => {
+  const s = { ...S, modelDeep: 'big' };
+  const run = (extra) => decide({ ...full, ...FIVE, ...extra }, s, steps({
+    score: (o, c, r, model) => model === 'big' ? { score: o === 'Beta' ? 5 : o === 'Alpha' ? 3 : 1, why: 'deep ' + o } : nearlyEqual(o, c), review: () => okReview }));
+  const none = (await run({})).structuredContent;
+  assert.equal(none.decided, false);                                      // the default: no decision
+  const deep = (await run({ onDisagreement: 'deep' })).structuredContent;
+  assert.equal(deep.decided, true);
+  assert.equal(deep.choice, 'Beta');
+  assert.deepEqual(deep.overruled, { model: 'm1', choice: 'Alpha', margin: 4 });
+  assert.ok(deep.record && deep.record.decision === 'Beta');
+  assert.ok(deep.cautions[0].includes('onDisagreement: deep') && deep.cautions[0].includes('more reliable'));
+  assert.equal(deep.disagreement, undefined);
+});

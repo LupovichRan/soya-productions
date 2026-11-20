@@ -57,6 +57,7 @@ export const TOOLS = [
         reversible: { type: 'boolean', description: 'Can this be undone cheaply? Easy-to-undo choices get a lighter method and a one-week review; hard-to-undo ones get the deep method and a 30-day review.' },
         stakes: { type: 'string', enum: ['low', 'medium', 'high'], description: 'How much money, time, reputation or trust is at risk.' },
         escalateBelow: { type: 'number', minimum: 0, maximum: 100, description: 'Default 5. A standard decision whose top two options are fewer than this many points apart (out of 100) is re-asked the deep way. Raise it to be more careful.' },
+        onDisagreement: { type: 'string', enum: ['none', 'deep'], description: 'Default none: if the two models disagree, make no decision. Set deep only when calibrate.mjs has shown the second model to be more reliable than the first: then its answer is used and the first is reported as overruled.' },
         escalate: { type: 'boolean', description: 'Default true. Re-ask a close standard call with the deep method on the deep model. Ignored when depth is set.' },
         depth: { type: 'string', enum: ['quick', 'standard', 'deep'], description: 'Override the method. Default: quick when reversible and low stakes, deep when not reversible or high stakes, otherwise standard.' },
         samples: { type: 'integer', minimum: 1, maximum: 5, description: 'Quick method only: how many times to ask (default 1). Use 3 or 5 for a vote.' },
@@ -211,7 +212,12 @@ export async function decide(raw, s = settings(), fetcher = fetch) {
   const d = deep.structuredContent;
   d.escalatedFrom = { model: out.model, method: out.method, choice: out.choice, margin: out.margin, totals: out.table.map(t => ({ option: t.option, total: t.total })) };
   const why = `The first pass (${out.model}, standard) ${out.closeCall ? 'was a close call' : `had a margin under ${below} points`}, ${out.choice ? `choosing "${out.choice}" by ${out.margin} points` : 'an exact tie'}, so it was asked again with the deep method on ${d.model}.`;
-  if (out.choice && d.choice && d.choice !== out.choice) {
+  if (out.choice && d.choice && d.choice !== out.choice && asked.onDisagreement === 'deep') {
+    // The caller has measured the second model as the more reliable one (calibrate.mjs) and says to trust it.
+    d.agreed = false;
+    d.overruled = { model: out.model, choice: out.choice, margin: out.margin };
+    d.cautions.unshift(`${why} The two models disagree: ${out.model} chose "${out.choice}" and ${d.model} chose "${d.choice}". As asked (onDisagreement: deep), the second model's answer is used. Check that it really is the more reliable of the two.`);
+  } else if (out.choice && d.choice && d.choice !== out.choice) {
     // Disagreement. Neither model is trusted over the other, so nothing is chosen.
     d.disagreement = { first: { model: out.model, choice: out.choice, margin: out.margin }, second: { model: d.model, choice: d.choice, margin: d.margin } };
     d.decided = false;
