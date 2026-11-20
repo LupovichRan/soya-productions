@@ -1,6 +1,6 @@
 # Read It Simply
 
-*Made by Soyactory.* App 2, 20 November 2026.
+*Made by Soycatory.* App 2, 20 November 2026.
 
 Paste a confusing letter or official message. See what it asks you to do, the dates in it, the amounts of money, and who to contact. English and Hebrew.
 

@@ -1,6 +1,6 @@
 # Plain Steps
 
-*Made by Soyactory.* App 4, 20 November 2026. English and Hebrew.
+*Made by Soycatory.* App 4, 20 November 2026. English and Hebrew.
 
 Make a short routine for something you do again and again, and tick it off one small step at a time. Leaving the house, a morning, closing down the kitchen, the weekly shop. Big tick boxes, one calm progress line, no streaks, no points, no nagging.
 

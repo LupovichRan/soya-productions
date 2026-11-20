@@ -1,4 +1,4 @@
-/* Say It Kindly, a Soyactory app.
+/* Say It Kindly, a Soycatory app.
    Paste a message you are nervous to send. See the phrases that tend to land hard, and fix each one in place.
    The message never leaves this device and is never saved. Only the language choice is kept. */
 (function () {
@@ -12,7 +12,7 @@
     en: {
       title: 'Say It Kindly',
       otherLang: 'עברית',
-      credit: 'Made by Soyactory',
+      credit: 'Made by Soycatory',
       homeTitle: 'Nervous about a message?',
       homeLead: 'Paste it here before you send it. You will see the phrases that tend to land hard, and a gentler way to say each one.',
       label: 'Your message',
@@ -45,7 +45,7 @@
     he: {
       title: 'בעדינות',
       otherLang: 'English',
-      credit: 'מבית Soyactory',
+      credit: 'מבית Soycatory',
       homeTitle: 'חוששים מהודעה?',
       homeLead: 'הדביקו אותה כאן לפני השליחה. תראו את הביטויים שנוטים לפגוע, ואיך אפשר להגיד כל אחד מהם בעדינות.',
       label: 'ההודעה שלך',
@@ -190,7 +190,7 @@
     var html = document.documentElement;
     html.lang = state.lang;
     html.dir = state.lang === 'he' ? 'rtl' : 'ltr';
-    document.title = t('title') + ' — Soyactory';
+    document.title = t('title') + ' — Soycatory';
     document.getElementById('brand-title').textContent = t('title');
     document.getElementById('credit').textContent = t('credit');
     var toggle = document.getElementById('lang-toggle');

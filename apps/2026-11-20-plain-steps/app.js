@@ -1,4 +1,4 @@
-/* Plain Steps, a Soyactory app.
+/* Plain Steps, a Soycatory app.
    Make a short routine you repeat, and tick it off one step at a time. Routines are kept in this browser only.
    Where the browser has a built-in AI model, it can suggest the steps; it is offered, never started on its own. */
 (function () {
@@ -12,7 +12,7 @@
     en: {
       title: 'Plain Steps',
       otherLang: 'עברית',
-      credit: 'Made by Soyactory',
+      credit: 'Made by Soycatory',
       listTitle: 'Your routines',
       listLead: 'A routine is a short list you tick off, one small step at a time. Make one for anything you do again and again.',
       newRoutine: 'New routine',
@@ -53,7 +53,7 @@
     he: {
       title: 'צעד אחר צעד',
       otherLang: 'English',
-      credit: 'מבית Soyactory',
+      credit: 'מבית Soycatory',
       listTitle: 'השגרות שלך',
       listLead: 'שגרה היא רשימה קצרה שמסמנים בה וי, צעד קטן אחד בכל פעם. אפשר להכין שגרה לכל דבר שעושים שוב ושוב.',
       newRoutine: 'שגרה חדשה',
@@ -219,7 +219,7 @@
     var html = document.documentElement;
     html.lang = state.lang;
     html.dir = state.lang === 'he' ? 'rtl' : 'ltr';
-    document.title = t('title') + ' — Soyactory';
+    document.title = t('title') + ' — Soycatory';
     document.getElementById('brand-title').textContent = t('title');
     document.getElementById('credit').textContent = t('credit');
     var toggle = document.getElementById('lang-toggle');

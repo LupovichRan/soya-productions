@@ -1,4 +1,4 @@
-# Soyactory
+# Soycatory
 
 *The Soya Software Factory.*
 

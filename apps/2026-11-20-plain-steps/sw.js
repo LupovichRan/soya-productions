@@ -1,6 +1,6 @@
 /* Plain Steps service worker. Scope: this folder only.
    Bump VERSION (plainsteps-YYYYMMDDHHMMSS) whenever a cached file changes. */
-const VERSION = 'plainsteps-20261120190000';
+const VERSION = 'plainsteps-20261120210000';
 
 const PRECACHE = [
   './',
@@ -13,7 +13,7 @@ const PRECACHE = [
   'icons/read-512.png',
   'icons/read-maskable-512.png',
   'icons/read-apple-180.png',
-  'assets/soyactory-mark.jpg',
+  'assets/soycatory-mark.jpg',
 ];
 
 self.addEventListener('install', (event) => {
