@@ -129,11 +129,29 @@ From the real standard runs above (not a run through the escalation path itself)
 | The deep model's answer replaces the first (the first design) | 5 | 2 | 0 |
 | **Agree or no decision (now)** | **5** | **0** | **2** |
 
-The first design would have thrown away two correct answers. The rule now used trades two decisions it could not make for no wrong ones. This is arithmetic on existing results, with one run per case; the next step is to put the hard set through the full path.
+The first design would have thrown away two correct answers. The rule now used trades two decisions it could not make for no wrong ones. **Then measured through the full path** (`calibrate.mjs --hard` with `escalateBelow: 100`, so every case gets the second look; Phi-3.5 mini first, Qwen2.5 7B deep second, servers swapped one at a time):
+
+| Case | Phi first | Second look | Result |
+|---|---|---|---|
+| Arithmetic trap | right | disagreed | **no decision** |
+| Hard requirement | right | agreed | right |
+| Negated criterion | right | agreed | right |
+| Proven against unknown | right | agreed | right |
+| One heavy criterion | right | agreed | right |
+| Reversibility | right | agreed | right |
+| Units | right | agreed | right |
+
+**6 right, 0 wrong, 1 no decision.** Average 307 seconds per decision, against about 115 for Phi alone.
+
+How to read it, without flattering the feature:
+
+1. **It never produced a wrong answer** on this set, and it caught the one disagreement instead of adopting the 7B's wrong arithmetic.
+2. **But here it did not rescue anything.** Phi alone was right on all seven, so the second look only added time, and turned one correct answer into "no decision". Its benefit would show where the first model errs, and Phi did not err on this set.
+3. **The deep method helped the 7B.** On the reversibility case the 7B, run standard, was wrong; run deep inside the second look, it agreed with Phi and was right. One run, so this may be luck.
 
 ### Which model for the second look
 
-Neither model dominates: Phi was right more often on the hard clear-cut cases, and the 7B was steadier on the ambiguous choice. So the second look is not "ask the stronger model". Its value is **independence**: two different models that agree are better evidence than one model asked twice, and two that disagree is exactly when a person should look. The default pairing (Phi first, Qwen2.5 7B second) is kept for that reason, and the cautions say when they differ. Whether a second look ever corrects a wrong answer is still unobserved; the way to find out is to put the hard set through the whole escalation path, which is not yet done.
+Neither model dominates: Phi was right more often on the hard clear-cut cases, and the 7B was steadier on the ambiguous choice. So the second look is not "ask the stronger model". Its value is **independence**: two different models that agree are better evidence than one model asked twice, and two that disagree is exactly when a person should look. The default pairing (Phi first, Qwen2.5 7B second) is kept for that reason, and the cautions say when they differ. On the hard set the second look never corrected a wrong answer, because the first model made none; it cost time and one decision that Phi alone would have got right (see the full-path table above). So use it where a close call really matters, and not by default on everything.
 
 ### Escalation, verified on real models
 
