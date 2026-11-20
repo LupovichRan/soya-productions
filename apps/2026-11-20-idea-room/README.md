@@ -19,16 +19,22 @@ The "Viewing as Owner / Visitor" switch stands in for two different people on on
 ## Trust points, in plain words
 Trust is how an owner says "you made this idea better". Only the owner gives it, only for something of yours they accepted, never for turning up, and never in exchange for money. Three trust points add one to your voice, up to four. It is not equity and nothing here promises a share of an idea.
 
+## Shared ideas and the live numbers
+
+When you make an idea you choose where it lives: **on this device only** (the default) or **shared with everyone in this alpha**. Shared ideas, acts, seats, suggestions, answers, votes and trust points are kept in a small Supabase database (`infra/supabase/idea-room.sql`), so two people on two phones see each other's changes. `dashboard.html` shows the totals live and refreshes every ten seconds.
+
+How it stays safe, in plain words: the address and key in `config.js` are a publishable key, meant to be public. With it, the app can only call ten functions; it cannot read or change any table. Each function checks who is asking (a random device id kept in the browser) and what is allowed: only the owner can accept, decline, give trust, accept work or decide; only someone with a seat can vote; the survey is set once; a decision waits for day 14; there are caps on ideas, suggestions and sizes. A device is a browser, not a verified person, so someone determined can make many; the numbers show activity, not proven demand. Shared ideas are public: do not put private details in them.
+
 ## What it does not do, on purpose
 
 - **No invented demand.** A new idea starts at 0. Only what this device recorded counts. Examples carry made-up numbers and say **Example**.
-- **No server, so no crowd yet.** One device is one person, so this shows how it works; it cannot measure real demand. That needs sign-in and shared storage, which is a decision for Ran (see the concept note).
+- **No proof of people yet.** Ideas kept on this device are one person. Shared ideas count browsers, not verified people, and there is no sign-in, moderation or report button. Real demand needs real sign-in, which is a decision for Ran (see the concept note).
 - **No money and no ownership.** Backing is a pledge of time. Voice is not equity, and nothing here promises a share of an idea.
 
 ## What is kept, and where
 
-Ideas are kept in this browser (`localStorage`, key `soya-idearoom-ideas`, up to 12 ideas) and the language in `soya-idearoom-lang`. Nothing leaves the device. No account, no ads, no tracking. Stored data is treated as untrusted when read back: malformed entries are dropped and limits applied again. If the browser will not store, the app says so and still works until the page closes.
+Ideas are kept in this browser (`localStorage`, key `soya-idearoom-ideas`, up to 12 ideas) and the language in `soya-idearoom-lang`. Ideas kept on the device never leave it. Only ideas you choose to share are sent to the shared service, with a random device id. No account, no ads, no tracking. Stored data is treated as untrusted when read back: malformed entries are dropped and limits applied again. If the browser will not store, the app says so and still works until the page closes.
 
 ## Files
 
-`index.html`, `styles.css`, `room.js` (logic, tested), `app.js` (screens and text in English and Hebrew), `sw.js` (offline; cache `idearoom-…`), `manifest.webmanifest`, `icons/`, `assets/`. Check with `node --test apps/2026-11-20-idea-room/room.test.js`.
+`index.html`, `styles.css`, `room.js` (logic, tested), `remote.js` and `config.js` (the shared service), `dashboard.html` and `dashboard.js` (live numbers), `app.js` (screens and text in English and Hebrew), `sw.js` (offline; cache `idearoom-…`), `manifest.webmanifest`, `icons/`, `assets/`. Check with `node --test apps/2026-11-20-idea-room/room.test.js`.

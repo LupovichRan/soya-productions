@@ -1,12 +1,16 @@
 /* Idea Room service worker. Scope: this folder only.
    Bump VERSION (idearoom-YYYYMMDDHHMMSS) whenever a cached file changes. */
-const VERSION = 'idearoom-20261121000000';
+const VERSION = 'idearoom-20261121020000';
 
 const PRECACHE = [
   './',
   'index.html',
   'styles.css',
   'room.js',
+  'config.js',
+  'remote.js',
+  'dashboard.html',
+  'dashboard.js',
   'app.js',
   'manifest.webmanifest',
   'icons/room-192.png',

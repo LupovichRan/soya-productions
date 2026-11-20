@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Live numbers — Idea Room — Soycatory</title>
+<meta name="description" content="Live numbers from the Idea Room alpha: ideas, devices, acts recorded, seats, votes and trust points. Refreshes every ten seconds.">
+<meta name="theme-color" content="#0F172A">
+<link rel="icon" href="icons/room-192.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&family=Inter:wght@400;500;600;650;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="./" id="back-link">
+    <img src="assets/soycatory-mark.jpg" alt="" width="40" height="40">
+    <span><b id="brand-title">Live numbers</b><small>Idea Room · Soycatory</small></span>
+  </a>
+  <button type="button" class="ghost" id="lang-toggle">עברית</button>
+</header>
+
+<main id="app" aria-live="polite"></main>
+
+<footer class="foot">
+  <img src="assets/soycatory-mark.jpg" alt="Soya the cat" width="48" height="48">
+  <p id="credit">Made by Soycatory</p>
+</footer>
+
+<noscript><p class="noscript">The live numbers need JavaScript.</p></noscript>
+<script src="config.js"></script>
+<script src="remote.js"></script>
+<script src="dashboard.js"></script>
+</body>
+</html>

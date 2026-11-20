@@ -8,6 +8,7 @@
   var LANG_KEY = 'soya-idearoom-lang';
   var DATA_KEY = 'soya-idearoom-ideas';
   var R = window.SoyaRoom;
+  var Remote = window.SoyaRemote || { enabled: false };
 
   var COLORS = { cat: '#1F2937', fox: '#B9571E', owl: '#6B5540', bear: '#7A4B2E', rabbit: '#8C95A3', frog: '#2F7D55' };
   var EARS = {
@@ -42,7 +43,8 @@
   var I18N = {
     en: {
       title: 'Idea Room', otherLang: 'עברית', credit: 'Made by Soycatory',
-      alpha: 'Alpha test. Everything is kept on this device only, and there is no server yet, so only what this device recorded is counted. Numbers marked Example are made up to show how it works.',
+      alpha: 'Alpha test. Ideas you keep on this device stay on it. Ideas you choose to share are public to everyone using this alpha, so never put private details in them. A device is a browser, not a verified person. Numbers marked Example are made up to show how it works.',
+      shared: 'Shared', sharedMine: 'Shared · yours', remoteFailed: 'Could not reach the shared service just now. Shared ideas may be out of date; your own device still works.', shareIt: 'Share it with everyone in this alpha', shareHelp: 'Shared ideas are public. Do not put private or confidential details in them.', deviceOnly: 'Keep it on this device only', whereTitle: 'Where should it live?', liveNumbers: 'Live numbers',
       listTitle: 'Ideas', listLead: 'Bring an idea. For two weeks people show whether they want it, with small real acts, not likes. Then the owner decides.',
       newIdea: 'New idea', resetExamples: 'Reset the examples', sure: 'Tap again to reset', example: 'Example', yours: 'Yours',
       dayOf: function (d) { return 'Day ' + d + ' of 14'; }, scoreOf: function (s, n) { return s + ' of ' + n; },
@@ -77,7 +79,8 @@
     },
     he: {
       title: 'חדר רעיונות', otherLang: 'English', credit: 'נוצר על ידי Soycatory',
-      alpha: 'בדיקת אלפא. הכול נשמר במכשיר הזה בלבד ועדיין אין שרת, ולכן נספר רק מה שהמכשיר הזה רשם. מספרים שמסומנים דוגמה הם מומצאים, כדי להראות איך זה עובד.',
+      alpha: 'בדיקת אלפא. רעיונות שנשארים במכשיר הזה נשארים בו. רעיונות שבוחרים לשתף גלויים לכל מי שמשתמש באלפא, ולכן אין לכתוב בהם פרטים פרטיים. מכשיר הוא דפדפן, לא אדם מאומת. מספרים שמסומנים דוגמה הם מומצאים, כדי להראות איך זה עובד.',
+      shared: 'משותף', sharedMine: 'משותף · שלך', remoteFailed: 'לא הצלחנו להגיע לשירות המשותף כרגע. רעיונות משותפים עשויים להיות לא מעודכנים; המכשיר שלך ממשיך לעבוד.', shareIt: 'משתפים עם כולם באלפא הזו', shareHelp: 'רעיונות משותפים גלויים לכולם. אין לכתוב בהם פרטים פרטיים או סודיים.', deviceOnly: 'משאירים רק במכשיר הזה', whereTitle: 'איפה הרעיון יגור?', liveNumbers: 'מספרים בשידור חי',
       listTitle: 'רעיונות', listLead: 'מביאים רעיון. במשך שבועיים אנשים מראים אם הם רוצים אותו, במעשים קטנים ואמיתיים, לא בלייקים. אחר כך הבעלים מחליט.',
       newIdea: 'רעיון חדש', resetExamples: 'איפוס הדוגמאות', sure: 'לוחצים שוב כדי לאפס', example: 'דוגמה', yours: 'שלך',
       dayOf: function (d) { return 'יום ' + d + ' מתוך 14'; }, scoreOf: function (s, n) { return s + ' מתוך ' + n; },
@@ -112,7 +115,7 @@
     }
   };
 
-  var state = { lang: loadLang(), ideas: [], screen: 'list', currentId: '', tab: 'idea', role: 'owner', draft: null, error: '', survey: { q: '', o: '' }, suggest: '', declining: '', declineText: '', error2: '', saveFailed: false, resetAsk: false };
+  var state = { lang: loadLang(), ideas: [], screen: 'list', currentId: '', tab: 'idea', role: 'owner', draft: null, error: '', survey: { q: '', o: '' }, suggest: '', declining: '', declineText: '', error2: '', saveFailed: false, resetAsk: false, remote: [], remoteMsg: '' };
   var app = document.getElementById('app');
 
   function loadLang() {
@@ -160,7 +163,8 @@
     try { localStorage.setItem(DATA_KEY, JSON.stringify(state.ideas)); state.saveFailed = false; }
     catch (e) { state.saveFailed = true; }
   }
-  function current() { return state.ideas.filter(function (i) { return i.id === state.currentId; })[0] || null; }
+  function all() { return state.ideas.concat(state.remote); }
+  function current() { return all().filter(function (i) { return i.id === state.currentId; })[0] || null; }
   function update(next) { state.ideas = state.ideas.map(function (i) { return i.id === next.id ? next : i; }); save(); }
 
   /* What to show for an idea: examples take their words from the language in use. */
@@ -174,13 +178,13 @@
     var s = idea.sample && SAMPLES[idea.sample];
     return s && item.tk >= 0 && s[state.lang].items[item.tk] ? s[state.lang].items[item.tk] : '';
   }
-  function tag(idea) { return '<span class="pill ' + (idea.sample ? '' : 'live') + '">' + esc(idea.sample ? t('example') : t('yours')) + '</span>'; }
+  function tag(idea) { return '<span class="pill ' + (idea.sample ? '' : 'live') + '">' + esc(idea.sample ? t('example') : idea.remote ? t(idea.owner ? 'sharedMine' : 'shared') : t('yours')) + '</span>'; }
   function alpha() { return '<p class="banner" role="note">' + esc(t('alpha')) + '</p>'; }
-  function saveNote() { return state.saveFailed ? '<p class="banner" role="status">' + esc(t('cantSave')) + '</p>' : ''; }
+  function saveNote() { return (state.saveFailed ? '<p class="banner" role="status">' + esc(t('cantSave')) + '</p>' : '') + (state.remoteMsg ? '<p class="banner" role="status">' + esc(t(state.remoteMsg)) + '</p>' : ''); }
 
   /* Screens */
   function viewList() {
-    var rows = state.ideas.map(function (raw) {
+    var rows = all().map(function (raw) {
       var i = words(raw), v = R.verdict(raw);
       return '<button type="button" class="row" data-open="' + esc(i.id) + '">' + mascot(i.mascot, 40) + '<span><b dir="' + boxDir(i.name) + '"><bdi>' + esc(i.name) + '</bdi></b>' +
         '<small>' + esc(t('dayOf')(v.day)) + ' · ' + esc(t('scoreOf')(v.score, v.needed)) + '</small></span>' + tag(raw) + '</button>';
@@ -188,7 +192,8 @@
     return '<h1>' + esc(t('listTitle')) + '</h1><p class="lead">' + esc(t('listLead')) + '</p>' + alpha() + saveNote() +
       '<div class="rows">' + rows + '</div>' +
       '<div class="actions"><button type="button" class="wide" data-act="new">' + esc(t('newIdea')) + '</button>' +
-      '<button type="button" class="ghost wide" data-act="reset">' + esc(state.resetAsk ? t('sure') : t('resetExamples')) + '</button></div>';
+      '<button type="button" class="ghost wide" data-act="reset">' + esc(state.resetAsk ? t('sure') : t('resetExamples')) + '</button>' +
+      (Remote.enabled ? '<a class="button wide" href="dashboard.html">' + esc(t('liveNumbers')) + '</a>' : '') + '</div>';
   }
 
   function viewNew() {
@@ -202,6 +207,7 @@
       '<div class="field"><label for="f-problem">' + esc(t('problem')) + '</label><textarea id="f-problem" maxlength="' + R.LIMITS.problem + '" dir="' + boxDir(d.problem) + '" autocomplete="off">' + esc(d.problem) + '</textarea></div>' +
       '<div class="field"><label for="f-promise">' + esc(t('promise')) + '</label><textarea id="f-promise" maxlength="' + R.LIMITS.promise + '" dir="' + boxDir(d.promise) + '" autocomplete="off">' + esc(d.promise) + '</textarea></div>' +
       '<div class="field"><span class="label">' + esc(t('mascot')) + '</span><div class="picks">' + picks + '</div></div>' +
+      (Remote.enabled ? '<div class="field"><span class="label">' + esc(t('whereTitle')) + '</span><div class="row-actions"><button type="button" class="ghost" data-where="device" aria-pressed="' + (!d.shared) + '">' + esc(t('deviceOnly')) + '</button><button type="button" class="ghost" data-where="shared" aria-pressed="' + (!!d.shared) + '">' + esc(t('shareIt')) + '</button></div><p class="small mute">' + esc(t('shareHelp')) + '</p></div>' : '') +
       (state.error ? '<p class="banner" role="alert">' + esc(t(state.error)) + '</p>' : '') +
       '<div class="actions"><button type="submit" class="wide">' + esc(t('save')) + '</button><button type="button" class="ghost wide" data-act="cancel">' + esc(t('cancel')) + '</button></div></form>';
   }
@@ -216,9 +222,10 @@
     var raw = current();
     if (!raw) return viewList();
     var i = words(raw);
+    if (raw.remote) state.role = raw.owner ? 'owner' : 'visitor';
     var head = '<div class="room-head">' + mascot(i.mascot, 56) + '<div><h1 dir="' + boxDir(i.name) + '"><bdi>' + esc(i.name) + '</bdi></h1>' + tag(raw) + '</div></div>' +
-      '<div class="role"><span>' + esc(t('viewing')) + '</span><button type="button" class="ghost" data-role="owner" aria-pressed="' + (state.role === 'owner') + '">' + esc(t('owner')) + '</button>' +
-      '<button type="button" class="ghost" data-role="visitor" aria-pressed="' + (state.role === 'visitor') + '">' + esc(t('visitor')) + '</button></div>';
+      (raw.remote ? '' : '<div class="role"><span>' + esc(t('viewing')) + '</span><button type="button" class="ghost" data-role="owner" aria-pressed="' + (state.role === 'owner') + '">' + esc(t('owner')) + '</button>' +
+      '<button type="button" class="ghost" data-role="visitor" aria-pressed="' + (state.role === 'visitor') + '">' + esc(t('visitor')) + '</button></div>');
     var body = state.tab === 'join' ? tabJoin(raw, i) : state.tab === 'roadmap' ? tabRoad(raw, i) : state.tab === 'verdict' ? tabVerdict(raw) : tabIdea(raw, i);
     return head + tabBar() + alpha() + saveNote() + body + '<div class="actions"><button type="button" class="ghost wide" data-act="back">' + esc(t('back')) + '</button></div>';
   }
@@ -278,9 +285,11 @@
         } else btn = '<div class="row-actions"><button type="button" class="ghost" data-item="' + id + '" data-move="accept">' + esc(t('accept')) + '</button><button type="button" class="ghost" data-item="' + id + '" data-decline="' + id + '">' + esc(t('decline')) + '</button></div>';
       } else if (it.status === 'accepted' && !owner) btn = '<button type="button" class="ghost" data-item="' + id + '" data-move="claim">' + esc(t('claim')) + '</button>';
       else if (it.status === 'claimed' && owner) btn = '<button type="button" class="ghost" data-item="' + id + '" data-move="done">' + esc(t('doneBtn')) + '</button>';
-      var yours = (it.by === 'you' && (it.status === 'accepted' || it.status === 'claimed' || it.status === 'done')) || (it.claimedBy === 'you' && it.status === 'done');
+      /* Trust goes to someone else's accepted suggestion or finished work. On this device alone, "you" stands in for that person. */
+      var yours = raw.remote ? (it.status === 'done' || (it.by === 'other' && (it.status === 'accepted' || it.status === 'claimed')))
+        : (it.by === 'you' && (it.status === 'accepted' || it.status === 'claimed' || it.status === 'done')) || (it.claimedBy === 'you' && it.status === 'done');
       if (owner && yours) {
-        var given = (raw.trust || []).filter(function (g) { return g.itemId === it.id; }).reduce(function (n, g) { return n + g.points; }, 0);
+        var given = raw.remote ? (it.given || 0) : (raw.trust || []).filter(function (g) { return g.itemId === it.id; }).reduce(function (n, g) { return n + g.points; }, 0);
         var left = R.MAX_TRUST_ITEM - given;
         extra += '<div class="trustrow"><span class="small mute">' + esc(t('giveTrust')) + (given ? ' · ' + esc(t('trustSent')(given)) : '') + '</span>' +
           (left > 0 ? '<span class="row-actions">' + [1, 3, 5].filter(function (n) { return n <= left; }).map(function (n) { return '<button type="button" class="ghost" data-item="' + id + '" data-trust="' + n + '">+' + n + '</button>'; }).join('') + '</span>' : '<span class="small mute">' + esc(t('trustLimit')) + '</span>') + '</div>';
@@ -310,8 +319,25 @@
     return '<section class="card"><h2>' + esc(t('verdictTitle')) + '</h2><table><thead><tr><th>' + esc(t('act')) + '</th><th class="num">' + esc(t('times')) + '</th><th class="num">' + esc(t('counts')) + '</th><th class="num">=</th></tr></thead><tbody>' + rows +
       '</tbody><tfoot><tr><td colspan="3">' + esc(t('total')) + '</td><td class="num">' + v.score + ' / ' + v.needed + '</td></tr></tfoot></table>' +
       '<p><b>' + esc(msg) + '</b></p><p class="small mute">' + esc(t('suggestion')) + '</p>' + decide + '</section>' +
-      '<section class="card demo"><h2>' + esc(t('demo')) + '</h2><div class="row-actions"><button type="button" class="ghost" data-act="skipday">' + esc(t('skipDay')) + '</button><button type="button" class="ghost" data-act="skipend">' + esc(t('skipEnd')) + '</button></div></section>';
+      (raw.remote ? '' : '<section class="card demo"><h2>' + esc(t('demo')) + '</h2><div class="row-actions"><button type="button" class="ghost" data-act="skipday">' + esc(t('skipDay')) + '</button><button type="button" class="ghost" data-act="skipend">' + esc(t('skipEnd')) + '</button></div></section>');
   }
+
+  /* The shared service: ask for everything this device may see, and re-draw only if something changed. */
+  var lastRemote = '', lastMsg = '';
+  function refreshRemote() {
+    if (!Remote.enabled) return Promise.resolve(false);
+    return Remote.list().then(function (list) {
+      var j = JSON.stringify(list), changed = j !== lastRemote || lastMsg !== '';
+      lastRemote = j; lastMsg = ''; state.remoteMsg = ''; state.remote = list; return changed;
+    }).catch(function () {
+      var changed = lastMsg !== 'remoteFailed'; lastMsg = 'remoteFailed'; state.remoteMsg = 'remoteFailed'; return changed;
+    });
+  }
+  /** Do something on the shared service, then show what it now says. A refusal shows the same plain message. */
+  function remoteDo(promise) {
+    return promise.then(function () { return refreshRemote(); }, function () { state.remoteMsg = 'remoteFailed'; lastMsg = 'remoteFailed'; return refreshRemote().then(function () { state.remoteMsg = 'remoteFailed'; lastMsg = 'remoteFailed'; }); }).then(function () { render(); });
+  }
+  function typing() { var a = document.activeElement; return !!a && (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA'); }
 
   function render() {
     document.documentElement.lang = state.lang;
@@ -325,7 +351,7 @@
     var h = app.querySelector('h1'); if (h) { h.setAttribute('tabindex', '-1'); }
   }
   function go(screen) { state.screen = screen; state.error = ''; state.error2 = ''; state.resetAsk = false; render(); window.scrollTo(0, 0); }
-  function openRoom(id) { state.currentId = id; state.tab = 'idea'; state.role = 'owner'; state.survey = { q: '', o: '' }; state.suggest = ''; state.declining = ''; state.declineText = ''; go('room'); }
+  function openRoom(id) { state.currentId = id; var cr = current(); if (cr && cr.remote) state.role = cr.owner ? 'owner' : 'visitor'; state.tab = 'idea'; state.role = (cr && cr.remote && !cr.owner) ? 'visitor' : 'owner'; state.survey = { q: '', o: '' }; state.suggest = ''; state.declining = ''; state.declineText = ''; go('room'); }
 
   /* Typing keeps drafts, and each box keeps its own direction. */
   app.addEventListener('input', function (e) {
@@ -346,11 +372,15 @@
     if (e.target.id === 'new-form') {
       var d = state.draft, r = R.makeIdea(d.name, d.problem, d.promise, d.mascot, newId());
       if (!r.ok) { state.error = r.why === 'name' ? 'errName' : r.why === 'problem' ? 'errProblem' : 'errPromise'; render(); return; }
+      if (d.shared && Remote.enabled) {
+        Remote.newIdea(r.idea).then(function (id) { return refreshRemote().then(function () { openRoom(String(id)); }); }, function () { state.remoteMsg = 'remoteFailed'; render(); });
+        return;
+      }
       state.ideas = state.ideas.concat([r.idea]).slice(-R.LIMITS.ideas); save(); openRoom(r.idea.id);
     } else if (e.target.id === 'suggest-form') {
       var raw = current(); if (!raw) return;
       var a = R.addItem(raw, state.suggest, newId());
-      if (a.ok) { state.suggest = ''; update(a.idea); render(); }
+      if (a.ok) { var text = state.suggest; state.suggest = ''; if (raw.remote) remoteDo(Remote.addItem(raw.id, text)); else { update(a.idea); render(); } }
     }
   });
 
@@ -361,26 +391,29 @@
     if (el.dataset.tab) { state.tab = el.dataset.tab; return render(); }
     if (el.dataset.role) { state.role = el.dataset.role; return render(); }
     if (el.dataset.mascot) { state.draft.mascot = el.dataset.mascot; return render(); }
-    if (el.dataset.signal && raw) { update(R.toggleSignal(raw, el.dataset.signal)); return render(); }
-    if (el.dataset.vote && raw) { update(R.vote(raw, Number(el.dataset.vote))); return render(); }
+    if (el.dataset.where) { state.draft.shared = el.dataset.where === 'shared'; return render(); }
+    if (el.dataset.signal && raw) { if (raw.remote) return remoteDo(Remote.signal(raw.id, el.dataset.signal)); update(R.toggleSignal(raw, el.dataset.signal)); return render(); }
+    if (el.dataset.vote && raw) { if (raw.remote) return remoteDo(Remote.vote(raw.id, Number(el.dataset.vote))); update(R.vote(raw, Number(el.dataset.vote))); return render(); }
     if (el.dataset.decline) { state.declining = el.dataset.decline; state.declineText = ''; return render(); }
-    if (el.dataset.trust && raw && state.role === 'owner') { var g = R.awardTrust(raw, el.dataset.item, Number(el.dataset.trust), '', newId()); if (g.ok) { var item = raw.items.filter(function (x) { return x.id === el.dataset.item; })[0]; g.idea.trust[g.idea.trust.length - 1].why = item ? (itemText(raw, item) || '').slice(0, R.LIMITS.why) : ''; update(g.idea); } return render(); }
-    if (el.dataset.move && raw) { update(R.moveItem(raw, el.dataset.item, el.dataset.move)); return render(); }
-    if (el.dataset.decide && raw && state.role === 'owner') { update(Object.assign({}, raw, { decision: el.dataset.decide })); return render(); }
+    if (el.dataset.trust && raw && state.role === 'owner') {
+      if (raw.remote) { var it0 = raw.items.filter(function (x) { return x.id === el.dataset.item; })[0]; return remoteDo(Remote.trust(el.dataset.item, Number(el.dataset.trust), it0 ? it0.text.slice(0, R.LIMITS.why) : '')); }
+      var g = R.awardTrust(raw, el.dataset.item, Number(el.dataset.trust), '', newId()); if (g.ok) { var item = raw.items.filter(function (x) { return x.id === el.dataset.item; })[0]; g.idea.trust[g.idea.trust.length - 1].why = item ? (itemText(raw, item) || '').slice(0, R.LIMITS.why) : ''; update(g.idea); } return render(); }
+    if (el.dataset.move && raw) { if (raw.remote) return remoteDo(Remote.move(el.dataset.item, el.dataset.move)); update(R.moveItem(raw, el.dataset.item, el.dataset.move)); return render(); }
+    if (el.dataset.decide && raw && state.role === 'owner') { if (raw.remote) return remoteDo(Remote.decide(raw.id, el.dataset.decide)); update(Object.assign({}, raw, { decision: el.dataset.decide })); return render(); }
     switch (el.dataset.act) {
-      case 'new': state.draft = { name: '', problem: '', promise: '', mascot: 'fox' }; return go('new');
+      case 'new': state.draft = { name: '', problem: '', promise: '', mascot: 'fox', shared: false }; return go('new');
       case 'cancel': case 'back': return go('list');
       case 'declinecancel': state.declining = ''; return render();
-      case 'declinesend': if (raw) { update(R.moveItem(raw, el.dataset.item, 'decline', state.declineText)); state.declining = ''; state.declineText = ''; render(); } return;
+      case 'declinesend': if (raw) { var why = state.declineText; state.declining = ''; state.declineText = ''; if (raw.remote) return remoteDo(Remote.move(el.dataset.item, 'decline', why)); update(R.moveItem(raw, el.dataset.item, 'decline', why)); render(); } return;
       case 'reset':
         if (!state.resetAsk) { state.resetAsk = true; return render(); }
         state.ideas = seedSamples().concat(state.ideas.filter(function (i) { return !i.sample; })).slice(0, R.LIMITS.ideas); save(); state.resetAsk = false; return render();
-      case 'seat': if (raw) { update(Object.assign({}, raw, { seat: true })); render(); } return;
+      case 'seat': if (raw) { if (raw.remote) return remoteDo(Remote.seat(raw.id)); update(Object.assign({}, raw, { seat: true })); render(); } return;
       case 'survey':
         if (!raw) return;
         var s = R.setSurvey(raw, state.survey.q, state.survey.o);
         if (!s.ok) { state.error2 = s.why === 'question' ? 'errQuestion' : 'errOptions'; return render(); }
-        state.error2 = ''; update(s.idea); return render();
+        state.error2 = ''; if (raw.remote) return remoteDo(Remote.survey(raw.id, s.idea.question, s.idea.options)); update(s.idea); return render();
       case 'skipday': if (raw) { update(Object.assign({}, raw, { dayOffset: Math.min(R.DAYS, (raw.dayOffset || 0) + 1) })); render(); } return;
       case 'skipend': if (raw) { update(Object.assign({}, raw, { dayOffset: R.DAYS })); render(); } return;
     }
@@ -395,5 +428,12 @@
 
   load();
   render();
+  if (Remote.enabled) {
+    refreshRemote().then(function (changed) { if (changed) render(); });
+    setInterval(function () {
+      if (document.visibilityState !== 'visible' || typing()) return;
+      refreshRemote().then(function (changed) { if (changed && !typing()) render(); });
+    }, 15000);
+  }
   if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) navigator.serviceWorker.register('sw.js').catch(function () { /* optional */ });
 })();
