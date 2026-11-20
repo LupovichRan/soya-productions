@@ -74,6 +74,7 @@ What these runs changed in the method:
 4. The stress-test now looks for reasons that contradict the context, after the 7B model's false reason.
 5. Options are compared side by side on each criterion. In the first design each option was scored without seeing the others, and all three models then failed the simplest calibration case: asked alone whether 20 dollars is a "low price" for a kettle, a model cannot know. Scored the first way, the 1.5B model got 3 of 8 calibration cases right and Phi-3.5-mini got 6 of 8.
 6. Criteria must be worded so that more is better ("Low price", not "Price").
+7. A model that says it has nothing to go on for an option (a `null` score) is counted as a neutral 3 and flagged, and the confidence is capped at 0.5, instead of the whole decision failing. This came from the first real decision with Phi-3.5 mini, where an option had been left out of the background text by mistake.
 
 ## Calibration results
 

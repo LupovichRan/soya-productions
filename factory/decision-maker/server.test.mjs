@@ -318,3 +318,20 @@ test('a reason that contradicts the context is called out and lowers confidence'
   assert.equal(out.confidence, 0.5);
   assert.match(calls.at(-1).user, /Cost: 5 of 5, because: Alpha on Cost/);   // the stress-test sees every reason
 });
+
+test('a model with nothing to go on gets a neutral 3, said out loud, and the decision still completes', async () => {
+  const r = await decide({ ...full, criteria: ['Cost'], weights: [5] }, S, steps({
+    score: (option) => option === 'Gamma' ? { score: null, why: 'Gamma is not mentioned in the context' } : { score: option === 'Alpha' ? 5 : 2, why: 'w' },
+    review: () => okReview,
+  }));
+  const out = r.structuredContent;
+  assert.equal(out.choice, 'Alpha');
+  assert.deepEqual(out.table.find(t => t.option === 'Gamma').scores, [3]);
+  assert.deepEqual(out.table.find(t => t.option === 'Gamma').unknown, ['Cost']);
+  assert.equal(out.table.find(t => t.option === 'Alpha').unknown, undefined);
+  assert.ok(out.cautions.some(c => /nothing to go on for "Gamma" on "Cost"[\s\S]*neutral 3/.test(c)));
+  assert.equal(out.confidence, 0.5);
+  assert.equal(checkScores({ 1: { why: 'a', score: 'N/A' } }, 1).value[0].unknown, true);
+  assert.equal(checkScores({ 1: { score: null } }, 1).ok, false);                      // still needs a reason
+  assert.equal(checkScores({ 1: { why: 'a', score: 4.5 } }, 1).ok, false);             // a made-up number is not accepted
+});

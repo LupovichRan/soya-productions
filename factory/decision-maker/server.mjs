@@ -248,7 +248,9 @@ const SCORE_SYSTEM = `You compare the options for a decision on ONE criterion on
 
 For each option, first say what specifically helps or hurts it on this one criterion, then give it a score: 1 very poor, 2 poor, 3 mixed, 4 good, 5 very good. Compare the options with each other: if one is clearly better on this criterion it must get a higher score, and equal scores are only for options that are truly equal on it.
 
-Answer with one JSON object and nothing else, keyed by option number, with "why" before "score". The request ends with the exact shape to fill in. Do not repeat the criterion as the reason.`;
+Answer with one JSON object and nothing else, keyed by option number, with "why" before "score". The request ends with the exact shape to fill in. Do not repeat the criterion as the reason.
+
+If what you are given says nothing at all about an option on this criterion, answer "score": null for that option and say in "why" what is missing. Do not guess a number for an option you know nothing about.`;
 
 const REVIEW_SYSTEM = `You stress-test a decision that is about to be made. You are given the question, the options with their scores, and the current leader. Be a sceptical friend, not a cheerleader.
 
@@ -312,8 +314,11 @@ export function checkScores(raw, count) {
   for (let i = 1; i <= count; i++) {
     const e = raw[String(i)];
     if (!e || typeof e !== 'object') return { ok: false, why: `option ${i} is missing; there must be one entry for each of the ${count} options, keyed "1" to "${count}"` };
-    if (!whole15(e.score)) return { ok: false, why: `option ${i}: "score" must be a whole number from 1 to 5` };
     if (!str(e.why)) return { ok: false, why: `option ${i}: "why" must be one short sentence` };
+    // A model that says it has nothing to go on is telling the truth. Count that as a neutral 3 and say so,
+    // rather than throwing away the whole decision.
+    if (e.score == null || /^(n\/?a|null|unknown|none|not applicable|\?)$/i.test(String(e.score).trim())) { out.push({ score: 3, why: str(e.why), unknown: true }); continue; }
+    if (!whole15(e.score)) return { ok: false, why: `option ${i}: "score" must be a whole number from 1 to 5, or null if you have nothing to go on` };
     out.push({ score: Number(e.score), why: str(e.why) });
   }
   return { ok: true, value: out };
@@ -363,7 +368,7 @@ async function structured(s, args, fetcher, state) {
   //    in a different order so that position cannot favour one, and the middle score is kept.
   const rounds = args.depth === 'deep' ? 3 : 1;
   const n = args.options.length;
-  const table = args.options.map(option => ({ option, scores: [], reasons: [], spread: 0 }));
+  const table = args.options.map(option => ({ option, scores: [], reasons: [], unknown: [], spread: 0 }));
   for (const c of criteria) {
     const runs = [];   // runs[round][optionIndex] = { score, why }
     for (let round = 0; round < rounds; round++) {
@@ -380,6 +385,8 @@ async function structured(s, args, fetcher, state) {
       const mine = runs.map(r => r[oi]);
       const mid = median(mine.map(r => r.score));
       row.scores.push(mid);
+      // Unknown when most rounds had nothing to go on.
+      if (mine.filter(r => r.unknown).length * 2 > mine.length) row.unknown.push(c.name);
       // Keep the reason that goes with the middle score.
       row.reasons.push(mine.slice().sort((x, y) => Math.abs(x.score - mid) - Math.abs(y.score - mid))[0].why);
       row.spread = Math.max(row.spread, Math.max(...mine.map(r => r.score)) - Math.min(...mine.map(r => r.score)));
@@ -391,6 +398,7 @@ async function structured(s, args, fetcher, state) {
     row.pros = pick(v => v >= 4);
     row.cons = pick(v => v <= 2);
     if (rounds === 1) delete row.spread;
+    if (!row.unknown.length) delete row.unknown;
   }
 
   // 3. Totals are added up here, not by the model.
@@ -417,8 +425,10 @@ async function structured(s, args, fetcher, state) {
   if (tied) confidence = 0;
   if (review && !review.leaderFeelsRight) confidence = Math.min(confidence, 0.5);
   if (review && review.doubtfulReasons.length) confidence = Math.min(confidence, 0.5);
+  if (table.some(r => r.unknown)) confidence = Math.min(confidence, 0.5);
   confidence = Math.round(confidence * 100) / 100;
   const cautions = [
+    ...table.flatMap(r => (r.unknown || []).map(c => `The model had nothing to go on for "${r.option}" on "${c}", so that score is a neutral 3. Give it more context and decide again.`)),
     flat ? 'The model gave nearly the same score to everything, so the totals say little. It is probably too small for this decision; try a larger model.' : '',
     tied ? `Exact tie between ${ranked.filter(r => r.total === leader.total).map(r => `"${r.option}"`).join(' and ')}. The model could not separate them. No decision was made.` : closeCall ? `Close call: only ${margin} points separate "${leader.option}" from "${ranked[1].option}".` : '',
     review && !review.leaderFeelsRight ? `The model doubts the leader despite the scores${review.missingCriterion ? `; it says the criteria miss: ${review.missingCriterion}` : ''}. Consider adding that criterion and deciding again.` : '',
