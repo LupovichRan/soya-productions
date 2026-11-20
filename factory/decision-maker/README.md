@@ -149,6 +149,27 @@ How to read it, without flattering the feature:
 2. **But here it did not rescue anything.** Phi alone was right on all seven, so the second look only added time, and turned one correct answer into "no decision". Its benefit would show where the first model errs, and Phi did not err on this set.
 3. **The deep method helped the 7B.** On the reversibility case the 7B, run standard, was wrong; run deep inside the second look, it agreed with Phi and was right. One run, so this may be luck.
 
+### How reliable is Phi-3.5 mini on its own
+
+Every Phi result above was one run per case. To see whether that was luck, all 15 calibration cases (8 easy, 7 hard) were run twice more, standard method, on Phi-3.5 mini alone: 30 more runs, which with the earlier pass makes three runs of each case.
+
+| | Runs | Right | Wrong | No decision | Failed |
+|---|---|---|---|---|---|
+| Two repeat passes | 30 | **30** | 0 | 0 | 0 |
+| With the earlier pass | 45 | **45** | 0 | 0 | 0 |
+
+- **No case flipped.** All 15 cases were right every time.
+- **Not by a whisker.** Margins between the winner and the runner-up in the repeat runs: smallest 34.3 points, median 58.4, none under 20. The widest swing for one case between repeats was the arithmetic trap (80 then 40), still a clear win. Nothing was close, and no case had flat scores.
+- **Time:** 115 seconds per decision on average (119 easy, 110 hard) on four CPU cores.
+
+What this supports: on clear-cut questions of the kind in the calibration sets, Phi-3.5 mini is reliable. What it does not:
+
+1. **The cases are mine.** I wrote all 15, with one defensible answer each. Real decisions are ambiguous; on the real question of which app to build, margins were 4 to 32 points and one early run even put the runners-up in a different order.
+2. **0 wrong in 45 is 15 cases tested three times, not 45 independent cases.** With so few distinct cases, a true error rate of several percent on cases like these is still possible.
+3. **It says nothing about decisions with no right answer.** For those the tool's job is to show the reasoning and the doubts, and to say when two models disagree, not to be right.
+
+So the claim this evidence supports is narrow: *Phi-3.5 mini, on its own, did not get a single clear-cut calibration case wrong in 45 runs.* It does not support "the right model every time".
+
 ### A cheap model first, a better one second
 
 The hard-set run above never showed the second look correcting anything, because Phi made no errors. A first model that does err is needed to test that, so the easy set was run through the full path with Qwen2.5 1.5B first and Phi-3.5 mini second (`escalateBelow: 100`, so every case got the second look).
