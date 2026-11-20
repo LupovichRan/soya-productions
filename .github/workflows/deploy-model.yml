@@ -1,0 +1,51 @@
+# NOT YET RUN. Builds the model server image and deploys it to Google Cloud Run.
+# Starts only when a person presses "Run workflow". See docs/HOSTING.md for the one-time set-up.
+name: Deploy model server
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write   # lets GitHub prove who it is to Google; no stored cloud key
+
+concurrency: deploy-model
+
+env:
+  REGION: us-central1
+  SERVICE: soya-decider
+  REPOSITORY: soya
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: model-server   # add yourself as a required reviewer on this environment
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ vars.GCP_DEPLOY_SERVICE_ACCOUNT }}
+      - uses: google-github-actions/setup-gcloud@v2
+      - name: Build and push the image
+        run: |
+          set -euo pipefail
+          IMAGE="${REGION}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${REPOSITORY}/${SERVICE}:${GITHUB_SHA}"
+          gcloud auth configure-docker "${REGION}-docker.pkg.dev" --quiet
+          docker build -t "$IMAGE" infra/model-server
+          docker push "$IMAGE"
+          echo "IMAGE=$IMAGE" >> "$GITHUB_ENV"
+      - name: Deploy
+        run: |
+          set -euo pipefail
+          gcloud run deploy "$SERVICE" \
+            --project "${{ vars.GCP_PROJECT_ID }}" --region "$REGION" --image "$IMAGE" \
+            --service-account "${{ vars.GCP_RUNTIME_SERVICE_ACCOUNT }}" \
+            --set-secrets "LLAMA_API_KEY=soya-decider-key:latest" \
+            --cpu 2 --memory 4Gi --concurrency 1 --timeout 300 \
+            --min-instances 0 --max-instances 1 \
+            --cpu-boost --allow-unauthenticated --quiet
+          gcloud run services describe "$SERVICE" --project "${{ vars.GCP_PROJECT_ID }}" --region "$REGION" --format 'value(status.url)'

@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# Least privilege: this workflow only reads the code.
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: Tests and syntax
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Decision maker tests
+        run: node --test factory/decision-maker/server.test.mjs
+      - name: Every script parses
+        run: |
+          set -euo pipefail
+          git ls-files '*.js' '*.mjs' | while read -r f; do node --check "$f"; done
+      - name: Film list is well formed
+        run: |
+          node -e '
+            globalThis.window = {};
+            require("./films.js");
+            const films = window.SOYA_FILMS;
+            if (!Array.isArray(films) || !films.length) throw new Error("films.js has no films");
+            for (const f of films) {
+              if (!f.en?.title || !f.he?.title) throw new Error("a film is missing its English or Hebrew title");
+              if (!/^\d{4}-\d{2}-\d{2}$/.test(f.date)) throw new Error("bad date on " + f.en.title);
+              if (!(f.folder || f.path || f.url)) throw new Error(f.en.title + " has nowhere to open");
+              if (f.folder && !require("fs").existsSync("films/" + f.folder + "/index.html")) throw new Error("films/" + f.folder + "/index.html is missing");
+            }
+            console.log(films.length + " film(s) listed");
+          '
+      - name: No build tooling crept in
+        run: |
+          if git ls-files | grep -E '(^|/)(package\.json|package-lock\.json|yarn\.lock|pnpm-lock\.yaml)$'; then
+            echo "This repository has no build step. Remove the files above." && exit 1
+          fi
+
+  secrets:
+    name: Secret scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
