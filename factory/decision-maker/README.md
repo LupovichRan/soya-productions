@@ -149,6 +149,27 @@ How to read it, without flattering the feature:
 2. **But here it did not rescue anything.** Phi alone was right on all seven, so the second look only added time, and turned one correct answer into "no decision". Its benefit would show where the first model errs, and Phi did not err on this set.
 3. **The deep method helped the 7B.** On the reversibility case the 7B, run standard, was wrong; run deep inside the second look, it agreed with Phi and was right. One run, so this may be luck.
 
+### A cheap model first, a better one second
+
+The hard-set run above never showed the second look correcting anything, because Phi made no errors. A first model that does err is needed to test that, so the easy set was run through the full path with Qwen2.5 1.5B first and Phi-3.5 mini second (`escalateBelow: 100`, so every case got the second look).
+
+| Policy | Right | Wrong | No decision | Time per decision |
+|---|---|---|---|---|
+| 1.5B alone | 6 | 2 | 0 | about 1 minute |
+| 1.5B first, second look, disagreement means no decision (the default) | 6 | **0** | 2 | 265 seconds |
+| 1.5B first, second look, **trust the second** (`onDisagreement: deep`) | **8** | **0** | 0 | 265 seconds |
+| Phi alone | 8 | 0 | 0 | about 110 seconds |
+
+**This is the first real case of a second look correcting a wrong answer.** The 1.5B was wrong on "cheaper, otherwise identical" and on "cost matters most"; Phi was right on both. By default the tool caught both and made no decision; with `onDisagreement: deep`, set because Phi had measured better than the 1.5B, it corrected both.
+
+Three things that keep this from being a recommendation:
+
+1. **The 1.5B's mistakes were confident.** Run again three times on its two wrong cases, its margins were 40, 40 and 40 (one run wrong, two right) and 23, 23 and 20 (all wrong): never under the default threshold of 5. So the default "second look only on a close call" rule **would not have caught either error**. Here the second look only worked because it was forced on every case, which is what costs the time. A small model's margin is not a reliable sign of its confidence.
+2. **It is not cheaper.** Cheap-first with a forced second look took 265 seconds per decision, against about 110 for Phi alone, which was right on all eight. On this machine, with models swapped to fit in memory, the cheap-first path loses on both time and accuracy to simply using Phi.
+3. **One run per case, eight easy cases.** Two corrections are two corrections, not a rate. In the first case the 1.5B was wrong in one run of three and right in the other two with the same margin, so even its errors are partly noise.
+
+What this supports: `onDisagreement: deep` is correct *only* when the second model has measured better than the first (check with `calibrate.mjs`), and the second look is worth forcing (`escalateBelow` high) only when the first model is known to make confident mistakes. For standard decisions on this hardware, use the smallest model that passes calibration, here Phi-3.5 mini, on its own.
+
 ### Which model for the second look
 
 Neither model dominates: Phi was right more often on the hard clear-cut cases, and the 7B was steadier on the ambiguous choice. So the second look is not "ask the stronger model". Its value is **independence**: two different models that agree are better evidence than one model asked twice, and two that disagree is exactly when a person should look. The default pairing (Phi first, Qwen2.5 7B second) is kept for that reason, and the cautions say when they differ. On the hard set the second look never corrected a wrong answer, because the first model made none; it cost time and one decision that Phi alone would have got right (see the full-path table above). So use it where a close call really matters, and not by default on everything.
