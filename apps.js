@@ -6,6 +6,20 @@
      url:    'https://…'         anywhere else */
 window.SOYA_APPS = [
   {
+    number: 3,
+    date: '2026-11-20',
+    folder: '2026-11-20-say-it-kindly',
+    mascot: 'bear',
+    en: {
+      title: 'Say It Kindly',
+      line: 'Paste a message you are nervous to send. See the phrases that tend to land hard, and fix each one in place. Nothing leaves your device.'
+    },
+    he: {
+      title: 'בעדינות',
+      line: 'מדביקים הודעה שחוששים לשלוח. רואים את הביטויים שנוטים לפגוע, ומתקנים כל אחד במקום. שום דבר לא יוצא מהמכשיר.'
+    }
+  },
+  {
     number: 2,
     date: '2026-11-20',
     folder: '2026-11-20-read-it-simply',
