@@ -88,7 +88,7 @@ Every claim in the brief has a source with a link and a date. If the search foun
 Use the smallest model that does the job well, and the strongest one where a mistake is expensive.
 
 - **For the work of a run** (when a run hands parts to helper agents): a fast, cheap model for searching, reading and mechanical edits; the most capable model for choosing the concept, designing the app, and the final check before the pull request. Never pick a weaker model for the final check to save time.
-- **For the decision maker:** only models that pass `factory/decision-maker/calibrate.mjs`. A small passing model for quick choices, the smallest passing model for standard ones, the most careful available for deep ones. The measured results are in the decision maker's README; re-run the calibration when a model is changed.
+- **For the decision maker:** only models that pass `factory/decision-maker/calibrate.mjs`, easy set and `--hard` set. The second look uses a different model from the first, for independence: on the hard set the larger model did worse, so do not assume the bigger model is the more careful one. A small passing model for quick choices, the smallest passing model for standard ones, the most careful available for deep ones. The measured results are in the decision maker's README; re-run the calibration when a model is changed.
 - **Say which model did what** in the brief, so a bad result can be traced to its cause.
 
 ## The mailbox

@@ -91,10 +91,36 @@ What this says:
 
 1. **The method mattered as much as the model.** Changing how the question is put took the smallest model from 3 to 6 right and the middle one from 6 to 8.
 2. **Phi-3.5 mini is the smallest model that passes.** It is the default for standard decisions. Its file is about 2.4 GB, so it fits a 4 to 8 GB server.
-3. **Qwen2.5 7B matches it on these cases but is no faster**, so on this evidence it has no advantage for standard decisions. It is the choice for deep decisions, where each criterion is asked three times; the margin may show up on harder cases than these eight.
+3. **Qwen2.5 7B matches it on these eight easy cases but is no faster**, so on the easy cases it has no advantage. On the harder set below it did worse, not better.
 4. **The 1.5B model is for quick choices only.** It still failed one case where the weights decide, and one where the middle option is right.
 
 **Run-to-run noise is real.** Phi-3.5 mini was asked the same real question twice, at a low temperature, and Second Look scored 89.5 the first time and 70.5 the second, while Say It Kindly stayed on top (90.5, then 96.8). The winner was stable; the margin was not. So a margin of a few points is within noise, which is exactly why a close call is asked again with the deep method rather than trusted.
+
+### A harder calibration set
+
+`node factory/decision-maker/calibrate.mjs --hard` runs seven cases that are still clear-cut but easier to get wrong: an arithmetic trap ("first month free"), a long feature list against a hard requirement, a negated criterion ("few interruptions"), a proven option against an unknown one, one heavy criterion against several light ones, reversibility, and units (90 minutes against 2 hours). Standard method, one run per case.
+
+| Model | Hard set | Wrong on |
+|---|---|---|
+| Phi-3.5 mini | **7 of 7** (one case with flat scores) | none |
+| Qwen2.5 7B | **5 of 7** | the arithmetic trap; the reversible choice |
+
+**The larger model was not the better one.** This contradicts the assumption the set-up was first built on, that a bigger model is the careful one. With one run per case and seven cases, a single lucky or unlucky answer moves a model by 14 points, so this is a warning and not a ranking.
+
+### Stability on an ambiguous choice
+
+The same real question (which of three concepts to build, five equal-weight criteria) was asked three times on each model, standard method:
+
+| Model | Choices | Margins | Plain Steps total in each run | Time per run |
+|---|---|---|---|---|
+| Phi-3.5 mini | Plain Steps, Plain Steps, Plain Steps | 20, 12, 4 (spread 6.5) | 84, 80, 80 | about 4.7 minutes |
+| Qwen2.5 7B | Plain Steps, Plain Steps, Plain Steps | 28, 24, 32 (spread 3.3) | 100, 100, 100 | about 5.4 minutes |
+
+All six runs agree on the order: Plain Steps, then Second Look, then Five-Minute Teacher. The 7B model was steadier from run to run; Phi's margin ranged from 4 to 20.
+
+### Which model for the second look
+
+Neither model dominates: Phi was right more often on the hard clear-cut cases, and the 7B was steadier on the ambiguous choice. So the second look is not "ask the stronger model". Its value is **independence**: two different models that agree are better evidence than one model asked twice, and two that disagree is exactly when a person should look. The default pairing (Phi first, Qwen2.5 7B second) is kept for that reason, and the cautions say when they differ. Whether a second look ever corrects a wrong answer is still unobserved; the way to find out is to put the hard set through the whole escalation path, which is not yet done.
 
 ### Escalation, verified on real models
 
@@ -126,7 +152,7 @@ Suggested set-up:
 |---|---|
 | `LLM_MODEL_QUICK` | Qwen2.5 1.5B Instruct |
 | `LLM_MODEL` | Phi-3.5 mini Instruct |
-| `LLM_MODEL_DEEP` | Qwen2.5 7B Instruct |
+| `LLM_MODEL_DEEP` | Qwen2.5 7B Instruct (see "Which model for the second look": chosen for independence from the first, not because it is stronger) |
 
 All three can be served by one llama.cpp server with several models, or by separate small servers; the hosting guide uses one model (Phi-3.5 mini) to stay inside the free allowance.
 
@@ -149,7 +175,7 @@ It runs eight decisions that each have one defensible answer (the cheaper of two
 |---|---|---|
 | `LLM_MODEL_QUICK` | Quick decisions: easy to undo, low stakes | A small, fast model |
 | `LLM_MODEL` | Standard decisions, and anything the other two are not set for | The smallest model that passes calibration |
-| `LLM_MODEL_DEEP` | Deep decisions: hard to undo or high stakes, and the second look at a close call | The most careful model you can run |
+| `LLM_MODEL_DEEP` | Deep decisions: hard to undo or high stakes, and the second look at a close call | A different model from `LLM_MODEL`, so its mistakes are independent. Not simply the largest: on the hard set the larger model did worse |
 
 Every answer says which model made it. `decider_status` lists the three.
 
