@@ -1,0 +1,42 @@
+# Soycatory model router (LiteLLM proxy, open source, MIT). One address for every tool; it picks the model.
+# Order, cheapest first:
+#   coder        your own small model (for example Qwen coder on a rented GPU)
+#   coder-cheap  a hosted open model with a free or low-priced tier (OpenAI-compatible address)
+#   reviewer     a stronger model, only for hard or high-stakes work (optional; remove if unused)
+# If a tier is down, rate-limited or slow, the request moves to the next tier by itself.
+# No key is written here. Keys and addresses come from environment variables.
+model_list:
+  - model_name: coder
+    litellm_params:
+      model: openai/qwen2.5-coder:14b               # the name your server calls the model (Ollama name shown)
+      api_base: os.environ/LOCAL_BASE               # e.g. http://127.0.0.1:11434/v1 (through an SSH tunnel)
+      api_key: os.environ/LOCAL_KEY
+      timeout: 60
+  - model_name: coder-cheap
+    litellm_params:
+      model: openai/deepseek-chat                   # edit: the hosted model's name at CHEAP_BASE
+      api_base: os.environ/CHEAP_BASE
+      api_key: os.environ/CHEAP_KEY
+      timeout: 90
+  - model_name: reviewer
+    litellm_params:
+      model: openai/CHANGE-ME-reviewer-model         # edit, or delete this tier and its fallback line
+      api_base: os.environ/REVIEW_BASE
+      api_key: os.environ/REVIEW_KEY
+      timeout: 120
+
+router_settings:
+  num_retries: 1
+  allowed_fails: 2          # after 2 failures a tier rests for a while
+  cooldown_time: 60         # seconds
+  fallbacks:
+    - coder: [coder-cheap]
+    - coder-cheap: [reviewer]
+
+litellm_settings:
+  drop_params: true         # ignore options a model does not support instead of failing
+  telemetry: false
+  set_verbose: false
+
+general_settings:
+  master_key: os.environ/ROUTER_KEY   # callers send this; it is not a provider key
