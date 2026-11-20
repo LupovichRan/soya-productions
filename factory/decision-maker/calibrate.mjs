@@ -5,7 +5,7 @@
 // Use it before trusting a model, and to pick the smallest model that passes.
 //
 //   LLM_BASE_URL=http://localhost:11434/v1 LLM_MODEL=qwen2.5:7b node factory/decision-maker/calibrate.mjs
-//   add --json for machine-readable output, --depth deep to test the deep method
+//   add --json for machine-readable output, --depth deep to test the deep method, --hard for the harder set
 import { pathToFileURL } from 'node:url';
 import { decide, settings } from './server.mjs';
 
@@ -77,9 +77,71 @@ export const CASES = [
   },
 ];
 
-export async function calibrate(s = settings(), { depth = 'standard', fetcher = fetch, onCase = () => {} } = {}) {
+/** Harder cases, each still with one defensible answer: a unit or arithmetic trap, a flashy distractor, a negated
+ *  criterion, an unknown against a proven option, a weighted trade-off, irreversibility, and a hard requirement.
+ *  A model that passes the easy set can still fail these. Use them to decide when a second look is worth its cost. */
+export const HARD_CASES = [
+  {
+    name: 'arithmetic: "one month free" is not the sticker price',
+    question: 'Which phone plan is cheaper over the whole contract?',
+    options: ['Plan A: 100 dollars a month for 3 months, and the first month is free', 'Plan B: 270 dollars in one payment for the 3 months'],
+    criteria: ['Low total cost'], weights: [5],
+    context: 'Both plans are for the same 3 months and give exactly the same service.',
+    expect: 0,
+  },
+  {
+    name: 'a hard requirement beats a long feature list',
+    question: 'Which note-taking app should I use on the train?',
+    options: ['CloudNotes: works only with an internet connection, but has voice notes, drawing, sharing, templates and AI summaries', 'PlainNotes: works fully offline, only plain text'],
+    criteria: ['Works without internet', 'Has many features'], weights: [5, 1],
+    context: 'The train has no signal for the whole 90-minute ride, and notes must be taken during the ride.',
+    expect: 1,
+  },
+  {
+    name: 'a negated criterion: fewer interruptions is better',
+    question: 'Which reminder app should I install?',
+    options: ['App One sends about 10 notifications every day', 'App Two sends about 1 notification every week'],
+    criteria: ['Few interruptions'], weights: [5],
+    context: 'Both apps remind you of the same things and are equally easy to use.',
+    expect: 1,
+  },
+  {
+    name: 'a proven option against an unknown one',
+    question: 'Which backup service should I trust with my photos?',
+    options: ['Service X: has run for 12 years with no reported data loss', 'Service Y: launched last month, nothing is known about its reliability yet'],
+    criteria: ['Proven to be reliable'], weights: [5],
+    context: 'Both cost the same and have the same features.',
+    expect: 0,
+  },
+  {
+    name: 'the single heavy criterion decides, not the count of wins',
+    question: 'Which flat should I rent?',
+    options: ['Flat A: 5 minutes from work, but the rent is 40 percent above what I can pay', 'Flat B: 35 minutes from work, rent within what I can pay, quieter street'],
+    criteria: ['Rent is within what I can pay', 'Short trip to work', 'Quiet street'], weights: [5, 1, 1],
+    context: 'I cannot borrow money and cannot pay more than my limit.',
+    expect: 1,
+  },
+  {
+    name: 'reversibility: the choice that can be undone',
+    question: 'What should I do with the old project files?',
+    options: ['Delete them permanently right now', 'Move them to an archive folder and delete them in 30 days if nobody asks'],
+    criteria: ['The choice can still be undone'], weights: [5],
+    context: 'I am fairly sure nobody needs them, but I am not completely certain.',
+    expect: 1,
+  },
+  {
+    name: 'units: 90 minutes is shorter than 2 hours',
+    question: 'Which route should I take to the airport?',
+    options: ['Route One: 2 hours', 'Route Two: 90 minutes'],
+    criteria: ['Takes less time'], weights: [5],
+    context: 'Both routes cost the same and are equally comfortable.',
+    expect: 1,
+  },
+];
+
+export async function calibrate(s = settings(), { depth = 'standard', fetcher = fetch, onCase = () => {}, cases = CASES } = {}) {
   const rows = [];
-  for (const c of CASES) {
+  for (const c of cases) {
     const started = Date.now();
     const r = await decide({ question: c.question, options: c.options, criteria: c.criteria, weights: c.weights, context: c.context, depth }, s, fetcher);
     const out = r.structuredContent;
@@ -116,7 +178,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   if (!s.baseUrl || !s.model) { console.error('Set LLM_BASE_URL and LLM_MODEL first.'); process.exit(2); }
   const json = process.argv.includes('--json');
   const depth = process.argv.includes('--depth') ? process.argv[process.argv.indexOf('--depth') + 1] : 'standard';
-  const { summary, rows } = await calibrate(s, { depth, onCase: (r) => { if (!json) console.log(`${r.right ? 'right' : r.failed ? 'FAILED' : 'WRONG'}  ${String(r.seconds).padStart(4)}s  ${r.name}${r.flat ? '  (flat scores)' : ''}${r.right ? '' : `\n         expected: ${r.expected}\n         got:      ${r.got ?? r.note}`}`); } });
+  const { summary, rows } = await calibrate(s, { depth, cases: process.argv.includes('--hard') ? HARD_CASES : CASES, onCase: (r) => { if (!json) console.log(`${r.right ? 'right' : r.failed ? 'FAILED' : 'WRONG'}  ${String(r.seconds).padStart(4)}s  ${r.name}${r.flat ? '  (flat scores)' : ''}${r.right ? '' : `\n         expected: ${r.expected}\n         got:      ${r.got ?? r.note}`}`); } });
   if (json) console.log(JSON.stringify({ summary, rows }, null, 2));
   else console.log(`\n${summary.model}: ${summary.right} of ${summary.cases} right, ${summary.failed} failed, ${summary.flat} flat, about ${summary.averageSeconds}s per decision.\nVerdict: ${summary.verdict}.`);
   process.exit(summary.verdict === 'not good enough' ? 1 : 0);
