@@ -17,6 +17,7 @@ Candidate apps, highest score first. Scores are 1–5 each; see `FACTORY.md`. A 
 | 2 | Read It Simply (from "Read It To Me Simply") | 2026-11-20 | `apps/2026-11-20-read-it-simply/` |
 | 3 | Say It Kindly | 2026-11-20 | `apps/2026-11-20-say-it-kindly/` (chosen by the decision maker, three runs on two models; see `factory/decisions/2026-11-20-next-app.md`) |
 | 4 | Plain Steps | 2026-11-20 | `apps/2026-11-20-plain-steps/` (chosen by the decision maker: six runs on two models, all in favour; see `factory/decisions/2026-11-20-small-choices.md`) |
+| 5 | Idea Room (alpha proof of concept of the open idea factory) | 2026-11-20 | `apps/2026-11-20-idea-room/` (chosen by Ran; see `factory/concepts/open-idea-factory.md`) |
 | — | Decision Maker (POC 2, a tool, not an app) | 2026-11-20 | `factory/decision-maker/` |
 
 ## Set aside
