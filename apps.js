@@ -6,6 +6,20 @@
      url:    'https://…'         anywhere else */
 window.SOYA_APPS = [
   {
+    number: 4,
+    date: '2026-11-20',
+    folder: '2026-11-20-plain-steps',
+    mascot: 'frog',
+    en: {
+      title: 'Plain Steps',
+      line: 'Make a short routine you repeat and tick it off one small step at a time. Start from an example. Everything stays on your device.'
+    },
+    he: {
+      title: 'צעד אחר צעד',
+      line: 'מכינים שגרה קצרה שחוזרים עליה ומסמנים אותה צעד קטן אחד בכל פעם. אפשר להתחיל מדוגמה. הכול נשאר במכשיר.'
+    }
+  },
+  {
     number: 3,
     date: '2026-11-20',
     folder: '2026-11-20-say-it-kindly',
