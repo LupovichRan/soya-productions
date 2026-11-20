@@ -15,8 +15,8 @@ Candidate apps, highest score first. Scores are 1–5 each; see `FACTORY.md`. A 
 | App | Name | Date | Where |
 |---|---|---|---|
 | 1 | Roundtable | 2026-11-20 | Its own repository, `soya-poc-2026-11-20-roundtable` |
-| 3 | Say It Kindly | 2026-11-20 | `apps/2026-11-20-say-it-kindly/` (chosen by the decision maker, three runs on two models; see `factory/decisions/2026-11-20-next-app.md`) |
 | 2 | Read It Simply (from "Read It To Me Simply") | 2026-11-20 | `apps/2026-11-20-read-it-simply/` |
+| 3 | Say It Kindly | 2026-11-20 | `apps/2026-11-20-say-it-kindly/` (chosen by the decision maker, three runs on two models; see `factory/decisions/2026-11-20-next-app.md`) |
 | — | Decision Maker (POC 2, a tool, not an app) | 2026-11-20 | `factory/decision-maker/` |
 
 ## Set aside
