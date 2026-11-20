@@ -1,6 +1,6 @@
 # Soya explains: the videos
 
-Short videos where Soya the cat explains AI and software in plain words. He is a cartoon; the voice is a computer voice and the pages say so. They are published at `videos.html`, listed in `videos.js`, and linked from the front page and the daily post.
+Short videos where Soya the cat explains AI and software in plain words. Soya is a male cat and a cartoon; the voice is a computer voice and the pages say so. They are published at `videos.html`, listed in `videos.js`, and linked from the front page and the daily post.
 
 ## Make one
 
@@ -11,8 +11,8 @@ Short videos where Soya the cat explains AI and software in plain words. He is a
      --voice <path>/en_US-joe-medium.onnx --piper "<venv>/bin/python -m piper" \
      --fonts <fonts folder> --out assets/videos
    ```
-   It speaks each scene with Piper, measures the audio, draws the scenes, joins the sound, writes `<slug>.en.vtt` and `<slug>.he.vtt` captions and a poster, and encodes `<slug>.mp4` (about 25 MB per 10 minutes at this size).
-3. Level the sound so it does not clip: `ffmpeg -i in.mp4 -c:v copy -af loudnorm=I=-18:TP=-2:LRA=7 -c:a aac -b:a 96k out.mp4`.
+   It speaks each scene with Piper (a little faster than normal, then warmed), writes an **original music bed with code** (a chilled four-chord loop at 92 beats a minute: no samples, no licence to worry about) that ducks under the voice, draws each scene over a retro dusk scene while Soya bobs to the beat and blinks, burns in large captions (most people watch muted), writes `<slug>.en.vtt` and `<slug>.he.vtt`, a poster, and encodes `<slug>.mp4` (about 5 MB a minute).
+3. The sound is levelled for you (about -16 LUFS, peak under -1.5 dB). Check it anyway: no clipping, and the music clearly lower under the voice.
 4. Add an entry at the top of `videos.js`, check the page in English and Hebrew at phone width, and open a pull request.
 
 ## The voice
