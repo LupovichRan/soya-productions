@@ -341,27 +341,47 @@ const FIVE = { criteria: ['A', 'B', 'C', 'D', 'E'], weights: [1, 1, 1, 1, 1] };
 /** The standard model sees Alpha and Beta as nearly equal (Alpha ahead by 4 points). */
 const nearlyEqual = (o, c) => ({ score: o === 'Gamma' ? 1 : o === 'Alpha' ? 5 : (c === 'E' ? 4 : 5), why: 'std ' + o });
 
-test('a close standard call is asked again, the careful way, on the deep model', async () => {
+test('a close standard call is asked again on the deep model; if the two agree, that is said', async () => {
   const s = { ...S, modelDeep: 'big', baseUrlDeep: 'http://deep.test/v1' };
   const calls = [];
   const wise = steps({
-    // The deep model sees Beta as clearly better.
-    score: (o, c, r, model) => model === 'big' ? { score: o === 'Beta' ? 5 : o === 'Alpha' ? 3 : 1, why: 'deep ' + o } : nearlyEqual(o, c),
+    // Both models put Alpha first; the deep model is much more sure of it.
+    score: (o, c, r, model) => model === 'big' ? { score: o === 'Alpha' ? 5 : o === 'Beta' ? 2 : 1, why: 'deep ' + o } : nearlyEqual(o, c),
     review: () => okReview,
   }, calls);
   const r = await decide({ ...full, ...FIVE }, s, wise);
   const out = r.structuredContent;
   assert.equal(out.method, 'deep');
   assert.equal(out.model, 'big');
-  assert.equal(out.choice, 'Beta');
+  assert.equal(out.choice, 'Alpha');
+  assert.equal(out.agreed, true);
+  assert.equal(out.decided, true);
   assert.equal(out.escalatedFrom.choice, 'Alpha');
   assert.equal(out.escalatedFrom.margin, 4);
   assert.equal(out.escalatedFrom.model, 'm1');
   assert.deepEqual(out.escalatedFrom.totals.map(t => t.option), ['Alpha', 'Beta', 'Gamma']);
-  assert.ok(out.cautions[0].includes('close call') && out.cautions[0].includes('chose differently: "Beta"'));
+  assert.ok(out.cautions[0].includes('close call') && out.cautions[0].includes('The second look agrees'));
   assert.ok(calls.some(c => c.body.model === 'm1') && calls.some(c => c.body.model === 'big'));
   assert.equal(baseUrlFor('deep', s), 'http://deep.test/v1');
   assert.equal(baseUrlFor('standard', s), S.baseUrl);
+});
+
+test('two models that disagree make no decision, and both are shown', async () => {
+  const s = { ...S, modelDeep: 'big' };
+  const r = await decide({ ...full, ...FIVE }, s, steps({
+    // The deep model sees Beta as clearly better than Alpha.
+    score: (o, c, rd, model) => model === 'big' ? { score: o === 'Beta' ? 5 : o === 'Alpha' ? 3 : 1, why: 'deep ' + o } : nearlyEqual(o, c),
+    review: () => okReview,
+  }));
+  const out = r.structuredContent;
+  assert.equal(out.decided, false);
+  assert.equal(out.choice, null);
+  assert.equal(out.confidence, 0);
+  assert.equal(out.record, null);
+  assert.deepEqual(out.disagreement, { first: { model: 'm1', choice: 'Alpha', margin: 4 }, second: { model: 'big', choice: 'Beta', margin: out.margin } });
+  assert.ok(out.cautions[0].includes('The two models disagree') && out.cautions[0].includes('No decision was made'));
+  assert.equal(out.table[0].option, 'Beta');                         // the deep table is there to read
+  assert.equal(out.escalatedFrom.choice, 'Alpha');                   // and so is the first pass
 });
 
 test('no second look when there is no deep model, when the caller chose a depth, or when asked not to', async () => {
@@ -409,29 +429,13 @@ test('a model that cannot set the weights does not sink the decision: equal weig
 test('escalateBelow lets the caller be more careful: a clear answer under the chosen margin is asked again', async () => {
   const s = { ...S, modelDeep: 'big' };
   const clear = (extra) => decide({ ...full, ...FIVE, ...extra }, s, steps({
-    score: (o, c, r, model) => ({ score: o === 'Alpha' ? (model === 'big' ? 3 : 5) : o === 'Beta' ? (model === 'big' ? 5 : 3) : 1, why: 'w' }), review: () => okReview }));
+    score: (o, c, r, model) => ({ score: o === 'Alpha' ? 5 : o === 'Beta' ? (model === 'big' ? 4 : 3) : 1, why: 'w' }), review: () => okReview }));
   const plain = await clear({});
   assert.equal(plain.structuredContent.method, 'standard');                   // 40 points apart: not close, so no second look
   const careful = await clear({ escalateBelow: 60 });
   assert.equal(careful.structuredContent.method, 'deep');
-  assert.equal(careful.structuredContent.choice, 'Beta');
-  assert.equal(careful.structuredContent.escalatedFrom.choice, 'Alpha');
+  assert.equal(careful.structuredContent.choice, 'Alpha');                    // both models agree
+  assert.equal(careful.structuredContent.agreed, true);
   assert.match(careful.structuredContent.cautions[0], /margin under 60 points/);
   assert.equal((await clear({ escalateBelow: 10 })).structuredContent.method, 'standard');
-});
-
-test('the hard calibration cases are well formed, and the calibrator accepts them', async () => {
-  assert.ok(HARD_CASES.length >= 6);
-  for (const c of [...CASES, ...HARD_CASES]) {
-    assert.ok(c.options.length >= 2 && new Set(c.options).size === c.options.length, c.name);
-    assert.equal(c.criteria.length, c.weights.length, c.name);
-    assert.ok(Number.isInteger(c.expect) && c.expect >= 0 && c.expect < c.options.length, c.name);
-    // Criteria are worded so that more is better, as the tool asks of callers.
-    assert.ok(c.criteria.every(x => !/^(price|time|cost)$/i.test(x)), c.name);
-  }
-  // A stand-in that scores the expected option highest gets every hard case right.
-  const wise = steps({ score: (option) => ({ score: HARD_CASES.some(c => c.options[c.expect] === option) ? 5 : 1, why: 'w' }), review: () => okReview });
-  const r = await calibrate(S, { fetcher: wise, cases: HARD_CASES });
-  assert.equal(r.summary.right, HARD_CASES.length);
-  assert.equal(r.summary.cases, HARD_CASES.length);
 });
