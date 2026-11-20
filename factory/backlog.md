@@ -11,6 +11,12 @@ Candidate apps, highest score first. Scores are 1–5 each; see `FACTORY.md`. A 
 | Second Look | Paste a product's AI claim and get plain questions to ask before believing it. | 3 | 4 | 5 | 4 | 5 | 21 | 2026-11-20 |
 | Five-Minute Teacher | Pick a topic and get one small spoken lesson and one question back. | 4 | 4 | 2 | 5 | 4 | 19 | 2026-11-20 |
 
+## Decided next
+
+| Concept | Decided | By | Margin |
+|---|---|---|---|
+| Say It Kindly | 2026-11-20 | Decision maker, Phi-3.5 mini; see `factory/decisions/2026-11-20-next-app.md` | 1 point over Second Look: a close call |
+
 ## Built
 
 | App | Name | Date | Where |
