@@ -10,6 +10,10 @@ Candidate apps, highest score first. Scores are 1–5 each; see `FACTORY.md`. A 
 | Second Look | Paste a product's AI claim and get plain questions to ask before believing it. | 3 | 4 | 5 | 4 | 5 | 21 | 2026-11-20 |
 | Five-Minute Teacher | Pick a topic and get one small spoken lesson and one question back. | 4 | 4 | 2 | 5 | 4 | 19 | 2026-11-20 |
 
+## Next, unsettled
+
+The decision maker has not settled the fourth app. Two real runs on the same model disagreed on Second Look against Plain Steps (see `factory/decisions/2026-11-20-small-choices.md`). The next run should decide again, with `escalateBelow: 15`, and take the deep model's answer.
+
 ## Built
 
 | App | Name | Date | Where |

@@ -389,3 +389,33 @@ test('a failed second look is reported and the first answer stands', async () =>
   assert.equal(out.choice, 'Alpha');
   assert.ok(out.cautions.some(c => /deeper second look was tried[\s\S]*failed/.test(c)));
 });
+
+test('a model that cannot set the weights does not sink the decision: equal weights, said out loud', async () => {
+  const r = await decide({ ...full, criteria: ['Cost', 'Speed'] }, S, steps({
+    weights: () => 'nonsense',
+    score: byOption({ Alpha: [5, 5], Beta: [2, 2], Gamma: [1, 1] }),
+    review: () => okReview,
+  }));
+  const out = r.structuredContent;
+  assert.equal(out.choice, 'Alpha');
+  assert.deepEqual(out.criteria.map(c => c.weight), [3, 3]);
+  assert.ok(out.cautions.some(c => /could not set the weights[\s\S]*every criterion counts equally/.test(c)));
+  assert.ok(out.confidence <= 0.6);
+  // When the model was to propose the criteria as well, there is nothing to fall back on.
+  const none = await decide(full, S, steps({ weights: () => 'nonsense', score: byOption({ Alpha: [5], Beta: [2], Gamma: [1] }, ['Cost']), review: () => okReview }));
+  assert.equal(none.isError, true);
+});
+
+test('escalateBelow lets the caller be more careful: a clear answer under the chosen margin is asked again', async () => {
+  const s = { ...S, modelDeep: 'big' };
+  const clear = (extra) => decide({ ...full, ...FIVE, ...extra }, s, steps({
+    score: (o, c, r, model) => ({ score: o === 'Alpha' ? (model === 'big' ? 3 : 5) : o === 'Beta' ? (model === 'big' ? 5 : 3) : 1, why: 'w' }), review: () => okReview }));
+  const plain = await clear({});
+  assert.equal(plain.structuredContent.method, 'standard');                   // 40 points apart: not close, so no second look
+  const careful = await clear({ escalateBelow: 60 });
+  assert.equal(careful.structuredContent.method, 'deep');
+  assert.equal(careful.structuredContent.choice, 'Beta');
+  assert.equal(careful.structuredContent.escalatedFrom.choice, 'Alpha');
+  assert.match(careful.structuredContent.cautions[0], /margin under 60 points/);
+  assert.equal((await clear({ escalateBelow: 10 })).structuredContent.method, 'standard');
+});
