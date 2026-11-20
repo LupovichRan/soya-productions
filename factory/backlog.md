@@ -20,6 +20,7 @@ Candidate apps, highest score first. Scores are 1–5 each; see `FACTORY.md`. A 
 | 5 | Idea Room (alpha proof of concept of the open idea factory) | 2026-11-20 | `apps/2026-11-20-idea-room/` (chosen by Ran; see `factory/concepts/open-idea-factory.md`) |
 | 6 | Cat Factory (a parody of a software factory, told by cats) | 2026-11-20 | `apps/2026-11-20-cat-factory/` (chosen by Ran) |
 | 7 | Soya's Games (three small games for young children) | 2026-11-20 | `apps/2026-11-20-soya-games/` (chosen by Ran) |
+| 8 | Kafka Check (a config checker for message loss, repeats and reordering; browser and command line) | 2026-11-20 | `apps/2026-11-20-kafka-check/` (chosen by Ran) |
 | — | Decision Maker (POC 2, a tool, not an app) | 2026-11-20 | `factory/decision-maker/` |
 
 ## Set aside

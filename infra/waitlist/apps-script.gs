@@ -3,7 +3,7 @@
  * One tab per app and kind: "<app> waitlist" and "<app> requests". It runs as you, writes only to that one Sheet,
  * and holds no key. Setup is in infra/waitlist/README.md.
  */
-var APPS = ['soycatory', 'roundtable', 'read-it-simply', 'say-it-kindly', 'plain-steps', 'idea-room', 'cat-factory', 'soya-games'];
+var APPS = ['soycatory', 'roundtable', 'read-it-simply', 'say-it-kindly', 'plain-steps', 'idea-room', 'cat-factory', 'soya-games', 'kafka-check'];
 var MAX_ROWS = 5000, MAX_METRIC_ROWS = 100000;
 var METRIC_EVENTS = ['play', 'q25', 'q50', 'q75', 'q100', 'pause', 'seek', 'leave'];
 function slug_(v) { return /^[a-z0-9-]{3,60}$/.test(String(v || '')) ? String(v) : ''; }

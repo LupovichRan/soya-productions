@@ -6,6 +6,20 @@
      url:    'https://…'         anywhere else */
 window.SOYA_APPS = [
   {
+    number: 8,
+    date: '2026-11-20',
+    folder: '2026-11-20-kafka-check',
+    mascot: 'owl',
+    en: {
+      title: 'Kafka Check',
+      line: 'Paste a Kafka config and see where messages could be lost, repeated or reordered, with a link to the Kafka docs for each point. It runs in your browser and on the command line.'
+    },
+    he: {
+      title: 'בדיקת קפקא',
+      line: 'מדביקים הגדרות של קפקא ורואים איפה הודעות עלולות ללכת לאיבוד, לחזור או להתערבב בסדר, עם קישור לתיעוד של קפקא לכל נקודה. עובד בדפדפן ובשורת הפקודה.'
+    }
+  },
+  {
     number: 7,
     date: '2026-11-20',
     folder: '2026-11-20-soya-games',
