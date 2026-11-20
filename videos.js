@@ -5,37 +5,37 @@ window.SOYA_VIDEOS = [
   {
     "slug": "software-factory",
     "date": "2026-11-20",
-    "seconds": 94,
+    "seconds": 76,
     "title": {
       "en": "What is a software factory?",
       "he": "מה זה מפעל תוכנה?"
     },
     "description": {
-      "en": "Soya the cat explains what a software factory is, how Soycatory's works in five steps, and why the people stay in charge. About 80 seconds.",
-      "he": "סויה החתול מסביר מה זה מפעל תוכנה, איך המפעל של Soycatory עובד בחמישה שלבים, ולמה האנשים נשארים אחראים. כ־80 שניות."
+      "en": "Soya the cat explains what a software factory is, how Soycatory's works in five steps, and why the people stay in charge. About a minute.",
+      "he": "סויה החתול מסביר מה זה מפעל תוכנה, איך המפעל של Soycatory עובד בחמישה שלבים, ולמה האנשים נשארים אחראים. בערך דקה."
     },
     "transcript": {
       "en": [
-        "Hi. I'm Soya. I'm a cat, and I explain the things you keep hearing about. Today: what is a software factory?",
-        "A factory makes the same kind of thing again and again, with steps you can check. A cookie factory goes: dough, bake, check, box. A software factory does the same for apps.",
-        "Ours has five steps. One: read what is new in AI and software. Two: pick the idea that would help an everyday person the most.",
-        "Three: build one small app. Four: check it. Tests, a scan for secrets, and a look at the phone screen, in English and in Hebrew.",
-        "Five: ask a person. The factory sends a request that says, here is my change, please look. It is not allowed to skip the checks.",
-        "Here is a trend. People now put an agent above the tools. It decides what is next, checks the result, and follows up. Some call that an outer loop. Our factory uses a small one.",
-        "But an agent is only as good as its rules. Ours cannot spend money, cannot open accounts, and cannot promise anyone ownership. A person decides those.",
-        "Why small apps? Because small things can be finished, checked and fixed. So the factory makes one app a day, until something catches.",
-        "I'm Soya. Try the apps, tell us what you would add, and come back for the next one."
+        "Hey. I'm Soya, a cat who explains things. Today: what is a software factory? One minute. Let's go.",
+        "A factory makes the same thing again and again, in steps you can check. Cookies: dough, bake, check, box. Apps: idea, build, check, app.",
+        "Ours has five steps. One: read what's new in AI. Two: pick the idea that helps a real person most.",
+        "Three: build one tiny app. Four: check it. Tests, a scan for secrets, and a look at a phone screen.",
+        "Five: ask a human. The factory sends a request that says: here's my change, take a look. No skipping the checks.",
+        "The trend right now? An agent above the tools. It decides what's next, checks the result, follows up. Some call it an outer loop. We run a small one.",
+        "But an agent is only as good as its rules. Ours can't spend money, can't open accounts, can't promise ownership. Humans decide that.",
+        "Why tiny apps? Tiny things get finished, checked, fixed. So: one app a day, until something catches.",
+        "I'm Soya. Try the apps. Tell us what you'd add. Later."
       ],
       "he": [
-        "היי, אני סויה. אני חתול, ואני מסביר דברים שאתם כל הזמן שומעים עליהם. היום: מה זה מפעל תוכנה?",
-        "מפעל מייצר שוב ושוב את אותו סוג של דבר, בשלבים שאפשר לבדוק. מפעל עוגיות עובד כך: בצק, אפייה, בדיקה, אריזה. מפעל תוכנה עושה את זה לאפליקציות.",
-        "למפעל שלנו יש חמישה שלבים. אחד: לקרוא מה חדש בבינה מלאכותית ובתוכנה. שניים: לבחור את הרעיון שהכי יעזור לאדם רגיל.",
-        "שלושה: לבנות אפליקציה קטנה אחת. ארבעה: לבדוק אותה. בדיקות, סריקה של סודות, ומבט על מסך הטלפון, באנגלית ובעברית.",
-        "חמישה: לשאול אדם. המפעל שולח בקשה שאומרת: הנה השינוי שלי, בבקשה תסתכלו. אסור לו לדלג על הבדיקות.",
-        "והנה מגמה. אנשים מציבים היום סוכן מעל הכלים. הוא מחליט מה הבא, בודק את התוצאה, וממשיך לעקוב. יש שקוראים לזה לולאה חיצונית. במפעל שלנו יש כזו, קטנה.",
-        "אבל סוכן טוב רק כמו הכללים שלו. הסוכן שלנו לא יכול להוציא כסף, לא יכול לפתוח חשבונות, ולא יכול להבטיח לאף אחד בעלות. את זה אדם מחליט.",
-        "למה אפליקציות קטנות? כי דברים קטנים אפשר לסיים, לבדוק ולתקן. אז המפעל מייצר אפליקציה ביום, עד שמשהו יתפוס.",
-        "אני סויה. נסו את האפליקציות, ספרו לנו מה הייתם מוסיפים, וחזרו להמשך."
+        "היי. אני סויה, חתול שמסביר דברים. היום: מה זה מפעל תוכנה? דקה אחת. יאללה.",
+        "מפעל מייצר את אותו דבר שוב ושוב, בשלבים שאפשר לבדוק. עוגיות: בצק, אפייה, בדיקה, אריזה. אפליקציות: רעיון, בנייה, בדיקה, אפליקציה.",
+        "למפעל שלנו יש חמישה שלבים. אחד: לקרוא מה חדש בבינה מלאכותית. שניים: לבחור את הרעיון שהכי יעזור לאדם אמיתי.",
+        "שלושה: לבנות אפליקציה קטנטנה אחת. ארבעה: לבדוק אותה. בדיקות, סריקה של סודות, ומבט על מסך טלפון.",
+        "חמישה: לשאול בן אדם. המפעל שולח בקשה שאומרת: הנה השינוי שלי, תסתכלו. אסור לדלג על הבדיקות.",
+        "המגמה עכשיו? סוכן שיושב מעל הכלים. הוא מחליט מה הבא, בודק את התוצאה, וממשיך לעקוב. יש שקוראים לזה לולאה חיצונית. אצלנו רצה אחת קטנה.",
+        "אבל סוכן טוב רק כמו הכללים שלו. הסוכן שלנו לא מוציא כסף, לא פותח חשבונות, ולא מבטיח בעלות. את זה בני אדם מחליטים.",
+        "למה אפליקציות קטנטנות? כי דברים קטנים מסיימים, בודקים ומתקנים. אז: אפליקציה ביום, עד שמשהו יתפוס.",
+        "אני סויה. נסו את האפליקציות. ספרו לנו מה הייתם מוסיפים. להתראות."
       ]
     }
   }
