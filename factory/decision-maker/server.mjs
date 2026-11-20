@@ -49,7 +49,7 @@ export const TOOLS = [
         question: { type: 'string', description: 'The decision to make, as one plain question.' },
         options: { type: 'array', minItems: 2, maxItems: 8, items: { type: 'string' }, description: 'The 2 to 8 options to choose between.' },
         context: { type: 'string', description: 'Facts the model needs: background, constraints, what has been tried.' },
-        criteria: { type: 'array', maxItems: 8, items: { type: 'string' }, description: 'What matters. If left out, the model proposes 3 to 5 criteria before it sees the options.' },
+        criteria: { type: 'array', maxItems: 8, items: { type: 'string' }, description: 'What matters. Word each one so that more of it is better ("Low price", not "Price"; "Takes little time", not "Time"), or the scores cannot be read. If left out, the model proposes 3 to 5 criteria before it sees the options.' },
         weights: { type: 'array', maxItems: 8, items: { type: 'integer', minimum: 1, maximum: 5 }, description: 'Optional weight 1 to 5 for each criterion, in the same order. If left out, the model sets them before any option is scored.' },
         reversible: { type: 'boolean', description: 'Can this be undone cheaply? Easy-to-undo choices get a lighter method and a one-week review; hard-to-undo ones get the deep method and a 30-day review.' },
         stakes: { type: 'string', enum: ['low', 'medium', 'high'], description: 'How much money, time, reputation or trust is at risk.' },
@@ -347,7 +347,7 @@ async function structured(s, args, fetcher, state) {
   else {
     const ask = args.criteria.length
       ? `${about}\n\nCriteria:\n${args.criteria.map((c, i) => `${i + 1}. ${c}`).join('\n')}\n\nGive each criterion a weight from 1 (matters a little) to 5 (matters most): {"weights": [3]}, one number per criterion, in order.`
-      : `${about}\n\nName the 3 to 5 things that should matter most for this decision, each with a weight from 1 (matters a little) to 5 (matters most): {"criteria": [{"name": "string", "weight": 3}]}`;
+      : `${about}\n\nName the 3 to 5 things that should matter most for this decision, each worded so that more of it is better (for example "Low cost", not "Cost"), and each with a weight from 1 (matters a little) to 5 (matters most): {"criteria": [{"name": "string", "weight": 3}]}`;
     criteria = await askJson(s, WEIGH_SYSTEM, ask, (raw) => checkWeights(raw, args.criteria), 0.2, fetcher, state);
   }
   // 2. Each option is judged on its own, one criterion at a time: a small question a small model

@@ -27,6 +27,11 @@ jobs:
           node-version: 22
       - name: Decision maker tests
         run: node --test factory/decision-maker/server.test.mjs
+      - name: Film tests
+        run: |
+          set -euo pipefail
+          found=$(git ls-files 'films/**/*.test.js' 'films/**/*.test.mjs')
+          if [ -n "$found" ]; then node --test $found; else echo "no film tests"; fi
       - name: Every script parses
         run: |
           set -euo pipefail
