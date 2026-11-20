@@ -9,7 +9,7 @@ window.SOYA_APPS = [
     number: 3,
     date: '2026-11-20',
     folder: '2026-11-20-say-it-kindly',
-    mascot: 'bear',
+    mascot: 'rabbit',
     en: {
       title: 'Say It Kindly',
       line: 'Paste a message you are nervous to send. See the phrases that tend to land hard, and fix each one in place. Nothing leaves your device.'

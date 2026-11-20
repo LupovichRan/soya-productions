@@ -96,6 +96,28 @@ What this says:
 
 **Run-to-run noise is real.** Phi-3.5 mini was asked the same real question twice, at a low temperature, and Second Look scored 89.5 the first time and 70.5 the second, while Say It Kindly stayed on top (90.5, then 96.8). The winner was stable; the margin was not. So a margin of a few points is within noise, which is exactly why a close call is asked again with the deep method rather than trusted.
 
+### Escalation, verified on real models
+
+The second look was first tested only against stand-ins. It has since been run for real, on Phi-3.5 mini and Qwen2.5 7B, one server at a time because both do not fit in this machine's memory together.
+
+| Question (all reversible, medium stakes) | Phi-3.5 mini, standard: top two, margin | Second look? |
+|---|---|---|
+| Which concept is the fourth app (three options) | Second Look 75 over Plain Steps 70, margin 5 | No: 5 is not less than 5 |
+| Which English name for the app (three options) | Say It Kindly 91.4 over Say It Gently 71.4, margin 20 | No |
+| Plain Steps against Second Look, equal weights | Plain Steps 96 over Second Look 64, margin 32 | No |
+| Which mascot (three options) | Rabbit 85 over Bear 70, margin 15 | No |
+| Which button label (three options) | Copy message 100 over Copy my message 86.7, margin 13.3 | Not by default |
+| The same button-label question with `escalateBelow: 100` | as above | **Yes: Qwen2.5 7B, deep method, 672 seconds in all. Same choice, "Copy message", 86.7 over 66.7; the first pass was kept under `escalatedFrom`.** |
+
+What this shows and does not show:
+
+1. **The whole path works for real:** the first pass on one model, the swap to the other, the deep method with three rounds per criterion and rotated option order, and the first pass reported alongside the answer.
+2. **A natural close call is rarer than expected.** Across the real runs on this page, Phi's margins were 1, 26, 5, 20, 32, 15 and 13 points, so by the default rule only the very first run (1 point, before the second look existed) would have been re-asked. That is the rule working as designed, but it means the second look will seldom fire at a margin of 5. Raise `escalateBelow` (for example to 15) for decisions that matter.
+3. **Agreement is common.** On the two questions where both models answered, they chose the same option each time.
+4. **The forced run proves the plumbing, not the value.** The second look has not yet been seen to change a wrong answer into a right one, because no real run has disagreed.
+
+Also seen in these runs: Phi-3.5 mini twice failed to set the weights for four criteria. The decision now carries on with equal weights and says so.
+
 Limits of this evidence: eight cases is a small sample, the cases are ones with a clear answer, and each model was run once per case. A model that passes calibration can still be wrong on a hard, ambiguous decision. Re-run `calibrate.mjs` whenever a model is changed.
 
 Suggested set-up:
