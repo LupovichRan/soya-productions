@@ -45,7 +45,7 @@ export const TOOLS = [
   {
     name: 'decide',
     title: 'Decide',
-    description: 'Ask the self-hosted model to choose exactly one of the given options, using a structured method. Quick: one answer with reasons (for small choices that are easy to undo). Standard: criteria are weighted before any option is scored, the options are compared on one criterion at a time, the totals are added up in code, then the leader gets a pre-mortem, a bias check and a "what else" check. Deep: the same, with every option scored three times and the middle score kept (for choices that are hard to undo or high stakes). Depth is picked from "reversible" and "stakes" unless you set it. A standard decision that comes out as a close call (within five points, or tied) is asked again automatically with the deep method on the deep model, if one is set; set escalate to false to stop that. Returns the choice, the full table, and a decision record with a review date. The model sees only what you pass here, so put everything it needs in "context". If no model is connected or an answer is unusable, the call fails; it never makes a decision up.',
+    description: 'Ask the self-hosted model to choose exactly one of the given options, using a structured method. Quick: one answer with reasons (for small choices that are easy to undo). Standard: criteria are weighted before any option is scored, the options are compared on one criterion at a time, the totals are added up in code, then the leader gets a pre-mortem, a bias check and a "what else" check. Deep: the same, with every option scored three times and the middle score kept (for choices that are hard to undo or high stakes). Depth is picked from "reversible" and "stakes" unless you set it. A standard decision that comes out as a close call (less than five points apart, or tied) is asked again automatically with the deep method on the deep model, if one is set; set escalate to false to stop that. Returns the choice, the full table, and a decision record with a review date. The model sees only what you pass here, so put everything it needs in "context". If no model is connected or an answer is unusable, the call fails; it never makes a decision up.',
     inputSchema: {
       type: 'object', additionalProperties: false, required: ['question', 'options'],
       properties: {
@@ -188,7 +188,7 @@ async function decideOnce(s, args, temperature, fetcher, state) {
 
 /**
  * Decide, and when the first pass is a close call, ask again the careful way.
- * A standard decision that comes out within five points (or tied) is re-run with the deep method on the
+ * A standard decision that comes out less than five points apart (or tied) is re-run with the deep method on the
  * deep model, if one is set. The deep answer is the one returned; the first pass is kept alongside it.
  * Not done when the caller chose a depth, or set escalate: false.
  */
@@ -388,6 +388,7 @@ async function record(s, args, out) {
 }
 
 async function structured(s, args, fetcher, state) {
+  let weightNote = '';
   const about = `Question: ${args.question}` + (args.context ? `\n\nContext:\n${args.context}` : '');
 
   // 1. Criteria and weights first. The model is not shown the options here.
@@ -397,7 +398,14 @@ async function structured(s, args, fetcher, state) {
     const ask = args.criteria.length
       ? `${about}\n\nCriteria:\n${args.criteria.map((c, i) => `${i + 1}. ${c}`).join('\n')}\n\nGive each criterion a weight from 1 (matters a little) to 5 (matters most): {"weights": [3]}, one number per criterion, in order.`
       : `${about}\n\nName the 3 to 5 things that should matter most for this decision, each worded so that more of it is better (for example "Low cost", not "Cost"), and each with a weight from 1 (matters a little) to 5 (matters most): {"criteria": [{"name": "string", "weight": 3}]}`;
-    criteria = await askJson(s, WEIGH_SYSTEM, ask, (raw) => checkWeights(raw, args.criteria), 0.2, fetcher, state);
+    try { criteria = await askJson(s, WEIGH_SYSTEM, ask, (raw) => checkWeights(raw, args.criteria), 0.2, fetcher, state); }
+    catch (err) {
+      // The caller named the criteria, so a model that cannot weigh them should not sink the decision.
+      // Equal weights are a fair default, and the answer says so. Criteria the model was to propose cannot be invented here.
+      if (!args.criteria.length) throw err;
+      criteria = args.criteria.map(name => ({ name, weight: 3 }));
+      weightNote = `The model could not set the weights (${reason(err)}), so every criterion counts equally.`;
+    }
   }
   // 2. One criterion at a time, across all the options. Deep: three rounds, each with the options
   //    in a different order so that position cannot favour one, and the middle score is kept.
@@ -461,6 +469,7 @@ async function structured(s, args, fetcher, state) {
   if (review && !review.leaderFeelsRight) confidence = Math.min(confidence, 0.5);
   if (review && review.doubtfulReasons.length) confidence = Math.min(confidence, 0.5);
   if (table.some(r => r.unknown)) confidence = Math.min(confidence, 0.5);
+  if (weightNote) confidence = Math.min(confidence, 0.6);
   confidence = Math.round(confidence * 100) / 100;
   const cautions = [
     ...table.flatMap(r => (r.unknown || []).map(c => `The model had nothing to go on for "${r.option}" on "${c}", so that score is a neutral 3. Give it more context and decide again.`)),
@@ -471,6 +480,7 @@ async function structured(s, args, fetcher, state) {
     review && review.whatElse ? `An option that was not on the list: ${review.whatElse}` : '',
     ...(review ? review.doubtfulReasons.map(d => `A reason behind a score looks wrong: ${d}`) : []),
     rounds > 1 && table.some(r => r.spread >= 3) ? 'The model scored the same option very differently between rounds; treat the totals as rough.' : '',
+    weightNote,
     reviewNote,
   ].filter(Boolean);
 

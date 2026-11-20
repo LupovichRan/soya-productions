@@ -389,3 +389,19 @@ test('a failed second look is reported and the first answer stands', async () =>
   assert.equal(out.choice, 'Alpha');
   assert.ok(out.cautions.some(c => /deeper second look was tried[\s\S]*failed/.test(c)));
 });
+
+test('a model that cannot set the weights does not sink the decision: equal weights, said out loud', async () => {
+  const r = await decide({ ...full, criteria: ['Cost', 'Speed'] }, S, steps({
+    weights: () => 'nonsense',
+    score: byOption({ Alpha: [5, 5], Beta: [2, 2], Gamma: [1, 1] }),
+    review: () => okReview,
+  }));
+  const out = r.structuredContent;
+  assert.equal(out.choice, 'Alpha');
+  assert.deepEqual(out.criteria.map(c => c.weight), [3, 3]);
+  assert.ok(out.cautions.some(c => /could not set the weights[\s\S]*every criterion counts equally/.test(c)));
+  assert.ok(out.confidence <= 0.6);
+  // When the model was to propose the criteria as well, there is nothing to fall back on.
+  const none = await decide(full, S, steps({ weights: () => 'nonsense', score: byOption({ Alpha: [5], Beta: [2], Gamma: [1] }, ['Cost']), review: () => okReview }));
+  assert.equal(none.isError, true);
+});

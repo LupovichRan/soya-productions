@@ -42,7 +42,7 @@ The five steps:
 4. **Stress-test the leader.** A pre-mortem (it is months later and this choice failed: why, and what early sign would have warned us?), the one bias most likely at work, and "what else?" — an option that was not on the list.
 5. **A record.** The decision, confidence, what would change it, an if-then next step, and a review date: one week for choices that are easy to undo, 30 days otherwise.
 
-The scores decide. If the model doubts the leader, or the top two are within five points, the answer says so under `cautions` and the confidence is lowered. The winner is never swapped quietly. An exact tie at the top is reported as no decision (`decided: false`, `choice: null`). If the model gives nearly the same score to everything, the answer says the model is probably too small for the job.
+The scores decide. If the model doubts the leader, or the top two are less than five points apart, the answer says so under `cautions` and the confidence is lowered. The winner is never swapped quietly. An exact tie at the top is reported as no decision (`decided: false`, `choice: null`). If the model gives nearly the same score to everything, the answer says the model is probably too small for the job.
 
 ### How strong is the evidence for this method
 
@@ -75,6 +75,7 @@ What these runs changed in the method:
 5. Options are compared side by side on each criterion. In the first design each option was scored without seeing the others, and all three models then failed the simplest calibration case: asked alone whether 20 dollars is a "low price" for a kettle, a model cannot know. Scored the first way, the 1.5B model got 3 of 8 calibration cases right and Phi-3.5-mini got 6 of 8.
 6. Criteria must be worded so that more is better ("Low price", not "Price").
 7. A model that says it has nothing to go on for an option (a `null` score) is counted as a neutral 3 and flagged, and the confidence is capped at 0.5, instead of the whole decision failing. This came from the first real decision with Phi-3.5 mini, where an option had been left out of the background text by mistake.
+8. A model that cannot set the weights (it miscounted them twice in real runs) no longer sinks the decision when the caller named the criteria: every criterion then counts equally, the answer says so, and confidence is capped at 0.6. When the model was meant to propose the criteria itself, there is nothing to fall back on and the call fails.
 
 ## Calibration results
 
@@ -130,7 +131,7 @@ It runs eight decisions that each have one defensible answer (the cheaper of two
 
 Every answer says which model made it. `decider_status` lists the three.
 
-**Close calls get a second look automatically.** If a standard decision comes out within five points, or tied, and a deep model is set, the decision is asked again with the deep method on the deep model, and that answer is the one returned. The first pass is kept under `escalatedFrom` (its model, choice, margin and totals), and the first caution says whether the deep method agreed. This does not happen when the caller sets a depth, sets `escalate: false`, or no deep model is set. If the second look fails, the first answer stands and says so.
+**Close calls get a second look automatically.** If a standard decision comes out less than five points apart, or tied, and a deep model is set, the decision is asked again with the deep method on the deep model, and that answer is the one returned. The first pass is kept under `escalatedFrom` (its model, choice, margin and totals), and the first caution says whether the deep method agreed. This does not happen when the caller sets a depth, sets `escalate: false`, or no deep model is set. If the second look fails, the first answer stands and says so.
 
 If the models live on different servers, set `LLM_BASE_URL_QUICK` and `LLM_BASE_URL_DEEP`; each falls back to `LLM_BASE_URL`.
 
