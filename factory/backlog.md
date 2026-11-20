@@ -15,7 +15,7 @@ Candidate apps, highest score first. Scores are 1–5 each; see `FACTORY.md`. A 
 
 | Concept | Decided | By | Margin |
 |---|---|---|---|
-| Say It Kindly | 2026-11-20 | Decision maker, Phi-3.5 mini; see `factory/decisions/2026-11-20-next-app.md` | 1 point over Second Look: a close call |
+| Say It Kindly | 2026-11-20 | Decision maker: Phi-3.5 mini twice, Qwen2.5 7B deep once, all three agree; see `factory/decisions/2026-11-20-next-app.md` | Margins of 1, 26 and 4 points over Second Look: the order is stable, the margin is noise |
 
 ## Built
 
