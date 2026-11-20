@@ -3,5 +3,5 @@
    Leave both empty to run on this device only. */
 window.SOYA_ROOM_CONFIG = {
   url: 'https://futpofsbwfnbnkhyflwk.supabase.co',
-  key: 'sb_publishable_4sg56BrqgVt7U4I39spuYw_0GRj8LQd'
+  key: 'sb_publishable_4sg56BrqgVt7U4I39spuYw_0GRj8LQd' // gitleaks:allow (publishable key, public by design)
 };
