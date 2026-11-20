@@ -1,6 +1,10 @@
-# Soya Productions front page — rules for working in this repository
+# Soya Productions — rules for working in this repository
 
-This page lists the Soya Productions films (daily POCs) for day-to-day people who are not technical.
+This repository is the Soya Productions factory and its front page. The front page lists the films (small web apps) for day-to-day people who are not technical. The factory makes new ones.
+
+- **Factory runs follow `factory/FACTORY.md` exactly.** Read it first. A run opens a pull request and never merges it.
+- `factory/decision-maker/` is a Node tool, not a film: no dependencies, no `package.json`. Check it with `node --test factory/decision-maker/server.test.mjs`.
+- Films made here live in `films/YYYY-MM-DD-slug/`, each self-contained, with its own storage-key and cache-name prefix.
 
 - Vanilla HTML, CSS and JavaScript. No framework, no build step, no backend, no cookies, no analytics, no ads, no tracking.
 - The list of films is `films.js`, newest first. Adding a film is one entry there, with English and Hebrew text.

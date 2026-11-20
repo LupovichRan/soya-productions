@@ -1,6 +1,13 @@
 # Soya Productions
 
-The front page for the Soya Productions films: small, calm web apps built one at a time as daily POCs. Each film lives in its own repository (`soya-poc-YYYY-MM-DD-slug`) and is published on its own GitHub Pages address. This page lists them, newest first.
+A small software factory, and the front page for what it makes. On a schedule, a run reads current trends in AI and software, turns the most useful concept into a small, calm web app (a "film"), and opens a pull request for Ran to review. This page lists the films, newest first.
+
+- [factory/FACTORY.md](factory/FACTORY.md) — how a run works and what makes a good film.
+- [factory/trends/](factory/trends/) — one trend brief per run.
+- [factory/backlog.md](factory/backlog.md) — scored concepts waiting to be built.
+- [films/](films/) — the films the factory has made.
+- [docs/HOSTING.md](docs/HOSTING.md) — where things run, build-or-borrow decisions, checks on every change, security.
+- [factory/decision-maker/](factory/decision-maker/) — POC 2: lets Claude ask your own self-hosted model to make a choice.
 
 No accounts, no ads, no tracking. English and Hebrew.
 
@@ -12,14 +19,14 @@ Open `films.js`, copy an entry, put it at the top, and fill it in:
 {
   number: 2,
   date: '2026-11-21',
-  path: 'soya-poc-2026-11-21-slug',   // the repository name
+  folder: '2026-11-21-slug',           // the folder under films/
   mascot: 'owl',                       // cat, fox, owl, bear, rabbit or frog
   en: { title: 'Name', line: 'One plain sentence about what it does.' },
   he: { title: 'שם', line: 'משפט פשוט אחד על מה שזה עושה.' }
 }
 ```
 
-The newest film becomes "Now showing"; the rest move to "Earlier films". The link is `../{path}/`, which works because every film is published next to this page on the same host. Use `url` instead of `path` for a film hosted somewhere else.
+The newest film becomes "Now showing"; the rest move to "Earlier films". Use `path: 'repository-name'` instead for a film in its own repository published next to this site (as Roundtable is), or `url` for a film hosted somewhere else.
 
 ## Run it
 

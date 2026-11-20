@@ -63,8 +63,12 @@
     try { return d.toLocaleDateString(lang === 'he' ? 'he-IL' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' }); }
     catch (e) { return iso; }
   }
-  /** Films sit next to this site on the same host, so a relative link works wherever it is served. */
-  function href(film) { return film.url || '../' + encodeURIComponent(film.path) + '/'; }
+  /** A film is a folder in this repository (folder), a sister site on the same host (path), or elsewhere (url). */
+  function href(film) {
+    if (film.url) return film.url;
+    if (film.folder) return 'films/' + encodeURIComponent(film.folder) + '/';
+    return '../' + encodeURIComponent(film.path) + '/';
+  }
   function words(film) { return film[lang] || film.en || {}; }
   function meta(film) { return t('film') + ' ' + film.number + ' · ' + day(film.date); }
 
