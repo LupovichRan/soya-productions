@@ -23,7 +23,7 @@
       app: 'App',
       open: 'Open',
       none: 'No apps yet. Come back soon.',
-      roadTitle: 'Road map for each app', onePage: 'One page',
+      roadTitle: 'Road map for each app', onePage: 'One page', videosTitle: 'Soya explains', videosLine: 'Short videos where Soya the cat explains AI and software.',
       howTitle: 'How the factory works',
       how: ['It reads what is new in AI and software.', 'It picks the idea that would help an everyday person most.', 'It builds a small app, checks it, and asks Ran to look before anything goes live.'],
       promise: 'No accounts, no ads, no tracking.'
@@ -36,7 +36,7 @@
       app: 'אפליקציה',
       open: 'פתיחה',
       none: 'אין עדיין אפליקציות. חזרו בקרוב.',
-      roadTitle: 'מפת דרכים לכל אפליקציה', onePage: 'עמוד אחד',
+      roadTitle: 'מפת דרכים לכל אפליקציה', onePage: 'עמוד אחד', videosTitle: 'סויה מסבירה', videosLine: 'סרטונים קצרים שבהם סויה החתולה מסבירה בינה מלאכותית ותוכנה.',
       howTitle: 'איך המפעל עובד',
       how: ['הוא קורא מה חדש בבינה מלאכותית ובתוכנה.', 'הוא בוחר את הרעיון שהכי יעזור לאדם רגיל.', 'הוא בונה אפליקציה קטנה, בודק אותה, ומבקש מרן להסתכל לפני שמשהו עולה לאוויר.'],
       promise: 'בלי חשבון, בלי פרסומות, בלי מעקב.'
@@ -106,6 +106,7 @@
         }).join('');
       }
     }
+    html += '<h2>' + esc(t('videosTitle')) + '</h2><a class="row" href="videos.html">' + mascot('cat', 40) + '<span><b>' + esc(t('videosTitle')) + '</b><small>' + esc(t('videosLine')) + '</small></span></a>';
     if (list.length) {
       html += '<h2>' + esc(t('roadTitle')) + '</h2>' + list.map(function (f) {
         var key = f.folder || 'roundtable', x = words(f);

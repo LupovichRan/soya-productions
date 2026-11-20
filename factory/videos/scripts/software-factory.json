@@ -1,0 +1,37 @@
+{
+  "slug": "software-factory",
+  "title": { "en": "What is a software factory?", "he": "מה זה מפעל תוכנה?" },
+  "description": {
+    "en": "Soya the cat explains what a software factory is, how Soycatory's works in five steps, and why the people stay in charge. About 80 seconds.",
+    "he": "סויה החתול מסביר מה זה מפעל תוכנה, איך המפעל של Soycatory עובד בחמישה שלבים, ולמה האנשים נשארים אחראים. כ־80 שניות."
+  },
+  "scenes": [
+    { "show": { "type": "title", "kicker": "SOYA EXPLAINS", "title": "What is a software factory?" },
+      "en": "Hi. I'm Soya. I'm a cat, and I explain the things you keep hearing about. Today: what is a software factory?",
+      "he": "היי, אני סויה. אני חתול, ואני מסביר דברים שאתם כל הזמן שומעים עליהם. היום: מה זה מפעל תוכנה?" },
+    { "show": { "type": "chains", "labels": ["A cookie factory", "A software factory"], "rows": [["Dough", "Bake", "Check", "Box"], ["Idea", "Build", "Check", "App"]] },
+      "en": "A factory makes the same kind of thing again and again, with steps you can check. A cookie factory goes: dough, bake, check, box. A software factory does the same for apps.",
+      "he": "מפעל מייצר שוב ושוב את אותו סוג של דבר, בשלבים שאפשר לבדוק. מפעל עוגיות עובד כך: בצק, אפייה, בדיקה, אריזה. מפעל תוכנה עושה את זה לאפליקציות." },
+    { "show": { "type": "pipeline", "done": [], "now": [0, 1] },
+      "en": "Ours has five steps. One: read what is new in AI and software. Two: pick the idea that would help an everyday person the most.",
+      "he": "למפעל שלנו יש חמישה שלבים. אחד: לקרוא מה חדש בבינה מלאכותית ובתוכנה. שניים: לבחור את הרעיון שהכי יעזור לאדם רגיל." },
+    { "show": { "type": "pipeline", "done": [0, 1], "now": [2, 3] },
+      "en": "Three: build one small app. Four: check it. Tests, a scan for secrets, and a look at the phone screen, in English and in Hebrew.",
+      "he": "שלושה: לבנות אפליקציה קטנה אחת. ארבעה: לבדוק אותה. בדיקות, סריקה של סודות, ומבט על מסך הטלפון, באנגלית ובעברית." },
+    { "show": { "type": "pipeline", "done": [0, 1, 2, 3], "now": [4] },
+      "en": "Five: ask a person. The factory sends a request that says, here is my change, please look. It is not allowed to skip the checks.",
+      "he": "חמישה: לשאול אדם. המפעל שולח בקשה שאומרת: הנה השינוי שלי, בבקשה תסתכלו. אסור לו לדלג על הבדיקות." },
+    { "show": { "type": "loop", "center": "an outer loop", "nodes": ["DECIDE", "CHECK", "FOLLOW UP"] },
+      "en": "Here is a trend. People now put an agent above the tools. It decides what is next, checks the result, and follows up. Some call that an outer loop. Our factory uses a small one.",
+      "he": "והנה מגמה. אנשים מציבים היום סוכן מעל הכלים. הוא מחליט מה הבא, בודק את התוצאה, וממשיך לעקוב. יש שקוראים לזה לולאה חיצונית. במפעל שלנו יש כזו, קטנה." },
+    { "show": { "type": "list", "head": "An agent is only as good as its rules", "items": ["Spend money", "Open accounts", "Promise ownership"], "foot": "A person decides those." },
+      "en": "But an agent is only as good as its rules. Ours cannot spend money, cannot open accounts, and cannot promise anyone ownership. A person decides those.",
+      "he": "אבל סוכן טוב רק כמו הכללים שלו. הסוכן שלנו לא יכול להוציא כסף, לא יכול לפתוח חשבונות, ולא יכול להבטיח לאף אחד בעלות. את זה אדם מחליט." },
+    { "show": { "type": "big", "line1": "ONE APP A DAY", "line2": "until something catches" },
+      "en": "Why small apps? Because small things can be finished, checked and fixed. So the factory makes one app a day, until something catches.",
+      "he": "למה אפליקציות קטנות? כי דברים קטנים אפשר לסיים, לבדוק ולתקן. אז המפעל מייצר אפליקציה ביום, עד שמשהו יתפוס." },
+    { "show": { "type": "outro", "line1": "Try the apps", "line2": "Tell us what you would add", "url": "lupovichran.github.io/soya-productions" },
+      "en": "I'm Soya. Try the apps, tell us what you would add, and come back for the next one.",
+      "he": "אני סויה. נסו את האפליקציות, ספרו לנו מה הייתם מוסיפים, וחזרו להמשך." }
+  ]
+}
