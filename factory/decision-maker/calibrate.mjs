@@ -139,17 +139,23 @@ export const HARD_CASES = [
   },
 ];
 
-export async function calibrate(s = settings(), { depth = 'standard', fetcher = fetch, onCase = () => {}, cases = CASES } = {}) {
+export async function calibrate(s = settings(), { depth = 'standard', fetcher = fetch, onCase = () => {}, cases = CASES, escalateBelow } = {}) {
   const rows = [];
   for (const c of cases) {
     const started = Date.now();
-    const r = await decide({ question: c.question, options: c.options, criteria: c.criteria, weights: c.weights, context: c.context, depth }, s, fetcher);
+    // With escalateBelow set, no depth is passed, so the full path runs: first model, then the second look.
+    const r = await decide({ question: c.question, options: c.options, criteria: c.criteria, weights: c.weights, context: c.context, ...(escalateBelow != null ? { escalateBelow } : { depth }) }, s, fetcher);
     const out = r.structuredContent;
     const row = {
       name: c.name,
       expected: c.options[c.expect],
       got: r.isError ? null : out.choice,
       right: !r.isError && out.choice === c.options[c.expect],
+      noDecision: !r.isError && out.decided === false,
+      wrong: !r.isError && out.decided !== false && out.choice !== c.options[c.expect],
+      agreed: !r.isError ? Boolean(out.agreed) : false,
+      escalated: !r.isError && Boolean(out.escalatedFrom),
+      first: !r.isError && out.escalatedFrom ? out.escalatedFrom.choice : null,
       failed: Boolean(r.isError),
       note: r.isError ? r.content[0].text : '',
       margin: r.isError ? null : out.margin ?? null,
@@ -162,6 +168,7 @@ export async function calibrate(s = settings(), { depth = 'standard', fetcher = 
   const right = rows.filter(r => r.right).length;
   const summary = {
     model: s.model, depth, cases: rows.length, right,
+    wrong: rows.filter(r => r.wrong).length, noDecision: rows.filter(r => r.noDecision).length, escalated: rows.filter(r => r.escalated).length, agreed: rows.filter(r => r.agreed).length,
     failed: rows.filter(r => r.failed).length,
     flat: rows.filter(r => r.flat).length,
     averageSeconds: Math.round(rows.reduce((n, r) => n + r.seconds, 0) / rows.length),
