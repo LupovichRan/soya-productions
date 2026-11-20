@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Idea Room — Soycatory</title>
+<meta name="description" content="Bring an idea, test it for two weeks, and see if people want it. Alpha test: everything stays on your device.">
+<meta name="theme-color" content="#0F172A">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/room-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icons/room-apple-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&family=Inter:wght@400;500;600;650;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="top">
+  <button type="button" class="brand" id="brand">
+    <img src="assets/soycatory-mark.jpg" alt="" width="40" height="40">
+    <span><b id="brand-title">Idea Room</b><small>Soycatory</small></span>
+  </button>
+  <button type="button" class="ghost" id="lang-toggle">עברית</button>
+</header>
+
+<main id="app" aria-live="polite"></main>
+
+<footer class="foot">
+  <img src="assets/soycatory-mark.jpg" alt="Soya the cat" width="48" height="48">
+  <p id="credit">Made by Soycatory</p>
+</footer>
+
+<noscript><p class="noscript">Idea Room needs JavaScript to run.</p></noscript>
+<script src="room.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

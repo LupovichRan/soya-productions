@@ -6,6 +6,20 @@
      url:    'https://…'         anywhere else */
 window.SOYA_APPS = [
   {
+    number: 5,
+    date: '2026-11-20',
+    folder: '2026-11-20-idea-room',
+    mascot: 'fox',
+    en: {
+      title: 'Idea Room (alpha)',
+      line: 'Bring an idea and test it for two weeks. People show they want it with small real acts, and the owner decides. An early test: it runs on your device only.'
+    },
+    he: {
+      title: 'חדר רעיונות (אלפא)',
+      line: 'מביאים רעיון ובודקים אותו שבועיים. אנשים מראים שהם רוצים אותו במעשים קטנים ואמיתיים, והבעלים מחליט. בדיקה מוקדמת: רצה רק במכשיר שלך.'
+    }
+  },
+  {
     number: 4,
     date: '2026-11-20',
     folder: '2026-11-20-plain-steps',
