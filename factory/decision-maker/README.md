@@ -37,7 +37,7 @@ Say `reversible` and `stakes` and the method is picked for you; `depth` override
 The five steps:
 
 1. **Weights first.** What matters, and how much, is settled before any option is scored. The model is not shown the options at this step, so the weights cannot lean toward a favourite. You can pass your own `criteria` and `weights` instead.
-2. **Each option alone, one criterion at a time.** Every option is judged in its own separate requests, one small question per criterion: a reason first, then a score from 1 to 5. It is not shown the other options. Judging separately before comparing reduces noise, and a small question is one a small model can answer. The reasons behind high scores become the case for; the reasons behind low scores become the case against.
+2. **One criterion at a time.** For each criterion, one small request compares all the options on that criterion alone: a reason first, then a score from 1 to 5. Judging one quality at a time, before any overall view is formed, keeps one strong impression from colouring everything else. Seeing the options side by side is what makes a score such as "low price" mean something. The reasons behind high scores become the case for; the reasons behind low scores become the case against. In the deep method each criterion is asked three times with the options in a different order each time.
 3. **Totals in code.** The weighted totals are added up by the server, not by the model.
 4. **Stress-test the leader.** A pre-mortem (it is months later and this choice failed: why, and what early sign would have warned us?), the one bias most likely at work, and "what else?" — an option that was not on the list.
 5. **A record.** The decision, confidence, what would change it, an if-then next step, and a review date: one week for choices that are easy to undo, 30 days otherwise.
@@ -51,7 +51,7 @@ From the research notes, which mostly rest on secondary sources:
 | Step | Evidence |
 |---|---|
 | Pre-mortem | Medium. Reported to help people find about 30% more reasons for an outcome. |
-| Judging separately before comparing | Medium. Reduces noise between judgments. |
+| Judging one criterion at a time before forming an overall view | Medium. Reduces noise and the pull of one strong impression. |
 | Weights before scores | A standard practice of weighted decision tables; no outcome study was found. |
 | If-then plans | Strong for following through on an intention. |
 | Lighter process for reversible choices | An idea from business practice, with no outcome research. |
@@ -64,7 +64,18 @@ First runs, 20 November 2026, on llama.cpp's server with four CPU cores, asking 
 |---|---|---|
 | Qwen2.5 1.5B Instruct, 4-bit | about 2 minutes | The method ran end to end, but the model could not tell the options apart: nearly every score was 5, and its reasons mostly repeated the criteria. The tool reported a close call and low confidence. **Not good enough to decide with.** |
 
-Three changes came straight out of these runs: scores are asked for one criterion at a time (asked for five at once, the model left blanks); the reason is asked for before the number and no example number is shown (shown a 3, it answered 3 to everything); and an exact tie is no longer answered with whichever option was listed first.
+| Qwen2.5 7B Instruct, 4-bit | about 6 minutes | Told the options apart and gave real reasons. One reason was factually wrong (it said pasting text sends it off the device), and that error decided the result. **Useful, but its reasons must be read.** |
+
+What these runs changed in the method:
+
+1. Scores are asked for one criterion at a time. Asked for five at once, the small model left blanks.
+2. The reason is asked for before the number, and no example number is shown. Shown a 3, it answered 3 to everything.
+3. An exact tie is reported as no decision. It used to return whichever option was listed first.
+4. The stress-test now looks for reasons that contradict the context, after the 7B model's false reason.
+5. Options are compared side by side on each criterion. In the first design each option was scored without seeing the others, and all three models then failed the simplest calibration case: asked alone whether 20 dollars is a "low price" for a kettle, a model cannot know. Scored the first way, the 1.5B model got 3 of 8 calibration cases right and Phi-3.5-mini got 6 of 8.
+6. Criteria must be worded so that more is better ("Low price", not "Price").
+
+Calibration results for the current method are being measured and will be added here.
 
 
 ## Choosing the right model

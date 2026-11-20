@@ -5,7 +5,7 @@ import { spawn } from 'node:child_process';
 import { createServer } from 'node:http';
 import { fileURLToPath } from 'node:url';
 import { calibrate, CASES } from './calibrate.mjs';
-import { modelFor, checkArgs, checkDecision, checkReview, checkScore, checkWeights, decide, extractJson, handle, median, pickDepth, status } from './server.mjs';
+import { modelFor, checkArgs, checkDecision, checkReview, checkScores, checkWeights, decide, extractJson, handle, median, pickDepth, status } from './server.mjs';
 
 const S = { baseUrl: 'http://model.test/v1', model: 'm1', apiKey: '', log: '', timeoutMs: 5000 };
 const good = (o = {}) => JSON.stringify({ choice: 2, confidence: 0.8, reasons: ['cheaper'], risk: 'slower', wouldChangeIf: 'a deadline', ...o });
@@ -22,14 +22,24 @@ function model(replies, calls = []) {
 const ask = { question: 'Which first?', options: ['Alpha', 'Beta', 'Gamma'], depth: 'quick' };
 const full = { question: 'Which first?', options: ['Alpha', 'Beta', 'Gamma'] };
 
-/** A stand-in model for the structured method: answers by which step is asking. */
+/** A stand-in model for the structured method: answers by which step is asking.
+ *  `score(option, criterion, round)` gives one option's answer; the stand-in assembles the reply
+ *  for whatever order the options were listed in. */
 function steps({ weights, score, review }, calls = []) {
   return async (url, init) => {
     const body = JSON.parse(init.body), system = body.messages[0].content, user = body.messages[1].content;
-    const step = system.startsWith('You help set up') ? 'weigh' : system.startsWith('You judge one option') ? 'score' : 'review';
-    const option = (/The option to judge: (.*)/.exec(user) || [])[1], criterion = (/The criterion: (.*)/.exec(user) || [])[1];
-    calls.push({ step, option, criterion, user, body });
-    const r = step === 'weigh' ? weights(user) : step === 'score' ? score(option, criterion, calls.filter(c => c.step === 'score' && c.option === option && c.criterion === criterion).length) : review(user);
+    const step = system.startsWith('You help set up') ? 'weigh' : system.startsWith('You compare the options') ? 'score' : 'review';
+    const criterion = (/The one criterion to judge: (.*)/.exec(user) || [])[1];
+    const listed = step === 'score' ? user.split('The options:\n')[1].split('\n\n')[0].split('\n').map(l => l.replace(/^\d+\. /, '')) : [];
+    calls.push({ step, criterion, listed, user, body });
+    const round = calls.filter(c => c.step === 'score' && c.criterion === criterion).length;
+    let r;
+    if (step === 'weigh') r = weights(user);
+    else if (step === 'review') r = review(user);
+    else {
+      const each = listed.map(o => score(o, criterion, round));
+      r = each.some(e => typeof e === 'string') ? each.find(e => typeof e === 'string') : Object.fromEntries(each.map((e, k) => [k + 1, e]));
+    }
     if (r instanceof Error) throw r;
     return new Response(JSON.stringify({ choices: [{ message: { content: typeof r === 'string' ? r : JSON.stringify(r) } }] }), { status: 200 });
   };
@@ -162,15 +172,16 @@ test('each step of the structured method checks its answer', () => {
   assert.equal(checkWeights({ weights: [5, 1] }, ['a', 'b']).value[0].weight, 5);
   assert.equal(checkWeights({ weights: [5] }, ['a', 'b']).ok, false);
   assert.equal(checkWeights({ criteria: [{ name: 'a', weight: 2 }, { name: 'b', weight: 9 }] }, []).ok, false);
-  assert.equal(checkScore({ score: 4, why: 'w' }).value.score, 4);
-  assert.equal(checkScore({ score: 0, why: 'w' }).ok, false);
-  assert.equal(checkScore({ score: 3 }).ok, false);
+  assert.deepEqual(checkScores({ 1: { why: 'a', score: 4 }, 2: { why: 'b', score: '2' } }, 2).value.map(v => v.score), [4, 2]);
+  assert.equal(checkScores({ 1: { why: 'a', score: 4 } }, 2).ok, false);
+  assert.equal(checkScores({ 1: { why: 'a', score: 0 }, 2: { why: 'b', score: 2 } }, 2).ok, false);
+  assert.equal(checkScores({ 1: { score: 3 }, 2: { why: 'b', score: 2 } }, 2).ok, false);
   assert.equal(checkReview({ preMortem: [], confidence: 0.5 }).ok, false);
   assert.equal(checkReview({ ...okReview, bias: 'made-up' }).value.bias, 'none');
   assert.equal(median([5, 1, 3]), 3);
 });
 
-test('standard: weights before options, each option alone, totals added in code', async () => {
+test('standard: weights before options, one criterion at a time, totals added in code', async () => {
   const calls = [];
   const r = await decide({ ...full, criteria: ['Cost', 'Speed'], context: 'ctx' }, S, steps({
     weights: () => ({ weights: [5, 1] }),
@@ -182,11 +193,12 @@ test('standard: weights before options, each option alone, totals added in code'
   assert.equal(out.choice, 'Beta');                       // 5*5+1*1=26 of 30 beats Alpha 15 and Gamma 18
   assert.deepEqual(out.table.map(t => [t.option, t.total]), [['Beta', 86.7], ['Gamma', 60], ['Alpha', 50]]);
   assert.equal(out.closeCall, false);
-  assert.deepEqual(calls.map(c => c.step), ['weigh', ...Array(6).fill('score'), 'review']);
+  assert.deepEqual(calls.map(c => c.step), ['weigh', 'score', 'score', 'review']);
+  assert.deepEqual(calls.filter(c => c.step === 'score').map(c => c.criterion), ['Cost', 'Speed']);
   assert.deepEqual(out.table[0].pros, ['Beta on Cost']);            // the reason behind its high score
   assert.deepEqual(out.table[0].cons, ['Beta on Speed']);           // the reason behind its low score
   assert.doesNotMatch(calls[0].user, /Alpha|Beta|Gamma/);  // weights are set without seeing the options
-  assert.doesNotMatch(calls[1].user, /Beta|Gamma/);        // each option is judged without the others
+  assert.doesNotMatch(calls[1].user, /Speed/);             // one criterion at a time: the other is not mentioned
   assert.equal(out.preMortem[0].earlyWarning, 'no visits in week one');
   assert.ok(out.cautions.some(c => /confirmation bias/.test(c)));
   assert.ok(out.cautions.some(c => /Delta/.test(c)));
@@ -229,7 +241,9 @@ test('deep: every option is scored three times and the middle score is kept; rev
   }, calls));
   const out = r.structuredContent;
   assert.equal(out.method, 'deep');
-  assert.equal(calls.filter(c => c.step === 'score').length, 9);
+  const scoring = calls.filter(c => c.step === 'score');
+  assert.equal(scoring.length, 3);
+  assert.deepEqual(scoring.map(c => c.listed[0]), ['Alpha', 'Beta', 'Gamma']);   // the order rotates between rounds
   assert.equal(out.table[0].option, 'Alpha');
   assert.deepEqual(out.table[0].scores, [4]);
   assert.deepEqual(out.table[0].reasons, ['round 3']);              // the reason that goes with the middle score
