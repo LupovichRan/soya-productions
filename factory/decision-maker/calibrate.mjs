@@ -139,12 +139,12 @@ export const HARD_CASES = [
   },
 ];
 
-export async function calibrate(s = settings(), { depth = 'standard', fetcher = fetch, onCase = () => {}, cases = CASES, escalateBelow } = {}) {
+export async function calibrate(s = settings(), { depth = 'standard', fetcher = fetch, onCase = () => {}, cases = CASES, escalateBelow, onDisagreement } = {}) {
   const rows = [];
   for (const c of cases) {
     const started = Date.now();
     // With escalateBelow set, no depth is passed, so the full path runs: first model, then the second look.
-    const r = await decide({ question: c.question, options: c.options, criteria: c.criteria, weights: c.weights, context: c.context, ...(escalateBelow != null ? { escalateBelow } : { depth }) }, s, fetcher);
+    const r = await decide({ question: c.question, options: c.options, criteria: c.criteria, weights: c.weights, context: c.context, ...(escalateBelow != null ? { escalateBelow } : { depth }), ...(onDisagreement ? { onDisagreement } : {}) }, s, fetcher);
     const out = r.structuredContent;
     const row = {
       name: c.name,
@@ -156,6 +156,8 @@ export async function calibrate(s = settings(), { depth = 'standard', fetcher = 
       agreed: !r.isError ? Boolean(out.agreed) : false,
       escalated: !r.isError && Boolean(out.escalatedFrom),
       first: !r.isError && out.escalatedFrom ? out.escalatedFrom.choice : null,
+      second: !r.isError && out.escalatedFrom ? (out.disagreement ? out.disagreement.second.choice : out.choice) : null,
+      expectedChoice: c.options[c.expect],
       failed: Boolean(r.isError),
       note: r.isError ? r.content[0].text : '',
       margin: r.isError ? null : out.margin ?? null,
