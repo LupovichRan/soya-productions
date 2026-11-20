@@ -118,6 +118,19 @@ The same real question (which of three concepts to build, five equal-weight crit
 
 All six runs agree on the order: Plain Steps, then Second Look, then Five-Minute Teacher. The 7B model was steadier from run to run; Phi's margin ranged from 4 to 20.
 
+### What the disagreement rule would have done on the hard set
+
+From the real standard runs above (not a run through the escalation path itself): Phi and Qwen2.5 7B gave the same answer on 5 of the 7 hard cases, and both were right. On the other 2 (the arithmetic trap and the reversible choice) Phi was right and Qwen was wrong.
+
+| Policy | Right | Wrong | No decision |
+|---|---|---|---|
+| Phi alone | 7 | 0 | 0 |
+| Qwen alone | 5 | 2 | 0 |
+| The deep model's answer replaces the first (the first design) | 5 | 2 | 0 |
+| **Agree or no decision (now)** | **5** | **0** | **2** |
+
+The first design would have thrown away two correct answers. The rule now used trades two decisions it could not make for no wrong ones. This is arithmetic on existing results, with one run per case; the next step is to put the hard set through the full path.
+
 ### Which model for the second look
 
 Neither model dominates: Phi was right more often on the hard clear-cut cases, and the 7B was steadier on the ambiguous choice. So the second look is not "ask the stronger model". Its value is **independence**: two different models that agree are better evidence than one model asked twice, and two that disagree is exactly when a person should look. The default pairing (Phi first, Qwen2.5 7B second) is kept for that reason, and the cautions say when they differ. Whether a second look ever corrects a wrong answer is still unobserved; the way to find out is to put the hard set through the whole escalation path, which is not yet done.
@@ -179,7 +192,11 @@ It runs eight decisions that each have one defensible answer (the cheaper of two
 
 Every answer says which model made it. `decider_status` lists the three.
 
-**Close calls get a second look automatically.** If a standard decision comes out less than five points apart, or tied, and a deep model is set, the decision is asked again with the deep method on the deep model, and that answer is the one returned. The first pass is kept under `escalatedFrom` (its model, choice, margin and totals), and the first caution says whether the deep method agreed. This does not happen when the caller sets a depth, sets `escalate: false`, or no deep model is set. If the second look fails, the first answer stands and says so.
+**Close calls get a second look automatically.** If a standard decision comes out less than five points apart, or tied, and a deep model is set, the decision is asked again with the deep method on the second model. The first pass is kept under `escalatedFrom` (its model, choice, margin and totals).
+
+- **The two agree:** the deep answer is returned with `agreed: true`, and the first caution says so.
+- **The two disagree:** **no decision is made.** `choice` is `null`, `decided` is `false`, confidence is 0, there is no record, and `disagreement` names what each model chose. Both tables are there to read. The caller (a person, or the factory falling back on its backlog scores) decides. Neither model is trusted over the other, because on the hard calibration set the larger model was wrong where the smaller one was right.
+- **No second look** when the caller sets a depth, sets `escalate: false`, or no second model is set. If the second look fails, the first answer stands and says so.
 
 If the models live on different servers, set `LLM_BASE_URL_QUICK` and `LLM_BASE_URL_DEEP`; each falls back to `LLM_BASE_URL`.
 

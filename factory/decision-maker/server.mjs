@@ -45,7 +45,7 @@ export const TOOLS = [
   {
     name: 'decide',
     title: 'Decide',
-    description: 'Ask the self-hosted model to choose exactly one of the given options, using a structured method. Quick: one answer with reasons (for small choices that are easy to undo). Standard: criteria are weighted before any option is scored, the options are compared on one criterion at a time, the totals are added up in code, then the leader gets a pre-mortem, a bias check and a "what else" check. Deep: the same, with every option scored three times and the middle score kept (for choices that are hard to undo or high stakes). Depth is picked from "reversible" and "stakes" unless you set it. A standard decision that comes out as a close call (less than five points apart, or tied) is asked again automatically with the deep method on the deep model, if one is set; set escalate to false to stop that. Returns the choice, the full table, and a decision record with a review date. The model sees only what you pass here, so put everything it needs in "context". If no model is connected or an answer is unusable, the call fails; it never makes a decision up.',
+    description: 'Ask the self-hosted model to choose exactly one of the given options, using a structured method. Quick: one answer with reasons (for small choices that are easy to undo). Standard: criteria are weighted before any option is scored, the options are compared on one criterion at a time, the totals are added up in code, then the leader gets a pre-mortem, a bias check and a "what else" check. Deep: the same, with every option scored three times and the middle score kept (for choices that are hard to undo or high stakes). Depth is picked from "reversible" and "stakes" unless you set it. A standard decision that comes out as a close call (less than five points apart, or tied) is asked again automatically with the deep method on a second model, if one is set. If the two models agree the answer says so; if they disagree, NO decision is made (choice is null, decided is false) and both tables are returned, because neither model is trusted over the other. Set escalate to false to stop the second look. Returns the choice, the full table, and a decision record with a review date. The model sees only what you pass here, so put everything it needs in "context". If no model is connected or an answer is unusable, the call fails; it never makes a decision up.',
     inputSchema: {
       type: 'object', additionalProperties: false, required: ['question', 'options'],
       properties: {
@@ -190,7 +190,9 @@ async function decideOnce(s, args, temperature, fetcher, state) {
 /**
  * Decide, and when the first pass is a close call, ask again the careful way.
  * A standard decision that comes out less than five points apart (or tied) is re-run with the deep method on the
- * deep model, if one is set. The deep answer is the one returned; the first pass is kept alongside it.
+ * deep model, if one is set. Two different models are an independent check on each other, not a ranking:
+ * if they agree, the answer stands with that said; if they disagree, no decision is made and both are shown,
+ * because on the hard calibration set the larger model was wrong where the smaller one was right.
  * Not done when the caller chose a depth, or set escalate: false.
  */
 export async function decide(raw, s = settings(), fetcher = fetch) {
@@ -208,7 +210,19 @@ export async function decide(raw, s = settings(), fetcher = fetch) {
   }
   const d = deep.structuredContent;
   d.escalatedFrom = { model: out.model, method: out.method, choice: out.choice, margin: out.margin, totals: out.table.map(t => ({ option: t.option, total: t.total })) };
-  d.cautions.unshift(`The first pass (${out.model}, standard) ${out.closeCall ? 'was a close call' : `had a margin under ${below} points`}, ${out.choice ? `choosing "${out.choice}" by ${out.margin} points` : 'an exact tie'}, so it was asked again with the deep method on ${d.model}.${out.choice && d.choice !== out.choice ? ` The deep method chose differently: "${d.choice}".` : ''}`);
+  const why = `The first pass (${out.model}, standard) ${out.closeCall ? 'was a close call' : `had a margin under ${below} points`}, ${out.choice ? `choosing "${out.choice}" by ${out.margin} points` : 'an exact tie'}, so it was asked again with the deep method on ${d.model}.`;
+  if (out.choice && d.choice && d.choice !== out.choice) {
+    // Disagreement. Neither model is trusted over the other, so nothing is chosen.
+    d.disagreement = { first: { model: out.model, choice: out.choice, margin: out.margin }, second: { model: d.model, choice: d.choice, margin: d.margin } };
+    d.decided = false;
+    d.choice = null;
+    d.confidence = 0;
+    d.record = null;
+    d.cautions.unshift(`${why} The two models disagree: ${out.model} chose "${out.choice}" and ${d.model} chose "${d.disagreement.second.choice}". No decision was made. Read both tables, or ask again with more context.`);
+  } else {
+    if (out.choice && d.choice === out.choice) d.agreed = true;
+    d.cautions.unshift(`${why}${d.agreed ? ' The second look agrees.' : ''}`);
+  }
   deep.content = [{ type: 'text', text: JSON.stringify(d, null, 2) }];
   return deep;
 }
