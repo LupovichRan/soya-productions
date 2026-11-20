@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Soyactory: one-time Google Cloud set-up for the model server.
+# Soycatory: one-time Google Cloud set-up for the model server.
 #
 # Run it in Google Cloud Shell (https://shell.cloud.google.com), signed in as the owner of the project.
 # READ IT FIRST. It is short and changes only what is listed below. It is safe to run twice.
@@ -39,7 +39,7 @@ DEPLOYER_EMAIL="${DEPLOYER}@${PROJECT_ID}.iam.gserviceaccount.com"
 RUNTIME_EMAIL="${RUNTIME}@${PROJECT_ID}.iam.gserviceaccount.com"
 SECRET="soya-decider-key"
 POOL="github"
-PROVIDER="soyactory"
+PROVIDER="soycatory"
 
 echo "Project: $PROJECT_ID ($PROJECT_NUMBER), region $REGION, repository $REPO, branch $BRANCH"
 
@@ -51,7 +51,7 @@ gcloud services enable --project "$PROJECT_ID" \
 echo "2/7 Docker repository"
 gcloud artifacts repositories describe soya --location "$REGION" --project "$PROJECT_ID" >/dev/null 2>&1 \
   || gcloud artifacts repositories create soya --repository-format=docker --location "$REGION" --project "$PROJECT_ID" \
-       --description "Soyactory model server images"
+       --description "Soycatory model server images"
 
 echo "3/7 Secret (a new random key; it is not printed)"
 if ! gcloud secrets describe "$SECRET" --project "$PROJECT_ID" >/dev/null 2>&1; then
@@ -63,7 +63,7 @@ fi
 echo "4/7 Service accounts"
 for sa in "$DEPLOYER" "$RUNTIME"; do
   gcloud iam service-accounts describe "${sa}@${PROJECT_ID}.iam.gserviceaccount.com" --project "$PROJECT_ID" >/dev/null 2>&1 \
-    || gcloud iam service-accounts create "$sa" --project "$PROJECT_ID" --display-name "Soyactory $sa"
+    || gcloud iam service-accounts create "$sa" --project "$PROJECT_ID" --display-name "Soycatory $sa"
 done
 
 echo "5/7 Permissions, as narrow as they go"
@@ -93,7 +93,7 @@ gcloud iam service-accounts add-iam-policy-binding "$DEPLOYER_EMAIL" --project "
 echo "7/7 Budget alert"
 if [ -n "$BILLING_ACCOUNT" ]; then
   gcloud services enable billingbudgets.googleapis.com --project "$PROJECT_ID"
-  gcloud billing budgets create --billing-account "$BILLING_ACCOUNT" --display-name "Soyactory: tell me at \$1" \
+  gcloud billing budgets create --billing-account "$BILLING_ACCOUNT" --display-name "Soycatory: tell me at \$1" \
     --budget-amount 1USD --filter-projects "projects/${PROJECT_ID}" \
     --threshold-rule percent=0.5 --threshold-rule percent=1.0 || echo "    could not create the budget; set one by hand at https://console.cloud.google.com/billing/budgets"
 else

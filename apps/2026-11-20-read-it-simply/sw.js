@@ -1,6 +1,6 @@
 /* Read It Simply service worker. Scope: this folder only.
    Bump VERSION (readsimply-YYYYMMDDHHMMSS) whenever a cached file changes. */
-const VERSION = 'readsimply-20261120150000';
+const VERSION = 'readsimply-20261120210000';
 
 const PRECACHE = [
   './',
@@ -13,7 +13,7 @@ const PRECACHE = [
   'icons/read-512.png',
   'icons/read-maskable-512.png',
   'icons/read-apple-180.png',
-  'assets/soyactory-mark.jpg',
+  'assets/soycatory-mark.jpg',
 ];
 
 self.addEventListener('install', (event) => {

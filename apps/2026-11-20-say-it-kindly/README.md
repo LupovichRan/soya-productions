@@ -1,6 +1,6 @@
 # Say It Kindly
 
-*Made by Soyactory.* App 3, 20 November 2026. English and Hebrew.
+*Made by Soycatory.* App 3, 20 November 2026. English and Hebrew.
 
 Paste a message you are nervous to send. The phrases that tend to land hard are listed, each with why, and where there is a safe gentler wording you can put it into your message with one tap. The message stays one editable box: nothing is rewritten for you, and the list follows what you type.
 

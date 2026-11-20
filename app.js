@@ -1,10 +1,10 @@
-/* Soyactory front page: says what the factory is and lists the apps it has made, from apps.js,
+/* Soycatory front page: says what the factory is and lists the apps it has made, from apps.js,
    newest first. No framework, no build step, no tracking. Only the language choice is kept,
    in this browser. */
 (function () {
   'use strict';
 
-  var LANG_KEY = 'soyactory-lang';
+  var LANG_KEY = 'soycatory-lang';
   var COLORS = { cat: '#1F2937', fox: '#B9571E', owl: '#6B5540', bear: '#7A4B2E', rabbit: '#8C95A3', frog: '#2F7D55' };
   var EARS = {
     cat: '<path d="M20 38 L24 6 L48 26Z"/><path d="M80 38 L76 6 L52 26Z"/>',

@@ -1,6 +1,6 @@
 # Hosting, delivery and security — decisions
 
-Written 20 November 2026. What Soyactory needs to run, where each piece should live, and whether to build it, use open source, or pay. Free and open source are tried first.
+Written 20 November 2026. What Soycatory needs to run, where each piece should live, and whether to build it, use open source, or pay. Free and open source are tried first.
 
 ## Where things stand
 

@@ -1,4 +1,4 @@
-/* The list of apps the Soyactory has made, newest first.
+/* The list of apps the Soycatory has made, newest first.
    To add one: copy an entry, put it at the top, and fill it in.
    Where the app lives — use one of:
      folder: 'YYYY-MM-DD-slug'   a folder under apps/ in this repository (factory apps)

@@ -1,4 +1,4 @@
-/* Read It Simply — a Soyactory app.
+/* Read It Simply — a Soycatory app.
    Paste a confusing letter; see what it says, what it asks of you, and by when.
    The letter never leaves this device and is never saved. Only the language choice is kept. */
 (function () {
@@ -12,7 +12,7 @@
     en: {
       title: 'Read It Simply',
       otherLang: 'עברית',
-      credit: 'Made by Soyactory',
+      credit: 'Made by Soycatory',
       homeTitle: 'Got a confusing letter?',
       homeLead: 'Paste it here. You will see what it asks you to do, and the dates and amounts in it.',
       label: 'The letter or message',
@@ -46,7 +46,7 @@
     he: {
       title: 'בפשטות',
       otherLang: 'English',
-      credit: 'מבית Soyactory',
+      credit: 'מבית Soycatory',
       homeTitle: 'קיבלת מכתב מבלבל?',
       homeLead: 'הדביקו אותו כאן. תראו מה מבקשים מכם לעשות, ואת התאריכים והסכומים שבו.',
       label: 'המכתב או ההודעה',
@@ -248,7 +248,7 @@
     var html = document.documentElement;
     html.lang = state.lang;
     html.dir = state.lang === 'he' ? 'rtl' : 'ltr';
-    document.title = t('title') + ' — Soyactory';
+    document.title = t('title') + ' — Soycatory';
     document.getElementById('brand-title').textContent = t('title');
     document.getElementById('credit').textContent = t('credit');
     var toggle = document.getElementById('lang-toggle');
