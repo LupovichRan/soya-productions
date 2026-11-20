@@ -76,15 +76,20 @@ Still to do by hand in GitHub settings (an assistant cannot change these):
 
 ## One-time Google Cloud set-up (only if you choose Cloud Run)
 
-1. Create a project and attach billing. Set a **budget alert at $1** so any charge is noticed.
-2. Enable Cloud Run, Artifact Registry and Secret Manager. Create an Artifact Registry repository named `soya` in `us-central1`.
-3. Create a secret named `soya-decider-key` holding a long random value.
-4. Create two service accounts: one that may deploy (Cloud Run Admin, Artifact Registry Writer, Service Account User on the second), and one the service runs as (Secret Accessor on that one secret, nothing else).
-5. Create a workload identity pool and provider for GitHub, restricted to the repository `LupovichRan/soya-productions`, and let it act as the deploy account.
-6. In the repository's settings add the variables `GCP_PROJECT_ID`, `GCP_WORKLOAD_IDENTITY_PROVIDER`, `GCP_DEPLOY_SERVICE_ACCOUNT` and `GCP_RUNTIME_SERVICE_ACCOUNT`. These are names, not secrets.
-7. Run "Deploy model server" from the Actions tab and approve it.
+One script does all of it. It is `infra/gcp-setup.sh`: short, readable, safe to run twice, and it deletes nothing. It has been tested only against a stand-in for `gcloud`, never against a real account, so expect to fix a flag or two on the first real run.
 
-Then the decision maker needs `LLM_BASE_URL` set to the service address followed by `/v1`, `LLM_MODEL` set to `decider`, and the key from step 3.
+1. Open Google Cloud Shell, signed in as the owner of the project: <https://shell.cloud.google.com>
+2. Fetch the script and read it before running it:
+   `curl -fsSL https://raw.githubusercontent.com/LupovichRan/soya-productions/main/infra/gcp-setup.sh -o gcp-setup.sh && less gcp-setup.sh`
+3. Run it, naming your project (add `BILLING_ACCOUNT=...` to also get a $1 budget alert):
+   `PROJECT_ID=your-project-id bash gcp-setup.sh`
+4. It prints four values. Paste them into the repository as variables: <https://github.com/LupovichRan/soya-productions/settings/variables/actions>
+5. Create an environment named `model-server` with yourself as required reviewer: <https://github.com/LupovichRan/soya-productions/settings/environments>
+6. Run "Deploy model server" from the Actions tab and approve it.
+
+What the script sets up: the Cloud Run, Artifact Registry, Secret Manager and sign-in services; a Docker repository `soya`; a secret `soya-decider-key` holding a new random key that is never printed; a deploying service account and a runtime service account, each with only the permissions it needs; and a trust rule that lets GitHub deploy without any stored key, but only from this repository's `main` branch. If the repository is renamed, run it again with `GITHUB_REPO=LupovichRan/new-name`.
+
+Then the decision maker needs `LLM_BASE_URL` set to the service address followed by `/v1`, `LLM_MODEL` set to `decider`, and the key from the secret.
 
 ## Risks worth knowing
 
