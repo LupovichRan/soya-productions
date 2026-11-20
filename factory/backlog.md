@@ -19,6 +19,7 @@ Candidate apps, highest score first. Scores are 1–5 each; see `FACTORY.md`. A 
 | 4 | Plain Steps | 2026-11-20 | `apps/2026-11-20-plain-steps/` (chosen by the decision maker: six runs on two models, all in favour; see `factory/decisions/2026-11-20-small-choices.md`) |
 | 5 | Idea Room (alpha proof of concept of the open idea factory) | 2026-11-20 | `apps/2026-11-20-idea-room/` (chosen by Ran; see `factory/concepts/open-idea-factory.md`) |
 | 6 | Cat Factory (a parody of a software factory, told by cats) | 2026-11-20 | `apps/2026-11-20-cat-factory/` (chosen by Ran) |
+| 7 | Soya's Games (three small games for young children) | 2026-11-20 | `apps/2026-11-20-soya-games/` (chosen by Ran) |
 | — | Decision Maker (POC 2, a tool, not an app) | 2026-11-20 | `factory/decision-maker/` |
 
 ## Set aside
