@@ -6,6 +6,20 @@
      url:    'https://…'         anywhere else */
 window.SOYA_FILMS = [
   {
+    number: 2,
+    date: '2026-11-20',
+    folder: '2026-11-20-read-it-simply',
+    mascot: 'owl',
+    en: {
+      title: 'Read It Simply',
+      line: 'Paste a confusing letter. See what it asks you to do, and the dates and amounts in it. Nothing leaves your device.'
+    },
+    he: {
+      title: 'בפשטות',
+      line: 'מדביקים מכתב מבלבל. רואים מה מבקשים מכם לעשות, ואת התאריכים והסכומים שבו. שום דבר לא יוצא מהמכשיר.'
+    }
+  },
+  {
     number: 1,
     date: '2026-11-20',
     path: 'soya-poc-2026-11-20-roundtable',

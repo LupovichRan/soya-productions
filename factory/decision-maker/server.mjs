@@ -7,6 +7,8 @@
 // Settings (environment variables):
 //   LLM_BASE_URL   where the model server listens, e.g. http://localhost:11434/v1
 //   LLM_MODEL      the model name on that server, e.g. qwen3:4b
+//   LLM_MODEL_QUICK  optional; a smaller, faster model for quick decisions (easy to undo, low stakes)
+//   LLM_MODEL_DEEP   optional; a larger, more careful model for deep decisions (hard to undo, high stakes)
 //   LLM_API_KEY    optional; only for a gateway in front of your own server
 //   DECISION_LOG   optional; a file to append every decision to, one JSON object per line
 //   LLM_TIMEOUT_MS optional; how long to wait for one answer (default 120000)
@@ -28,6 +30,8 @@ export function settings(env = process.env) {
   return {
     baseUrl: String(env.LLM_BASE_URL || '').trim().replace(/\/+$/, ''),
     model: String(env.LLM_MODEL || '').trim(),
+    modelQuick: String(env.LLM_MODEL_QUICK || '').trim(),
+    modelDeep: String(env.LLM_MODEL_DEEP || '').trim(),
     apiKey: String(env.LLM_API_KEY || ''),
     log: String(env.DECISION_LOG || '').trim(),
     timeoutMs: Math.max(1000, Number(env.LLM_TIMEOUT_MS) || 120000),
@@ -38,14 +42,14 @@ export const TOOLS = [
   {
     name: 'decide',
     title: 'Decide',
-    description: 'Ask the self-hosted model to choose exactly one of the given options, using a structured method. Quick: one answer with reasons (for small choices that are easy to undo). Standard: criteria are weighted before any option is scored, each option is judged on its own with pros and cons, the totals are added up in code, then the leader gets a pre-mortem, a bias check and a "what else" check. Deep: the same, with every option scored three times and the middle score kept (for choices that are hard to undo or high stakes). Depth is picked from "reversible" and "stakes" unless you set it. Returns the choice, the full table, and a decision record with a review date. The model sees only what you pass here, so put everything it needs in "context". If no model is connected or an answer is unusable, the call fails; it never makes a decision up.',
+    description: 'Ask the self-hosted model to choose exactly one of the given options, using a structured method. Quick: one answer with reasons (for small choices that are easy to undo). Standard: criteria are weighted before any option is scored, the options are compared on one criterion at a time, the totals are added up in code, then the leader gets a pre-mortem, a bias check and a "what else" check. Deep: the same, with every option scored three times and the middle score kept (for choices that are hard to undo or high stakes). Depth is picked from "reversible" and "stakes" unless you set it. Returns the choice, the full table, and a decision record with a review date. The model sees only what you pass here, so put everything it needs in "context". If no model is connected or an answer is unusable, the call fails; it never makes a decision up.',
     inputSchema: {
       type: 'object', additionalProperties: false, required: ['question', 'options'],
       properties: {
         question: { type: 'string', description: 'The decision to make, as one plain question.' },
         options: { type: 'array', minItems: 2, maxItems: 8, items: { type: 'string' }, description: 'The 2 to 8 options to choose between.' },
         context: { type: 'string', description: 'Facts the model needs: background, constraints, what has been tried.' },
-        criteria: { type: 'array', maxItems: 8, items: { type: 'string' }, description: 'What matters. If left out, the model proposes 3 to 5 criteria before it sees the options.' },
+        criteria: { type: 'array', maxItems: 8, items: { type: 'string' }, description: 'What matters. Word each one so that more of it is better ("Low price", not "Price"; "Takes little time", not "Time"), or the scores cannot be read. If left out, the model proposes 3 to 5 criteria before it sees the options.' },
         weights: { type: 'array', maxItems: 8, items: { type: 'integer', minimum: 1, maximum: 5 }, description: 'Optional weight 1 to 5 for each criterion, in the same order. If left out, the model sets them before any option is scored.' },
         reversible: { type: 'boolean', description: 'Can this be undone cheaply? Easy-to-undo choices get a lighter method and a one-week review; hard-to-undo ones get the deep method and a 30-day review.' },
         stakes: { type: 'string', enum: ['low', 'medium', 'high'], description: 'How much money, time, reputation or trust is at risk.' },
@@ -80,6 +84,13 @@ export function userMessage(a) {
   return `Question: ${a.question}\n\nOptions:\n${a.options.map((o, i) => `${i + 1}. ${o}`).join('\n')}` +
     (a.criteria.length ? `\n\nWhat matters most, in order:\n${a.criteria.map(c => `- ${c}`).join('\n')}` : '') +
     (a.context ? `\n\nContext:\n${a.context}` : '');
+}
+
+/** Which model answers at each depth. Falls back to the main model when no other is set. */
+export function modelFor(depth, s) {
+  if (depth === 'quick') return s.modelQuick || s.model;
+  if (depth === 'deep') return s.modelDeep || s.model;
+  return s.model;
 }
 
 /** Match the effort to the decision: light for what is easy to undo, heavy for what is not. */
@@ -169,6 +180,8 @@ export async function decide(raw, s = settings(), fetcher = fetch) {
   if (!checked.ok) return fail(checked.why);
   if (!s.baseUrl || !s.model) return fail('No model is connected. Set LLM_BASE_URL and LLM_MODEL for this server. No decision was made.');
   const { args } = checked;
+  // The right model for the job: a small one for small choices, the careful one for what is hard to undo.
+  s = { ...s, model: modelFor(args.depth, s) };
   const state = { format: true };
   if (args.depth !== 'quick') {
     let out;
@@ -212,7 +225,8 @@ export async function decide(raw, s = settings(), fetcher = fetch) {
    Built from Ran's own decision research (his decision-coach project and his decision-models notes):
    - match the effort to how reversible the choice is and how much is at stake
    - agree the criteria and their weights before scoring, so the result cannot lean toward a favourite
-   - judge each option on its own, one criterion at a time, before anything is compared (this reduces noise)
+   - judge one criterion at a time across the options, and only then add up (this keeps one strong
+     impression from colouring the rest, and reduces noise)
    - add the totals up in code; a model's arithmetic is not trusted
    - run a pre-mortem on the leader, with an early warning sign for each way it could fail
    - ask "what else?" and name the one bias most likely to matter
@@ -225,15 +239,16 @@ const WEIGH_SYSTEM = `You help set up a decision before any option is judged. Yo
 
 Answer with one JSON object and nothing else.`;
 
-// The reason is asked for before the number, and no example number is shown: a small model
-// that sees "score": 3 in the instructions tends to answer 3 to everything.
-const SCORE_SYSTEM = `You judge one option for a decision against one criterion. You are not shown the other options and must not guess at them. Base your answer only on what you are given, and do not invent facts.
+// One criterion at a time, across all the options: judging each quality separately before any
+// overall view is formed keeps one strong impression from colouring everything else, and seeing the
+// options side by side is what makes a score such as "low price" mean something.
+// The reason is asked for before the number, and no example number is shown: a small model that
+// sees "score": 3 in the instructions tends to answer 3 to everything.
+const SCORE_SYSTEM = `You compare the options for a decision on ONE criterion only. Ignore everything else about the options, however good or bad they are in other ways. Base your answer only on what you are given, and do not invent facts.
 
-First think about what specifically helps or hurts this option on this criterion. Then commit to a score. Use the whole range: 1 very poor, 2 poor, 3 mixed, 4 good, 5 very good. A 3 is only for when the points for and against truly balance.
+For each option, first say what specifically helps or hurts it on this one criterion, then give it a score: 1 very poor, 2 poor, 3 mixed, 4 good, 5 very good. Compare the options with each other: if one is clearly better on this criterion it must get a higher score, and equal scores are only for options that are truly equal on it.
 
-Answer with one JSON object and nothing else, with "why" first:
-{ "why": "one short sentence in your own words: the specific thing about this option that decides the score", "score": a whole number from 1 to 5 }
-Do not repeat the criterion as the reason.`;
+Answer with one JSON object and nothing else, keyed by option number, with "why" before "score". The request ends with the exact shape to fill in. Do not repeat the criterion as the reason.`;
 
 const REVIEW_SYSTEM = `You stress-test a decision that is about to be made. You are given the question, the options with their scores, and the current leader. Be a sceptical friend, not a cheerleader.
 
@@ -247,6 +262,7 @@ Answer with one JSON object and nothing else:
   "missingCriterion": "string",
   "wouldChangeIf": "string",
   "ifThen": "string",
+  "doubtfulReasons": ["string"],
   "confidence": 0.0
 }
 "preMortem": imagine it is some months later and choosing the leader failed. Give the one to three most likely reasons, each with an early warning sign that could be noticed in time.
@@ -255,6 +271,7 @@ Answer with one JSON object and nothing else:
 "leaderFeelsRight": false only if the leader seems wrong despite the scores; then "missingCriterion" names what the criteria failed to capture. Otherwise an empty string.
 "wouldChangeIf": the one fact that would change the decision.
 "ifThen": the next step as an if-then plan, such as "If it is Monday morning, then I will ...".
+"doubtfulReasons": any reason given for a score that contradicts the context or states something the context does not support, quoted briefly with what is wrong. An empty list if none.
 "confidence": between 0 and 1.`;
 
 /** Ask for JSON and check it; one retry with the reason. */
@@ -288,11 +305,18 @@ export function checkWeights(raw, criteria) {
   return { ok: true, value: list };
 }
 
-export function checkScore(raw) {
+/** One criterion's answer: an entry per option, keyed by option number. */
+export function checkScores(raw, count) {
   if (!raw || typeof raw !== 'object') return { ok: false, why: 'the answer is not a JSON object' };
-  if (!whole15(raw.score)) return { ok: false, why: '"score" must be a whole number from 1 to 5' };
-  if (!str(raw.why)) return { ok: false, why: '"why" must be one short sentence' };
-  return { ok: true, value: { score: Number(raw.score), why: str(raw.why) } };
+  const out = [];
+  for (let i = 1; i <= count; i++) {
+    const e = raw[String(i)];
+    if (!e || typeof e !== 'object') return { ok: false, why: `option ${i} is missing; there must be one entry for each of the ${count} options, keyed "1" to "${count}"` };
+    if (!whole15(e.score)) return { ok: false, why: `option ${i}: "score" must be a whole number from 1 to 5` };
+    if (!str(e.why)) return { ok: false, why: `option ${i}: "why" must be one short sentence` };
+    out.push({ score: Number(e.score), why: str(e.why) });
+  }
+  return { ok: true, value: out };
 }
 
 export function checkReview(raw) {
@@ -302,7 +326,7 @@ export function checkReview(raw) {
   const confidence = Number(raw.confidence);
   if (!Number.isFinite(confidence) || confidence < 0 || confidence > 1) return { ok: false, why: '"confidence" must be a number between 0 and 1' };
   const bias = BIASES.includes(str(raw.bias).toLowerCase()) ? str(raw.bias).toLowerCase() : 'none';
-  return { ok: true, value: { preMortem, bias, biasWhy: str(raw.biasWhy), whatElse: str(raw.whatElse), leaderFeelsRight: raw.leaderFeelsRight !== false, missingCriterion: str(raw.missingCriterion), wouldChangeIf: str(raw.wouldChangeIf), ifThen: str(raw.ifThen), confidence } };
+  return { ok: true, value: { preMortem, bias, biasWhy: str(raw.biasWhy), whatElse: str(raw.whatElse), leaderFeelsRight: raw.leaderFeelsRight !== false, missingCriterion: str(raw.missingCriterion), wouldChangeIf: str(raw.wouldChangeIf), ifThen: str(raw.ifThen), doubtfulReasons: strings(raw.doubtfulReasons, 4), confidence } };
 }
 
 function makeRecord(args, decision, confidence, wouldChangeIf, ifThen) {
@@ -332,30 +356,41 @@ async function structured(s, args, fetcher, state) {
   else {
     const ask = args.criteria.length
       ? `${about}\n\nCriteria:\n${args.criteria.map((c, i) => `${i + 1}. ${c}`).join('\n')}\n\nGive each criterion a weight from 1 (matters a little) to 5 (matters most): {"weights": [3]}, one number per criterion, in order.`
-      : `${about}\n\nName the 3 to 5 things that should matter most for this decision, each with a weight from 1 (matters a little) to 5 (matters most): {"criteria": [{"name": "string", "weight": 3}]}`;
+      : `${about}\n\nName the 3 to 5 things that should matter most for this decision, each worded so that more of it is better (for example "Low cost", not "Cost"), and each with a weight from 1 (matters a little) to 5 (matters most): {"criteria": [{"name": "string", "weight": 3}]}`;
     criteria = await askJson(s, WEIGH_SYSTEM, ask, (raw) => checkWeights(raw, args.criteria), 0.2, fetcher, state);
   }
-  // 2. Each option is judged on its own, one criterion at a time: a small question a small model
-  //    can answer well. Deep: three times each, and the middle score is kept.
+  // 2. One criterion at a time, across all the options. Deep: three rounds, each with the options
+  //    in a different order so that position cannot favour one, and the middle score is kept.
   const rounds = args.depth === 'deep' ? 3 : 1;
-  const table = [];
-  for (const option of args.options) {
-    const scores = [], reasons = [];
-    let spread = 0;
-    for (const c of criteria) {
-      const runs = [];
-      for (let i = 0; i < rounds; i++) {
-        runs.push(await askJson(s, SCORE_SYSTEM, `${about}\n\nThe option to judge: ${option}\n\nThe criterion: ${c.name}\n\nHow well does this option do on this criterion?`, checkScore, rounds > 1 ? 0.7 : 0.2, fetcher, state));
-      }
-      const mid = median(runs.map(r => r.score));
-      scores.push(mid);
-      // Keep the reason that goes with the middle score.
-      reasons.push(runs.slice().sort((x, y) => Math.abs(x.score - mid) - Math.abs(y.score - mid))[0].why);
-      spread = Math.max(spread, Math.max(...runs.map(r => r.score)) - Math.min(...runs.map(r => r.score)));
+  const n = args.options.length;
+  const table = args.options.map(option => ({ option, scores: [], reasons: [], spread: 0 }));
+  for (const c of criteria) {
+    const runs = [];   // runs[round][optionIndex] = { score, why }
+    for (let round = 0; round < rounds; round++) {
+      const order = args.options.map((_, i) => (i + round) % n);
+      const shape = `{${order.map((_, k) => `"${k + 1}": {"why": "...", "score": N}`).join(', ')}}`;
+      const got = await askJson(s, SCORE_SYSTEM,
+        `${about}\n\nThe one criterion to judge: ${c.name}\n\nThe options:\n${order.map((oi, k) => `${k + 1}. ${args.options[oi]}`).join('\n')}\n\nFill in exactly this shape, where each N is your whole-number score from 1 to 5 for that option on this criterion:\n${shape}`,
+        (raw) => checkScores(raw, n), rounds > 1 ? 0.7 : 0.2, fetcher, state);
+      const byOption = [];
+      order.forEach((oi, k) => { byOption[oi] = got[k]; });
+      runs.push(byOption);
     }
+    table.forEach((row, oi) => {
+      const mine = runs.map(r => r[oi]);
+      const mid = median(mine.map(r => r.score));
+      row.scores.push(mid);
+      // Keep the reason that goes with the middle score.
+      row.reasons.push(mine.slice().sort((x, y) => Math.abs(x.score - mid) - Math.abs(y.score - mid))[0].why);
+      row.spread = Math.max(row.spread, Math.max(...mine.map(r => r.score)) - Math.min(...mine.map(r => r.score)));
+    });
+  }
+  for (const row of table) {
     // Reasons behind high scores are the case for; reasons behind low scores are the case against.
-    const pick = (test) => criteria.map((c, i) => ({ i, weight: c.weight })).filter(x => test(scores[x.i])).sort((x, y) => y.weight - x.weight).slice(0, 3).map(x => reasons[x.i]);
-    table.push({ option, scores, reasons, pros: pick(n => n >= 4), cons: pick(n => n <= 2), ...(rounds > 1 ? { spread } : {}) });
+    const pick = (test) => criteria.map((c, i) => ({ i, weight: c.weight })).filter(x => test(row.scores[x.i])).sort((x, y) => y.weight - x.weight).slice(0, 3).map(x => row.reasons[x.i]);
+    row.pros = pick(v => v >= 4);
+    row.cons = pick(v => v <= 2);
+    if (rounds === 1) delete row.spread;
   }
 
   // 3. Totals are added up here, not by the model.
@@ -370,7 +405,7 @@ async function structured(s, args, fetcher, state) {
   const flat = Math.max(...all) - Math.min(...all) <= 1;
 
   // 4. Stress-test the leader.
-  const scoreboard = ranked.map(r => `- ${r.option}: ${r.total} out of 100. For: ${r.pros.join('; ') || 'nothing given'}. Against: ${r.cons.join('; ') || 'nothing given'}.`).join('\n');
+  const scoreboard = ranked.map(r => `- ${r.option}: ${r.total} out of 100.\n${criteria.map((c, i) => `    ${c.name}: ${r.scores[i]} of 5, because: ${r.reasons[i]}`).join('\n')}`).join('\n');
   let review = null, reviewNote = '';
   try {
     review = await askJson(s, REVIEW_SYSTEM, `${about}\n\nCriteria and weights:\n${criteria.map(c => `- ${c.name} (weight ${c.weight})`).join('\n')}\n\nOptions, best score first:\n${scoreboard}\n\nCurrent leader: ${leader.option}`, checkReview, 0.3, fetcher, state);
@@ -381,6 +416,7 @@ async function structured(s, args, fetcher, state) {
   if (closeCall) confidence = Math.min(confidence, 0.6);
   if (tied) confidence = 0;
   if (review && !review.leaderFeelsRight) confidence = Math.min(confidence, 0.5);
+  if (review && review.doubtfulReasons.length) confidence = Math.min(confidence, 0.5);
   confidence = Math.round(confidence * 100) / 100;
   const cautions = [
     flat ? 'The model gave nearly the same score to everything, so the totals say little. It is probably too small for this decision; try a larger model.' : '',
@@ -388,6 +424,7 @@ async function structured(s, args, fetcher, state) {
     review && !review.leaderFeelsRight ? `The model doubts the leader despite the scores${review.missingCriterion ? `; it says the criteria miss: ${review.missingCriterion}` : ''}. Consider adding that criterion and deciding again.` : '',
     review && review.bias !== 'none' ? `Watch for ${review.bias} bias: ${review.biasWhy}` : '',
     review && review.whatElse ? `An option that was not on the list: ${review.whatElse}` : '',
+    ...(review ? review.doubtfulReasons.map(d => `A reason behind a score looks wrong: ${d}`) : []),
     rounds > 1 && table.some(r => r.spread >= 3) ? 'The model scored the same option very differently between rounds; treat the totals as rough.' : '',
     reviewNote,
   ].filter(Boolean);
@@ -412,7 +449,7 @@ async function structured(s, args, fetcher, state) {
 }
 
 export async function status(s = settings(), fetcher = fetch) {
-  const out = { connected: Boolean(s.baseUrl && s.model), model: s.model || null, answers: false, note: '' };
+  const out = { connected: Boolean(s.baseUrl && s.model), model: s.model || null, models: { quick: modelFor('quick', s) || null, standard: s.model || null, deep: modelFor('deep', s) || null }, answers: false, note: '' };
   if (!out.connected) out.note = 'Set LLM_BASE_URL and LLM_MODEL for this server.';
   else {
     try {
@@ -436,7 +473,7 @@ export async function handle(msg, deps = {}) {
     case 'initialize': {
       const asked = msg.params?.protocolVersion;
       return reply({ protocolVersion: PROTOCOLS.includes(asked) ? asked : PROTOCOLS[0], capabilities: { tools: {} }, serverInfo: SERVER,
-        instructions: 'Use "decide" to have a self-hosted model choose between options with a structured method (weights first, each option judged alone, totals added in code, then a pre-mortem and bias check). Say whether the choice is reversible and how high the stakes are. Pass everything the model needs in "context". Read the cautions and the table before acting, and keep the decision record so the choice can be reviewed on its review date.' });
+        instructions: 'Use "decide" to have a self-hosted model choose between options with a structured method (weights first, options compared one criterion at a time, totals added in code, then a pre-mortem and bias check). Say whether the choice is reversible and how high the stakes are. Pass everything the model needs in "context". Read the cautions and the table before acting, and keep the decision record so the choice can be reviewed on its review date.' });
     }
     case 'ping': return reply({});
     case 'tools/list': return reply({ tools: TOOLS });

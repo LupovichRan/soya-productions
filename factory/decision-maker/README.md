@@ -37,12 +37,12 @@ Say `reversible` and `stakes` and the method is picked for you; `depth` override
 The five steps:
 
 1. **Weights first.** What matters, and how much, is settled before any option is scored. The model is not shown the options at this step, so the weights cannot lean toward a favourite. You can pass your own `criteria` and `weights` instead.
-2. **Each option alone.** Every option is judged in its own separate request, with pros, cons and a score per criterion. It is not shown the other options. Judging separately before comparing reduces noise.
+2. **One criterion at a time.** For each criterion, one small request compares all the options on that criterion alone: a reason first, then a score from 1 to 5. Judging one quality at a time, before any overall view is formed, keeps one strong impression from colouring everything else. Seeing the options side by side is what makes a score such as "low price" mean something. The reasons behind high scores become the case for; the reasons behind low scores become the case against. In the deep method each criterion is asked three times with the options in a different order each time.
 3. **Totals in code.** The weighted totals are added up by the server, not by the model.
 4. **Stress-test the leader.** A pre-mortem (it is months later and this choice failed: why, and what early sign would have warned us?), the one bias most likely at work, and "what else?" — an option that was not on the list.
 5. **A record.** The decision, confidence, what would change it, an if-then next step, and a review date: one week for choices that are easy to undo, 30 days otherwise.
 
-The scores decide. If the model doubts the leader, or the top two are within five points, the answer says so under `cautions` and the confidence is lowered. The winner is never swapped quietly.
+The scores decide. If the model doubts the leader, or the top two are within five points, the answer says so under `cautions` and the confidence is lowered. The winner is never swapped quietly. An exact tie at the top is reported as no decision (`decided: false`, `choice: null`). If the model gives nearly the same score to everything, the answer says the model is probably too small for the job.
 
 ### How strong is the evidence for this method
 
@@ -51,12 +51,54 @@ From the research notes, which mostly rest on secondary sources:
 | Step | Evidence |
 |---|---|
 | Pre-mortem | Medium. Reported to help people find about 30% more reasons for an outcome. |
-| Judging separately before comparing | Medium. Reduces noise between judgments. |
+| Judging one criterion at a time before forming an overall view | Medium. Reduces noise and the pull of one strong impression. |
 | Weights before scores | A standard practice of weighted decision tables; no outcome study was found. |
 | If-then plans | Strong for following through on an intention. |
 | Lighter process for reversible choices | An idea from business practice, with no outcome research. |
 
-None of this was tested with a small self-hosted model. Whether such a model scores sensibly is the open question this POC exists to answer.
+## What real models have shown so far
+
+First runs, 20 November 2026, on llama.cpp's server with four CPU cores, asking which of three concepts the factory should build next (five criteria, standard method).
+
+| Model | Time | What happened |
+|---|---|---|
+| Qwen2.5 1.5B Instruct, 4-bit | about 2 minutes | The method ran end to end, but the model could not tell the options apart: nearly every score was 5, and its reasons mostly repeated the criteria. The tool reported a close call and low confidence. **Not good enough to decide with.** |
+
+| Qwen2.5 7B Instruct, 4-bit | about 6 minutes | Told the options apart and gave real reasons. One reason was factually wrong (it said pasting text sends it off the device), and that error decided the result. **Useful, but its reasons must be read.** |
+
+What these runs changed in the method:
+
+1. Scores are asked for one criterion at a time. Asked for five at once, the small model left blanks.
+2. The reason is asked for before the number, and no example number is shown. Shown a 3, it answered 3 to everything.
+3. An exact tie is reported as no decision. It used to return whichever option was listed first.
+4. The stress-test now looks for reasons that contradict the context, after the 7B model's false reason.
+5. Options are compared side by side on each criterion. In the first design each option was scored without seeing the others, and all three models then failed the simplest calibration case: asked alone whether 20 dollars is a "low price" for a kettle, a model cannot know. Scored the first way, the 1.5B model got 3 of 8 calibration cases right and Phi-3.5-mini got 6 of 8.
+6. Criteria must be worded so that more is better ("Low price", not "Price").
+
+Calibration results for the current method are being measured and will be added here.
+
+
+## Choosing the right model
+
+Two things decide which model answers.
+
+**Is the model good enough at all?** Check before trusting it:
+
+```
+LLM_BASE_URL=http://localhost:11434/v1 LLM_MODEL=your-model node factory/decision-maker/calibrate.mjs
+```
+
+It runs eight decisions that each have one defensible answer (the cheaper of two identical kettles; back up before upgrading; the bicycle that fits the budget; the same journey with the weights swapped; a fancy name against what already works; where not to post a password; the right amount of paint). It reports how many the model got right, whether it told the options apart, and the time per decision, and gives a verdict: good enough to decide with, usable for small easy-to-undo choices only, or not good enough. Use the smallest model that passes.
+
+**Which model for which decision?** Set up to three, and each decision goes to the one chosen for its depth:
+
+| Variable | Used for | Pick |
+|---|---|---|
+| `LLM_MODEL_QUICK` | Quick decisions: easy to undo, low stakes | A small, fast model |
+| `LLM_MODEL` | Standard decisions, and anything the other two are not set for | The smallest model that passes calibration |
+| `LLM_MODEL_DEEP` | Deep decisions: hard to undo or high stakes | The most careful model you can run |
+
+Every answer says which model made it. `decider_status` lists the three.
 
 ## Set-up
 
@@ -68,7 +110,7 @@ Three settings, as environment variables:
 | `LLM_MODEL` | The model's name on that server | `qwen3:4b` |
 | `LLM_API_KEY` | Optional. Only if a gateway sits in front of your server | |
 
-Optional: `DECISION_LOG` (a file that gets one line per decision) and `LLM_TIMEOUT_MS` (default 120000).
+Optional: `LLM_MODEL_QUICK` and `LLM_MODEL_DEEP` (see "Choosing the right model"), `DECISION_LOG` (a file that gets one line per decision) and `LLM_TIMEOUT_MS` (default 120000).
 
 Never put a real key in this repository.
 
