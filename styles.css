@@ -52,3 +52,23 @@ main{width:100%;max-width:640px;margin:0 auto;padding:0 16px 16px;flex:1}
 
 .foot{text-align:center;color:var(--mute);font-size:14px;padding:16px 16px max(24px,env(safe-area-inset-bottom))}
 .noscript{text-align:center;padding:24px}
+
+/* One page for one app */
+.plain{list-style:disc;margin:8px 0 0;padding-inline-start:22px}.plain li{margin:6px 0;color:#344054}
+.gap{margin-top:18px}
+a.button{display:flex;align-items:center;justify-content:center;min-height:var(--tap);padding:10px 18px;border-radius:10px;border:1px solid var(--ink);background:var(--ink);color:#fff;font-weight:600;text-decoration:none;margin-bottom:16px}
+.intro{margin:0 0 16px}.intro summary{min-height:var(--tap);display:flex;align-items:center;cursor:pointer;font-weight:600}
+.intro video{width:100%;height:auto;border-radius:12px;margin-top:6px;background:#0F172A}
+label{display:block;font-weight:600;margin:14px 0 6px}
+input[type=email],input[type=text],textarea{font:inherit;width:100%;padding:12px;border:1px solid var(--line-strong);border-radius:10px;background:#fff;color:var(--ink);min-height:var(--tap)}
+textarea{min-height:110px;resize:vertical}
+label.check{display:flex;gap:10px;align-items:flex-start;font-weight:400}
+label.check input{width:24px;height:24px;margin-top:2px;flex:none}
+.hp{position:absolute;inset-inline-start:-9999px;width:1px;height:1px;overflow:hidden}
+form .wide{margin-top:12px}
+.banner{background:#FBF0D9;color:#5C3D00;border:1px solid #EBD9AE;border-radius:10px;padding:12px 14px;font-weight:500;margin:12px 0}
+.banner.soft{background:#E8ECF8;color:#27325C;border-color:#D3DAF0}.banner.ok{background:#E3F1EE;color:#0A4F44;border-color:#BFDCD6}
+button.ghost.wide{background:#fff;color:var(--ink);border-color:var(--line-strong)}
+button:disabled,input:disabled,textarea:disabled{opacity:.55;cursor:not-allowed}
+
+.wide{width:100%}

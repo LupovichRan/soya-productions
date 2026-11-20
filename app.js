@@ -23,6 +23,7 @@
       app: 'App',
       open: 'Open',
       none: 'No apps yet. Come back soon.',
+      roadTitle: 'Road map for each app', onePage: 'One page',
       howTitle: 'How the factory works',
       how: ['It reads what is new in AI and software.', 'It picks the idea that would help an everyday person most.', 'It builds a small app, checks it, and asks Ran to look before anything goes live.'],
       promise: 'No accounts, no ads, no tracking.'
@@ -35,6 +36,7 @@
       app: 'אפליקציה',
       open: 'פתיחה',
       none: 'אין עדיין אפליקציות. חזרו בקרוב.',
+      roadTitle: 'מפת דרכים לכל אפליקציה', onePage: 'עמוד אחד',
       howTitle: 'איך המפעל עובד',
       how: ['הוא קורא מה חדש בבינה מלאכותית ובתוכנה.', 'הוא בוחר את הרעיון שהכי יעזור לאדם רגיל.', 'הוא בונה אפליקציה קטנה, בודק אותה, ומבקש מרן להסתכל לפני שמשהו עולה לאוויר.'],
       promise: 'בלי חשבון, בלי פרסומות, בלי מעקב.'
@@ -103,6 +105,12 @@
           return '<a class="row" href="' + esc(href(f)) + '">' + mascot(f.mascot, 40) + '<span><b>' + esc(x.title) + '</b><small>' + meta(f) + '</small></span></a>';
         }).join('');
       }
+    }
+    if (list.length) {
+      html += '<h2>' + esc(t('roadTitle')) + '</h2>' + list.map(function (f) {
+        var key = f.folder || 'roundtable', x = words(f);
+        return '<a class="row" href="one-pager.html?app=' + encodeURIComponent(key) + '">' + mascot(f.mascot, 40) + '<span><b>' + esc(x.title) + '</b><small>' + esc(t('onePage')) + '</small></span></a>';
+      }).join('');
     }
     html += '<h2>' + esc(t('howTitle')) + '</h2><section class="card"><ol class="steps">' + t('how').map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') + '</ol></section>';
     app.innerHTML = html;
