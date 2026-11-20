@@ -56,6 +56,7 @@ export const TOOLS = [
         weights: { type: 'array', maxItems: 8, items: { type: 'integer', minimum: 1, maximum: 5 }, description: 'Optional weight 1 to 5 for each criterion, in the same order. If left out, the model sets them before any option is scored.' },
         reversible: { type: 'boolean', description: 'Can this be undone cheaply? Easy-to-undo choices get a lighter method and a one-week review; hard-to-undo ones get the deep method and a 30-day review.' },
         stakes: { type: 'string', enum: ['low', 'medium', 'high'], description: 'How much money, time, reputation or trust is at risk.' },
+        escalateBelow: { type: 'number', minimum: 0, maximum: 100, description: 'Default 5. A standard decision whose top two options are fewer than this many points apart (out of 100) is re-asked the deep way. Raise it to be more careful.' },
         escalate: { type: 'boolean', description: 'Default true. Re-ask a close standard call with the deep method on the deep model. Ignored when depth is set.' },
         depth: { type: 'string', enum: ['quick', 'standard', 'deep'], description: 'Override the method. Default: quick when reversible and low stakes, deep when not reversible or high stakes, otherwise standard.' },
         samples: { type: 'integer', minimum: 1, maximum: 5, description: 'Quick method only: how many times to ask (default 1). Use 3 or 5 for a vote.' },
@@ -196,7 +197,9 @@ export async function decide(raw, s = settings(), fetcher = fetch) {
   const first = await decideAt(raw, s, fetcher);
   const asked = raw && typeof raw === 'object' ? raw : {};
   const out = first.structuredContent;
-  if (first.isError || !out || out.method !== 'standard' || !out.closeCall || asked.depth !== undefined || asked.escalate === false || !s.modelDeep) return first;
+  // "Close" means less than escalateBelow points apart (default 5), or tied.
+  const below = Number.isFinite(asked.escalateBelow) ? Math.max(0, Math.min(100, asked.escalateBelow)) : 5;
+  if (first.isError || !out || out.method !== 'standard' || !(out.closeCall || (out.margin != null && out.margin < below)) || asked.depth !== undefined || asked.escalate === false || !s.modelDeep) return first;
   const deep = await decideAt({ ...asked, depth: 'deep' }, s, fetcher);
   if (deep.isError) {
     out.cautions.push(`A deeper second look was tried because this was a close call, but it failed: ${deep.content[0].text}`);
@@ -205,7 +208,7 @@ export async function decide(raw, s = settings(), fetcher = fetch) {
   }
   const d = deep.structuredContent;
   d.escalatedFrom = { model: out.model, method: out.method, choice: out.choice, margin: out.margin, totals: out.table.map(t => ({ option: t.option, total: t.total })) };
-  d.cautions.unshift(`The first pass (${out.model}, standard) was a close call, ${out.choice ? `choosing "${out.choice}" by ${out.margin} points` : 'an exact tie'}, so it was asked again with the deep method on ${d.model}.${out.choice && d.choice !== out.choice ? ` The deep method chose differently: "${d.choice}".` : ''}`);
+  d.cautions.unshift(`The first pass (${out.model}, standard) ${out.closeCall ? 'was a close call' : `had a margin under ${below} points`}, ${out.choice ? `choosing "${out.choice}" by ${out.margin} points` : 'an exact tie'}, so it was asked again with the deep method on ${d.model}.${out.choice && d.choice !== out.choice ? ` The deep method chose differently: "${d.choice}".` : ''}`);
   deep.content = [{ type: 'text', text: JSON.stringify(d, null, 2) }];
   return deep;
 }
