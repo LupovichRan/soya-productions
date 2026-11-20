@@ -93,6 +93,8 @@ What this says:
 3. **Qwen2.5 7B matches it on these cases but is no faster**, so on this evidence it has no advantage for standard decisions. It is the choice for deep decisions, where each criterion is asked three times; the margin may show up on harder cases than these eight.
 4. **The 1.5B model is for quick choices only.** It still failed one case where the weights decide, and one where the middle option is right.
 
+**Run-to-run noise is real.** Phi-3.5 mini was asked the same real question twice, at a low temperature, and Second Look scored 89.5 the first time and 70.5 the second, while Say It Kindly stayed on top (90.5, then 96.8). The winner was stable; the margin was not. So a margin of a few points is within noise, which is exactly why a close call is asked again with the deep method rather than trusted.
+
 Limits of this evidence: eight cases is a small sample, the cases are ones with a clear answer, and each model was run once per case. A model that passes calibration can still be wrong on a hard, ambiguous decision. Re-run `calibrate.mjs` whenever a model is changed.
 
 Suggested set-up:
@@ -124,9 +126,13 @@ It runs eight decisions that each have one defensible answer (the cheaper of two
 |---|---|---|
 | `LLM_MODEL_QUICK` | Quick decisions: easy to undo, low stakes | A small, fast model |
 | `LLM_MODEL` | Standard decisions, and anything the other two are not set for | The smallest model that passes calibration |
-| `LLM_MODEL_DEEP` | Deep decisions: hard to undo or high stakes | The most careful model you can run |
+| `LLM_MODEL_DEEP` | Deep decisions: hard to undo or high stakes, and the second look at a close call | The most careful model you can run |
 
 Every answer says which model made it. `decider_status` lists the three.
+
+**Close calls get a second look automatically.** If a standard decision comes out within five points, or tied, and a deep model is set, the decision is asked again with the deep method on the deep model, and that answer is the one returned. The first pass is kept under `escalatedFrom` (its model, choice, margin and totals), and the first caution says whether the deep method agreed. This does not happen when the caller sets a depth, sets `escalate: false`, or no deep model is set. If the second look fails, the first answer stands and says so.
+
+If the models live on different servers, set `LLM_BASE_URL_QUICK` and `LLM_BASE_URL_DEEP`; each falls back to `LLM_BASE_URL`.
 
 ## Set-up
 
