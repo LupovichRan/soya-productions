@@ -6,6 +6,20 @@
      url:    'https://…'         anywhere else */
 window.SOYA_APPS = [
   {
+    number: 7,
+    date: '2026-11-20',
+    folder: '2026-11-20-soya-games',
+    mascot: 'bear',
+    en: {
+      title: "Soya's Games",
+      line: 'Three small games for young children to play with a grown-up: match the pairs, count the fish, find the odd one. No timers, no scores, no sound. Nothing is saved or sent.'
+    },
+    he: {
+      title: 'המשחקים של סויה',
+      line: 'שלושה משחקים קטנים לילדים צעירים לשחק עם מבוגר: מוצאים זוגות, סופרים דגים, מוצאים את השונה. בלי שעון, בלי ציונים, בלי צלילים. שום דבר לא נשמר ולא נשלח.'
+    }
+  },
+  {
     number: 6,
     date: '2026-11-20',
     folder: '2026-11-20-cat-factory',
