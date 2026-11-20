@@ -17,6 +17,7 @@ Candidate films, highest score first. Scores are 1–5 each; see `FACTORY.md`. A
 | Film | Name | Date | Where |
 |---|---|---|---|
 | 1 | Roundtable | 2026-11-20 | Its own repository, `soya-poc-2026-11-20-roundtable` |
+| — | Decision Maker (POC 2, a tool, not a film) | 2026-11-20 | `factory/decision-maker/` |
 
 ## Set aside
 

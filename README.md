@@ -6,6 +6,7 @@ A small software factory, and the front page for what it makes. On a schedule, a
 - [factory/trends/](factory/trends/) — one trend brief per run.
 - [factory/backlog.md](factory/backlog.md) — scored concepts waiting to be built.
 - [films/](films/) — the films the factory has made.
+- [factory/decision-maker/](factory/decision-maker/) — POC 2: lets Claude ask your own self-hosted model to make a choice.
 
 No accounts, no ads, no tracking. English and Hebrew.
 

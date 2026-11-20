@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "soya-decision-maker": {
+      "command": "node",
+      "args": ["factory/decision-maker/server.mjs"]
+    }
+  }
+}
