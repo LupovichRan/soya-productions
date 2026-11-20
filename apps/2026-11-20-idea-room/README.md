@@ -10,11 +10,14 @@ Bring an idea and test it for two weeks. People show whether they want it with s
 |---|---|
 | **Ideas** | A list of ideas with the day of the test and the score so far. Two labelled examples, plus your own (up to 12). |
 | **Idea** | The problem, the promise, the day, and a score against 20. |
-| **Join in** | Five acts to record, each once, each with a weight (follow 1, want 2, tell someone 3, give an hour 4, take a short call 5). A free seat. A survey, counted at your voice (1 with a seat, up to 4). |
-| **Roadmap** | Anyone suggests, the owner accepts, someone takes it, the owner accepts the finished work. Accepted work raises your voice. |
+| **Join in** | Five acts to record, each once, each with a weight (follow 1, want 2, tell someone 3, give an hour 4, take a short call 5). A free seat. **Trust points** (given only by the owner). A survey, counted at your voice (1 with a seat, plus 1 for every 3 trust points, up to 4). |
+| **Roadmap** | Every suggestion gets an answer: the owner accepts it, or says **Not now** with a short reason. Someone takes accepted work and the owner accepts it as finished. The page shows how many suggestions have been answered. For a suggestion or work they accepted, the owner can give 1 to 5 trust points (at most 5 for any one item). |
 | **Verdict** | The score by act, what the numbers suggest, and the owner's decision. Demo buttons skip days. |
 
 The "Viewing as Owner / Visitor" switch stands in for two different people on one device.
+
+## Trust points, in plain words
+Trust is how an owner says "you made this idea better". Only the owner gives it, only for something of yours they accepted, never for turning up, and never in exchange for money. Three trust points add one to your voice, up to four. It is not equity and nothing here promises a share of an idea.
 
 ## What it does not do, on purpose
 

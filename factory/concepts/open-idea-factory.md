@@ -24,3 +24,10 @@ Like GitHub, but for ideas. Anyone can bring an idea, test it fast, and gather a
 
 ## Suggested first small app
 "Idea page": one public page per idea with the teaser, a two-week signal count (real clicks on "I want this", "I will tell a friend", "I will help"), and a plain verdict at the end. Static, no accounts, one form for sign-ups.
+
+## Direction from Ran, 20 November 2026: an open-source product manager
+The tool should work like an open-source product manager that everyone on an idea shares: the idea gets better because people work on it together. Every idea counts and every voice is heard. Trust points are earned from the idea owner.
+
+What that became in the alpha (app 5): every suggestion gets an answer (accept, or "not now" with a reason, and a count of how many are answered), and the owner gives 1 to 5 trust points for suggestions and work they accept. Trust, not money, raises a person's voice. Trust points are not ownership and carry no share.
+
+Still to do: shared storage (the Supabase schema in `infra/supabase/idea-room.sql` needs a trust table and a decline status, and its voice rule should use trust instead of finished work), real people, and a clear public statement of how owners are expected to use trust points fairly.
