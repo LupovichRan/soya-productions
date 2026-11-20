@@ -212,7 +212,7 @@ export async function decide(raw, s = settings(), fetcher = fetch) {
    Built from Ran's own decision research (his decision-coach project and his decision-models notes):
    - match the effort to how reversible the choice is and how much is at stake
    - agree the criteria and their weights before scoring, so the result cannot lean toward a favourite
-   - judge each option on its own, separately, before anything is compared (this reduces noise)
+   - judge each option on its own, one criterion at a time, before anything is compared (this reduces noise)
    - add the totals up in code; a model's arithmetic is not trusted
    - run a pre-mortem on the leader, with an early warning sign for each way it could fail
    - ask "what else?" and name the one bias most likely to matter
@@ -225,15 +225,15 @@ const WEIGH_SYSTEM = `You help set up a decision before any option is judged. Yo
 
 Answer with one JSON object and nothing else.`;
 
-const SCORE_SYSTEM = `You judge one option for a decision, on its own. You are not shown the other options and must not guess at them. Base everything only on what you are given. Do not invent facts; when you do not know, score in the middle and say so in a con.
+// The reason is asked for before the number, and no example number is shown: a small model
+// that sees "score": 3 in the instructions tends to answer 3 to everything.
+const SCORE_SYSTEM = `You judge one option for a decision against one criterion. You are not shown the other options and must not guess at them. Base your answer only on what you are given, and do not invent facts.
 
-Answer with one JSON object and nothing else:
-{
-  "pros": ["string"],
-  "cons": ["string"],
-  "scores": [3]
-}
-"pros" and "cons" have one to three short points each. "scores" has one whole number from 1 (poor) to 5 (strong) for each criterion, in the order given.`;
+First think about what specifically helps or hurts this option on this criterion. Then commit to a score. Use the whole range: 1 very poor, 2 poor, 3 mixed, 4 good, 5 very good. A 3 is only for when the points for and against truly balance.
+
+Answer with one JSON object and nothing else, with "why" first:
+{ "why": "one short sentence in your own words: the specific thing about this option that decides the score", "score": a whole number from 1 to 5 }
+Do not repeat the criterion as the reason.`;
 
 const REVIEW_SYSTEM = `You stress-test a decision that is about to be made. You are given the question, the options with their scores, and the current leader. Be a sceptical friend, not a cheerleader.
 
@@ -288,12 +288,11 @@ export function checkWeights(raw, criteria) {
   return { ok: true, value: list };
 }
 
-export function checkScore(raw, count) {
+export function checkScore(raw) {
   if (!raw || typeof raw !== 'object') return { ok: false, why: 'the answer is not a JSON object' };
-  if (!Array.isArray(raw.scores) || raw.scores.length !== count || !raw.scores.every(whole15)) return { ok: false, why: `"scores" must have ${count} whole numbers from 1 to 5, one per criterion` };
-  const pros = strings(raw.pros, 3), cons = strings(raw.cons, 3);
-  if (!pros.length && !cons.length) return { ok: false, why: 'give at least one pro or one con' };
-  return { ok: true, value: { pros, cons, scores: raw.scores.map(Number) } };
+  if (!whole15(raw.score)) return { ok: false, why: '"score" must be a whole number from 1 to 5' };
+  if (!str(raw.why)) return { ok: false, why: '"why" must be one short sentence' };
+  return { ok: true, value: { score: Number(raw.score), why: str(raw.why) } };
 }
 
 export function checkReview(raw) {
@@ -336,19 +335,27 @@ async function structured(s, args, fetcher, state) {
       : `${about}\n\nName the 3 to 5 things that should matter most for this decision, each with a weight from 1 (matters a little) to 5 (matters most): {"criteria": [{"name": "string", "weight": 3}]}`;
     criteria = await askJson(s, WEIGH_SYSTEM, ask, (raw) => checkWeights(raw, args.criteria), 0.2, fetcher, state);
   }
-  const list = criteria.map((c, i) => `${i + 1}. ${c.name}`).join('\n');
-
-  // 2. Each option is judged on its own. Deep: three times, and the middle score is kept.
+  // 2. Each option is judged on its own, one criterion at a time: a small question a small model
+  //    can answer well. Deep: three times each, and the middle score is kept.
   const rounds = args.depth === 'deep' ? 3 : 1;
   const table = [];
   for (const option of args.options) {
-    const runs = [];
-    for (let i = 0; i < rounds; i++) {
-      runs.push(await askJson(s, SCORE_SYSTEM, `${about}\n\nThe option to judge: ${option}\n\nCriteria, in order:\n${list}`, (raw) => checkScore(raw, criteria.length), rounds > 1 ? 0.7 : 0.2, fetcher, state));
+    const scores = [], reasons = [];
+    let spread = 0;
+    for (const c of criteria) {
+      const runs = [];
+      for (let i = 0; i < rounds; i++) {
+        runs.push(await askJson(s, SCORE_SYSTEM, `${about}\n\nThe option to judge: ${option}\n\nThe criterion: ${c.name}\n\nHow well does this option do on this criterion?`, checkScore, rounds > 1 ? 0.7 : 0.2, fetcher, state));
+      }
+      const mid = median(runs.map(r => r.score));
+      scores.push(mid);
+      // Keep the reason that goes with the middle score.
+      reasons.push(runs.slice().sort((x, y) => Math.abs(x.score - mid) - Math.abs(y.score - mid))[0].why);
+      spread = Math.max(spread, Math.max(...runs.map(r => r.score)) - Math.min(...runs.map(r => r.score)));
     }
-    const scores = criteria.map((_, c) => median(runs.map(r => r.scores[c])));
-    const spread = Math.max(...criteria.map((_, c) => Math.max(...runs.map(r => r.scores[c])) - Math.min(...runs.map(r => r.scores[c]))));
-    table.push({ option, scores, pros: runs[0].pros, cons: runs[0].cons, ...(rounds > 1 ? { spread } : {}) });
+    // Reasons behind high scores are the case for; reasons behind low scores are the case against.
+    const pick = (test) => criteria.map((c, i) => ({ i, weight: c.weight })).filter(x => test(scores[x.i])).sort((x, y) => y.weight - x.weight).slice(0, 3).map(x => reasons[x.i]);
+    table.push({ option, scores, reasons, pros: pick(n => n >= 4), cons: pick(n => n <= 2), ...(rounds > 1 ? { spread } : {}) });
   }
 
   // 3. Totals are added up here, not by the model.
@@ -357,6 +364,10 @@ async function structured(s, args, fetcher, state) {
   const ranked = [...table].sort((a, b) => b.total - a.total);
   const leader = ranked[0], margin = Math.round((leader.total - ranked[1].total) * 10) / 10;
   const closeCall = margin < 5;
+  // An exact tie at the top is not a decision. Say so rather than hand back whichever option was listed first.
+  const tied = margin === 0;
+  const all = table.flatMap(r => r.scores);
+  const flat = Math.max(...all) - Math.min(...all) <= 1;
 
   // 4. Stress-test the leader.
   const scoreboard = ranked.map(r => `- ${r.option}: ${r.total} out of 100. For: ${r.pros.join('; ') || 'nothing given'}. Against: ${r.cons.join('; ') || 'nothing given'}.`).join('\n');
@@ -368,10 +379,12 @@ async function structured(s, args, fetcher, state) {
   // The scores decide. Doubts are reported, never used to swap the winner quietly.
   let confidence = review ? review.confidence : 0.5;
   if (closeCall) confidence = Math.min(confidence, 0.6);
+  if (tied) confidence = 0;
   if (review && !review.leaderFeelsRight) confidence = Math.min(confidence, 0.5);
   confidence = Math.round(confidence * 100) / 100;
   const cautions = [
-    closeCall ? `Close call: only ${margin} points separate "${leader.option}" from "${ranked[1].option}".` : '',
+    flat ? 'The model gave nearly the same score to everything, so the totals say little. It is probably too small for this decision; try a larger model.' : '',
+    tied ? `Exact tie between ${ranked.filter(r => r.total === leader.total).map(r => `"${r.option}"`).join(' and ')}. The model could not separate them. No decision was made.` : closeCall ? `Close call: only ${margin} points separate "${leader.option}" from "${ranked[1].option}".` : '',
     review && !review.leaderFeelsRight ? `The model doubts the leader despite the scores${review.missingCriterion ? `; it says the criteria miss: ${review.missingCriterion}` : ''}. Consider adding that criterion and deciding again.` : '',
     review && review.bias !== 'none' ? `Watch for ${review.bias} bias: ${review.biasWhy}` : '',
     review && review.whatElse ? `An option that was not on the list: ${review.whatElse}` : '',
@@ -380,7 +393,8 @@ async function structured(s, args, fetcher, state) {
   ].filter(Boolean);
 
   return {
-    choice: leader.option,
+    choice: tied ? null : leader.option,
+    decided: !tied,
     confidence,
     method: args.depth,
     reasons: leader.pros,
@@ -392,7 +406,7 @@ async function structured(s, args, fetcher, state) {
     closeCall,
     preMortem: review?.preMortem || [],
     cautions,
-    record: makeRecord(args, leader.option, confidence, review?.wouldChangeIf || '', review?.ifThen || ''),
+    record: tied ? null : makeRecord(args, leader.option, confidence, review?.wouldChangeIf || '', review?.ifThen || ''),
     model: s.model,
   };
 }

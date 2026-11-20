@@ -26,15 +26,16 @@ function steps({ weights, score, review }, calls = []) {
   return async (url, init) => {
     const body = JSON.parse(init.body), system = body.messages[0].content, user = body.messages[1].content;
     const step = system.startsWith('You help set up') ? 'weigh' : system.startsWith('You judge one option') ? 'score' : 'review';
-    const option = (/The option to judge: (.*)/.exec(user) || [])[1];
-    calls.push({ step, option, user, body });
-    const r = step === 'weigh' ? weights(user) : step === 'score' ? score(option, calls.filter(c => c.step === 'score' && c.option === option).length) : review(user);
+    const option = (/The option to judge: (.*)/.exec(user) || [])[1], criterion = (/The criterion: (.*)/.exec(user) || [])[1];
+    calls.push({ step, option, criterion, user, body });
+    const r = step === 'weigh' ? weights(user) : step === 'score' ? score(option, criterion, calls.filter(c => c.step === 'score' && c.option === option && c.criterion === criterion).length) : review(user);
     if (r instanceof Error) throw r;
     return new Response(JSON.stringify({ choices: [{ message: { content: typeof r === 'string' ? r : JSON.stringify(r) } }] }), { status: 200 });
   };
 }
 const okReview = { preMortem: [{ reason: 'nobody uses it', earlyWarning: 'no visits in week one' }], bias: 'confirmation', biasWhy: 'it was the first idea', whatElse: 'Delta', leaderFeelsRight: true, missingCriterion: '', wouldChangeIf: 'a deadline', ifThen: 'If it is Monday, then I start', confidence: 0.9 };
-const byOption = (map) => (option) => ({ pros: ['good ' + option], cons: ['bad ' + option], scores: map[option] });
+/** Scores per option, listed in the order the criteria were given. */
+const byOption = (map, names = ['Cost', 'Speed']) => (option, criterion) => ({ score: map[option][Math.max(0, names.indexOf(criterion))], why: `${option} on ${criterion}` });
 
 test('arguments are checked', () => {
   assert.equal(checkArgs({}).ok, false);
@@ -160,9 +161,9 @@ test('each step of the structured method checks its answer', () => {
   assert.equal(checkWeights({ weights: [5, 1] }, ['a', 'b']).value[0].weight, 5);
   assert.equal(checkWeights({ weights: [5] }, ['a', 'b']).ok, false);
   assert.equal(checkWeights({ criteria: [{ name: 'a', weight: 2 }, { name: 'b', weight: 9 }] }, []).ok, false);
-  assert.equal(checkScore({ pros: ['p'], cons: [], scores: [1, 5] }, 2).ok, true);
-  assert.equal(checkScore({ pros: ['p'], scores: [1, 6] }, 2).ok, false);
-  assert.equal(checkScore({ scores: [1, 2] }, 2).ok, false);
+  assert.equal(checkScore({ score: 4, why: 'w' }).value.score, 4);
+  assert.equal(checkScore({ score: 0, why: 'w' }).ok, false);
+  assert.equal(checkScore({ score: 3 }).ok, false);
   assert.equal(checkReview({ preMortem: [], confidence: 0.5 }).ok, false);
   assert.equal(checkReview({ ...okReview, bias: 'made-up' }).value.bias, 'none');
   assert.equal(median([5, 1, 3]), 3);
@@ -180,7 +181,9 @@ test('standard: weights before options, each option alone, totals added in code'
   assert.equal(out.choice, 'Beta');                       // 5*5+1*1=26 of 30 beats Alpha 15 and Gamma 18
   assert.deepEqual(out.table.map(t => [t.option, t.total]), [['Beta', 86.7], ['Gamma', 60], ['Alpha', 50]]);
   assert.equal(out.closeCall, false);
-  assert.deepEqual(calls.map(c => c.step), ['weigh', 'score', 'score', 'score', 'review']);
+  assert.deepEqual(calls.map(c => c.step), ['weigh', ...Array(6).fill('score'), 'review']);
+  assert.deepEqual(out.table[0].pros, ['Beta on Cost']);            // the reason behind its high score
+  assert.deepEqual(out.table[0].cons, ['Beta on Speed']);           // the reason behind its low score
   assert.doesNotMatch(calls[0].user, /Alpha|Beta|Gamma/);  // weights are set without seeing the options
   assert.doesNotMatch(calls[1].user, /Beta|Gamma/);        // each option is judged without the others
   assert.equal(out.preMortem[0].earlyWarning, 'no visits in week one');
@@ -198,13 +201,14 @@ test('weights given by the caller skip the weighting step; with no criteria the 
   assert.equal(calls[0].step, 'score');
   calls = [];
   const r = await decide(full, S, steps({ weights: () => ({ criteria: [{ name: 'Cost', weight: 3 }, { name: 'Speed', weight: 2 }] }), score: byOption({ Alpha: [5, 5], Beta: [1, 1], Gamma: [2, 2] }), review: () => okReview }, calls));
+  assert.doesNotMatch(calls[0].user, /Alpha|Beta|Gamma/);
   assert.deepEqual(r.structuredContent.criteria.map(c => c.name), ['Cost', 'Speed']);
   assert.equal(r.structuredContent.choice, 'Alpha');
 });
 
 test('a close call or a doubted leader lowers confidence and is said out loud, but the scores still decide', async () => {
-  const r = await decide({ ...full, criteria: ['Cost'], weights: [5] }, S, steps({
-    score: byOption({ Alpha: [4], Beta: [4], Gamma: [1] }),
+  const r = await decide({ ...full, criteria: ['Cost', 'Speed'], weights: [5, 1] }, S, steps({
+    score: byOption({ Alpha: [4, 5], Beta: [4, 4], Gamma: [1, 1] }),
     review: () => ({ ...okReview, leaderFeelsRight: false, missingCriterion: 'trust' }),
   }));
   const out = r.structuredContent;
@@ -219,7 +223,7 @@ test('a close call or a doubted leader lowers confidence and is said out loud, b
 test('deep: every option is scored three times and the middle score is kept; review in 30 days', async () => {
   const calls = [];
   const r = await decide({ ...full, criteria: ['Cost'], weights: [1], reversible: false }, S, steps({
-    score: (option, n) => ({ pros: ['p'], cons: ['c'], scores: [option === 'Alpha' ? [5, 1, 4][n - 1] : 2] }),
+    score: (option, criterion, n) => ({ score: option === 'Alpha' ? [5, 1, 4][n - 1] : 2, why: 'round ' + n }),
     review: () => okReview,
   }, calls));
   const out = r.structuredContent;
@@ -227,6 +231,7 @@ test('deep: every option is scored three times and the middle score is kept; rev
   assert.equal(calls.filter(c => c.step === 'score').length, 9);
   assert.equal(out.table[0].option, 'Alpha');
   assert.deepEqual(out.table[0].scores, [4]);
+  assert.deepEqual(out.table[0].reasons, ['round 3']);              // the reason that goes with the middle score
   assert.equal(out.table[0].spread, 4);
   assert.ok(out.cautions.some(c => /very differently/.test(c)));
   assert.equal((new Date(out.record.reviewOn) - new Date(out.record.madeOn)) / 86400000, 30);
@@ -240,4 +245,15 @@ test('a failed scoring step makes no decision; a failed stress-test is reported,
   assert.equal(r.structuredContent.choice, 'Alpha');
   assert.equal(r.structuredContent.confidence, 0.5);
   assert.ok(r.structuredContent.cautions.some(c => /stress-test could not be run/.test(c)));
+});
+
+test('an exact tie at the top is not a decision', async () => {
+  const r = await decide({ ...full, criteria: ['Cost'], weights: [5] }, S, steps({ score: byOption({ Alpha: [3], Beta: [3], Gamma: [3] }), review: () => okReview }));
+  const out = r.structuredContent;
+  assert.equal(out.choice, null);
+  assert.equal(out.decided, false);
+  assert.equal(out.record, null);
+  assert.equal(out.confidence, 0);
+  assert.ok(out.cautions.some(c => /Exact tie[\s\S]*No decision was made/.test(c)));
+  assert.ok(out.cautions.some(c => /nearly the same score to everything/.test(c)));
 });
