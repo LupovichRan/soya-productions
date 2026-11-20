@@ -6,6 +6,20 @@
      url:    'https://…'         anywhere else */
 window.SOYA_APPS = [
   {
+    number: 6,
+    date: '2026-11-20',
+    folder: '2026-11-20-cat-factory',
+    mascot: 'cat',
+    en: {
+      title: 'Cat Factory (parody)',
+      line: 'Give the cats a job. They run a shift and hand you a silly report: who sat on the keyboard, what is in the commit log, and whether it ships. A parody. Nothing leaves your device.'
+    },
+    he: {
+      title: 'מפעל החתולים (פרודיה)',
+      line: 'נותנים לחתולים משימה. הם עובדים משמרת ומגישים דוח מצחיק: מי ישב על המקלדת, מה ביומן השינויים, והאם משחררים. פרודיה. שום דבר לא יוצא מהמכשיר.'
+    }
+  },
+  {
     number: 5,
     date: '2026-11-20',
     folder: '2026-11-20-idea-room',
