@@ -7,6 +7,8 @@
 // Settings (environment variables):
 //   LLM_BASE_URL   where the model server listens, e.g. http://localhost:11434/v1
 //   LLM_MODEL      the model name on that server, e.g. qwen3:4b
+//   LLM_MODEL_QUICK  optional; a smaller, faster model for quick decisions (easy to undo, low stakes)
+//   LLM_MODEL_DEEP   optional; a larger, more careful model for deep decisions (hard to undo, high stakes)
 //   LLM_API_KEY    optional; only for a gateway in front of your own server
 //   DECISION_LOG   optional; a file to append every decision to, one JSON object per line
 //   LLM_TIMEOUT_MS optional; how long to wait for one answer (default 120000)
@@ -28,6 +30,8 @@ export function settings(env = process.env) {
   return {
     baseUrl: String(env.LLM_BASE_URL || '').trim().replace(/\/+$/, ''),
     model: String(env.LLM_MODEL || '').trim(),
+    modelQuick: String(env.LLM_MODEL_QUICK || '').trim(),
+    modelDeep: String(env.LLM_MODEL_DEEP || '').trim(),
     apiKey: String(env.LLM_API_KEY || ''),
     log: String(env.DECISION_LOG || '').trim(),
     timeoutMs: Math.max(1000, Number(env.LLM_TIMEOUT_MS) || 120000),
@@ -80,6 +84,13 @@ export function userMessage(a) {
   return `Question: ${a.question}\n\nOptions:\n${a.options.map((o, i) => `${i + 1}. ${o}`).join('\n')}` +
     (a.criteria.length ? `\n\nWhat matters most, in order:\n${a.criteria.map(c => `- ${c}`).join('\n')}` : '') +
     (a.context ? `\n\nContext:\n${a.context}` : '');
+}
+
+/** Which model answers at each depth. Falls back to the main model when no other is set. */
+export function modelFor(depth, s) {
+  if (depth === 'quick') return s.modelQuick || s.model;
+  if (depth === 'deep') return s.modelDeep || s.model;
+  return s.model;
 }
 
 /** Match the effort to the decision: light for what is easy to undo, heavy for what is not. */
@@ -169,6 +180,8 @@ export async function decide(raw, s = settings(), fetcher = fetch) {
   if (!checked.ok) return fail(checked.why);
   if (!s.baseUrl || !s.model) return fail('No model is connected. Set LLM_BASE_URL and LLM_MODEL for this server. No decision was made.');
   const { args } = checked;
+  // The right model for the job: a small one for small choices, the careful one for what is hard to undo.
+  s = { ...s, model: modelFor(args.depth, s) };
   const state = { format: true };
   if (args.depth !== 'quick') {
     let out;
@@ -412,7 +425,7 @@ async function structured(s, args, fetcher, state) {
 }
 
 export async function status(s = settings(), fetcher = fetch) {
-  const out = { connected: Boolean(s.baseUrl && s.model), model: s.model || null, answers: false, note: '' };
+  const out = { connected: Boolean(s.baseUrl && s.model), model: s.model || null, models: { quick: modelFor('quick', s) || null, standard: s.model || null, deep: modelFor('deep', s) || null }, answers: false, note: '' };
   if (!out.connected) out.note = 'Set LLM_BASE_URL and LLM_MODEL for this server.';
   else {
     try {

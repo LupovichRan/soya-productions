@@ -4,7 +4,8 @@ import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import { createServer } from 'node:http';
 import { fileURLToPath } from 'node:url';
-import { checkArgs, checkDecision, checkReview, checkScore, checkWeights, decide, extractJson, handle, median, pickDepth, status } from './server.mjs';
+import { calibrate, CASES } from './calibrate.mjs';
+import { modelFor, checkArgs, checkDecision, checkReview, checkScore, checkWeights, decide, extractJson, handle, median, pickDepth, status } from './server.mjs';
 
 const S = { baseUrl: 'http://model.test/v1', model: 'm1', apiKey: '', log: '', timeoutMs: 5000 };
 const good = (o = {}) => JSON.stringify({ choice: 2, confidence: 0.8, reasons: ['cheaper'], risk: 'slower', wouldChangeIf: 'a deadline', ...o });
@@ -256,4 +257,38 @@ test('an exact tie at the top is not a decision', async () => {
   assert.equal(out.confidence, 0);
   assert.ok(out.cautions.some(c => /Exact tie[\s\S]*No decision was made/.test(c)));
   assert.ok(out.cautions.some(c => /nearly the same score to everything/.test(c)));
+});
+
+test('each depth is sent to the model chosen for it', async () => {
+  const s = { ...S, modelQuick: 'small', modelDeep: 'big' };
+  assert.equal(modelFor('quick', S), 'm1');
+  let calls = [];
+  const q = await decide(ask, s, model([good()], calls));
+  assert.equal(calls[0].body.model, 'small');
+  assert.equal(q.structuredContent.model, 'small');
+  calls = [];
+  const d = await decide({ ...full, criteria: ['Cost'], weights: [1], depth: 'deep' }, s, steps({ score: byOption({ Alpha: [5], Beta: [1], Gamma: [1] }, ['Cost']), review: () => okReview }, calls));
+  assert.ok(calls.every(c => c.body.model === 'big'));
+  assert.equal(d.structuredContent.model, 'big');
+  calls = [];
+  await decide({ ...full, criteria: ['Cost'], weights: [1] }, s, steps({ score: byOption({ Alpha: [5], Beta: [1], Gamma: [1] }, ['Cost']), review: () => okReview }, calls));
+  assert.ok(calls.every(c => c.body.model === 'm1'));
+  assert.deepEqual((await status(s, model([good()]))).structuredContent.models, { quick: 'small', standard: 'm1', deep: 'big' });
+});
+
+test('calibration: a model that judges well passes, one that scores everything the same does not', async () => {
+  // A stand-in that scores the expected option high and the others low.
+  // The two travel cases share options, so there the stand-in judges each criterion on its merits.
+  const wise = steps({ score: (option, criterion) => {
+    const train = /express train/.test(option), travel = train || /The bus/.test(option);
+    if (travel) return { score: (criterion === 'Arrives quickly') === train ? 5 : 1, why: 'w' };
+    return { score: CASES.some(c => c.options[c.expect] === option) ? 5 : 1, why: 'w' };
+  }, review: () => okReview });
+  const a = await calibrate(S, { fetcher: wise });
+  assert.equal(a.summary.right, CASES.length);
+  assert.equal(a.summary.verdict, 'good enough to decide with');
+  const dull = steps({ score: () => ({ score: 3, why: 'w' }), review: () => okReview });
+  const b = await calibrate(S, { fetcher: dull });
+  assert.equal(b.summary.right, 0);
+  assert.equal(b.summary.verdict, 'not good enough');
 });
