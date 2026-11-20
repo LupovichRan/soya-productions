@@ -1,6 +1,6 @@
 # Soya explains: the videos
 
-Short videos where Soya the cat explains AI and software in plain words. She is a cartoon; the voice is a computer voice and the pages say so. They are published at `videos.html`, listed in `videos.js`, and linked from the front page and the daily post.
+Short videos where Soya the cat explains AI and software in plain words. He is a cartoon; the voice is a computer voice and the pages say so. They are published at `videos.html`, listed in `videos.js`, and linked from the front page and the daily post.
 
 ## Make one
 

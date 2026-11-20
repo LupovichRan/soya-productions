@@ -6,7 +6,7 @@
       --fonts /path/to/fonts --out assets/videos
 
 What it does, in order: speaks every scene with Piper (an open text-to-speech engine, run on this computer), measures
-each scene's audio, draws the scene over a calm dusk background with Soya's silhouette (her eyes glow a little more
+each scene's audio, draws the scene over a calm dusk background with Soya's silhouette (his eyes glow a little more
 while the voice is loud), joins the audio, writes English and Hebrew caption files (WebVTT), and encodes an MP4.
 The voice is synthetic and the page that shows the video says so. Use only a voice whose licence allows public use
 (en_US-joe-medium is CC0). Needs: Python 3 with numpy and Pillow, ffmpeg, Piper, the cat photo
