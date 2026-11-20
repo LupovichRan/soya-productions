@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import { createServer } from 'node:http';
 import { fileURLToPath } from 'node:url';
-import { calibrate, CASES } from './calibrate.mjs';
+import { calibrate, CASES, HARD_CASES } from './calibrate.mjs';
 import { baseUrlFor, modelFor, checkArgs, checkDecision, checkReview, checkScores, checkWeights, decide, extractJson, handle, median, pickDepth, status } from './server.mjs';
 
 const S = { baseUrl: 'http://model.test/v1', model: 'm1', apiKey: '', log: '', timeoutMs: 5000 };
@@ -418,4 +418,20 @@ test('escalateBelow lets the caller be more careful: a clear answer under the ch
   assert.equal(careful.structuredContent.escalatedFrom.choice, 'Alpha');
   assert.match(careful.structuredContent.cautions[0], /margin under 60 points/);
   assert.equal((await clear({ escalateBelow: 10 })).structuredContent.method, 'standard');
+});
+
+test('the hard calibration cases are well formed, and the calibrator accepts them', async () => {
+  assert.ok(HARD_CASES.length >= 6);
+  for (const c of [...CASES, ...HARD_CASES]) {
+    assert.ok(c.options.length >= 2 && new Set(c.options).size === c.options.length, c.name);
+    assert.equal(c.criteria.length, c.weights.length, c.name);
+    assert.ok(Number.isInteger(c.expect) && c.expect >= 0 && c.expect < c.options.length, c.name);
+    // Criteria are worded so that more is better, as the tool asks of callers.
+    assert.ok(c.criteria.every(x => !/^(price|time|cost)$/i.test(x)), c.name);
+  }
+  // A stand-in that scores the expected option highest gets every hard case right.
+  const wise = steps({ score: (option) => ({ score: HARD_CASES.some(c => c.options[c.expect] === option) ? 5 : 1, why: 'w' }), review: () => okReview });
+  const r = await calibrate(S, { fetcher: wise, cases: HARD_CASES });
+  assert.equal(r.summary.right, HARD_CASES.length);
+  assert.equal(r.summary.cases, HARD_CASES.length);
 });
