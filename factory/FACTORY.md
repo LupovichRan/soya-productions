@@ -119,6 +119,9 @@ When something needs him, tell him by email if a mail tool is available, and in 
 - At most three fix attempts when a check is red. If it is still red, open the pull request as a draft and say plainly what fails.
 - The pull request description starts with a three-line plan: the idea, what it will not do, how it was checked.
 
+## Videos
+Soya explains one idea per video, about a minute and a half, with her computer voice and captions in both languages. How to make one, the voice licence rule and the "facts, not fashion" rule are in `factory/videos/README.md`. A video is only published when its words were checked against a source we can link to.
+
 ## Changing the factory
 
 Ran changes these rules. A run may propose a change to this file in its pull request description, but does not edit the rules itself.
