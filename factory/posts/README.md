@@ -1,6 +1,6 @@
 # LinkedIn posts
 
-One file per post, named `YYYY-MM-DD-<app>.md`. Every post **starts with the line** `ONE APP A DAY UNTIL SOMETHING WILL CATCH ...` and then:
+One file per post, named `YYYY-MM-DD-<app>.md` (the date is the day it goes out). They are made by the Studio from a brief: see `factory/studio/README.md`. The queue is simply the files whose date has come and that have not been published. Every post **starts with the line** `ONE APP A DAY UNTIL SOMETHING WILL CATCH ...` and then:
 
 1. `Day N: <App name> (alpha or parody if it is one).`
 2. What it is, in two plain sentences.

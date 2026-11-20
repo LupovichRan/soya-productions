@@ -1,0 +1,56 @@
+{
+  "slug": "read-it-simply",
+  "number": 2,
+  "day": 4,
+  "date": "2026-11-20",
+  "post_date": "2026-11-23",
+  "mascot": "owl",
+  "kind": "app",
+  "title": {
+    "en": "Read It Simply",
+    "he": "בפשטות"
+  },
+  "line": {
+    "en": "Paste a confusing letter. See what it asks you to do, and the dates and amounts in it. Nothing leaves your device.",
+    "he": "מדביקים מכתב מבלבל. רואים מה מבקשים מכם לעשות, ואת התאריכים והסכומים שבו. שום דבר לא יוצא מהמכשיר."
+  },
+  "limit": "It is a reading aid, not advice, and it cannot read a photo of a letter yet.",
+  "roadmap": {
+    "en": {
+      "works": [
+        "Paste a confusing letter and see what it asks you to do",
+        "Pulls out the dates, the amounts of money and who to contact",
+        "A simple reading in English and Hebrew; a fuller one if your browser has a built-in AI"
+      ],
+      "next": [
+        "Read a photo of a letter, not only pasted text",
+        "A short list of \"questions to ask them\"",
+        "Save a reading to look at again"
+      ],
+      "later": [
+        "Read it aloud, slowly",
+        "A version for a family member who asks you for help"
+      ],
+      "ask": "What kind of letter confuses you most?"
+    },
+    "he": {
+      "works": [
+        "מדביקים מכתב מבלבל ורואים מה מבקשים מכם לעשות",
+        "מוציא תאריכים, סכומי כסף ואל מי לפנות",
+        "קריאה פשוטה באנגלית ובעברית; קריאה מלאה יותר אם בדפדפן יש בינה מלאכותית מובנית"
+      ],
+      "next": [
+        "קריאה של תצלום מכתב, לא רק טקסט מודבק",
+        "רשימה קצרה של \"שאלות לשאול אותם\"",
+        "שמירת קריאה כדי לחזור אליה"
+      ],
+      "later": [
+        "הקראה בקול, לאט",
+        "גרסה לבן משפחה שמבקש מכם עזרה"
+      ],
+      "ask": "איזה סוג מכתב מבלבל אתכם הכי הרבה?"
+    }
+  },
+  "explainer": null,
+  "folder": "2026-11-20-read-it-simply"
+}

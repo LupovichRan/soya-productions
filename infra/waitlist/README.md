@@ -1,4 +1,4 @@
-# Waiting lists and "what would you add?" requests
+# Waiting lists, requests, video watch counts and comments
 
 Each app's one-pager (`one-pager.html?app=…`) has two small forms: **What would you add?** and **Tell me when it is ready**. They send what the person typed, and the app's name, to a small Google Apps Script that adds a row to a Google Sheet. One tab per app and kind, for example `idea-room waitlist` and `idea-room requests`. No server of ours, no database, no key in the repository.
 
@@ -15,6 +15,12 @@ The Sheet already exists: **Soycatory waiting lists and requests** (in the owner
 5. Put that URL in `waitlist.js` as `url`, and merge. The forms switch on.
 
 To check it works: open a one-pager, join the waiting list with your own email, and look for a row in that app's tab.
+
+## Video watch counts and comments
+
+The same script also receives, from `videos.html`: **watch counts** (tab `video metrics`) and **comments** (tab `video comments`). A count is a row such as "software-factory, play" or "software-factory, leave at 41 seconds": the video, the event (`play`, `q25`, `q50`, `q75`, `q100`, `pause`, `seek`, `leave`), the position, the length, the language, the time, and a **random number made for that one visit**. The number is held in memory and never stored in the browser, so it is not an identifier of a person or a device; it only joins a few events from one viewing. Nothing else is sent: no cookies, no address, no browser details. A browser that sends Do Not Track or Global Privacy Control is not counted at all. The page tells viewers what is counted.
+
+The tab `video summary` (in the Sheet) turns the rows into views, how many reached each quarter, how many finished, and a count of where people stopped in each ten seconds. For a new video, copy its row in `video summary` and change the name in column A. Comments hold the comment, the moment it was written about, and the email only if the person gave one. They are not shown on the site.
 
 ## What it keeps, and why
 

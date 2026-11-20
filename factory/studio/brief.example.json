@@ -1,0 +1,20 @@
+{
+  "slug": "plain-steps",
+  "folder": "2026-11-20-plain-steps",
+  "number": 4,
+  "day": 1,
+  "date": "2026-11-20",
+  "mascot": "frog",
+  "kind": "app",
+  "title": { "en": "Plain Steps", "he": "צעד אחר צעד" },
+  "line": {
+    "en": "Make a short routine you repeat and tick it off one small step at a time. Everything stays on your device.",
+    "he": "מכינים שגרה קצרה שחוזרים עליה ומסמנים אותה צעד קטן אחד בכל פעם. הכול נשאר במכשיר."
+  },
+  "limit": "It does not remind you yet, and it keeps routines on one device only.",
+  "roadmap": {
+    "en": { "works": ["Make a short routine and tick it off one step at a time", "Four examples, all editable", "Routines stay on your device"], "next": ["A gentle reminder you choose", "Share a routine at home", "More starting routines"], "later": ["Steps for someone else, for caregivers", "A big-print card to print"], "ask": "What do you do again and again that you wish was a checklist?" },
+    "he": { "works": ["יוצרים שגרה קצרה ומסמנים אותה צעד אחר צעד", "ארבע דוגמאות, כולן ניתנות לעריכה", "השגרות נשארות במכשיר"], "next": ["תזכורת עדינה שאתם בוחרים", "שיתוף שגרה בבית", "עוד שגרות להתחלה"], "later": ["צעדים עבור מישהו אחר, למטפלים", "כרטיס באותיות גדולות להדפסה"], "ask": "מה אתם עושים שוב ושוב ושהייתם רוצים שיהיה רשימת סימון?" }
+  },
+  "explainer": null
+}

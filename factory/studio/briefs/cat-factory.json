@@ -1,0 +1,56 @@
+{
+  "slug": "cat-factory",
+  "number": 6,
+  "day": 6,
+  "date": "2026-11-20",
+  "post_date": "2026-11-25",
+  "mascot": "cat",
+  "kind": "parody",
+  "title": {
+    "en": "Cat Factory (parody)",
+    "he": "מפעל החתולים (פרודיה)"
+  },
+  "line": {
+    "en": "Give the cats a job. They run a shift and hand you a silly report: who sat on the keyboard, what is in the commit log, and whether it ships. A parody. Nothing leaves your device.",
+    "he": "נותנים לחתולים משימה. הם עובדים משמרת ומגישים דוח מצחיק: מי ישב על המקלדת, מה ביומן השינויים, והאם משחררים. פרודיה. שום דבר לא יוצא מהמכשיר."
+  },
+  "limit": "It is a joke: the reports are written in advance and are not real software advice.",
+  "roadmap": {
+    "en": {
+      "works": [
+        "Give the cats a job; six of them run a shift",
+        "A silly report: who sat on the keyboard, the commit log, the version, whether it ships",
+        "Same job gives the same report, so it can be shared"
+      ],
+      "next": [
+        "A share card as a picture",
+        "More cats, more blockers",
+        "Hebrew jokes checked by native speakers"
+      ],
+      "later": [
+        "A weekly shift report for a real team, as a joke they opt into",
+        "Cat of the month"
+      ],
+      "ask": "What is the funniest thing a cat has done to your work?"
+    },
+    "he": {
+      "works": [
+        "נותנים לחתולים משימה; שישה מהם עובדים משמרת",
+        "דוח מצחיק: מי ישב על המקלדת, יומן השינויים, הגרסה והאם משחררים",
+        "אותה משימה נותנת אותו דוח, אז אפשר לשתף"
+      ],
+      "next": [
+        "כרטיס שיתוף כתמונה",
+        "עוד חתולים, עוד תקיעויות",
+        "בדיחות בעברית שנבדקו על ידי דוברי שפת אם"
+      ],
+      "later": [
+        "דוח משמרת שבועי לצוות אמיתי, כבדיחה שמצטרפים אליה",
+        "חתול החודש"
+      ],
+      "ask": "מה הדבר הכי מצחיק שחתול עשה לעבודה שלכם?"
+    }
+  },
+  "explainer": null,
+  "folder": "2026-11-20-cat-factory"
+}

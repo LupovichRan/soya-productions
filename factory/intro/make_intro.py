@@ -149,7 +149,12 @@ def render(slug, title, line, number, fonts, outdir, base):
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser(); ap.add_argument('--fonts', required=True); ap.add_argument('--out', default=os.path.join(ROOT, 'assets', 'intros')); ap.add_argument('--only')
+    ap.add_argument('--brief', help='a studio brief (factory/studio/brief.example.json): make just that app\'s intro')
     a = ap.parse_args(); os.makedirs(a.out, exist_ok=True); base = compose_base()
-    for slug, title, line, number in APPS:
+    todo = APPS
+    if a.brief:
+        import json
+        br = json.load(open(a.brief)); todo = [(br['slug'], br['title']['en'], br['line']['en'].split('. ')[0].rstrip('.') + '.', br.get('number'))]
+    for slug, title, line, number in todo:
         if a.only and a.only != slug: continue
         print(render(slug, title, line, number, a.fonts, a.out, base)); sys.stdout.flush()

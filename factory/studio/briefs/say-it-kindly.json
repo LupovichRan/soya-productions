@@ -1,0 +1,56 @@
+{
+  "slug": "say-it-kindly",
+  "number": 3,
+  "day": 3,
+  "date": "2026-11-20",
+  "post_date": "2026-11-22",
+  "mascot": "rabbit",
+  "kind": "app",
+  "title": {
+    "en": "Say It Kindly",
+    "he": "בעדינות"
+  },
+  "line": {
+    "en": "Paste a message you are nervous to send. See the phrases that tend to land hard, and fix each one in place. Nothing leaves your device.",
+    "he": "מדביקים הודעה שחוששים לשלוח. רואים את הביטויים שנוטים לפגוע, ומתקנים כל אחד במקום. שום דבר לא יוצא מהמכשיר."
+  },
+  "limit": "It points at phrases and offers swaps; it cannot know your situation or the person you are writing to.",
+  "roadmap": {
+    "en": {
+      "works": [
+        "Paste a message you are nervous to send",
+        "Lists the phrases that tend to land hard, each with why",
+        "One tap puts in a gentler wording; the message stays yours"
+      ],
+      "next": [
+        "More phrases, checked with people who speak the language every day",
+        "A \"how will this feel to read?\" view",
+        "Hebrew gentler wordings for more phrases"
+      ],
+      "later": [
+        "Messages to a boss, a landlord, a school: pick the situation first",
+        "A calm second look before you press send"
+      ],
+      "ask": "Which message did you last put off sending?"
+    },
+    "he": {
+      "works": [
+        "מדביקים הודעה שחוששים לשלוח",
+        "מציג את הביטויים שנוטים לפגוע, כל אחד עם הסבר",
+        "לחיצה אחת מכניסה ניסוח עדין יותר; ההודעה נשארת שלכם"
+      ],
+      "next": [
+        "עוד ביטויים, שנבדקו עם אנשים שמדברים את השפה כל יום",
+        "מבט של \"איך זה ירגיש לקרוא?\"",
+        "ניסוחים עדינים בעברית לעוד ביטויים"
+      ],
+      "later": [
+        "הודעות לבוס, לבעל בית, לבית הספר: בוחרים קודם את המצב",
+        "מבט שני ורגוע לפני שלוחצים על שליחה"
+      ],
+      "ask": "איזו הודעה דחיתם לשלוח לאחרונה?"
+    }
+  },
+  "explainer": null,
+  "folder": "2026-11-20-say-it-kindly"
+}

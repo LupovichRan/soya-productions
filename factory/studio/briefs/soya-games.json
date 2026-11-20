@@ -1,0 +1,56 @@
+{
+  "slug": "soya-games",
+  "number": 7,
+  "day": 5,
+  "date": "2026-11-20",
+  "post_date": "2026-11-24",
+  "mascot": "bear",
+  "kind": "app",
+  "title": {
+    "en": "Soya's Games",
+    "he": "המשחקים של סויה"
+  },
+  "line": {
+    "en": "Three small games for young children to play with a grown-up: match the pairs, count the fish, find the odd one. No timers, no scores, no sound. Nothing is saved or sent.",
+    "he": "שלושה משחקים קטנים לילדים צעירים לשחק עם מבוגר: מוצאים זוגות, סופרים דגים, מוצאים את השונה. בלי שעון, בלי ציונים, בלי צלילים. שום דבר לא נשמר ולא נשלח."
+  },
+  "limit": "It has three games and counts up to nine; nothing is scored or saved.",
+  "roadmap": {
+    "en": {
+      "works": [
+        "Three games: match the pairs, count the fish, find the odd one",
+        "No timers, no scores against the child, no sound",
+        "Nothing saved or sent; big tap targets; English and Hebrew"
+      ],
+      "next": [
+        "Count beyond nine, and a letters game",
+        "A \"sit with me\" mode with questions for the grown-up to ask",
+        "More animals and a calm background"
+      ],
+      "later": [
+        "Read-aloud labels, off by default",
+        "A printable activity sheet"
+      ],
+      "ask": "What game does your child ask for again and again?"
+    },
+    "he": {
+      "works": [
+        "שלושה משחקים: מוצאים זוגות, סופרים דגים, מוצאים את השונה",
+        "בלי שעון, בלי ציונים נגד הילד, בלי צלילים",
+        "שום דבר לא נשמר ולא נשלח; כפתורים גדולים; עברית ואנגלית"
+      ],
+      "next": [
+        "ספירה מעבר לתשע, ומשחק אותיות",
+        "מצב \"שבו איתי\" עם שאלות שהמבוגר יכול לשאול",
+        "עוד חיות ורקע רגוע"
+      ],
+      "later": [
+        "תוויות מוקראות, כבויות כברירת מחדל",
+        "דף פעילות להדפסה"
+      ],
+      "ask": "איזה משחק הילד או הילדה שלכם מבקשים שוב ושוב?"
+    }
+  },
+  "explainer": null,
+  "folder": "2026-11-20-soya-games"
+}

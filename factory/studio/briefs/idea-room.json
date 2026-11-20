@@ -1,0 +1,56 @@
+{
+  "slug": "idea-room",
+  "number": 5,
+  "day": 1,
+  "date": "2026-11-20",
+  "post_date": "2026-11-20",
+  "mascot": "fox",
+  "kind": "alpha",
+  "title": {
+    "en": "Idea Room (alpha)",
+    "he": "חדר רעיונות (אלפא)"
+  },
+  "line": {
+    "en": "Bring an idea and test it for two weeks. People show they want it with small real acts, and the owner decides. An early test: it runs on your device only.",
+    "he": "מביאים רעיון ובודקים אותו שבועיים. אנשים מראים שהם רוצים אותו במעשים קטנים ואמיתיים, והבעלים מחליט. בדיקה מוקדמת: רצה רק במכשיר שלך."
+  },
+  "limit": "It cannot prove who people are yet (there is no sign-in), so the numbers show activity, not real demand.",
+  "roadmap": {
+    "en": {
+      "works": [
+        "Bring an idea and test it for two weeks with small real acts, not likes",
+        "Every suggestion gets an answer; the owner gives trust points that raise a voice",
+        "Share an idea so others see it; live numbers page"
+      ],
+      "next": [
+        "Sign-in, so a person counts once",
+        "A report button and basic moderation for shared ideas",
+        "Email when an owner answers your suggestion"
+      ],
+      "later": [
+        "Agents that build what the community roadmap accepts, one reviewed pull request at a time",
+        "A fair way to share credit when an idea becomes a product"
+      ],
+      "ask": "What would make you trust an idea board enough to post your own idea?"
+    },
+    "he": {
+      "works": [
+        "מביאים רעיון ובודקים אותו שבועיים במעשים קטנים ואמיתיים, לא בלייקים",
+        "כל הצעה מקבלת תשובה; הבעלים נותן נקודות אמון שמחזקות קול",
+        "משתפים רעיון כך שאחרים יראו אותו; עמוד מספרים חיים"
+      ],
+      "next": [
+        "כניסה עם חשבון, כך שאדם נספר פעם אחת",
+        "כפתור דיווח ופיקוח בסיסי על רעיונות משותפים",
+        "מייל כשבעלים עונה להצעה שלכם"
+      ],
+      "later": [
+        "סוכנים שבונים את מה שמפת הדרכים של הקהילה מאשרת, בקשת שינוי אחת בכל פעם, עם בדיקה אנושית",
+        "דרך הוגנת לחלק קרדיט כשרעיון הופך למוצר"
+      ],
+      "ask": "מה היה גורם לכם לסמוך על לוח רעיונות מספיק כדי לפרסם בו רעיון משלכם?"
+    }
+  },
+  "explainer": null,
+  "folder": "2026-11-20-idea-room"
+}
