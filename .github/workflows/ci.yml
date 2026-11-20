@@ -32,6 +32,8 @@ jobs:
           set -euo pipefail
           found=$(git ls-files 'apps/**/*.test.js' 'apps/**/*.test.mjs')
           if [ -n "$found" ]; then node --test $found; else echo "no app tests"; fi
+      - name: Studio tests
+        run: python3 -m unittest discover -s factory/studio
       - name: Every script parses
         run: |
           set -euo pipefail

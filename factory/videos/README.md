@@ -32,3 +32,7 @@ A video about a trend says only what we can point to. Before writing one about s
 | 3 | `outer-loop` | Idea: the agent above the tools that decides, checks and follows up |
 | 4 | `small-and-big-models` | Idea: when a small model is enough, from our own measurements |
 | 5 | `open-source` | Idea: what open source means, and what it does not |
+
+## Counting and comments
+
+`videos.html` counts how far each video is watched and takes comments tied to a moment, only when a receiver address is set in `waitlist.js`, with no cookies, nothing stored in the browser, a random number for one visit only, and nothing sent for anyone who sends Do Not Track. The Sheet tab `video summary` shows views, how far people get and where they stop. To add a video, copy its row in `video summary` and change the name in column A. How the channel uses the numbers: `factory/CHANNEL.md`.

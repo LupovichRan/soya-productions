@@ -119,6 +119,9 @@ When something needs him, tell him by email if a mail tool is available, and in 
 - At most three fix attempts when a check is red. If it is still red, open the pull request as a draft and say plainly what fails.
 - The pull request description starts with a three-line plan: the idea, what it will not do, how it was checked.
 
+## Studio
+An app is not finished until it has a brief and `python3 factory/studio/studio.py check` reports no gaps: the post, the one-pager road map, the intro, the share card. See `factory/studio/README.md`. The channel that publishes and learns from it is in `factory/CHANNEL.md`.
+
 ## Videos
 Soya explains one idea per video, about a minute and a half, with her computer voice and captions in both languages. How to make one, the voice licence rule and the "facts, not fashion" rule are in `factory/videos/README.md`. A video is only published when its words were checked against a source we can link to.
 

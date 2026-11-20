@@ -82,3 +82,12 @@ a.brand{color:inherit;text-decoration:none}
 .video h2{font-size:22px;color:var(--ink);margin:0 0 4px}
 .lead{font-size:17px;color:#344054;margin:6px 0 14px}
 #app > p.small:first-child{margin-top:16px}.small a{color:var(--accent)}
+
+.comment-form{border-top:1px solid var(--line);margin-top:12px;padding-top:6px}
+.comment-form h3{margin:10px 0 0;font-size:17px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+pre{white-space:pre-wrap;word-break:break-word;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px;font-size:14px;margin:8px 0}
+select{font:inherit;width:100%;padding:12px;border:1px solid var(--line-strong);border-radius:10px;background:#fff;min-height:var(--tap)}
+code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em}
+.two > div{min-width:0}.two input,.two select{min-width:0;width:100%}
+input[type=date],input[type=number]{max-width:100%}

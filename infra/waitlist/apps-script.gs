@@ -4,7 +4,9 @@
  * and holds no key. Setup is in infra/waitlist/README.md.
  */
 var APPS = ['soycatory', 'roundtable', 'read-it-simply', 'say-it-kindly', 'plain-steps', 'idea-room', 'cat-factory', 'soya-games'];
-var MAX_ROWS = 5000;
+var MAX_ROWS = 5000, MAX_METRIC_ROWS = 100000;
+var METRIC_EVENTS = ['play', 'q25', 'q50', 'q75', 'q100', 'pause', 'seek', 'leave'];
+function slug_(v) { return /^[a-z0-9-]{3,60}$/.test(String(v || '')) ? String(v) : ''; }
 
 function doGet() { return text_({ ok: true, name: 'Soycatory waiting list' }); }
 
@@ -12,6 +14,7 @@ function doPost(e) {
   var p = (e && e.parameter) || {};
   if (p.website) return text_({ ok: true });                       // a robot filled the hidden field: say nothing
   var app = String(p.app || ''), kind = String(p.kind || ''), lang = p.lang === 'he' ? 'he' : 'en';
+  if (kind === 'metric' || kind === 'comment') return video_(p, kind, lang);   // video watch counts and comments
   if (APPS.indexOf(app) < 0) return text_({ ok: false });
   var lock = LockService.getScriptLock(); lock.waitLock(20000);
   try {
@@ -32,6 +35,30 @@ function doPost(e) {
       if (rq.getLastRow() >= MAX_ROWS) return text_({ ok: false });
       rq.appendRow([when, safe_(body), safe_(mail), lang]);
     } else return text_({ ok: false });
+    return text_({ ok: true });
+  } finally { lock.releaseLock(); }
+}
+
+/** Video watch counts (no cookies, no ids: only a random number made for one visit) and timestamped comments. */
+function video_(p, kind, lang) {
+  var video = slug_(p.video); if (!video) return text_({ ok: false });
+  var pos = Math.max(0, Math.min(86400, Math.floor(Number(p.position) || 0)));
+  var lock = LockService.getScriptLock(); lock.waitLock(20000);
+  try {
+    var ss = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('SHEET_ID')), when = new Date().toISOString();
+    if (kind === 'metric') {
+      if (p.website || METRIC_EVENTS.indexOf(String(p.event)) < 0) return text_({ ok: true });
+      var m = tab_(ss, 'video metrics', ['When (UTC)', 'Video', 'View', 'Event', 'Position (s)', 'Duration (s)', 'Language']);
+      if (m.getLastRow() >= MAX_METRIC_ROWS) return text_({ ok: false });
+      m.appendRow([when, video, String(p.view || '').replace(/[^a-z0-9]/gi, '').slice(0, 12), String(p.event), pos, Math.max(0, Math.min(86400, Math.floor(Number(p.duration) || 0))), lang]);
+    } else {
+      if (p.website) return text_({ ok: true });
+      var body = String(p.text || '').trim().slice(0, 300), mail = String(p.email || '').trim().toLowerCase();
+      if (body.length < 3 || (mail && (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(mail) || mail.length > 254))) return text_({ ok: false });
+      var c = tab_(ss, 'video comments', ['When (UTC)', 'Video', 'At (s)', 'Comment', 'Email (optional)', 'Language']);
+      if (c.getLastRow() >= MAX_ROWS) return text_({ ok: false });
+      c.appendRow([when, video, pos, safe_(body), safe_(mail), lang]);
+    }
     return text_({ ok: true });
   } finally { lock.releaseLock(); }
 }
