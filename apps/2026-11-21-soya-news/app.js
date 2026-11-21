@@ -6,7 +6,7 @@
   'use strict';
 
   var K = { lang: 'soya-news-lang', age: 'soya-news-age', mood: 'soya-news-mood', nick: 'soya-news-nick', seen: 'soya-news-seen', quiz: 'soya-news-quiz', rate: 'soya-news-rate', gender: 'soya-news-gender' };
-  var VERSION = '2026-11-21.9';
+  var VERSION = '2026-11-21.10';
   var LANGS = ['en', 'he', 'fr'];
   var BANDS = [{ id: 'cub', from: 6, to: 8, pose: 'bell' }, { id: 'explorer', from: 9, to: 12, pose: 'wow' }, { id: 'teen', from: 13, to: 17, pose: 'glasses' }, { id: 'grown', from: 18, to: 25, pose: 'crown' }, { id: 'owner', from: 26, to: 66, pose: 'sit' }];
   var MAX_AGE = 66;
@@ -30,6 +30,7 @@
       read: 'Soya, read it to me', stopRead: 'Stop reading', reading: 'Soya is reading...', noVoice: 'This browser cannot read aloud.', catLabel: 'Soya the cat. Tap him.',
       taps: ['Meow! That tickles.', 'Did you know cats sleep about 15 hours a day?', 'Keep reading, I am watching!', 'Purr. Good question.', 'I am a reporter, not a pillow!'],
       cheer: ['Yes! You got it!', 'Clever cat!', 'Purr-fect!'], oops: ['Oops! Try to remember it.', 'Almost! Now you know.'], rateQ: 'How clear was this?', rateThanks: 'Thanks! Soya will use this to explain better.', stars: function (n) { return n + ' of 5'; },
+      mouse: 'Report a problem or an idea', mouseSay: 'A mouse! Tell him what went wrong.', tellUs: 'Tell us!', kindsBug: { bug: 'Something is broken', idea: 'I have an idea', fix: 'Please fix this' }, boxSoon: "Soya's mailbox opens soon.",
       bugTitle: 'Something wrong or confusing?', bugLabel: 'What happened?', bugSend: 'Send the report', bugAdds: function (v) { return 'We also send the app version (' + v + '), the language and the age level, nothing else.'; }, bugThanks: 'Thank you. We will look at it.', bugGithub: 'Grown-ups can also report it on GitHub',
       aboutTitle: 'I\'m raising a human', about: function (n) { return [
         'Hi, I\'m Soya. I\'m only ' + n + (n === 1 ? ' month' : ' months') + ' old, and I\'m already raising a human. His name is Ran.',
@@ -74,6 +75,7 @@
       read: 'סויה, תקריא לי', stopRead: 'מפסיקים להקריא', reading: 'סויה מקריא...', noVoice: 'הדפדפן הזה לא יודע להקריא בקול.', catLabel: 'סויה החתול. אפשר ללחוץ עליו.',
       taps: ['מיאו! זה מדגדג.', 'ידעתם שחתולים ישנים בערך 15 שעות ביום?', 'תמשיכו לקרוא, אני מסתכל!', 'פררר. שאלה טובה.', 'אני כתב, לא כרית!'],
       cheer: ['כן! צדקתם!', 'חתול חכם!', 'מושלם!'], oops: ['אופס! תזכרו את זה.', 'כמעט! עכשיו אתם יודעים.'], rateQ: 'כמה זה היה ברור?', rateThanks: 'תודה! סויה ישתמש בזה כדי להסביר טוב יותר.', stars: function (n) { return n + ' מתוך 5'; },
+      mouse: 'דיווח על תקלה או רעיון', mouseSay: 'עכבר! ספרו לו מה השתבש.', tellUs: 'ספרו לנו!', kindsBug: { bug: 'משהו לא עובד', idea: 'יש לי רעיון', fix: 'צריך לתקן' }, boxSoon: 'תיבת הדואר של סויה נפתחת בקרוב.',
       bugTitle: 'משהו לא עובד או לא ברור?', bugLabel: 'מה קרה?', bugSend: 'שולחים את הדיווח', bugAdds: function (v) { return 'אנחנו שולחים גם את גרסת האפליקציה (' + v + '), את השפה ואת רמת הגיל, ולא שום דבר אחר.'; }, bugThanks: 'תודה. נבדוק את זה.', bugGithub: 'מבוגרים יכולים לדווח גם ב־GitHub',
       aboutTitle: 'אני מגדל בן אדם', about: function (n) { return [
         'היי, אני סויה. אני רק ' + (n === 1 ? 'בן חודש' : 'בן ' + n + ' חודשים') + ', וכבר אני מגדל בן אדם. קוראים לו רן.',
@@ -118,6 +120,7 @@
       read: 'Soya, lis-moi ça', stopRead: 'Arrêter la lecture', reading: 'Soya lit...', noVoice: 'Ce navigateur ne sait pas lire à voix haute.', catLabel: 'Soya le chat. Touche-le.',
       taps: ['Miaou ! Ça chatouille.', 'Tu savais que les chats dorment environ 15 heures par jour ?', 'Continue à lire, je te regarde !', 'Ronron. Bonne question.', 'Je suis reporter, pas un coussin !'],
       cheer: ['Oui ! Bravo !', 'Chat malin !', 'Parfait !'], oops: ['Oups ! Retiens-le bien.', 'Presque ! Maintenant tu sais.'], rateQ: 'C\'était clair ?', rateThanks: 'Merci ! Soya s\'en servira pour mieux expliquer.', stars: function (n) { return n + ' sur 5'; },
+      mouse: 'Signaler un bug ou une idée', mouseSay: 'Une souris ! Dis-lui ce qui ne va pas.', tellUs: 'Dis-nous tout !', kindsBug: { bug: 'Ça ne marche pas', idea: "J'ai une idée", fix: 'À corriger' }, boxSoon: 'La boîte aux lettres de Soya ouvre bientôt.',
       bugTitle: 'Quelque chose ne va pas ou n\'est pas clair ?', bugLabel: 'Que s\'est-il passé ?', bugSend: 'Envoyer le signalement', bugAdds: function (v) { return 'Nous envoyons aussi la version de l\'appli (' + v + '), la langue et le niveau d\'âge, rien d\'autre.'; }, bugThanks: 'Merci. Nous allons regarder.', bugGithub: 'Les adultes peuvent aussi le signaler sur GitHub',
       aboutTitle: 'J\'élève un humain', about: function (n) { return [
         'Salut, je suis Soya. Je n\'ai que ' + n + ' mois, et j\'élève déjà un humain. Il s\'appelle Ran.',
@@ -273,12 +276,18 @@
     return '<div class="rate"><p class="label">' + esc(t('rateQ')) + '</p><div class="paws" role="group" aria-label="' + esc(t('rateQ')) + '">' + paws + '</div><p class="mute small" role="status">' + (got ? esc(t('rateThanks')) : '') + '</p></div>';
   }
   var GITHUB = 'https://github.com/LupovichRan/soya-productions/issues/new?title=' + encodeURIComponent('Soya News: ');
+  /* The mouse from Soya's game (annabelle-games) sits on the edge of the screen; tap it to report a problem or an idea. */
+  var MOUSE = '<svg viewBox="0 0 120 70" width="40" height="24" aria-hidden="true"><path d="M100,48 Q125,40 115,20" stroke="#ff7aa8" stroke-width="5" fill="none" stroke-linecap="round"/><ellipse cx="60" cy="45" rx="42" ry="22" fill="#9aa3ad" stroke="#5b636c" stroke-width="3"/><circle cx="30" cy="26" r="12" fill="#c3cad1" stroke="#5b636c" stroke-width="3"/><circle cx="30" cy="26" r="6" fill="#ffb3c8"/><circle cx="22" cy="44" r="4" fill="#222"/><circle cx="18" cy="52" r="5" fill="#ff7aa8"/><path d="M50,30 l6,10 l6,-10 l6,10" stroke="#5fd38d" stroke-width="3" fill="none"/></svg>';
+  var bugKind = 'bug';
   function bugBox() {
-    var html = '<section class="panel" id="bug"><h2>' + esc(t('bugTitle')) + '</h2>';
-    if (canSend()) html += '<form id="bug-form" novalidate><label for="bug-text">' + esc(t('bugLabel')) + '</label><textarea id="bug-text" maxlength="500" autocomplete="off" dir="' + boxDir() + '"></textarea>' +
+    var html = '<button type="button" class="mouse-btn" id="mouse-btn" aria-label="' + esc(t('mouse')) + '" title="' + esc(t('mouse')) + '">' + MOUSE + '</button>' +
+      '<dialog class="bug-dlg" id="bug-dlg" aria-labelledby="bug-h"><div class="bug-head">' + MOUSE.replace('width="40" height="24"', 'width="64" height="38"') + '<h2 id="bug-h">' + esc(t('tellUs')) + '</h2></div>';
+    if (canSend()) html += '<form id="bug-form" novalidate><div class="seg" role="group" aria-label="' + esc(t('bugTitle')) + '">' + ['bug', 'idea', 'fix'].map(function (k) { return '<button type="button" data-kind="' + k + '" aria-pressed="' + (k === bugKind) + '"' + (k === bugKind ? ' class="on"' : '') + '>' + esc(t('kindsBug')[k]) + '</button>'; }).join('') + '</div>' +
+      '<label for="bug-text">' + esc(t('bugLabel')) + '</label><textarea id="bug-text" maxlength="500" autocomplete="off" dir="' + boxDir() + '"></textarea>' +
       '<p class="mute small">' + esc(t('ideaSafe')) + ' ' + esc(t('bugAdds')(VERSION)) + '</p><div class="hp" aria-hidden="true"><label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>' +
       '<p class="note" role="status" hidden></p><button type="submit" class="ghost">' + esc(t('bugSend')) + '</button></form>';
-    return html + '<p><a href="' + esc(GITHUB) + '" target="_blank" rel="noopener">' + esc(t('bugGithub')) + '</a></p></section>';
+    else html += '<p class="mute">' + esc(t('boxSoon')) + '</p>';
+    return html + '<p><a href="' + esc(GITHUB) + '" target="_blank" rel="noopener">' + esc(t('bugGithub')) + '</a></p><button type="button" class="ghost" id="bug-close">' + esc(t('close')) + '</button></dialog>';
   }
   /* Soya introduces his human (photo from Ran's company page, with his permission), then the treat box. */
   /* Soya was 6 months old on 21 November 2026, so he was born around 21 May 2026. His age counts up by itself. */
@@ -379,6 +388,15 @@
         keepPlace(render, id);
       });
     });
+    var dlgB = document.getElementById('bug-dlg'), mouseBtn = document.getElementById('mouse-btn');
+    mouseBtn.addEventListener('click', function () {
+      if (dlgB.showModal) dlgB.showModal(); else dlgB.setAttribute('open', '');
+      if (window.SoyaLive) { window.SoyaLive.wow(1400); window.SoyaLive.say(t('mouseSay')); }
+      var first = dlgB.querySelector('textarea'); if (first) first.focus();
+    });
+    document.getElementById('bug-close').addEventListener('click', function () { dlgB.close(); mouseBtn.focus(); });
+    dlgB.addEventListener('click', function (e) { if (e.target === dlgB) dlgB.close(); });
+    dlgB.querySelectorAll('[data-kind]').forEach(function (b) { b.addEventListener('click', function () { bugKind = b.getAttribute('data-kind'); dlgB.querySelectorAll('[data-kind]').forEach(function (x) { var on = x === b; x.classList.toggle('on', on); x.setAttribute('aria-pressed', String(on)); }); }); });
     var bug = document.getElementById('bug-form');
     if (bug) bug.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -386,7 +404,7 @@
       function say(x) { note.hidden = false; note.textContent = x; }
       if (trap && trap.value) return;
       if (text.length < 3) return say(t('ideaShort'));
-      send({ kind: 'bug', text: text.slice(0, 500), version: VERSION, level: band(), issue: issueId || '' }).then(function () { box.value = ''; say(t('bugThanks')); }, function () { say(t('ideaFailed')); });
+      send({ kind: 'bug', type: bugKind, text: text.slice(0, 500), version: VERSION, level: band(), issue: issueId || '' }).then(function () { box.value = ''; say(t('bugThanks')); }, function () { say(t('ideaFailed')); });
     });
     var dlg = document.getElementById('ran-dialog'), opener = document.getElementById('ran-photo');
     if (dlg && opener) {
