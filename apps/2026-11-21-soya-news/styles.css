@@ -96,3 +96,21 @@ textarea{min-height:110px;resize:vertical}
 .about-row{display:flex;gap:14px;align-items:flex-start}
 .about-row .cat{flex:none}
 #bug a,.about a{display:inline-flex;align-items:center;min-height:var(--tap)}
+/* Fact / Soya thinks / A guess: colour plus a different shape, so it also works without colour */
+.facts-btn{align-self:flex-start}
+.facts{display:flex;flex-direction:column;gap:10px;background:var(--bg);border-radius:16px;padding:12px}
+.claims,.srcs{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.claim{display:flex;flex-direction:column;gap:4px;padding:8px 12px;border-radius:12px;border-inline-start:6px solid}
+.c-fact{border-color:var(--mint);background:rgba(94,224,193,.10)}
+.c-inference{border-color:var(--sky);background:rgba(122,167,255,.12)}
+.c-assumption{border-color:#FFB04D;background:rgba(255,176,77,.12)}
+.kind{display:inline-flex;align-items:center;gap:6px;font:600 14px var(--head)}
+.k-fact{color:var(--mint)} .k-fact svg{fill:var(--mint)}
+.k-inference{color:var(--sky)} .k-inference svg{fill:var(--sky)}
+.k-assumption{color:#FFB04D} .k-assumption svg{fill:#FFB04D}
+.srcs li{display:flex;flex-direction:column;gap:2px}
+.srcs a{display:inline-flex;align-items:center;min-height:var(--tap);font-weight:500}
+.claim a{color:var(--sky)}
+.tuna{display:inline-flex;gap:2px;vertical-align:middle}
+.fish{fill:#3A4466} .fish.on{fill:#FF9E7A}
+.key summary{min-height:var(--tap);display:flex;align-items:center;font:600 18px var(--head);cursor:pointer}

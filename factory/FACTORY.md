@@ -1,5 +1,7 @@
 # The Soycatory playbook
 
+> **Ran's writing rule (always):** never use bullet points in anything you write (reports, emails, pull requests, posts, docs, app text). Use numbered lists or plain sentences.
+
 Soycatory, the Soya Software Factory, is a small software factory. On a schedule, a run reads what is happening in AI and software, turns the most useful concept into a small web app (an "app"), and opens a pull request. Ran reviews and merges. Nothing reaches `main` without that.
 
 This file is the playbook. A run follows it from top to bottom.

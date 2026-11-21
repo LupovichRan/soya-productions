@@ -1,5 +1,7 @@
 # The outer loop
 
+> **Ran's writing rule (always):** never use bullet points in anything you write (reports, emails, pull requests, posts, docs, app text). Use numbered lists or plain sentences.
+
 The factory should not wait for a person to carry messages between its parts. The outer loop is an agent that, on a schedule, **decides what is next, checks the result, follows up, and only brings a person in where a person is needed**. The idea is borrowed from the way people now use agents as the layer above Claude Code, not inside it.
 
 ## What it does each day (after the build run has opened its pull request)

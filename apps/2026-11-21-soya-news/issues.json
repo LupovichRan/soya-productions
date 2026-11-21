@@ -90,7 +90,94 @@
       "en": "Ask: if you owned a tiny piece of a lemonade stand, what would make your piece worth more?",
       "he": "שאלו: אם הייתה לכם חתיכה קטנה מדוכן לימונדה, מה היה גורם לה להיות שווה יותר?",
       "fr": "Demandez : si tu possédais un petit morceau d'un stand de limonade, qu'est-ce qui le rendrait plus précieux ?"
-     }
+     },
+     "sources": [
+      {
+       "name": "Anthropic",
+       "url": "https://www.anthropic.com/news/anthropic-prices-initial-public-offering",
+       "tuna": 5,
+       "why": {
+        "en": "The company's own announcement: the best place for its own deal numbers, but it is talking about itself.",
+        "he": "ההודעה של החברה עצמה: המקום הכי טוב למספרים של העסקה שלה, אבל היא מדברת על עצמה.",
+        "fr": "L'annonce de l'entreprise elle-même : la meilleure source pour ses propres chiffres, mais elle parle d'elle."
+       }
+      },
+      {
+       "name": "Fortune",
+       "url": "https://fortune.com/2026/11/18/anthropic-prices-ipo-83-per-share-1-5-trillion/",
+       "tuna": 4,
+       "why": {
+        "en": "A big business magazine with editors who check facts.",
+        "he": "מגזין עסקים גדול עם עורכים שבודקים עובדות.",
+        "fr": "Un grand magazine économique avec des rédacteurs qui vérifient."
+       }
+      },
+      {
+       "name": "StockTitan",
+       "url": "https://www.stocktitan.net/articles/anthropic-ipo-live-ant-first-trading-day-2026",
+       "tuna": 2,
+       "why": {
+        "en": "A market news site that collects reports quickly; good for prices, less careful about checking.",
+        "he": "אתר חדשות שוק שאוסף דיווחים מהר; טוב למחירים, פחות זהיר בבדיקה.",
+        "fr": "Un site d'actualité boursière rapide ; bien pour les prix, moins prudent pour vérifier."
+       }
+      }
+     ],
+     "facts": [
+      {
+       "kind": "fact",
+       "text": {
+        "en": "Anthropic priced its shares at $83 and they began trading on Nasdaq as ANT on 19 November.",
+        "he": "Anthropic תמחרה את המניות ב־83 דולר והן החלו להיסחר בנאסד\"ק בסימול ANT ב־19 בנובמבר.",
+        "fr": "Anthropic a fixé le prix de ses actions à 83 dollars ; elles s'échangent au Nasdaq sous ANT depuis le 19 novembre."
+       },
+       "src": [
+        0,
+        1
+       ]
+      },
+      {
+       "kind": "fact",
+       "text": {
+        "en": "The company raised about $79 billion.",
+        "he": "החברה גייסה כ־79 מיליארד דולר.",
+        "fr": "L'entreprise a levé environ 79 milliards de dollars."
+       },
+       "src": [
+        0,
+        1
+       ]
+      },
+      {
+       "kind": "fact",
+       "text": {
+        "en": "The shares closed their first day 17% above $83.",
+        "he": "המניות סגרו את היום הראשון 17% מעל 83 דולר.",
+        "fr": "Les actions ont fini leur premier jour 17 % au-dessus de 83 dollars."
+       },
+       "src": [
+        2
+       ]
+      },
+      {
+       "kind": "inference",
+       "text": {
+        "en": "Buyers are paying a lot because they expect the company to keep growing very fast.",
+        "he": "הקונים משלמים הרבה כי הם מצפים שהחברה תמשיך לגדול מהר מאוד.",
+        "fr": "Les acheteurs paient cher parce qu'ils s'attendent à ce que l'entreprise continue de grandir très vite."
+       },
+       "src": null
+      },
+      {
+       "kind": "assumption",
+       "text": {
+        "en": "The price will keep jumping up and down for a while. Nobody knows where it ends up.",
+        "he": "המחיר ימשיך לקפוץ למעלה ולמטה עוד זמן מה. אף אחד לא יודע איפה הוא ייגמר.",
+        "fr": "Le prix va encore monter et descendre un moment. Personne ne sait où il finira."
+       },
+       "src": null
+      }
+     ]
     },
     {
      "id": "chips",
@@ -169,7 +256,50 @@
       "en": "Ask: why might a computer that thinks need more electricity than one that just plays videos?",
       "he": "שאלו: למה מחשב שחושב צריך יותר חשמל ממחשב שרק מנגן סרטונים?",
       "fr": "Demandez : pourquoi un ordinateur qui réfléchit aurait-il besoin de plus d'électricité qu'un ordinateur qui passe des vidéos ?"
-     }
+     },
+     "sources": [
+      {
+       "name": "CNBC",
+       "url": "https://www.cnbc.com/2026/11/17/nvidia-nvda-earnings-report-q3-2027.html",
+       "tuna": 4,
+       "why": {
+        "en": "A large business news channel that reports company results the day they come out.",
+        "he": "ערוץ חדשות עסקים גדול שמדווח על תוצאות חברות ביום שהן יוצאות.",
+        "fr": "Une grande chaîne d'info économique qui publie les résultats le jour même."
+       }
+      }
+     ],
+     "facts": [
+      {
+       "kind": "fact",
+       "text": {
+        "en": "Nvidia sold $107.6 billion of data center chips in three months, 110% more than a year before.",
+        "he": "Nvidia מכרה שבבים למרכזי נתונים ב־107.6 מיליארד דולר בשלושה חודשים, 110% יותר משנה קודם.",
+        "fr": "Nvidia a vendu pour 107,6 milliards de dollars de puces pour centres de données en trois mois, 110 % de plus qu'un an avant."
+       },
+       "src": [
+        0
+       ]
+      },
+      {
+       "kind": "inference",
+       "text": {
+        "en": "Most of the money going into AI ends up paying for chips and computers.",
+        "he": "רוב הכסף שנכנס לבינה מלאכותית בסוף משלם על שבבים ומחשבים.",
+        "fr": "La plupart de l'argent investi dans l'IA finit par payer des puces et des ordinateurs."
+       },
+       "src": null
+      },
+      {
+       "kind": "assumption",
+       "text": {
+        "en": "Demand will stay this strong next year. New rules or cheaper chips could change that.",
+        "he": "הביקוש יישאר חזק כזה גם בשנה הבאה. כללים חדשים או שבבים זולים יותר יכולים לשנות את זה.",
+        "fr": "La demande restera aussi forte l'an prochain. De nouvelles règles ou des puces moins chères pourraient changer ça."
+       },
+       "src": null
+      }
+     ]
     },
     {
      "id": "border",
@@ -248,7 +378,93 @@
       "en": "Ask: is it fair for one country to decide who can buy something? What would you do?",
       "he": "שאלו: האם זה הוגן שמדינה אחת תחליט מי יכול לקנות משהו? מה אתם הייתם עושים?",
       "fr": "Demandez : est-ce juste qu'un pays décide qui peut acheter quelque chose ? Toi, que ferais-tu ?"
-     }
+     },
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-16/us-moves-to-limit-remote-access-to-advanced-ai-chips",
+       "tuna": 5,
+       "why": {
+        "en": "One of the most careful business newsrooms in the world.",
+        "he": "אחד מחדרי החדשות העסקיים הזהירים בעולם.",
+        "fr": "L'une des rédactions économiques les plus rigoureuses au monde."
+       }
+      },
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-18/interim-nvidia-ceo-says-it-s-no-longer-sending-ai-chips-to-china",
+       "tuna": 5,
+       "why": {
+        "en": "One of the most careful business newsrooms in the world.",
+        "he": "אחד מחדרי החדשות העסקיים הזהירים בעולם.",
+        "fr": "L'une des rédactions économiques les plus rigoureuses au monde."
+       }
+      },
+      {
+       "name": "Al Jazeera",
+       "url": "https://www.aljazeera.com/economy/2026/11/17/us-moves-to-block-chinas-remote-access-to-ai-chips-amid-nvidia-scandal",
+       "tuna": 4,
+       "why": {
+        "en": "A large international newsroom; it has its own point of view on some topics, so compare with others.",
+        "he": "חדר חדשות בינלאומי גדול; יש לו נקודת מבט משלו בחלק מהנושאים, אז כדאי להשוות לאחרים.",
+        "fr": "Une grande rédaction internationale ; elle a son propre point de vue sur certains sujets, alors comparez."
+       }
+      },
+      {
+       "name": "CNBC",
+       "url": "https://www.cnbc.com/2026/11/18/nvidia-us-ai-chip-export-controls-data-centers-.html",
+       "tuna": 4,
+       "why": {
+        "en": "A large business news channel.",
+        "he": "ערוץ חדשות עסקים גדול.",
+        "fr": "Une grande chaîne d'info économique."
+       }
+      }
+     ],
+     "facts": [
+      {
+       "kind": "fact",
+       "text": {
+        "en": "The US now requires a licence before advanced AI chips go to data centers in Singapore, Malaysia, Thailand, Indonesia and Brazil.",
+        "he": "ארצות הברית דורשת עכשיו רישיון לפני ששבבי בינה מלאכותית מתקדמים מגיעים למרכזי נתונים בסינגפור, מלזיה, תאילנד, אינדונזיה וברזיל.",
+        "fr": "Les États-Unis exigent désormais une licence avant d'envoyer des puces d'IA avancées vers des centres de données à Singapour, en Malaisie, en Thaïlande, en Indonésie et au Brésil."
+       },
+       "src": [
+        0,
+        2,
+        3
+       ]
+      },
+      {
+       "kind": "fact",
+       "text": {
+        "en": "Nvidia's interim chief executive said it no longer ships its licensed data center chips to China.",
+        "he": "המנכ\"לית הזמנית של Nvidia אמרה שהחברה כבר לא שולחת לסין את שבבי מרכזי הנתונים שקיבלו רישיון.",
+        "fr": "La directrice générale par intérim de Nvidia a dit ne plus envoyer en Chine ses puces de centres de données sous licence."
+       },
+       "src": [
+        1
+       ]
+      },
+      {
+       "kind": "inference",
+       "text": {
+        "en": "AI chips are now treated like a precious resource, the way oil was.",
+        "he": "מתייחסים עכשיו לשבבי בינה מלאכותית כמו למשאב יקר, כמו שהתייחסו פעם לנפט.",
+        "fr": "Les puces d'IA sont maintenant traitées comme une ressource précieuse, comme le pétrole autrefois."
+       },
+       "src": null
+      },
+      {
+       "kind": "assumption",
+       "text": {
+        "en": "Other countries may make similar rules of their own.",
+        "he": "ייתכן שמדינות אחרות יקבעו כללים דומים משלהן.",
+        "fr": "D'autres pays pourraient faire des règles semblables."
+       },
+       "src": null
+      }
+     ]
     },
     {
      "id": "helper",
@@ -327,7 +543,72 @@
       "en": "Ask: if a helper could tap buttons on your phone, which ones should it never press without asking?",
       "he": "שאלו: אם עוזר היה יכול ללחוץ על כפתורים בטלפון, על אילו הוא אף פעם לא צריך ללחוץ בלי לשאול?",
       "fr": "Demandez : si un assistant pouvait appuyer sur les boutons de ton téléphone, lesquels ne devrait-il jamais toucher sans demander ?"
-     }
+     },
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://bloomberg.com/news/articles/2026-11-19/apple-is-working-on-ai-agent-for-device-control-apps-browsing-and-coding",
+       "tuna": 5,
+       "why": {
+        "en": "One of the most careful business newsrooms. Here it is reading job ads, not an Apple announcement.",
+        "he": "אחד מחדרי החדשות העסקיים הזהירים. כאן הוא קורא מודעות דרושים, לא הודעה של Apple.",
+        "fr": "L'une des rédactions les plus rigoureuses. Ici, elle lit des offres d'emploi, pas une annonce d'Apple."
+       }
+      },
+      {
+       "name": "AppleInsider",
+       "url": "https://appleinsider.com/articles/26/11/19/apple-ai-agents-are-coming-to-help-you-code-browse-perform-tasks",
+       "tuna": 3,
+       "why": {
+        "en": "A site that follows Apple closely; it often repeats what bigger newsrooms found.",
+        "he": "אתר שעוקב אחרי Apple מקרוב; הוא חוזר לא פעם על מה שחדרי חדשות גדולים מצאו.",
+        "fr": "Un site qui suit Apple de près ; il reprend souvent ce que de plus grandes rédactions ont trouvé."
+       }
+      }
+     ],
+     "facts": [
+      {
+       "kind": "fact",
+       "text": {
+        "en": "Bloomberg found Apple job ads for building an agent that controls apps, browses the web and writes code.",
+        "he": "Bloomberg מצאה מודעות דרושים של Apple לבניית סוכן שמפעיל אפליקציות, גולש ברשת וכותב קוד.",
+        "fr": "Bloomberg a trouvé des offres d'emploi d'Apple pour construire un agent qui pilote les applis, navigue sur le web et écrit du code."
+       },
+       "src": [
+        0,
+        1
+       ]
+      },
+      {
+       "kind": "fact",
+       "text": {
+        "en": "Apple has not announced it.",
+        "he": "Apple לא הודיעה על זה.",
+        "fr": "Apple ne l'a pas annoncé."
+       },
+       "src": [
+        0
+       ]
+      },
+      {
+       "kind": "inference",
+       "text": {
+        "en": "Phone helpers are moving from only talking to also doing things.",
+        "he": "העוזרים בטלפון עוברים מרק לדבר לגם לעשות דברים.",
+        "fr": "Les assistants des téléphones passent de « parler » à « faire »."
+       },
+       "src": null
+      },
+      {
+       "kind": "assumption",
+       "text": {
+        "en": "A helper like this will ask before doing anything big, like paying or deleting.",
+        "he": "עוזר כזה ישאל לפני שהוא עושה משהו גדול, כמו לשלם או למחוק.",
+        "fr": "Un tel assistant demandera avant de faire quelque chose d'important, comme payer ou supprimer."
+       },
+       "src": null
+      }
+     ]
     },
     {
      "id": "label",
@@ -406,7 +687,71 @@
       "en": "Ask: how could you tell if a funny video of a famous person is real or made by a computer?",
       "he": "שאלו: איך אפשר לדעת אם סרטון מצחיק של אדם מפורסם הוא אמיתי או שמחשב יצר אותו?",
       "fr": "Demandez : comment savoir si une vidéo drôle d'une célébrité est vraie ou fabriquée par un ordinateur ?"
-     }
+     },
+     "sources": [
+      {
+       "name": "European Commission",
+       "url": "https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai",
+       "tuna": 5,
+       "why": {
+        "en": "The official page of the people who wrote the law.",
+        "he": "הדף הרשמי של מי שכתבו את החוק.",
+        "fr": "La page officielle de ceux qui ont écrit la loi."
+       }
+      },
+      {
+       "name": "CASRAI",
+       "url": "https://casrai.org/news/eu-ai-act-2-december-2026-obligations-article-50",
+       "tuna": 2,
+       "why": {
+        "en": "A small site that explains rules; useful, but check the dates on the official page.",
+        "he": "אתר קטן שמסביר כללים; שימושי, אבל כדאי לבדוק את התאריכים בדף הרשמי.",
+        "fr": "Un petit site qui explique les règles ; utile, mais vérifiez les dates sur la page officielle."
+       }
+      }
+     ],
+     "facts": [
+      {
+       "kind": "fact",
+       "text": {
+        "en": "Europe's AI Act has rules that AI-made content must be marked.",
+        "he": "בחוק הבינה המלאכותית של אירופה יש כללים שתוכן שבינה מלאכותית יצרה חייב להיות מסומן.",
+        "fr": "L'AI Act européen prévoit que les contenus faits par l'IA doivent être marqués."
+       },
+       "src": [
+        0
+       ]
+      },
+      {
+       "kind": "fact",
+       "text": {
+        "en": "From 2 December 2026, AI tools already on the market must mark what they make. Only a small site says this date, so check the official page.",
+        "he": "מ־2 בדצמבר 2026 כלי בינה מלאכותית שכבר בשוק חייבים לסמן את מה שהם יוצרים. רק אתר קטן מציין את התאריך הזה, אז כדאי לבדוק בדף הרשמי.",
+        "fr": "À partir du 2 décembre 2026, les outils d'IA déjà sur le marché doivent marquer ce qu'ils créent. Seul un petit site donne cette date : vérifiez sur la page officielle."
+       },
+       "src": [
+        1
+       ]
+      },
+      {
+       "kind": "inference",
+       "text": {
+        "en": "Hidden marks help computers spot AI pictures, but people still need to check who made something.",
+        "he": "סימונים נסתרים עוזרים למחשבים לזהות תמונות של בינה מלאכותית, אבל אנשים עדיין צריכים לבדוק מי יצר משהו.",
+        "fr": "Les marques cachées aident les ordinateurs à repérer les images d'IA, mais les gens doivent toujours vérifier qui a créé quelque chose."
+       },
+       "src": null
+      },
+      {
+       "kind": "assumption",
+       "text": {
+        "en": "Other countries will copy Europe's rule.",
+        "he": "מדינות אחרות יעתיקו את הכלל של אירופה.",
+        "fr": "D'autres pays copieront la règle européenne."
+       },
+       "src": null
+      }
+     ]
     }
    ]
   }
