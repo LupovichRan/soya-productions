@@ -9,6 +9,12 @@ Soya the cat explains the world to kids, truthfully and in plain words, and to t
 5. **Soya's mood.** Curious, Silly or Calm changes how Soya greets you and reacts to each story. It never changes the facts.
 6. **Dark theme only**, cartoon drawings made from simple shapes, one filled button (the alert button), tap targets at least 48px, no looping motion.
 
+## Live Soya
+
+`soya-live.js` puts Soya at the bottom of the page. He walks in, sits, blinks every few seconds, looks around, smiles, and now and then walks to the other side. When a story comes into view he walks over and says his reaction; a right quiz answer gets a smile and a hop, a wrong one wide eyes. "Soya, read it to me" reads the story aloud in the reader's language with the browser's own voice (pitched a little higher and slower), with his mouth moving; tapping him while he reads stops it. On first load the story cards settle into place one by one, as if he arranged them. Ran asked for the motion on 2026-11-21: it is off for anyone whose device asks for reduced motion, and Settings has "Soya moves around: Yes / Calm". Taps go through the empty space around him.
+
+"Big things, explained for small cats": the reader is the small cat. The reader chooses חתול or חתולה (a boy cat, a girl cat, or just a cat) for the Hebrew and French titles; Soya himself is always a male cat.
+
 ## Adding an issue
 
 Put a new issue at the top of `issues.json` (same shape as the existing one: `id` is the date, `week`, `headline`, and five `stories`, each with `title`, five `levels` (`cub`, `explorer`, `teen`, `grown`, `owner`), a `talk` question for parents, a `word`, a `quiz`, `sources` (name, url, `tuna` 1 to 5, `why`) and `facts` (each with `kind` fact, inference or assumption, `text`, and `src`, the indexes of its sources)). Write all three languages; Soya is male in Hebrew (סויה הוא, מסביר) and in French (il). Mark anything that has only one secondary source as reported. Then bump `VERSION` in `sw.js`.
