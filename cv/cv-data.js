@@ -13,16 +13,16 @@ window.RAN_CV = {
       he: 'ארכיטקט ומוביל טכנולוגי מעשי עם יותר מ־15 שנות ניסיון בפלטפורמות דאטה ארגוניות, ענן ומערכות בנקאיות קריטיות. היום: CTO ויועץ ראשי, מוביל פרויקטים של דאטה, ענן ו־GenAI ב־AWS, ב־Google Cloud וב־Azure. הקים מאפס את פלטפורמת הקפקא של בנק ישראלי גדול. מחפש תפקיד קבוע של ארכיטקט ראשי, מרחוק או היברידי גמיש.'
     },
     leader: {
-      en: 'I design systems that must not lose data and then stay with them in production. I set up a major bank\'s Kafka platform from vendor choice to on-call standards, moved SQL Server and SSIS estates to BigQuery, dbt and Airflow, and built the backend team and RAG and agent pipelines of a conversational AI platform. For two years I have run AI coding agents under clear rules: I own the direction, the review, the tests and the cost.',
-      he: 'אני מתכנן מערכות שאסור להן לאבד דאטה, ונשאר איתן בייצור. הקמתי את פלטפורמת הקפקא של בנק גדול, מבחירת הספק ועד תקני התפעול, העברתי סביבות SQL Server ו־SSIS ל־BigQuery, dbt ו־Airflow, ובניתי את צוות ה־backend ואת צינורות ה־RAG והסוכנים של פלטפורמת בינה מלאכותית שיחתית. כבר שנתיים אני מפעיל סוכני קוד לפי כללים ברורים: הכיוון, הסקירה, הבדיקות והעלות נשארים אצלי.'
+      en: 'I design systems that must not lose data and then stay with them in production. I set up a major bank\'s Kafka platform from vendor choice to on-call standards, moved SQL Server and SSIS estates to BigQuery, dbt and Airflow, and built the backend team and the RAG and agent pipelines of a conversational AI platform that supports US military veterans, a startup that came out of stealth in 2026 and already serves many clients. For two years I have run AI coding agents under clear rules: I own the direction, the review, the tests and the cost.',
+      he: 'אני מתכנן מערכות שאסור להן לאבד דאטה, ונשאר איתן בייצור. הקמתי את פלטפורמת הקפקא של בנק גדול, מבחירת הספק ועד תקני התפעול, העברתי סביבות SQL Server ו־SSIS ל־BigQuery, dbt ו־Airflow, ובניתי את צוות ה־backend ואת צינורות ה־RAG והסוכנים של פלטפורמת בינה מלאכותית שיחתית שתומכת בוותיקי צבא אמריקאים, סטארט־אפ שיצא מחשאיות ב־2026 וכבר משרת לקוחות רבים. כבר שנתיים אני מפעיל סוכני קוד לפי כללים ברורים: הכיוון, הסקירה, הבדיקות והעלות נשארים אצלי.'
     },
     client: {
       en: 'You have data that must not get lost, a cloud bill that keeps growing, or a GenAI idea that needs to work in production. I come in, find where it breaks, design the fix, build it with your team and hand it over with standards your people can keep.',
       he: 'יש לכם דאטה שאסור שילך לאיבוד, חשבון ענן שרק גדל, או רעיון GenAI שצריך לעבוד בייצור. אני נכנס, מוצא איפה זה נשבר, מתכנן את התיקון, בונה אותו עם הצוות שלכם ומעביר אותו עם תקנים שהאנשים שלכם יוכלו לשמור עליהם.'
     },
     kid: {
-      en: 'Hi, it\'s Soya. My human Ran builds the invisible pipes that carry information between computers, like water pipes but for messages. In a bank, one lost message could mean someone\'s money goes missing, so his pipes must never leak. Now he also teaches computers to answer questions, and he makes little apps with me. He says it is work. I say it is typing.',
-      he: 'היי, זה סויה. הבן אדם שלי, רן, בונה צינורות בלתי נראים שמעבירים מידע בין מחשבים, כמו צינורות מים, רק להודעות. בבנק, הודעה אחת שהולכת לאיבוד יכולה להיות כסף של מישהו שנעלם, אז אסור שהצינורות שלו ידלפו. עכשיו הוא גם מלמד מחשבים לענות על שאלות, ובונה איתי אפליקציות קטנות. הוא אומר שזו עבודה. אני אומר שזה הקלדה.'
+      en: 'Hi, it\'s Soya. My human Ran builds the invisible pipes that carry information between computers, like water pipes but for messages. In a bank, one lost message could mean someone\'s money goes missing, so his pipes must never leak. Now he also teaches computers to answer questions, like a helper that talks with soldiers who came home from the army, and he makes little apps with me. He says it is work. I say it is typing.',
+      he: 'היי, זה סויה. הבן אדם שלי, רן, בונה צינורות בלתי נראים שמעבירים מידע בין מחשבים, כמו צינורות מים, רק להודעות. בבנק, הודעה אחת שהולכת לאיבוד יכולה להיות כסף של מישהו שנעלם, אז אסור שהצינורות שלו ידלפו. עכשיו הוא גם מלמד מחשבים לענות על שאלות, כמו עוזר שמדבר עם חיילים שחזרו הביתה מהצבא, ובונה איתי אפליקציות קטנות. הוא אומר שזו עבודה. אני אומר שזה הקלדה.'
     }
   },
 
@@ -42,10 +42,11 @@ window.RAN_CV = {
         { tag: 'g', en: 'Design enterprise AI and virtual-assistant solutions with AWS, RAG and Anthropic, OpenAI and NVIDIA technologies.', he: 'מתכנן פתרונות בינה מלאכותית ועוזרים וירטואליים ארגוניים עם AWS, RAG וטכנולוגיות של Anthropic, OpenAI ו־NVIDIA.' },
         { tag: 'c', en: 'Deliver cloud enablement, CI/CD and security modernisation, including for a cybersecurity company, with API integration, lineage and privacy controls.', he: 'מוביל הטמעת ענן, CI/CD ומודרניזציה של אבטחה, כולל עבור חברת סייבר, עם שילוב API, שושלת נתונים ובקרות פרטיות.' }
       ] },
-    { role: { en: 'Conversational AI platform · architecture, team and build', he: 'פלטפורמת בינה מלאכותית שיחתית · ארכיטקטורה, צוות ובנייה' }, org: { en: 'Confidential client', he: 'לקוח חסוי' }, when: { en: 'Selected project', he: 'פרויקט נבחר' },
+    { role: { en: 'Conversational AI platform for veterans\' wellbeing · architecture, team and build', he: 'פלטפורמת בינה מלאכותית שיחתית לרווחת ותיקי צבא · ארכיטקטורה, צוות ובנייה' }, org: { en: 'A US startup supporting military veterans', he: 'סטארט־אפ אמריקאי שתומך בוותיקי צבא' }, when: { en: 'Out of stealth in 2026, already serving many clients', he: 'יצא מחשאיות ב־2026 וכבר משרת לקוחות רבים' },
       lines: [
         { tag: 'l', en: 'Set up the first engineering team and infrastructure, and led the team that owned the whole backend while writing backend services myself.', he: 'הקמתי את צוות הפיתוח הראשון ואת התשתית, והובלתי את הצוות שאחראי על כל ה־backend, תוך כתיבת שירותים בעצמי.' },
-        { tag: 'g', en: 'Built RAG pipelines, LLM integrations and AI agent orchestration around the organisation\'s expert knowledge.', he: 'בניתי צינורות RAG, שילובי מודלי שפה ותזמור סוכנים סביב הידע המומחה של הארגון.' }
+        { tag: 'g', en: 'Built RAG pipelines, LLM integrations and AI agent orchestration around the organisation\'s expert knowledge.', he: 'בניתי צינורות RAG, שילובי מודלי שפה ותזמור סוכנים סביב הידע המומחה של הארגון.' },
+        { tag: 'l', en: 'The startup came out of stealth in 2026 and already serves many clients in the US.', he: 'הסטארט־אפ יצא מחשאיות ב־2026 וכבר משרת לקוחות רבים בארצות הברית.' }
       ] },
     { role: { en: 'AI-assisted engineering governance', he: 'ממשל לפיתוח בעזרת בינה מלאכותית' }, org: { en: 'Across projects', he: 'בכל הפרויקטים' }, when: { en: 'Past two years', he: 'בשנתיים האחרונות' },
       lines: [
