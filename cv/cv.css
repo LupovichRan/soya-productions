@@ -39,7 +39,7 @@ ol.skills b{font-family:var(--head);font-weight:600}
 ol.jobs{padding:0;list-style:none;gap:16px}
 .job{border-inline-start:4px solid var(--line);padding-inline-start:12px}
 .role{font:600 18px/1.3 var(--head)}
-.org{color:var(--mute)}.org span{white-space:nowrap}
+.org{color:var(--mute)}
 ol.lines{margin-top:6px}
 .dim{opacity:.4}
 .hit{color:var(--ink);background:rgba(94,224,193,.12);border-radius:8px;outline:2px solid rgba(94,224,193,.5);outline-offset:2px}
