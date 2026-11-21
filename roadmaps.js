@@ -304,14 +304,14 @@ window.SOYA_ROADMAPS = /*JSON-START*/{
     "slug": "soya-news",
     "en": {
       "works": [
-        "Five stories a week, each told at four levels from age 6 to 26",
-        "English, Hebrew and French, with a word of the week and a quiz per story",
-        "Soya's mood (curious, silly or calm) and a nickname, kept on the device",
-        "Add it to the home screen; on supported browsers it tells you when a new issue is out"
+        "Five true stories a week, each told at five levels from age 6 (Kitten) to 66 (Cat owner)",
+        "English, Hebrew and French, with a quiz, a word of the week and a question to ask your kid",
+        "Rate how clear each story was, report a problem, and suggest a topic",
+        "Soya's mood and a nickname, kept on the device; add it to the home screen for new-issue alerts"
       ],
       "next": [
+        "More animal friends who explain their own topics (a fox for money, an owl for science)",
         "Soya reads the story aloud",
-        "A picture glossary of every word so far",
         "Real push alerts on every phone"
       ],
       "later": [
@@ -322,14 +322,14 @@ window.SOYA_ROADMAPS = /*JSON-START*/{
     },
     "he": {
       "works": [
-        "חמש כתבות בשבוע, כל אחת בארבע רמות מגיל 6 עד 26",
-        "אנגלית, עברית וצרפתית, עם מילה של השבוע וחידון לכל כתבה",
-        "מצב הרוח של סויה (סקרן, מצחיק או רגוע) וכינוי, נשמרים במכשיר",
-        "מוסיפים למסך הבית; בדפדפנים שתומכים היא מודיעה כשיוצא גיליון חדש"
+        "חמש כתבות אמיתיות בשבוע, כל אחת בחמש רמות מגיל 6 (גור חתולים) עד 66 (בעלי חתול)",
+        "אנגלית, עברית וצרפתית, עם חידון, מילה של השבוע ושאלה לשאול את הילדים",
+        "מדרגים כמה כל כתבה הייתה ברורה, מדווחים על בעיה ומציעים נושא",
+        "מצב הרוח של סויה וכינוי, נשמרים במכשיר; מוסיפים למסך הבית להתראות על גיליון חדש"
       ],
       "next": [
+        "עוד חברים מעולם החיות שמסבירים נושאים משלהם (שועל לכסף, ינשוף למדע)",
         "סויה מקריא את הכתבה בקול",
-        "מילון תמונות של כל המילים עד עכשיו",
         "התראות אמיתיות בכל טלפון"
       ],
       "later": [

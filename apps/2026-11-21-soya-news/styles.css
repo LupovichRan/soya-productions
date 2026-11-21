@@ -65,7 +65,6 @@ input[type=range]{flex:1;accent-color:var(--sun);height:var(--tap);min-width:0}
 .band{min-height:56px;border-radius:14px;border:2px solid var(--line);background:var(--card2);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.2;padding:4px}
 .band b{font:600 14px var(--head)} .band small{color:var(--mute);font-size:12px}
 .band.on{border-color:var(--sun);background:rgba(255,201,77,.14)}
-@media (max-width:380px){.bands{grid-template-columns:repeat(2,1fr)}}
 .seg{display:flex;flex-wrap:wrap;gap:8px}
 .seg button{min-height:var(--tap);padding:8px 16px;border-radius:999px;border:2px solid var(--line);background:var(--card2)}
 .seg button.on{border-color:var(--pink);background:rgba(255,143,177,.16)}
@@ -74,8 +73,44 @@ input:not([type=range]),textarea{width:100%;min-height:var(--tap);padding:10px 1
 textarea{min-height:110px;resize:vertical}
 .note{background:var(--card2);border-radius:14px;padding:10px 14px}
 .new{background:var(--sun);color:#1B2032;border-radius:16px;padding:12px 16px;font:600 18px var(--head);text-align:center}
-.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.hp{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .home{display:inline-flex;align-items:center;min-height:var(--tap)}
 .foot{display:flex;flex-direction:column;align-items:center;gap:6px;padding:24px 16px 40px;color:var(--mute)}
 .foot img{border-radius:14px}
 .noscript{padding:24px;text-align:center}
+/* Soya from annabelle-games: a soft spotlight so the black cat reads on the dark page */
+.cat{display:block;background:radial-gradient(circle at 50% 58%,#3B4670 0 56%,transparent 57%);border-radius:50%}
+.hero .cat{flex:none}
+.say .cat{background:radial-gradient(circle at 50% 58%,#323C5C 0 56%,transparent 57%)}
+.tagline{font:500 18px/1.4 var(--head);color:var(--mint)}
+.age-row .band-cat{flex:none}
+.bands{grid-template-columns:repeat(5,1fr)}
+@media (max-width:440px){.bands{grid-template-columns:repeat(3,1fr)}}
+.talk{display:flex;flex-direction:column;gap:2px;background:rgba(255,201,77,.10);border:2px dashed var(--sun);border-radius:16px;padding:10px 14px}
+.talk b{color:var(--sun);font-family:var(--head);font-weight:600}
+.rate{display:flex;flex-direction:column;gap:6px}
+.paws{display:flex;gap:6px}
+.paw{min-width:var(--tap);min-height:var(--tap);border-radius:14px;border:2px solid var(--line);background:var(--card2);display:grid;place-items:center;padding:0}
+.paw svg{fill:#5B6585}
+.paw.on{border-color:var(--pink)} .paw.on svg{fill:var(--pink)}
+.about-row{display:flex;gap:14px;align-items:flex-start}
+.about-row .cat{flex:none}
+#bug a,.about a{display:inline-flex;align-items:center;min-height:var(--tap)}
+/* Fact / Soya thinks / A guess: colour plus a different shape, so it also works without colour */
+.facts-btn{align-self:flex-start}
+.facts{display:flex;flex-direction:column;gap:10px;background:var(--bg);border-radius:16px;padding:12px}
+.claims,.srcs{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.claim{display:flex;flex-direction:column;gap:4px;padding:8px 12px;border-radius:12px;border-inline-start:6px solid}
+.c-fact{border-color:var(--mint);background:rgba(94,224,193,.10)}
+.c-inference{border-color:var(--sky);background:rgba(122,167,255,.12)}
+.c-assumption{border-color:#FFB04D;background:rgba(255,176,77,.12)}
+.kind{display:inline-flex;align-items:center;gap:6px;font:600 14px var(--head)}
+.k-fact{color:var(--mint)} .k-fact svg{fill:var(--mint)}
+.k-inference{color:var(--sky)} .k-inference svg{fill:var(--sky)}
+.k-assumption{color:#FFB04D} .k-assumption svg{fill:#FFB04D}
+.srcs li{display:flex;flex-direction:column;gap:2px}
+.srcs a{display:inline-flex;align-items:center;min-height:var(--tap);font-weight:500}
+.claim a{color:var(--sky)}
+.tuna{display:inline-flex;gap:2px;vertical-align:middle}
+.fish{fill:#3A4466} .fish.on{fill:#FF9E7A}
+.key summary{min-height:var(--tap);display:flex;align-items:center;font:600 18px var(--head);cursor:pointer}

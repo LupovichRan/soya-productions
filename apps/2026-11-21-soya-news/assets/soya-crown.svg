@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="soya-crown" class="soyaSvg p-sit w-crown m-open" viewBox="0 0 200 220"><style>.soyaSvg{--fur:#19151c;--furLite:#3a2f36;--outline:#5b5064;--earInner:#ff9fbf;--pads:#ff9fb4;--eye:#b9e84a;--eyeRing:#6cae1e;--pupil:#07060a;--nose:#2e2129;--whisker:#f6f6f6;--blush:#ff8fb4}.soyaSvg .fur{fill:var(--fur);stroke:var(--outline);stroke-width:1.6;stroke-linejoin:round}
+.soyaSvg .tuft{fill:none;stroke:var(--fur);stroke-width:7;stroke-dasharray:.5 6.5;stroke-linecap:round}
+.soyaSvg .lite{fill:var(--furLite);stroke:var(--furLite);stroke-width:1.5;stroke-linejoin:round}
+.soyaSvg .ear{fill:var(--earInner)}
+.soyaSvg .pad{fill:var(--pads)}
+.soyaSvg .iris{fill:var(--eye);stroke:var(--eyeRing);stroke-width:1.6}
+.soyaSvg .pupil{fill:var(--pupil);transform-box:fill-box;transform-origin:center;transition:transform .2s}
+.soyaSvg .shine{fill:#fff}
+.soyaSvg .lid{fill:var(--fur);display:none}
+.soyaSvg .eh{fill:none;stroke:var(--eye);stroke-width:4.5;stroke-linecap:round;display:none}
+.soyaSvg .ec{fill:none;stroke:#a89cb4;stroke-width:3.5;stroke-linecap:round;display:none}
+.soyaSvg .blush{fill:var(--blush);opacity:.55}
+.soyaSvg .nose{fill:var(--nose);stroke:#8d6f7d;stroke-width:1.4;stroke-linejoin:round}
+.soyaSvg .mouth{fill:none;stroke:#a89cb4;stroke-width:2;stroke-linecap:round}
+.soyaSvg .mo{fill:#ff7aa0;stroke:#a89cb4;stroke-width:1.5;display:none}
+.soyaSvg .tg{fill:#ff8fb0;display:none}
+.soyaSvg .wh path{stroke:var(--whisker);stroke-width:1.6;stroke-linecap:round;fill:none}
+.soyaSvg .tailO{fill:none;stroke:var(--outline);stroke-width:23;stroke-linecap:round}
+.soyaSvg .tailF{fill:none;stroke:var(--fur);stroke-width:31;stroke-linecap:round;stroke-dasharray:1 8}
+.soyaSvg .tailM{fill:none;stroke:var(--fur);stroke-width:20;stroke-linecap:round}
+.soyaSvg .tailP{fill:none;stroke:var(--furLite);stroke-width:3;stroke-linecap:round;stroke-dasharray:4 14;opacity:.7}
+.soyaSvg .limbO{fill:none;stroke:var(--outline);stroke-width:16;stroke-linecap:round}
+.soyaSvg .limbM{fill:none;stroke:var(--fur);stroke-width:13;stroke-linecap:round}
+.soyaSvg .pose{display:none}
+.soyaSvg.p-sit .sit,.soyaSvg.p-eat .sit,.soyaSvg.p-held .sit,.soyaSvg.p-stand .stand,.soyaSvg.p-sleep .sleep,.soyaSvg.p-belly .belly,.soyaSvg.p-lie .lie{display:inline}
+.soyaSvg .acc{display:none}
+.soyaSvg.w-mane .acc-mane,.soyaSvg.w-glasses .acc-glasses,.soyaSvg.w-bow .acc-bow,.soyaSvg.w-flower .acc-flower,.soyaSvg.w-party .acc-party,.soyaSvg.w-crown .acc-crown,.soyaSvg.w-bell .acc-bell{display:inline}
+.soyaSvg.e-happy .eo,.soyaSvg.e-closed .eo,.soyaSvg.blink .eo{display:none}
+.soyaSvg.e-happy .eh{display:inline} .soyaSvg.e-closed .ec,.soyaSvg.blink .ec{display:inline}
+.soyaSvg.e-happy.blink .eh{display:inline} .soyaSvg.e-happy.blink .ec{display:none}
+.soyaSvg.e-wide .pupil{transform:scale(2.1,1.15)}
+.soyaSvg.sleepy .lid{display:inline}
+.soyaSvg.m-open .mo{display:inline} .soyaSvg.m-open .mouth{display:none}
+.soyaSvg.m-tongue .tg{display:inline}
+.soyaSvg .tailG{transform-box:fill-box;animation:none}
+.soyaSvg .sit .tailG{transform-origin:0% 100%} .soyaSvg .stand .tailG{transform-origin:100% 100%} .soyaSvg .lie .tailG,.soyaSvg .belly .tailG{transform-origin:0% 100%}
+.soyaSvg .sleep .tailG{animation-duration:5s}
+@keyframes wag{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(7deg)}}
+.soyaSvg .legA,.soyaSvg .legB{transform-box:fill-box;transform-origin:50% 0%}
+.soyaSvg.walking .legA{animation:none}
+.soyaSvg.walking .legB{animation:none}
+@keyframes step{0%,100%{transform:rotate(-16deg)}50%{transform:rotate(16deg)}}
+.soyaSvg .up{transform-box:fill-box;transform-origin:50% 100%;animation:none}
+.soyaSvg .up2{animation-delay:-.5s}
+@keyframes paddle{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(10deg)}}
+.soyaSvg.p-held .sit .legs{transform:scaleY(1.12);transform-box:fill-box;transform-origin:50% 0}
+.soyaSvg #HEAD{transition:transform .35s}</style>
+<g class="pose sit">
+  <g class="tailG "><path class="tailO" d="M136,198 C176,198 188,152 172,120 C164,104 172,88 184,84"/><path class="tailF" d="M136,198 C176,198 188,152 172,120 C164,104 172,88 184,84"/><path class="tailM" d="M136,198 C176,198 188,152 172,120 C164,104 172,88 184,84"/><path class="tailP" d="M136,198 C176,198 188,152 172,120 C164,104 172,88 184,84"/></g>
+  <ellipse class="fur" cx="68" cy="192" rx="22" ry="17"/><ellipse class="tuft" cx="68" cy="192" rx="22" ry="17"/><ellipse class="fur" cx="132" cy="192" rx="22" ry="17"/><ellipse class="tuft" cx="132" cy="192" rx="22" ry="17"/>
+  <path class="fur" d="M100,104 C58,110 54,172 62,198 L138,198 C146,172 142,110 100,104Z"/>
+  <path class="tuft" d="M100,104 C58,110 54,172 62,198 M138,198 C146,172 142,110 100,104"/>
+  <path class="lite" d="M84,124 l6,12 l5,-9 l5,12 l5,-12 l5,9 l6,-12 C112,152 88,152 84,124Z"/>
+  <g class="legs"><g class=""><rect class="fur" x="80" y="150" width="14" height="60" rx="7"/><ellipse class="fur" cx="87" cy="207" rx="9.5" ry="6"/></g><g class=""><rect class="fur" x="106" y="150" width="14" height="60" rx="7"/><ellipse class="fur" cx="113" cy="207" rx="9.5" ry="6"/></g></g>
+  <path class="pad" d="M83,208 a2.2,2 0 1,0 .1,0 M91,208 a2.2,2 0 1,0 .1,0 M109,208 a2.2,2 0 1,0 .1,0 M117,208 a2.2,2 0 1,0 .1,0" />
+</g>
+<g class="pose stand">
+  <g class="tailG "><path class="tailO" d="M48,140 C22,132 16,98 28,72 C34,58 28,48 18,46"/><path class="tailF" d="M48,140 C22,132 16,98 28,72 C34,58 28,48 18,46"/><path class="tailM" d="M48,140 C22,132 16,98 28,72 C34,58 28,48 18,46"/><path class="tailP" d="M48,140 C22,132 16,98 28,72 C34,58 28,48 18,46"/></g>
+  <g class="legB"><rect class="fur" x="56" y="148" width="14" height="60" rx="7"/><ellipse class="fur" cx="63" cy="205" rx="9.5" ry="6"/></g><g class="legA"><rect class="fur" x="122" y="148" width="14" height="60" rx="7"/><ellipse class="fur" cx="129" cy="205" rx="9.5" ry="6"/></g>
+  <ellipse class="fur" cx="98" cy="146" rx="58" ry="30"/><ellipse class="tuft" cx="98" cy="146" rx="58" ry="30"/>
+  <g class="legA"><rect class="fur" x="72" y="152" width="14" height="56" rx="7"/><ellipse class="fur" cx="79" cy="205" rx="9.5" ry="6"/></g><g class="legB"><rect class="fur" x="138" y="152" width="14" height="56" rx="7"/><ellipse class="fur" cx="145" cy="205" rx="9.5" ry="6"/></g>
+  <path class="lite" d="M70,132 q10,-8 22,-2 q10,-8 22,0" fill="none"/>
+</g>
+<g class="pose sleep">
+  <ellipse class="fur" cx="108" cy="184" rx="72" ry="30"/><ellipse class="tuft" cx="108" cy="184" rx="72" ry="30"/>
+  <path class="lite" d="M80,166 q14,-10 30,-4 q14,-8 30,0" fill="none"/>
+  <ellipse class="fur" cx="78" cy="208" rx="16" ry="7"/><ellipse class="tuft" cx="78" cy="208" rx="16" ry="7"/>
+  <g class="tailG "><path class="tailO" d="M170,196 C196,206 172,216 124,216 C96,216 74,214 58,208"/><path class="tailF" d="M170,196 C196,206 172,216 124,216 C96,216 74,214 58,208"/><path class="tailM" d="M170,196 C196,206 172,216 124,216 C96,216 74,214 58,208"/><path class="tailP" d="M170,196 C196,206 172,216 124,216 C96,216 74,214 58,208"/></g>
+</g>
+<g class="pose belly">
+  <g class="tailG "><path class="tailO" d="M160,192 C192,198 198,170 192,148"/><path class="tailF" d="M160,192 C192,198 198,170 192,148"/><path class="tailM" d="M160,192 C192,198 198,170 192,148"/><path class="tailP" d="M160,192 C192,198 198,170 192,148"/></g>
+  <g class="up"><path class="limbO" d="M72,172 L58,128"/><path class="limbM" d="M72,172 L58,128"/></g><g class="up up2"><path class="limbO" d="M138,172 L156,134"/><path class="limbM" d="M138,172 L156,134"/></g>
+  <ellipse class="fur" cx="104" cy="186" rx="60" ry="28"/><ellipse class="tuft" cx="104" cy="186" rx="60" ry="28"/>
+  <ellipse class="lite" cx="104" cy="180" rx="34" ry="14"/><ellipse class="tuft" cx="104" cy="180" rx="34" ry="14"/>
+  <g class="up up2"><path class="limbO" d="M92,166 L90,122"/><path class="limbM" d="M92,166 L90,122"/></g><g class="up"><path class="limbO" d="M118,166 L124,124"/><path class="limbM" d="M118,166 L124,124"/></g>
+  <g class="pad"><circle cx="58" cy="127" r="4"/><circle cx="90" cy="121" r="4"/><circle cx="124" cy="123" r="4"/><circle cx="156" cy="133" r="4"/></g>
+</g>
+<g class="pose lie">
+  <g class="tailG "><path class="tailO" d="M176,174 C198,164 200,132 188,112"/><path class="tailF" d="M176,174 C198,164 200,132 188,112"/><path class="tailM" d="M176,174 C198,164 200,132 188,112"/><path class="tailP" d="M176,174 C198,164 200,132 188,112"/></g>
+  <g class=""><path class="limbO" d="M160,190 L186,214"/><path class="limbM" d="M160,190 L186,214"/></g>
+  <ellipse class="fur" cx="118" cy="178" rx="64" ry="24"/><ellipse class="tuft" cx="118" cy="178" rx="64" ry="24"/>
+  <path class="lite" d="M88,160 q14,-8 30,-3 q14,-8 30,0" fill="none"/>
+  <g class=""><path class="limbO" d="M66,184 L46,214"/><path class="limbM" d="M66,184 L46,214"/></g><g class=""><path class="limbO" d="M82,188 L70,216"/><path class="limbM" d="M82,188 L70,216"/></g>
+  <g class="pad"><circle cx="45" cy="216" r="3.6"/><circle cx="69" cy="218" r="3.6"/></g>
+</g>
+<g id="HEAD" transform="translate(100 92)">
+  <g class="acc acc-mane"><circle cx="0" cy="2" r="60" fill="#e9a43c"/><circle cx="0" cy="2" r="60" fill="none" stroke="#c97a22" stroke-width="16" stroke-dasharray="2 11" stroke-linecap="round"/><circle cx="0" cy="2" r="50" fill="#f3bb55"/></g>
+  <path class="fur" d="M-40,-10 L-36,-68 L-4,-34Z"/><path class="ear" d="M-32,-20 L-31,-56 L-12,-34Z"/>
+  <path class="fur" d="M40,-10 L36,-68 L4,-34Z"/><path class="ear" d="M32,-20 L31,-56 L12,-34Z"/>
+  <ellipse class="fur" cx="0" cy="0" rx="46" ry="38"/><ellipse class="tuft" cx="0" cy="0" rx="46" ry="38"/>
+  <path class="lite" d="M-46,6 l-8,4 l7,3 l-7,5 l9,1 M46,6 l8,4 l-7,3 l7,5 l-9,1" />
+  <ellipse class="blush" cx="-31" cy="14" rx="7" ry="4"/><ellipse class="blush" cx="31" cy="14" rx="7" ry="4"/>
+  <g class="eo"><ellipse class="iris" cx="-17" cy="-3" rx="12.5" ry="13.5"/><ellipse class="pupil" cx="-17" cy="-2" rx="4.6" ry="9.5"/><circle class="shine" cx="-12.5" cy="-8" r="3.6"/><circle class="shine" cx="-21" cy="3" r="1.6"/><path class="lid" d="M-31,-4 Q-17,-20 -3,-4 L-3,-17 L-31,-17Z"/></g>
+ <path class="eh" d="M-27,0 Q-17,-12 -7,0"/><path class="ec" d="M-27,-3 Q-17,6 -7,-3"/><g class="eo"><ellipse class="iris" cx="17" cy="-3" rx="12.5" ry="13.5"/><ellipse class="pupil" cx="17" cy="-2" rx="4.6" ry="9.5"/><circle class="shine" cx="21.5" cy="-8" r="3.6"/><circle class="shine" cx="13" cy="3" r="1.6"/><path class="lid" d="M3,-4 Q17,-20 31,-4 L31,-17 L3,-17Z"/></g>
+ <path class="eh" d="M7,0 Q17,-12 27,0"/><path class="ec" d="M7,-3 Q17,6 27,-3"/>
+  <path class="nose" d="M-5,9 L5,9 L0,15Z"/>
+  <path class="mouth" d="M-8,19 Q-4,24 0,18 Q4,24 8,19"/>
+  <ellipse class="mo" cx="0" cy="23" rx="5.5" ry="6.5"/>
+  <ellipse class="tg" cx="0" cy="25" rx="4" ry="5"/>
+  <g class="wh"><path d="M-22,14 L-60,4 M-22,17 L-62,16 M-22,20 L-58,28 M22,14 L60,4 M22,17 L62,16 M22,20 L58,28"/></g>
+  <g class="acc acc-glasses"><rect x="-32" y="-15" width="27" height="22" rx="9" fill="#1d1d2b" stroke="#ff4d8d" stroke-width="3"/><rect x="5" y="-15" width="27" height="22" rx="9" fill="#1d1d2b" stroke="#ff4d8d" stroke-width="3"/><path d="M-5,-6 L5,-6" stroke="#ff4d8d" stroke-width="3"/><path d="M-27,-10 l8,0 M10,-10 l8,0" stroke="#fff8" stroke-width="3" stroke-linecap="round"/></g>
+  <g class="acc acc-bow"><path d="M22,-40 L6,-50 L8,-30Z M22,-40 L38,-50 L36,-30Z" fill="#ff5fa2" stroke="#c8306f" stroke-width="2"/><circle cx="22" cy="-40" r="5" fill="#ff8cc0" stroke="#c8306f" stroke-width="2"/></g>
+  <g class="acc acc-flower"><g transform="translate(-26,-40)"><circle cx="0" cy="-7" r="6" fill="#fff36b"/><circle cx="7" cy="-2" r="6" fill="#fff36b"/><circle cx="4" cy="6" r="6" fill="#fff36b"/><circle cx="-4" cy="6" r="6" fill="#fff36b"/><circle cx="-7" cy="-2" r="6" fill="#fff36b"/><circle r="5" fill="#ff8a1f"/></g></g>
+  <g class="acc acc-party"><path d="M-16,-34 L16,-34 L4,-92Z" fill="#5ac8ff" stroke="#2a6fd0" stroke-width="2"/><path d="M-10,-48 L12,-50 M-6,-64 L9,-66 M-2,-79 L6,-80" stroke="#ffe066" stroke-width="5" stroke-linecap="round"/><circle cx="4" cy="-93" r="7" fill="#ff4d8d"/></g>
+  <g class="acc acc-crown"><path d="M-24,-34 L-28,-62 L-13,-48 L0,-70 L13,-48 L28,-62 L24,-34Z" fill="#ffd34d" stroke="#d89a12" stroke-width="2.5" stroke-linejoin="round"/><circle cx="0" cy="-44" r="4.5" fill="#ff4d8d"/><circle cx="-14" cy="-41" r="3" fill="#5ac8ff"/><circle cx="14" cy="-41" r="3" fill="#5fd38d"/></g>
+  <g class="acc acc-bell"><path d="M-26,34 Q0,46 26,34" fill="none" stroke="#e8364f" stroke-width="7" stroke-linecap="round"/><circle cx="0" cy="45" r="7.5" fill="#ffd34d" stroke="#c48a0a" stroke-width="2"/><path d="M-3,47 L3,47" stroke="#8a5a00" stroke-width="2"/></g>
+</g>
+</svg>

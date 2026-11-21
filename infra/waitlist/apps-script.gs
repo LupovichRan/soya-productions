@@ -17,6 +17,7 @@ function doPost(e) {
   var app = String(p.app || ''), kind = String(p.kind || ''), lang = p.lang === 'he' ? 'he' : p.lang === 'fr' ? 'fr' : 'en';
   if (kind === 'metric' || kind === 'comment') return video_(p, kind, lang);   // video watch counts and comments
   if (kind === 'read' || kind === 'suggest') return news_(p, kind, lang);      // newsletter reading counts and topic requests
+  if ((kind === 'rate' || kind === 'bug') && app === 'soya-news') return soyaNews_(p, kind, lang);   // paws ratings and bug reports
   if (APPS.indexOf(app) < 0) return text_({ ok: false });
   var lock = LockService.getScriptLock(); lock.waitLock(20000);
   try {
@@ -84,6 +85,29 @@ function news_(p, kind, lang) {
       var q = tab_(ss, 'newsletter requests', ['When (UTC)', 'Issue', 'What should Soya look into?', 'Email (optional)', 'Language']);
       if (q.getLastRow() >= MAX_ROWS) return text_({ ok: false });
       q.appendRow([when, issue, safe_(body), safe_(mail), lang]);
+    }
+    return text_({ ok: true });
+  } finally { lock.releaseLock(); }
+}
+
+/** Soya News: "how clear was this?" paws (1 to 5) per story, and bug reports. Only what the reader chose to send. */
+function soyaNews_(p, kind, lang) {
+  if (p.website) return text_({ ok: true });
+  var level = ['cub', 'explorer', 'teen', 'grown', 'owner'].indexOf(String(p.level)) >= 0 ? String(p.level) : '';
+  var issue = /^\d{4}-\d{2}-\d{2}$/.test(String(p.issue || '')) ? String(p.issue) : '';
+  var lock = LockService.getScriptLock(); lock.waitLock(20000);
+  try {
+    var ss = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('SHEET_ID')), when = new Date().toISOString();
+    if (kind === 'rate') {
+      var paws = Math.floor(Number(p.paws)); if (!(paws >= 1 && paws <= 5) || !slug_(p.story)) return text_({ ok: false });
+      var r = tab_(ss, 'soya-news ratings', ['When (UTC)', 'Issue', 'Story', 'Paws (1-5)', 'Age level', 'First rating?', 'Language']);
+      if (r.getLastRow() >= MAX_METRIC_ROWS) return text_({ ok: false });
+      r.appendRow([when, issue, slug_(p.story), paws, level, p.first === 'yes' ? 'yes' : 'no', lang]);
+    } else {
+      var body = String(p.text || '').trim().slice(0, 500); if (body.length < 3) return text_({ ok: false });
+      var b = tab_(ss, 'soya-news bugs', ['When (UTC)', 'What happened', 'App version', 'Issue', 'Age level', 'Language']);
+      if (b.getLastRow() >= MAX_ROWS) return text_({ ok: false });
+      b.appendRow([when, safe_(body), String(p.version || '').replace(/[^0-9a-z.\-]/gi, '').slice(0, 20), issue, level, lang]);
     }
     return text_({ ok: true });
   } finally { lock.releaseLock(); }

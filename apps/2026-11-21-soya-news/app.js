@@ -5,16 +5,27 @@
 (function () {
   'use strict';
 
-  var K = { lang: 'soya-news-lang', age: 'soya-news-age', mood: 'soya-news-mood', nick: 'soya-news-nick', seen: 'soya-news-seen', quiz: 'soya-news-quiz' };
+  var K = { lang: 'soya-news-lang', age: 'soya-news-age', mood: 'soya-news-mood', nick: 'soya-news-nick', seen: 'soya-news-seen', quiz: 'soya-news-quiz', rate: 'soya-news-rate', gender: 'soya-news-gender' };
+  var VERSION = '2026-11-21.3';
   var LANGS = ['en', 'he', 'fr'];
-  var BANDS = [{ id: 'cub', from: 6, to: 8 }, { id: 'explorer', from: 9, to: 12 }, { id: 'teen', from: 13, to: 17 }, { id: 'grown', from: 18, to: 26 }];
+  var BANDS = [{ id: 'cub', from: 6, to: 8, pose: 'bell' }, { id: 'explorer', from: 9, to: 12, pose: 'wow' }, { id: 'teen', from: 13, to: 17, pose: 'glasses' }, { id: 'grown', from: 18, to: 25, pose: 'crown' }, { id: 'owner', from: 26, to: 66, pose: 'sit' }];
+  var MAX_AGE = 66;
+  var MOOD_POSE = { curious: 'wow', silly: 'party', calm: 'happy' };
 
   var I18N = {
     en: {
-      name: 'Soya News', tagline: 'AI news for curious kids, by Soya the cat reporter', week: 'This week',
+      name: 'Soya News', tagline: 'The world explained by Soya the cat: true, logical and fun', week: 'This week',
       ageQ: 'How old is the reader?', ageYears: function (n) { return n + ' years'; },
-      bands: { cub: 'Kitten', explorer: 'Explorer', teen: 'Teen', grown: 'Big kid' },
-      bandNote: { cub: 'Short and simple, with pictures in words.', explorer: 'How it works, with real numbers.', teen: 'The why behind it, and a question to think about.', grown: 'The full picture, with the details.' },
+      bands: { cub: 'Kitten', explorer: 'Curious cat', teen: 'Cool cat', grown: 'Top cat', owner: 'Cat owner' },
+      bandNote: { cub: 'Short and simple, with pictures in words.', explorer: 'How it works, with real numbers.', teen: 'The why behind it, and a question to think about.', grown: 'The full picture, with the details.', owner: 'Plain words for grown-ups, and a question to ask your kid.' },
+      talk: 'Talk about it with your kid',
+      factsBtn: "What's fact? Show the sources", factsHide: 'Hide the sources', key: 'How to read the colours',
+      kinds: { fact: 'Fact', inference: 'Soya thinks', assumption: 'A guess' },
+      kindNote: { fact: 'It is written in a source you can open.', inference: 'Soya worked it out from the facts.', assumption: 'It might be wrong. Nobody knows yet.' },
+      sources: 'Sources', tunaKey: 'Tuna = how much we trust a source. 5 tuna: the official source or a careful big newsroom. 1 tuna: an unknown site.', tuna: function (n) { return n + ' of 5 tuna'; }, from: 'from',
+      callMe: 'Soya calls me', genders: { m: 'Boy cat', f: 'Girl cat', x: 'Just a cat' }, rateQ: 'How clear was this?', rateThanks: 'Thanks! Soya will use this to explain better.', stars: function (n) { return n + ' of 5'; },
+      bugTitle: 'Something wrong or confusing?', bugLabel: 'What happened?', bugSend: 'Send the report', bugAdds: function (v) { return 'We also send the app version (' + v + '), the language and the age level, nothing else.'; }, bugThanks: 'Thank you. We will look at it.', bugGithub: 'Grown-ups can also report it on GitHub',
+      aboutTitle: 'Who made this', about: 'Soya News is made by Ran Lupovich, a software consultant in Israel who builds reliable systems for a living, and the maker of Soycatory, a small factory of friendly apps. He is also the proud father of a smart 9-year-old, and made Soya so kids and grown-ups can understand the world together. If you like it, share it with your kids.', share: 'Share Soya News', shared: 'Link copied. Thank you for sharing!', shareText: 'Soya the cat explains the world to kids, at their age.',
       word: 'Word of the week', quiz: 'Quick quiz', right: 'Yes!', wrong: 'Not quite. The answer is:', source: 'Where this came from',
       mood: "Soya's mood", moods: { curious: 'Curious', silly: 'Silly', calm: 'Calm' },
       nick: 'What should Soya call you?', nickHint: 'A nickname only. It stays on this device.',
@@ -35,10 +46,18 @@
       credit: 'Made by Soycatory', home: 'All apps', of: function (a, b) { return a + ' of ' + b; }
     },
     he: {
-      name: 'החדשות של סויה', tagline: 'חדשות בינה מלאכותית לילדים סקרנים, מאת סויה הכתב החתול', week: 'השבוע',
+      name: 'החדשות של סויה', tagline: 'העולם בהסבר של סויה החתול: אמת, היגיון וכיף', week: 'השבוע',
       ageQ: 'בן או בת כמה הקורא?', ageYears: function (n) { return 'בן ' + n; },
-      bands: { cub: 'גור', explorer: 'חוקר', teen: 'נוער', grown: 'ילד גדול' },
-      bandNote: { cub: 'קצר ופשוט, עם תמונות במילים.', explorer: 'איך זה עובד, עם מספרים אמיתיים.', teen: 'הלמה שמאחורי, ושאלה לחשוב עליה.', grown: 'התמונה המלאה, עם הפרטים.' },
+      bands: { cub: 'גור חתולים', explorer: 'חתול סקרן', teen: 'חתול מגניב', grown: 'חתול על', owner: 'בעלי חתול' },
+      bandNote: { cub: 'קצר ופשוט, עם תמונות במילים.', explorer: 'איך זה עובד, עם מספרים אמיתיים.', teen: 'הלמה שמאחורי, ושאלה לחשוב עליה.', grown: 'התמונה המלאה, עם הפרטים.', owner: 'מילים פשוטות למבוגרים, ושאלה לשאול את הילדים.' },
+      talk: 'מדברים על זה עם הילדים',
+      factsBtn: 'מה עובדה? מראים את המקורות', factsHide: 'מסתירים את המקורות', key: 'איך קוראים את הצבעים',
+      kinds: { fact: 'עובדה', inference: 'סויה חושב', assumption: 'ניחוש' },
+      kindNote: { fact: 'זה כתוב במקור שאפשר לפתוח.', inference: 'סויה הסיק את זה מהעובדות.', assumption: 'זה יכול להיות לא נכון. אף אחד עוד לא יודע.' },
+      sources: 'מקורות', tunaKey: 'טונה = כמה אנחנו סומכים על מקור. 5 טונות: המקור הרשמי או חדר חדשות גדול וזהיר. טונה אחת: אתר לא מוכר.', tuna: function (n) { return n + ' מתוך 5 טונות'; }, from: 'מתוך',
+      callMe: 'סויה קורא לי', genders: { m: 'חתול', f: 'חתולה', x: 'לא משנה' }, rateQ: 'כמה זה היה ברור?', rateThanks: 'תודה! סויה ישתמש בזה כדי להסביר טוב יותר.', stars: function (n) { return n + ' מתוך 5'; },
+      bugTitle: 'משהו לא עובד או לא ברור?', bugLabel: 'מה קרה?', bugSend: 'שולחים את הדיווח', bugAdds: function (v) { return 'אנחנו שולחים גם את גרסת האפליקציה (' + v + '), את השפה ואת רמת הגיל, ולא שום דבר אחר.'; }, bugThanks: 'תודה. נבדוק את זה.', bugGithub: 'מבוגרים יכולים לדווח גם ב־GitHub',
+      aboutTitle: 'מי עשה את זה', about: 'את החדשות של סויה עושה רן לופוביץ\', יועץ תוכנה בישראל שבונה מערכות אמינות למחייתו, והיוצר של Soycatory, מפעל קטן של אפליקציות ידידותיות. הוא גם אבא גאה לילד חכם בן 9, ויצר את סויה כדי שילדים ומבוגרים יבינו את העולם יחד. אם אהבתם, שתפו עם הילדים שלכם.', share: 'משתפים את החדשות של סויה', shared: 'הקישור הועתק. תודה ששיתפתם!', shareText: 'סויה החתול מסביר את העולם לילדים, בגובה העיניים שלהם.',
       word: 'המילה של השבוע', quiz: 'חידון קצר', right: 'נכון!', wrong: 'כמעט. התשובה היא:', source: 'מאיפה זה הגיע',
       mood: 'מצב הרוח של סויה', moods: { curious: 'סקרן', silly: 'מצחיק', calm: 'רגוע' },
       nick: 'איך סויה יקרא לכם?', nickHint: 'רק כינוי. הוא נשאר במכשיר הזה.',
@@ -59,10 +78,18 @@
       credit: 'נוצר על ידי Soycatory', home: 'כל האפליקציות', of: function (a, b) { return a + ' מתוך ' + b; }
     },
     fr: {
-      name: 'Les Nouvelles de Soya', tagline: "L'actu de l'IA pour enfants curieux, par Soya le chat reporter", week: 'Cette semaine',
+      name: 'Les Nouvelles de Soya', tagline: "Le monde expliqué par Soya le chat : vrai, logique et drôle", week: 'Cette semaine',
       ageQ: 'Quel âge a le lecteur ?', ageYears: function (n) { return n + ' ans'; },
-      bands: { cub: 'Chaton', explorer: 'Explorateur', teen: 'Ado', grown: 'Grand enfant' },
-      bandNote: { cub: 'Court et simple, avec des images en mots.', explorer: 'Comment ça marche, avec de vrais chiffres.', teen: 'Le pourquoi, et une question pour réfléchir.', grown: "L'image complète, avec les détails." },
+      bands: { cub: 'Chaton', explorer: 'Chat curieux', teen: 'Chat cool', grown: 'Super chat', owner: 'Maître du chat' },
+      bandNote: { cub: 'Court et simple, avec des images en mots.', explorer: 'Comment ça marche, avec de vrais chiffres.', teen: 'Le pourquoi, et une question pour réfléchir.', grown: "L'image complète, avec les détails.", owner: 'Des mots simples pour les adultes, et une question à poser à votre enfant.' },
+      talk: 'En parler avec votre enfant',
+      factsBtn: "C'est vrai ? Voir les sources", factsHide: 'Cacher les sources', key: 'Comment lire les couleurs',
+      kinds: { fact: 'Fait', inference: 'Soya pense', assumption: 'Une supposition' },
+      kindNote: { fact: "C'est écrit dans une source que tu peux ouvrir.", inference: "Soya l'a déduit des faits.", assumption: "Ça peut être faux. Personne ne le sait encore." },
+      sources: 'Sources', tunaKey: "Thon = notre confiance dans une source. 5 thons : la source officielle ou une grande rédaction rigoureuse. 1 thon : un site inconnu.", tuna: function (n) { return n + ' thons sur 5'; }, from: 'source',
+      callMe: "Soya m'appelle", genders: { m: 'Chat', f: 'Minette', x: 'Peu importe' }, rateQ: 'C\'était clair ?', rateThanks: 'Merci ! Soya s\'en servira pour mieux expliquer.', stars: function (n) { return n + ' sur 5'; },
+      bugTitle: 'Quelque chose ne va pas ou n\'est pas clair ?', bugLabel: 'Que s\'est-il passé ?', bugSend: 'Envoyer le signalement', bugAdds: function (v) { return 'Nous envoyons aussi la version de l\'appli (' + v + '), la langue et le niveau d\'âge, rien d\'autre.'; }, bugThanks: 'Merci. Nous allons regarder.', bugGithub: 'Les adultes peuvent aussi le signaler sur GitHub',
+      aboutTitle: 'Qui a fait ça', about: 'Les Nouvelles de Soya sont faites par Ran Lupovich, consultant en logiciel en Israël qui construit des systèmes fiables, et créateur de Soycatory, une petite fabrique d\'applis sympas. Il est aussi le papa fier d\'un enfant de 9 ans très malin, et a créé Soya pour que petits et grands comprennent le monde ensemble. Si vous aimez, partagez avec vos enfants.', share: 'Partager Les Nouvelles de Soya', shared: 'Lien copié. Merci de partager !', shareText: 'Soya le chat explique le monde aux enfants, à leur hauteur.',
       word: 'Le mot de la semaine', quiz: 'Petit quiz', right: 'Oui !', wrong: 'Presque. La réponse est :', source: "D'où ça vient",
       mood: "L'humeur de Soya", moods: { curious: 'Curieux', silly: 'Rigolo', calm: 'Calme' },
       nick: "Comment Soya doit-il t'appeler ?", nickHint: 'Juste un surnom. Il reste sur cet appareil.',
@@ -109,34 +136,34 @@
 
   var lang = get(K.lang, null);
   if (LANGS.indexOf(lang) < 0) { var nl = (navigator.language || '').toLowerCase(); lang = /^(he|iw)/.test(nl) ? 'he' : /^fr/.test(nl) ? 'fr' : 'en'; }
-  var age = Math.min(26, Math.max(6, parseInt(get(K.age, '9'), 10) || 9));
+  var age = Math.min(MAX_AGE, Math.max(6, parseInt(get(K.age, '9'), 10) || 9));
   var mood = MOODS[get(K.mood, 'curious')] ? get(K.mood, 'curious') : 'curious';
   var nick = String(get(K.nick, '')).slice(0, 20);
+  var gender = ['m', 'f', 'x'].indexOf(get(K.gender, 'x')) >= 0 ? get(K.gender, 'x') : 'x';
+  var openFacts = {};
   var quiz = {}; try { quiz = JSON.parse(get(K.quiz, '{}')) || {}; } catch (e) { quiz = {}; }
+  var rates = {}; try { rates = JSON.parse(get(K.rate, '{}')) || {}; } catch (e) { rates = {}; }
   var data = null, issueId = null, notice = '';
 
   function t(k) { return I18N[lang][k]; }
+  /* Hebrew and French titles follow the reader's choice: חתול or חתולה, chat or minette. Soya himself stays male. */
+  var GENDERED = {
+    he: { m: { cub: 'חתלתול', explorer: 'חתול סקרן', teen: 'חתול מגניב', grown: 'חתול על', owner: 'בעל חתול', ageQ: 'בן כמה אתה?' },
+          f: { cub: 'חתלתולה', explorer: 'חתולה סקרנית', teen: 'חתולה מגניבה', grown: 'חתולת על', owner: 'בעלת חתול', ageQ: 'בת כמה את?' } },
+    fr: { m: { cub: 'Chaton', explorer: 'Chat curieux', teen: 'Chat cool', grown: 'Super chat', owner: 'Maître du chat', ageQ: 'Quel âge as-tu ?' },
+          f: { cub: 'Chatonne', explorer: 'Minette curieuse', teen: 'Minette cool', grown: 'Super minette', owner: 'Maîtresse du chat', ageQ: 'Quel âge as-tu ?' } }
+  };
+  function g() { return (GENDERED[lang] && GENDERED[lang][gender]) || null; }
+  function bandName(id) { return (g() && g()[id]) || t('bands')[id]; }
+  function ageQ() { return (g() && g().ageQ) || t('ageQ'); }
   function L(o) { return (o && (o[lang] || o.en)) || ''; }
-  function band() { for (var i = 0; i < BANDS.length; i++) if (age <= BANDS[i].to) return BANDS[i].id; return 'grown'; }
+  function band() { for (var i = 0; i < BANDS.length; i++) if (age <= BANDS[i].to) return BANDS[i].id; return 'owner'; }
+  function bandOf(id) { return BANDS.filter(function (x) { return x.id === id; })[0]; }
+  /* Soya, drawn for the annabelle-games home (assets/soya-*.svg). */
+  function cat(pose, size, cls) { return '<img class="cat' + (cls ? ' ' + cls : '') + '" src="assets/soya-' + pose + '.svg" width="' + size + '" height="' + Math.round(size * 1.1) + '" alt="">'; }
   function boxDir() { return lang === 'he' ? 'rtl' : 'ltr'; }
 
   /* Drawings: simple shapes, so they stay crisp on any screen. */
-  function soya(size, extra) {
-    return '<svg class="soya' + (extra || '') + '" width="' + size + '" height="' + size + '" viewBox="0 0 120 120" aria-hidden="true">' +
-      '<ellipse cx="60" cy="112" rx="34" ry="5" fill="#000" opacity=".25"/>' +
-      '<path d="M26 44 L30 12 L52 32 Z M94 44 L90 12 L68 32 Z" fill="#2A2F3D" stroke="#7C86A2" stroke-width="2.5" stroke-linejoin="round"/>' +
-      '<path d="M33 38 L34 22 L45 33 Z M87 38 L86 22 L75 33 Z" fill="#FF8FB1"/>' +
-      '<ellipse cx="60" cy="62" rx="40" ry="36" fill="#2A2F3D" stroke="#7C86A2" stroke-width="2.5"/>' +
-      '<path d="M22 34 Q60 6 98 34 L96 40 Q60 22 24 40 Z" fill="#FFC94D"/><rect x="40" y="18" width="40" height="13" rx="3" fill="#FFF3D1"/>' +
-      '<text x="60" y="28.5" text-anchor="middle" font-size="9" font-weight="700" fill="#1B2032" font-family="Rubik,Arial,sans-serif">PRESS</text>' +
-      '<ellipse cx="45" cy="58" rx="9" ry="11" fill="#E8F86A"/><ellipse cx="75" cy="58" rx="9" ry="11" fill="#E8F86A"/>' +
-      '<ellipse cx="46" cy="60" rx="4" ry="7" fill="#11131A"/><ellipse cx="76" cy="60" rx="4" ry="7" fill="#11131A"/>' +
-      '<circle cx="43.5" cy="55" r="2.2" fill="#fff"/><circle cx="73.5" cy="55" r="2.2" fill="#fff"/>' +
-      '<path d="M56 72 L64 72 L60 77 Z" fill="#FF8FB1"/><path d="M60 77 Q55 83 50 80 M60 77 Q65 83 70 80" stroke="#7C86A2" stroke-width="2" fill="none" stroke-linecap="round"/>' +
-      '<path d="M20 68 L6 66 M20 74 L7 77 M100 68 L114 66 M100 74 L113 77" stroke="#7C86A2" stroke-width="2" stroke-linecap="round"/>' +
-      '<rect x="88" y="78" width="8" height="26" rx="4" fill="#9AA3B8" transform="rotate(-25 92 91)"/><circle cx="99" cy="76" r="9" fill="#5EE0C1" stroke="#1B2032" stroke-width="2"/>' +
-      '</svg>';
-  }
   var ART = {
     stock: '<rect x="10" y="62" width="14" height="22" rx="3" fill="#5EE0C1"/><rect x="30" y="48" width="14" height="36" rx="3" fill="#5EE0C1"/><rect x="50" y="34" width="14" height="50" rx="3" fill="#5EE0C1"/><path d="M78 26 L112 40 L86 76 Z" fill="#FFC94D" stroke="#1B2032" stroke-width="2"/><circle cx="92" cy="44" r="4" fill="#FF6B6B"/><circle cx="88" cy="58" r="3.5" fill="#FF6B6B"/><path d="M8 40 L28 30 L44 36 L66 18" stroke="#FF8FB1" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
     chip: '<rect x="34" y="20" width="52" height="52" rx="8" fill="#3B4466" stroke="#5EE0C1" stroke-width="3"/><rect x="46" y="32" width="28" height="28" rx="4" fill="#5EE0C1"/>' + [0, 1, 2, 3].map(function (i) { var p = 30 + i * 12; return '<path d="M' + p + ' 20 V10 M' + p + ' 72 V82 M34 ' + p + ' H24 M86 ' + p + ' H96" stroke="#9AA3B8" stroke-width="3" stroke-linecap="round"/>'; }).join('') + '<circle cx="60" cy="46" r="5" fill="#1B2032"/>',
@@ -156,14 +183,67 @@
     return '<article class="story" id="s-' + esc(s.id) + '">' +
       '<div class="story-head">' + art(s.art) + '<p class="count">' + esc(t('of')(i + 1, n)) + '</p></div>' +
       '<h2>' + esc(L(s.title)) + '</h2>' +
-      '<p class="body">' + esc(L(s.levels[b])) + '</p>' +
-      '<p class="say"><span class="mini">' + soya(36) + '</span><span>' + esc(m.react[i % m.react.length]) + '</span></p>' +
+      '<p class="body">' + esc(L(s.levels[b] || s.levels.grown)) + '</p>' +
+      (b === 'owner' && s.talk ? '<div class="talk"><b>' + esc(t('talk')) + '</b><span>' + esc(L(s.talk)) + '</span></div>' : '') +
+      '<p class="say"><span class="mini">' + cat(MOOD_POSE[mood], 44) + '</span><span>' + esc(m.react[i % m.react.length]) + '</span></p>' +
       '<div class="word"><b>' + esc(t('word')) + ': ' + esc(L(s.word.term)) + '</b><span>' + esc(L(s.word.means)) + '</span></div>' +
       '<div class="quiz" role="group" aria-label="' + esc(t('quiz')) + '"><p class="label">' + esc(t('quiz')) + '</p><p class="q">' + esc(L(s.quiz.q)) + '</p><div class="opts">' + opts + '</div><p class="verdict" role="status">' + esc(verdict) + '</p></div>' +
-      '<p class="src"><a href="' + esc(s.source) + '" target="_blank" rel="noopener">' + esc(t('source')) + '</a></p></article>';
+      factsBlock(s) + rateRow(s) + '</article>';
   }
 
+  var KIND_ICON = { fact: '<circle cx="12" cy="12" r="10"/><path d="M7 12.5l3.2 3.2L17 9" fill="none" stroke="#0F1424" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>',
+    inference: '<path d="M12 2l10 10-10 10L2 12z"/><path d="M8 12h7M12.5 8.5L16 12l-3.5 3.5" fill="none" stroke="#0F1424" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>',
+    assumption: '<rect x="2" y="2" width="20" height="20" rx="5"/><path d="M9.2 9.2a2.9 2.9 0 1 1 3.9 2.7c-.8.3-1.1.8-1.1 1.6v.6" fill="none" stroke="#0F1424" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="17.6" r="1.4" fill="#0F1424"/>' };
+  function kindTag(k) { return '<span class="kind k-' + k + '"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">' + KIND_ICON[k] + '</svg>' + esc(t('kinds')[k]) + '</span>'; }
+  function tunaRow(n) {
+    var fish = '<path d="M3 12c3-5 9-6 14-3l4-3v12l-4-3c-5 3-11 2-14-3z"/><circle cx="7.5" cy="11" r="1.1" fill="#0F1424"/>';
+    var out = ''; for (var i = 1; i <= 5; i++) out += '<svg class="fish' + (i <= n ? ' on' : '') + '" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">' + fish + '</svg>';
+    return '<span class="tuna" role="img" aria-label="' + esc(t('tuna')(n)) + '">' + out + '</span>';
+  }
+  /* "What's fact?": each claim coloured by kind, with the sources it comes from and how far we trust them. */
+  function factsBlock(s) {
+    if (!s.facts) return '<p class="src"><a href="' + esc(s.source) + '" target="_blank" rel="noopener">' + esc(t('source')) + '</a></p>';
+    var open = !!openFacts[s.id];
+    var html = '<button type="button" class="ghost facts-btn" data-facts="' + esc(s.id) + '" aria-expanded="' + open + '">' + esc(open ? t('factsHide') : t('factsBtn')) + '</button>';
+    if (!open) return html;
+    html += '<div class="facts"><ol class="claims">' + s.facts.map(function (f) {
+      var refs = (f.src || []).map(function (i) { return '<a href="' + esc(s.sources[i].url) + '" target="_blank" rel="noopener">' + esc(s.sources[i].name) + '</a>'; }).join(', ');
+      return '<li class="claim c-' + f.kind + '">' + kindTag(f.kind) + '<span>' + esc(L(f.text)) + (refs ? ' <small class="mute">(' + esc(t('from')) + ' ' + refs + ')</small>' : '') + '</span></li>';
+    }).join('') + '</ol><p class="label">' + esc(t('sources')) + '</p><ol class="srcs">' + s.sources.map(function (x) {
+      return '<li><a href="' + esc(x.url) + '" target="_blank" rel="noopener">' + esc(x.name) + '</a> ' + tunaRow(x.tuna) + '<small class="mute">' + esc(L(x.why)) + '</small></li>';
+    }).join('') + '</ol></div>';
+    return html;
+  }
+  function keyPanel() {
+    return '<details class="panel key"><summary>' + esc(t('key')) + '</summary><ol class="claims">' + ['fact', 'inference', 'assumption'].map(function (k) {
+      return '<li class="claim c-' + k + '">' + kindTag(k) + '<span>' + esc(t('kindNote')[k]) + '</span></li>';
+    }).join('') + '</ol><p class="small">' + tunaRow(4) + ' ' + esc(t('tunaKey')) + '</p></details>';
+  }
   function canSend() { return !!(window.SOYA_WAITLIST && window.SOYA_WAITLIST.url); }
+  function send(fields) {
+    var body = new URLSearchParams(fields); body.set('app', 'soya-news'); body.set('lang', lang); body.set('website', '');
+    return fetch(window.SOYA_WAITLIST.url, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() });
+  }
+  /* "How clear was this?" from 1 to 5 paws. Kept on the device; sent (story, paws, age level) only if the receiver is set. */
+  function rateRow(s) {
+    var k = issueId + '|' + s.id, got = rates[k];
+    var paws = [1, 2, 3, 4, 5].map(function (n) {
+      return '<button type="button" class="paw' + (got && n <= got ? ' on' : '') + '" data-rate="' + esc(s.id) + '" data-n="' + n + '" aria-label="' + esc(t('stars')(n)) + '" aria-pressed="' + (got === n) + '"><svg viewBox="0 0 100 100" width="26" height="26" aria-hidden="true"><ellipse cx="50" cy="66" rx="22" ry="18"/><ellipse cx="24" cy="42" rx="9" ry="12"/><ellipse cx="42" cy="28" rx="9" ry="12"/><ellipse cx="60" cy="28" rx="9" ry="12"/><ellipse cx="78" cy="42" rx="9" ry="12"/></svg></button>';
+    }).join('');
+    return '<div class="rate"><p class="label">' + esc(t('rateQ')) + '</p><div class="paws" role="group" aria-label="' + esc(t('rateQ')) + '">' + paws + '</div><p class="mute small" role="status">' + (got ? esc(t('rateThanks')) : '') + '</p></div>';
+  }
+  var GITHUB = 'https://github.com/LupovichRan/soya-productions/issues/new?title=' + encodeURIComponent('Soya News: ');
+  function bugBox() {
+    var html = '<section class="panel" id="bug"><h2>' + esc(t('bugTitle')) + '</h2>';
+    if (canSend()) html += '<form id="bug-form" novalidate><label for="bug-text">' + esc(t('bugLabel')) + '</label><textarea id="bug-text" maxlength="500" autocomplete="off" dir="' + boxDir() + '"></textarea>' +
+      '<p class="mute small">' + esc(t('ideaSafe')) + ' ' + esc(t('bugAdds')(VERSION)) + '</p><div class="hp" aria-hidden="true"><label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>' +
+      '<p class="note" role="status" hidden></p><button type="submit" class="ghost">' + esc(t('bugSend')) + '</button></form>';
+    return html + '<p><a href="' + esc(GITHUB) + '" target="_blank" rel="noopener">' + esc(t('bugGithub')) + '</a></p></section>';
+  }
+  function aboutBox() {
+    return '<section class="panel about"><div class="about-row">' + cat('happy', 72) + '<div><h2>' + esc(t('aboutTitle')) + '</h2><p>' + esc(t('about')) + '</p></div></div>' +
+      '<button type="button" class="ghost" id="share">' + esc(t('share')) + '</button><p class="note" id="share-note" role="status" hidden></p></section>';
+  }
   function ideaBox() {
     if (!canSend()) return '<section class="panel"><h2>' + esc(t('ideaTitle')) + '</h2><p class="mute">' + esc(t('ideaClosed')) + '</p></section>';
     return '<form class="panel" id="idea" novalidate><h2>' + esc(t('ideaTitle')) + '</h2>' +
@@ -179,29 +259,30 @@
     document.getElementById('brand-title').textContent = t('name');
     document.getElementById('credit').textContent = t('credit');
     var app = document.getElementById('app');
-    if (!data) { app.innerHTML = '<div class="hero">' + soya(120) + '</div>'; return; }
+    if (!data) { app.innerHTML = '<div class="hero">' + cat('sit', 120) + '</div>'; return; }
     var issues = data.issues || [], issue = issues.filter(function (x) { return x.id === issueId; })[0] || issues[0];
     if (!issue) return; issueId = issue.id;
     var m = MOODS[mood][lang] || MOODS[mood].en, b = band();
     var html = '';
     if (notice) html += '<p class="new" role="status">' + esc(notice) + '</p>';
-    html += '<section class="hero">' + soya(128, ' hello') + '<div class="bubble"><p>' + esc(m.hi(nick)) + '</p></div></section>' +
+    html += '<section class="hero">' + cat(MOOD_POSE[mood], 120, 'hello') + '<div class="bubble"><p>' + esc(m.hi(nick)) + '</p></div></section>' +
+      '<p class="tagline">' + esc(t('tagline')) + '</p>' +
       '<h1>' + esc(L(issue.headline)) + '</h1><p class="mute">' + esc(t('week')) + ' · ' + esc(L(issue.week)) + '</p>' +
-      '<section class="panel age"><label for="age"><b>' + esc(t('ageQ')) + '</b></label>' +
-      '<div class="age-row"><input type="range" id="age" min="6" max="26" step="1" value="' + age + '" aria-valuetext="' + esc(t('ageYears')(age) + ', ' + t('bands')[b]) + '">' +
+      '<section class="panel age"><label for="age"><b>' + esc(ageQ()) + '</b></label>' +
+      '<div class="age-row">' + cat(bandOf(b).pose, 56, 'band-cat') + '<input type="range" id="age" min="6" max="' + MAX_AGE + '" step="1" value="' + age + '" aria-valuetext="' + esc(t('ageYears')(age) + ', ' + bandName(b)) + '">' +
       '<output for="age" class="age-out">' + esc(age) + '</output></div>' +
-      '<div class="bands">' + BANDS.map(function (x) { return '<button type="button" class="band' + (x.id === b ? ' on' : '') + '" data-age="' + x.from + '" aria-pressed="' + (x.id === b) + '"><b>' + esc(t('bands')[x.id]) + '</b><small>' + x.from + '–' + x.to + '</small></button>'; }).join('') + '</div>' +
-      '<p class="mute small">' + esc(t('bandNote')[b]) + '</p></section>';
+      '<div class="bands">' + BANDS.map(function (x) { return '<button type="button" class="band' + (x.id === b ? ' on' : '') + '" data-age="' + x.from + '" aria-pressed="' + (x.id === b) + '"><b>' + esc(bandName(x.id)) + '</b><small>' + x.from + '–' + x.to + '</small></button>'; }).join('') + '</div>' +
+      '<p class="mute small">' + esc(t('bandNote')[b]) + '</p></section>' + keyPanel();
     html += issue.stories.map(function (s, i) { return story(s, i, issue.stories.length); }).join('');
-    html += '<p class="say end"><span class="mini">' + soya(36) + '</span><span>' + esc(m.bye) + '</span></p>';
+    html += '<p class="say end"><span class="mini">' + cat(MOOD_POSE[mood], 44) + '</span><span>' + esc(m.bye) + '</span></p>';
     html += '<section class="panel" id="notify"><h2>' + esc(t('notifyTitle')) + '</h2><p class="mute small">' + esc(t('notifyAsk')) + '</p>' +
       '<button type="button" class="primary" id="notify-btn">' + esc(t('notifyBtn')) + '</button><p class="note" id="notify-note" role="status"' + (notifyText() ? '' : ' hidden') + '>' + esc(notifyText()) + '</p>' +
       '<p class="mute small">' + esc(t('install')) + '</p></section>';
     html += '<section class="panel"><h2>' + esc(t('settings')) + '</h2>' +
       '<p class="label">' + esc(t('mood')) + '</p><div class="seg">' + Object.keys(MOODS).map(function (k) { return '<button type="button" data-mood="' + k + '" aria-pressed="' + (k === mood) + '"' + (k === mood ? ' class="on"' : '') + '>' + esc(t('moods')[k]) + '</button>'; }).join('') + '</div>' +
-      '<p class="label">' + esc(t('lang')) + '</p><div class="seg">' + LANGS.map(function (k) { return '<button type="button" data-lang="' + k + '" lang="' + k + '" aria-pressed="' + (k === lang) + '"' + (k === lang ? ' class="on"' : '') + '>' + { en: 'English', he: 'עברית', fr: 'Français' }[k] + '</button>'; }).join('') + '</div>' +
+      '<p class="label">' + esc(t('callMe')) + '</p><div class="seg">' + ['m', 'f', 'x'].map(function (k) { return '<button type="button" data-gender="' + k + '" aria-pressed="' + (k === gender) + '"' + (k === gender ? ' class="on"' : '') + '>' + esc(t('genders')[k]) + '</button>'; }).join('') + '</div><p class="label">' + esc(t('lang')) + '</p><div class="seg">' + LANGS.map(function (k) { return '<button type="button" data-lang="' + k + '" lang="' + k + '" aria-pressed="' + (k === lang) + '"' + (k === lang ? ' class="on"' : '') + '>' + { en: 'English', he: 'עברית', fr: 'Français' }[k] + '</button>'; }).join('') + '</div>' +
       '<label for="nick" class="label">' + esc(t('nick')) + '</label><input id="nick" maxlength="20" autocomplete="off" dir="' + boxDir() + '" value="' + esc(nick) + '"><p class="mute small">' + esc(t('nickHint')) + '</p></section>';
-    html += ideaBox();
+    html += ideaBox() + bugBox() + aboutBox();
     if (issues.length > 1) html += '<section class="panel"><h2>' + esc(t('older')) + '</h2><div class="seg wrap">' + issues.map(function (x) { return '<button type="button" data-issue="' + esc(x.id) + '"' + (x.id === issueId ? ' class="on" aria-pressed="true"' : ' aria-pressed="false"') + '>' + esc(L(x.week)) + '</button>'; }).join('') + '</div></section>';
     html += '<p class="mute small">' + esc(t('synthetic')) + ' ' + esc(t('privacy')) + '</p><p><a class="home" href="../../">' + esc(t('home')) + '</a></p>';
     app.innerHTML = html;
@@ -226,6 +307,32 @@
       bt.addEventListener('click', function () { quiz[issueId + '|' + bt.getAttribute('data-q')] = +bt.getAttribute('data-o'); put(K.quiz, JSON.stringify(quiz)); keepPlace(render, bt.getAttribute('data-q')); });
     });
     document.getElementById('notify-btn').addEventListener('click', subscribe);
+    app.querySelectorAll('[data-facts]').forEach(function (bt) { bt.addEventListener('click', function () { var id = bt.getAttribute('data-facts'); openFacts[id] = !openFacts[id]; keepPlace(render, id); var again = document.querySelector('[data-facts="' + id + '"]'); if (again) again.focus({ preventScroll: true }); }); });
+    app.querySelectorAll('[data-gender]').forEach(function (bt) { bt.addEventListener('click', function () { gender = bt.getAttribute('data-gender'); put(K.gender, gender); keepPlace(render); }); });
+    app.querySelectorAll('[data-rate]').forEach(function (bt) {
+      bt.addEventListener('click', function () {
+        var id = bt.getAttribute('data-rate'), n = +bt.getAttribute('data-n'), k = issueId + '|' + id, first = !rates[k];
+        rates[k] = n; put(K.rate, JSON.stringify(rates));
+        if (canSend()) send({ kind: 'rate', issue: issueId, story: id, paws: String(n), level: band(), first: first ? 'yes' : 'no' }).catch(function () {});
+        keepPlace(render, id);
+      });
+    });
+    var bug = document.getElementById('bug-form');
+    if (bug) bug.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var box = bug.querySelector('textarea'), note = bug.querySelector('.note'), trap = bug.querySelector('input[name=website]'), text = box.value.trim();
+      function say(x) { note.hidden = false; note.textContent = x; }
+      if (trap && trap.value) return;
+      if (text.length < 3) return say(t('ideaShort'));
+      send({ kind: 'bug', text: text.slice(0, 500), version: VERSION, level: band(), issue: issueId || '' }).then(function () { box.value = ''; say(t('bugThanks')); }, function () { say(t('ideaFailed')); });
+    });
+    document.getElementById('share').addEventListener('click', function () {
+      var url = new URL('./', location.href).href, note = document.getElementById('share-note');
+      function done() { note.hidden = false; note.textContent = t('shared'); }
+      if (navigator.share) { navigator.share({ title: t('name'), text: t('shareText'), url: url }).catch(function () {}); return; }
+      if (navigator.clipboard) navigator.clipboard.writeText(url).then(done, function () { note.hidden = false; note.textContent = url; });
+      else { note.hidden = false; note.textContent = url; }
+    });
     var form = document.getElementById('idea');
     if (form) form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -233,8 +340,7 @@
       function say(s) { note.hidden = false; note.textContent = s; }
       if (trap && trap.value) return;
       if (text.length < 3) return say(t('ideaShort'));
-      var body = new URLSearchParams({ kind: 'request', app: 'soya-news', text: text.slice(0, 300), email: '', lang: lang, website: '' });
-      fetch(window.SOYA_WAITLIST.url, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() })
+      send({ kind: 'request', text: text.slice(0, 300), email: '' })
         .then(function () { box.value = ''; say(t('ideaThanks')); }, function () { say(t('ideaFailed')); });
     });
   }
@@ -242,7 +348,7 @@
   function keepPlace(fn, storyId) {
     var anchor = storyId ? document.getElementById('s-' + storyId) : document.activeElement;
     var top = anchor && anchor.getBoundingClientRect ? anchor.getBoundingClientRect().top : null, id = anchor && anchor.id;
-    var focusSel = anchor && anchor.getAttribute && (anchor.id ? '#' + anchor.id : anchor.getAttribute('data-mood') ? '[data-mood="' + anchor.getAttribute('data-mood') + '"]' : anchor.getAttribute('data-lang') ? '[data-lang="' + anchor.getAttribute('data-lang') + '"]' : anchor.getAttribute('data-age') ? '[data-age="' + anchor.getAttribute('data-age') + '"]' : null);
+    var focusSel = anchor && anchor.getAttribute && (anchor.id ? '#' + anchor.id : anchor.getAttribute('data-mood') ? '[data-mood="' + anchor.getAttribute('data-mood') + '"]' : anchor.getAttribute('data-lang') ? '[data-lang="' + anchor.getAttribute('data-lang') + '"]' : anchor.getAttribute('data-age') ? '[data-age="' + anchor.getAttribute('data-age') + '"]' : anchor.getAttribute('data-gender') ? '[data-gender="' + anchor.getAttribute('data-gender') + '"]' : null);
     fn();
     var again = storyId ? document.getElementById('s-' + storyId) : (focusSel ? document.querySelector(focusSel) : null);
     if (again && top != null) { window.scrollBy(0, again.getBoundingClientRect().top - top); if (!storyId && again.focus) again.focus({ preventScroll: true }); }

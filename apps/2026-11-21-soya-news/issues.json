@@ -1,211 +1,759 @@
 {
-  "issues": [
+ "issues": [
+  {
+   "id": "2026-11-21",
+   "week": {
+    "en": "15–21 November 2026",
+    "he": "15–21 בנובמבר 2026",
+    "fr": "15–21 novembre 2026"
+   },
+   "headline": {
+    "en": "Chips, shops and name tags",
+    "he": "שבבים, חנויות ותגי שם",
+    "fr": "Puces, boutiques et étiquettes"
+   },
+   "stories": [
     {
-      "id": "2026-11-21",
-      "week": { "en": "15–21 November 2026", "he": "15–21 בנובמבר 2026", "fr": "15–21 novembre 2026" },
-      "headline": { "en": "Chips, shops and name tags", "he": "שבבים, חנויות ותגי שם", "fr": "Puces, boutiques et étiquettes" },
-      "stories": [
-        {
-          "id": "stock", "art": "stock",
-          "source": "https://www.anthropic.com/news/anthropic-prices-initial-public-offering",
-          "title": { "en": "Claude's company now sells tiny pieces of itself", "he": "החברה של Claude מוכרת עכשיו חתיכות קטנות של עצמה", "fr": "L'entreprise de Claude vend maintenant de petits morceaux d'elle-même" },
-          "levels": {
-            "cub": {
-              "en": "Anthropic is the company that made Claude, a computer helper that can talk and write. This week anyone grown-up can buy a tiny piece of the company, called a share. It's like buying one slice of a giant pizza!",
-              "he": "Anthropic היא החברה שבנתה את Claude, עוזר מחשב שיודע לדבר ולכתוב. השבוע כל מבוגר יכול לקנות חתיכה קטנטנה של החברה, שנקראת מניה. זה כמו לקנות משולש אחד מפיצה ענקית!",
-              "fr": "Anthropic est l'entreprise qui a créé Claude, un assistant d'ordinateur qui sait parler et écrire. Cette semaine, les grandes personnes peuvent acheter un tout petit morceau de l'entreprise, qu'on appelle une action. C'est comme acheter une part d'une pizza géante !"
-            },
-            "explorer": {
-              "en": "When a company \"goes public\", it starts selling shares on a stock market, a big shop for pieces of companies. Anthropic, which makes Claude, did this on 19 November. Each share cost $83 at first. People buy shares hoping the company grows, so their piece is worth more later. It can also go down!",
-              "he": "כשחברה \"נכנסת לבורסה\", היא מתחילה למכור מניות בשוק המניות, חנות גדולה לחתיכות של חברות. Anthropic, שבונה את Claude, עשתה את זה ב־19 בנובמבר. כל מניה עלתה בהתחלה 83 דולר. אנשים קונים מניות בתקווה שהחברה תגדל והחתיכה שלהם תהיה שווה יותר. זה יכול גם לרדת!",
-              "fr": "Quand une entreprise « entre en Bourse », elle commence à vendre des actions sur un marché, une grande boutique de morceaux d'entreprises. Anthropic, qui fait Claude, l'a fait le 19 novembre. Au début, une action coûtait 83 dollars. Les gens achètent en espérant que l'entreprise grandisse et que leur morceau vaille plus. Ça peut aussi baisser !"
-            },
-            "teen": {
-              "en": "Anthropic listed on Nasdaq as ANT at $83 a share and raised about $79 billion to pay for the huge computers AI needs. The price jumped 17% on day one, then dropped about 10% the next day. That swing is normal for new stocks: buyers are guessing how big a company will get, and guesses change fast.",
-              "he": "Anthropic נכנסה לנאסד\"ק בסימול ANT ב־83 דולר למניה וגייסה כ־79 מיליארד דולר כדי לממן את המחשבים הענקיים שבינה מלאכותית צריכה. המחיר קפץ ב־17% ביום הראשון, ואז ירד בערך 10% למחרת. תנודה כזו רגילה במניות חדשות: הקונים מנחשים כמה החברה תגדל, והניחושים משתנים מהר.",
-              "fr": "Anthropic est cotée au Nasdaq sous le nom ANT à 83 dollars l'action et a levé environ 79 milliards de dollars pour payer les énormes ordinateurs dont l'IA a besoin. Le prix a bondi de 17 % le premier jour, puis a baissé d'environ 10 % le lendemain. C'est normal pour une nouvelle action : les acheteurs devinent jusqu'où l'entreprise grandira, et les paris changent vite."
-            },
-            "grown": {
-              "en": "Anthropic's IPO priced at $83, above its $70–78 range, valuing it near $1.5 trillion fully diluted, and raised about $79 billion. Revenue for the first nine months of 2026 was $33.2 billion, so investors are paying roughly 26 times annualised revenue: a bet that very fast growth continues. Not investment advice, and Soycatory is built with Claude, so read that with care.",
-              "he": "ההנפקה של Anthropic תומחרה ב־83 דולר, מעל הטווח של 70–78, בשווי של כ־1.5 טריליון דולר בדילול מלא, וגייסה כ־79 מיליארד דולר. ההכנסות בתשעת החודשים הראשונים של 2026 היו 33.2 מיליארד דולר, כך שהמשקיעים משלמים בערך פי 26 מההכנסה השנתית: הימור שהצמיחה המהירה תימשך. זה לא ייעוץ השקעות, ו־Soycatory נבנית עם Claude, אז קראו בזהירות.",
-              "fr": "L'introduction en Bourse d'Anthropic s'est faite à 83 dollars, au-dessus de la fourchette de 70–78, pour une valeur d'environ 1 500 milliards de dollars entièrement diluée, et a levé environ 79 milliards. Le chiffre d'affaires des neuf premiers mois de 2026 était de 33,2 milliards : les investisseurs paient environ 26 fois le revenu annualisé, en pariant que la croissance rapide continue. Ce n'est pas un conseil d'investissement, et Soycatory est fait avec Claude : lisez avec prudence."
-            }
-          },
-          "word": {
-            "term": { "en": "Share", "he": "מניה", "fr": "Action" },
-            "means": { "en": "A tiny piece of a company that you can own.", "he": "חתיכה קטנה של חברה שאפשר להיות הבעלים שלה.", "fr": "Un tout petit morceau d'une entreprise que l'on peut posséder." }
-          },
-          "quiz": {
-            "q": { "en": "What is a share?", "he": "מה זו מניה?", "fr": "Qu'est-ce qu'une action ?" },
-            "options": [
-              { "en": "A tiny piece of a company", "he": "חתיכה קטנה של חברה", "fr": "Un petit morceau d'entreprise" },
-              { "en": "A kind of cat food", "he": "סוג של אוכל לחתולים", "fr": "Une sorte de croquettes" },
-              { "en": "A computer game", "he": "משחק מחשב", "fr": "Un jeu vidéo" }
-            ],
-            "answer": 0
-          }
-        },
-        {
-          "id": "chips", "art": "chip",
-          "source": "https://www.cnbc.com/2026/11/17/nvidia-nvda-earnings-report-q3-2027.html",
-          "title": { "en": "AI is hungry, and it eats chips", "he": "הבינה המלאכותית רעבה, והיא אוכלת שבבים", "fr": "L'IA a faim, et elle mange des puces" },
-          "levels": {
-            "cub": {
-              "en": "A chip is a tiny flat brain inside a computer. AI needs lots and lots of them, like a cat needs lots of naps. A company called Nvidia makes these chips, and this week it said it sold more than ever before!",
-              "he": "שבב הוא מוח קטנטן ושטוח בתוך מחשב. בינה מלאכותית צריכה המון המון כאלה, כמו שחתול צריך המון תנומות. חברה בשם Nvidia מייצרת את השבבים האלה, והשבוע היא סיפרה שמכרה יותר מאי פעם!",
-              "fr": "Une puce, c'est un minuscule cerveau tout plat dans un ordinateur. L'IA en a besoin de plein, comme un chat a besoin de plein de siestes. Une entreprise appelée Nvidia fabrique ces puces, et cette semaine elle a dit en avoir vendu plus que jamais !"
-            },
-            "explorer": {
-              "en": "To learn, an AI reads a huge amount of text and pictures, and that takes millions of fast math steps every second. Special chips do that math. Nvidia sold $107.6 billion of chips for big computer buildings (data centers) in just three months, about twice as much as a year ago.",
-              "he": "כדי ללמוד, בינה מלאכותית קוראת כמות עצומה של טקסטים ותמונות, וזה דורש מיליוני צעדי חשבון מהירים בכל שנייה. שבבים מיוחדים עושים את החשבון הזה. Nvidia מכרה שבבים למבני מחשבים גדולים (מרכזי נתונים) ב־107.6 מיליארד דולר בשלושה חודשים בלבד, בערך פי שניים משנה שעברה.",
-              "fr": "Pour apprendre, une IA lit une énorme quantité de textes et d'images, ce qui demande des millions de calculs rapides chaque seconde. Des puces spéciales font ces calculs. Nvidia a vendu pour 107,6 milliards de dollars de puces pour de grands bâtiments d'ordinateurs (centres de données) en seulement trois mois, environ deux fois plus qu'il y a un an."
-            },
-            "teen": {
-              "en": "AI chips (GPUs) are good at doing many small calculations at the same time, which is exactly what training and running AI models needs. Nvidia's data center revenue hit a record $107.6 billion in a quarter, up 110% in a year. Most of the money flowing into AI right now ends up paying for this hardware.",
-              "he": "שבבי בינה מלאכותית (GPU) טובים בלעשות הרבה חישובים קטנים בבת אחת, וזה בדיוק מה שאימון והרצה של מודלים צריכים. ההכנסות של Nvidia ממרכזי נתונים הגיעו לשיא של 107.6 מיליארד דולר ברבעון, עלייה של 110% בשנה. רוב הכסף שזורם עכשיו לבינה מלאכותית בסוף משלם על החומרה הזו.",
-              "fr": "Les puces d'IA (GPU) savent faire plein de petits calculs en même temps, exactement ce qu'il faut pour entraîner et faire tourner des modèles. Le chiffre d'affaires des centres de données de Nvidia a atteint un record de 107,6 milliards de dollars sur un trimestre, +110 % en un an. La plupart de l'argent qui entre dans l'IA finit par payer ce matériel."
-            },
-            "grown": {
-              "en": "Nvidia reported record data center revenue of $107.6 billion, up 110% year on year and above analyst estimates. Parallel matrix maths makes GPUs the bottleneck for training and inference, so capital raised by AI labs (including Anthropic's IPO money) largely flows to chipmakers and cloud providers. Watch whether demand holds as export rules tighten.",
-              "he": "Nvidia דיווחה על שיא של 107.6 מיליארד דולר בהכנסות ממרכזי נתונים, עלייה של 110% משנה לשנה, מעל הערכות האנליסטים. חישובי מטריצות מקביליים הופכים את ה־GPU לצוואר הבקבוק באימון ובהרצה, ולכן הכסף שמעבדות בינה מלאכותית מגייסות (כולל כסף ההנפקה של Anthropic) זורם בעיקר ליצרני שבבים ולספקי ענן. כדאי לעקוב אם הביקוש יחזיק כשכללי הייצוא מחמירים.",
-              "fr": "Nvidia a annoncé un record de 107,6 milliards de dollars de revenus centres de données, +110 % sur un an, au-dessus des attentes. Le calcul matriciel parallèle fait des GPU le goulot d'étranglement de l'entraînement et de l'inférence : l'argent levé par les labos d'IA (dont celui de l'introduction d'Anthropic) va surtout aux fabricants de puces et aux clouds. À suivre : la demande tiendra-t-elle avec des règles d'exportation plus strictes ?"
-            }
-          },
-          "word": {
-            "term": { "en": "Chip", "he": "שבב", "fr": "Puce" },
-            "means": { "en": "A tiny flat piece inside a computer that does the thinking math.", "he": "חתיכה קטנה ושטוחה בתוך מחשב שעושה את החשבון של החשיבה.", "fr": "Un petit morceau plat dans l'ordinateur qui fait les calculs pour « penser »." }
-          },
-          "quiz": {
-            "q": { "en": "Why does AI need so many chips?", "he": "למה בינה מלאכותית צריכה כל כך הרבה שבבים?", "fr": "Pourquoi l'IA a-t-elle besoin d'autant de puces ?" },
-            "options": [
-              { "en": "To do lots of math very fast", "he": "כדי לעשות המון חשבון מהר מאוד", "fr": "Pour faire beaucoup de calculs très vite" },
-              { "en": "To look shiny", "he": "כדי להיראות מבריקה", "fr": "Pour briller" },
-              { "en": "To keep the computer warm", "he": "כדי לחמם את המחשב", "fr": "Pour garder l'ordinateur au chaud" }
-            ],
-            "answer": 0
-          }
-        },
-        {
-          "id": "border", "art": "border",
-          "source": "https://www.bloomberg.com/news/articles/2026-11-16/us-moves-to-limit-remote-access-to-advanced-ai-chips",
-          "title": { "en": "Countries argue over who gets the best chips", "he": "מדינות מתווכחות מי יקבל את השבבים הכי טובים", "fr": "Les pays se disputent les meilleures puces" },
-          "levels": {
-            "cub": {
-              "en": "Some countries are worried about who gets the strongest AI chips, like kids arguing over the best toy. America made new rules about where these chips can go, and Nvidia stopped sending them to China.",
-              "he": "יש מדינות שדואגות מי יקבל את שבבי הבינה המלאכותית הכי חזקים, כמו ילדים שרבים על הצעצוע הכי טוב. אמריקה קבעה כללים חדשים לאן השבבים יכולים להגיע, ו־Nvidia הפסיקה לשלוח אותם לסין.",
-              "fr": "Certains pays s'inquiètent de qui reçoit les puces d'IA les plus puissantes, comme des enfants qui se disputent le meilleur jouet. L'Amérique a fait de nouvelles règles sur l'endroit où ces puces peuvent aller, et Nvidia a arrêté de les envoyer en Chine."
-            },
-            "explorer": {
-              "en": "The United States doesn't want China to use America's best AI chips. Some companies tried a trick: renting computers with those chips in other countries. Now big computer buildings in five countries (Singapore, Malaysia, Thailand, Indonesia and Brazil) need special permission to get them.",
-              "he": "ארצות הברית לא רוצה שסין תשתמש בשבבי הבינה המלאכותית הכי טובים של אמריקה. כמה חברות ניסו טריק: לשכור מחשבים עם השבבים האלה במדינות אחרות. עכשיו מבני מחשבים גדולים בחמש מדינות (סינגפור, מלזיה, תאילנד, אינדונזיה וברזיל) צריכים אישור מיוחד כדי לקבל אותם.",
-              "fr": "Les États-Unis ne veulent pas que la Chine utilise leurs meilleures puces d'IA. Certaines entreprises ont essayé une astuce : louer des ordinateurs avec ces puces dans d'autres pays. Maintenant, les grands bâtiments d'ordinateurs de cinq pays (Singapour, Malaisie, Thaïlande, Indonésie et Brésil) ont besoin d'une autorisation spéciale pour les recevoir."
-            },
-            "teen": {
-              "en": "AI chips are treated like strategic resources, a bit like oil used to be. The US now requires a licence before advanced chips go to data centers in five countries, to close the \"rent it abroad\" loophole. Nvidia's interim CEO said it no longer ships its licensed data center chips to China, giving up about $2.4 billion a quarter.",
-              "he": "מתייחסים לשבבי בינה מלאכותית כמו למשאב אסטרטגי, קצת כמו שפעם התייחסו לנפט. ארצות הברית דורשת עכשיו רישיון לפני ששבבים מתקדמים מגיעים למרכזי נתונים בחמש מדינות, כדי לסגור את פרצת \"שוכרים בחו\"ל\". המנכ\"לית הזמנית של Nvidia אמרה שהחברה כבר לא שולחת לסין את שבבי מרכזי הנתונים שקיבלו רישיון, ומוותרת על כ־2.4 מיליארד דולר ברבעון.",
-              "fr": "Les puces d'IA sont traitées comme une ressource stratégique, un peu comme le pétrole autrefois. Les États-Unis exigent maintenant une licence avant d'envoyer des puces avancées vers les centres de données de cinq pays, pour fermer la faille « louer à l'étranger ». La directrice générale par intérim de Nvidia a dit ne plus envoyer ses puces sous licence en Chine, soit environ 2,4 milliards de dollars par trimestre en moins."
-            },
-            "grown": {
-              "en": "A US Commerce interim rule requires licences for advanced AI chips going to data centers in Singapore, Malaysia, Thailand, Indonesia and Brazil, targeting remote access by Chinese firms. Nvidia stopped shipping licensed Hopper data center products to China and excluded them from guidance; analysts trimmed 2027–28 estimates. The trade-off: national security goals versus Southeast Asia's data center boom.",
-              "he": "תקנת ביניים של משרד המסחר האמריקאי דורשת רישיון לשבבי בינה מלאכותית מתקדמים שמגיעים למרכזי נתונים בסינגפור, מלזיה, תאילנד, אינדונזיה וברזיל, ומכוונת לגישה מרחוק של חברות סיניות. Nvidia הפסיקה לשלוח לסין מוצרי Hopper ברישיון והוציאה אותם מהתחזית; אנליסטים הורידו את ההערכות ל־2027–28. הדילמה: ביטחון לאומי מול תנופת מרכזי הנתונים בדרום־מזרח אסיה.",
-              "fr": "Une règle provisoire du ministère américain du Commerce impose une licence pour les puces d'IA avancées destinées aux centres de données de Singapour, Malaisie, Thaïlande, Indonésie et Brésil, pour viser l'accès à distance par des entreprises chinoises. Nvidia a cessé d'expédier ses produits Hopper sous licence vers la Chine et les a retirés de ses prévisions ; des analystes ont réduit leurs estimations 2027–28. L'arbitrage : sécurité nationale contre essor des centres de données en Asie du Sud-Est."
-            }
-          },
-          "word": {
-            "term": { "en": "Licence", "he": "רישיון", "fr": "Licence" },
-            "means": { "en": "A permission slip from the government to do something.", "he": "אישור מהממשלה לעשות משהו.", "fr": "Une autorisation du gouvernement pour faire quelque chose." }
-          },
-          "quiz": {
-            "q": { "en": "What trick were some companies using?", "he": "באיזה טריק השתמשו כמה חברות?", "fr": "Quelle astuce certaines entreprises utilisaient-elles ?" },
-            "options": [
-              { "en": "Hiding chips in cat toys", "he": "להחביא שבבים בצעצועים של חתולים", "fr": "Cacher des puces dans des jouets pour chats" },
-              { "en": "Renting computers with the chips in other countries", "he": "לשכור מחשבים עם השבבים במדינות אחרות", "fr": "Louer des ordinateurs avec ces puces dans d'autres pays" },
-              { "en": "Drawing the chips by hand", "he": "לצייר את השבבים ביד", "fr": "Dessiner les puces à la main" }
-            ],
-            "answer": 1
-          }
-        },
-        {
-          "id": "helper", "art": "helper",
-          "source": "https://bloomberg.com/news/articles/2026-11-19/apple-is-working-on-ai-agent-for-device-control-apps-browsing-and-coding",
-          "title": { "en": "Phones may get a helper that does jobs for you", "he": "לטלפונים אולי יהיה עוזר שעושה בשבילכם משימות", "fr": "Les téléphones pourraient avoir un assistant qui fait des tâches pour vous" },
-          "levels": {
-            "cub": {
-              "en": "Today you ask a phone a question and it answers. Soon some phones may also DO things for you, like open a game or find a picture. Apple seems to be building a helper like that. It's still a secret, so we're just guessing!",
-              "he": "היום שואלים את הטלפון שאלה והוא עונה. בקרוב אולי טלפונים גם יעשו דברים בשבילכם, כמו לפתוח משחק או למצוא תמונה. נראה ש־Apple בונה עוזר כזה. זה עדיין סוד, אז אנחנו רק מנחשים!",
-              "fr": "Aujourd'hui, on pose une question au téléphone et il répond. Bientôt, certains téléphones pourraient aussi FAIRE des choses pour vous, comme ouvrir un jeu ou trouver une photo. Apple semble construire un assistant comme ça. C'est encore secret, alors on devine !"
-            },
-            "explorer": {
-              "en": "An \"agent\" is an AI that doesn't just talk: it clicks, types and opens apps to finish a job. Bloomberg found Apple job ads asking for people to build an agent that can control apps, browse the web and write code on your device. Apple hasn't announced it, and there's no date yet.",
-              "he": "\"סוכן\" הוא בינה מלאכותית שלא רק מדברת: היא לוחצת, מקלידה ופותחת אפליקציות כדי לסיים משימה. Bloomberg מצאה מודעות דרושים של Apple שמחפשות אנשים לבנות סוכן שיכול להפעיל אפליקציות, לגלוש ולכתוב קוד במכשיר. Apple לא הודיעה על זה, ואין עדיין תאריך.",
-              "fr": "Un « agent », c'est une IA qui ne fait pas que parler : elle clique, tape et ouvre des applis pour finir une tâche. Bloomberg a trouvé des offres d'emploi d'Apple pour construire un agent capable de contrôler des applis, naviguer sur le web et écrire du code sur l'appareil. Apple ne l'a pas annoncé, et il n'y a pas encore de date."
-            },
-            "teen": {
-              "en": "Agents are the big trend of the year: coding tools now let several agents plan, build and test together, and Android Studio lets developers pick from over 40. Apple's job listings suggest it wants an agent built into its devices. Big question: how do you let software act for you without it doing something you didn't want?",
-              "he": "סוכנים הם הטרנד הגדול של השנה: כלי תכנות מאפשרים עכשיו לכמה סוכנים לתכנן, לבנות ולבדוק יחד, ו־Android Studio מאפשר למפתחים לבחור מתוך יותר מ־40. מודעות הדרושים של Apple מרמזות שהיא רוצה סוכן מובנה במכשירים שלה. השאלה הגדולה: איך נותנים לתוכנה לפעול בשמכם בלי שתעשה משהו שלא רציתם?",
-              "fr": "Les agents sont la grande tendance de l'année : des outils de code laissent maintenant plusieurs agents planifier, construire et tester ensemble, et Android Studio permet de choisir parmi plus de 40. Les offres d'emploi d'Apple suggèrent un agent intégré à ses appareils. Grande question : comment laisser un logiciel agir pour vous sans qu'il fasse ce que vous ne vouliez pas ?"
-            },
-            "grown": {
-              "en": "Bloomberg, reading Apple job listings, reports work on an on-device agent for app control, browsing and coding; AppleInsider reported the same, and Apple has said nothing. It fits a wider shift from chat to delegated action across GitHub Copilot, Replit and Android Studio. The hard parts are permissions, undo, and prompt injection from content the agent reads.",
-              "he": "Bloomberg, שקראה מודעות דרושים של Apple, מדווחת על עבודה על סוכן במכשיר להפעלת אפליקציות, גלישה ותכנות; גם AppleInsider דיווח על כך, ו־Apple לא אמרה דבר. זה משתלב במעבר רחב משיחה לביצוע משימות בשמכם ב־GitHub Copilot, ‏Replit ו־Android Studio. החלקים הקשים הם הרשאות, ביטול פעולות, והזרקת הוראות מתוך תוכן שהסוכן קורא.",
-              "fr": "Bloomberg, d'après des offres d'emploi d'Apple, rapporte un projet d'agent sur l'appareil pour piloter les applis, naviguer et coder ; AppleInsider dit la même chose, et Apple n'a rien annoncé. Cela s'inscrit dans le passage de la discussion à l'action déléguée chez GitHub Copilot, Replit et Android Studio. Les points difficiles : les permissions, l'annulation, et l'injection d'instructions par le contenu que l'agent lit."
-            }
-          },
-          "word": {
-            "term": { "en": "Agent", "he": "סוכן", "fr": "Agent" },
-            "means": { "en": "An AI helper that does tasks, not just answers.", "he": "עוזר בינה מלאכותית שעושה משימות, ולא רק עונה.", "fr": "Un assistant d'IA qui fait des tâches, pas seulement des réponses." }
-          },
-          "quiz": {
-            "q": { "en": "What makes an agent different from a chat helper?", "he": "מה שונה בסוכן לעומת עוזר שיחה?", "fr": "Qu'est-ce qui différencie un agent d'un assistant de discussion ?" },
-            "options": [
-              { "en": "It only tells jokes", "he": "הוא רק מספר בדיחות", "fr": "Il raconte seulement des blagues" },
-              { "en": "It is always a robot dog", "he": "הוא תמיד כלב רובוט", "fr": "C'est toujours un chien robot" },
-              { "en": "It can actually do tasks, like opening apps", "he": "הוא באמת עושה משימות, כמו לפתוח אפליקציות", "fr": "Il peut vraiment faire des tâches, comme ouvrir des applis" }
-            ],
-            "answer": 2
-          }
-        },
-        {
-          "id": "label", "art": "label",
-          "source": "https://casrai.org/news/eu-ai-act-2-december-2026-obligations-article-50",
-          "title": { "en": "In Europe, AI pictures must wear a name tag", "he": "באירופה, תמונות של בינה מלאכותית חייבות לענוד תג שם", "fr": "En Europe, les images d'IA doivent porter une étiquette" },
-          "levels": {
-            "cub": {
-              "en": "Some pictures and voices are made by computers, not people. From 2 December, in Europe, AI that makes them must add a hidden name tag that says \"a computer made this\". That way nobody gets tricked!",
-              "he": "יש תמונות וקולות שמחשב יצר, לא בן אדם. מ־2 בדצמבר, באירופה, בינה מלאכותית שיוצרת אותם צריכה להוסיף תג שם נסתר שאומר \"מחשב עשה את זה\". ככה אף אחד לא יתבלבל!",
-              "fr": "Certaines images et voix sont faites par des ordinateurs, pas par des gens. À partir du 2 décembre, en Europe, l'IA qui les fabrique doit ajouter une étiquette cachée qui dit « c'est un ordinateur qui l'a fait ». Comme ça, personne ne se fait avoir !"
-            },
-            "explorer": {
-              "en": "Europe has a big rulebook for AI called the AI Act. A new part starts on 2 December 2026: AI tools that make pictures, sound or text must mark what they make, so other computers can tell it's AI-made. New bans also start, against AI that makes hurtful fake pictures of real people.",
-              "he": "לאירופה יש ספר חוקים גדול לבינה מלאכותית שנקרא חוק הבינה המלאכותית. חלק חדש מתחיל ב־2 בדצמבר 2026: כלים שיוצרים תמונות, קול או טקסט צריכים לסמן את מה שהם יוצרים, כדי שמחשבים אחרים יזהו שזה נוצר בבינה מלאכותית. מתחילים גם איסורים חדשים על בינה מלאכותית שיוצרת תמונות מזויפות ופוגעות של אנשים אמיתיים.",
-              "fr": "L'Europe a un grand livre de règles pour l'IA appelé AI Act. Une nouvelle partie commence le 2 décembre 2026 : les outils d'IA qui font des images, du son ou du texte doivent marquer ce qu'ils créent, pour que d'autres ordinateurs sachent que c'est fait par l'IA. De nouvelles interdictions commencent aussi, contre les IA qui font de fausses images blessantes de vraies personnes."
-            },
-            "teen": {
-              "en": "Under the EU AI Act, generative AI already on the market must machine-mark its output by 2 December 2026 (think invisible watermarks or metadata). Bans start the same day on AI that makes non-consensual intimate images or child abuse material. The bigger \"high-risk\" rules were pushed back to December 2027. These details come from a compliance site, so check the EU's own pages.",
-              "he": "לפי חוק הבינה המלאכותית של האיחוד האירופי, בינה מלאכותית יוצרת שכבר בשוק צריכה לסמן את התוצרים שלה בצורה שמחשב קורא עד 2 בדצמבר 2026 (כמו סימני מים נסתרים או מטא־דאטה). באותו יום נכנסים איסורים על בינה מלאכותית שיוצרת תמונות אינטימיות בלי הסכמה או חומר של פגיעה בילדים. הכללים הגדולים של \"סיכון גבוה\" נדחו לדצמבר 2027. הפרטים מגיעים מאתר ציות, אז כדאי לבדוק באתר של האיחוד.",
-              "fr": "Selon l'AI Act européen, l'IA générative déjà sur le marché doit marquer ses productions de façon lisible par machine d'ici le 2 décembre 2026 (filigranes invisibles ou métadonnées). Le même jour commencent des interdictions sur l'IA qui crée des images intimes sans consentement ou des contenus d'abus sur enfants. Les grandes règles « à haut risque » sont repoussées à décembre 2027. Ces détails viennent d'un site de conformité : vérifiez sur les pages de l'UE."
-            },
-            "grown": {
-              "en": "Reported: from 2 December 2026, Article 50(2) machine-readable marking applies to generative systems placed on the EU market before 2 August 2026, alongside new Article 5 prohibitions on AI generating non-consensual intimate imagery or CSAM; Annex III high-risk obligations moved to 2 December 2027 via the Digital Omnibus. Sources are secondary, so confirm dates with the Commission before acting.",
-              "he": "דיווח: מ־2 בדצמבר 2026, חובת הסימון הקריא למכונה לפי סעיף 50(2) חלה על מערכות יוצרות שהוצבו בשוק האירופי לפני 2 באוגוסט 2026, לצד איסורים חדשים לפי סעיף 5 על בינה מלאכותית שיוצרת תמונות אינטימיות בלי הסכמה או חומר פגיעה בילדים; חובות הסיכון הגבוה של נספח III נדחו ל־2 בדצמבר 2027 דרך ה־Digital Omnibus. המקורות משניים, אז כדאי לאמת את התאריכים מול הנציבות לפני שפועלים.",
-              "fr": "Rapporté : à partir du 2 décembre 2026, le marquage lisible par machine de l'article 50(2) s'applique aux systèmes génératifs mis sur le marché de l'UE avant le 2 août 2026, avec de nouvelles interdictions de l'article 5 sur l'IA générant des images intimes non consenties ou des contenus pédocriminels ; les obligations « haut risque » de l'annexe III passent au 2 décembre 2027 via l'Omnibus numérique. Sources secondaires : confirmez les dates auprès de la Commission avant d'agir."
-            }
-          },
-          "word": {
-            "term": { "en": "Watermark", "he": "סימן מים", "fr": "Filigrane" },
-            "means": { "en": "A hidden mark that shows where something came from.", "he": "סימן נסתר שמראה מאיפה משהו הגיע.", "fr": "Une marque cachée qui montre d'où vient quelque chose." }
-          },
-          "quiz": {
-            "q": { "en": "Why add a hidden tag to AI pictures?", "he": "למה להוסיף תג נסתר לתמונות של בינה מלאכותית?", "fr": "Pourquoi ajouter une étiquette cachée aux images d'IA ?" },
-            "options": [
-              { "en": "So people aren't tricked into thinking they're real", "he": "כדי שאנשים לא יחשבו בטעות שהן אמיתיות", "fr": "Pour que personne ne croie qu'elles sont vraies" },
-              { "en": "To make them load faster", "he": "כדי שייטענו מהר יותר", "fr": "Pour qu'elles chargent plus vite" },
-              { "en": "So cats can read them", "he": "כדי שחתולים יוכלו לקרוא אותן", "fr": "Pour que les chats puissent les lire" }
-            ],
-            "answer": 0
-          }
-        }
-      ]
+     "id": "stock",
+     "art": "stock",
+     "source": "https://www.anthropic.com/news/anthropic-prices-initial-public-offering",
+     "title": {
+      "en": "Claude's company now sells tiny pieces of itself",
+      "he": "החברה של Claude מוכרת עכשיו חתיכות קטנות של עצמה",
+      "fr": "L'entreprise de Claude vend maintenant de petits morceaux d'elle-même"
+     },
+     "levels": {
+      "cub": {
+       "en": "Anthropic is the company that made Claude, a computer helper that can talk and write. This week anyone grown-up can buy a tiny piece of the company, called a share. It's like buying one slice of a giant pizza!",
+       "he": "Anthropic היא החברה שבנתה את Claude, עוזר מחשב שיודע לדבר ולכתוב. השבוע כל מבוגר יכול לקנות חתיכה קטנטנה של החברה, שנקראת מניה. זה כמו לקנות משולש אחד מפיצה ענקית!",
+       "fr": "Anthropic est l'entreprise qui a créé Claude, un assistant d'ordinateur qui sait parler et écrire. Cette semaine, les grandes personnes peuvent acheter un tout petit morceau de l'entreprise, qu'on appelle une action. C'est comme acheter une part d'une pizza géante !"
+      },
+      "explorer": {
+       "en": "When a company \"goes public\", it starts selling shares on a stock market, a big shop for pieces of companies. Anthropic, which makes Claude, did this on 19 November. Each share cost $83 at first. People buy shares hoping the company grows, so their piece is worth more later. It can also go down!",
+       "he": "כשחברה \"נכנסת לבורסה\", היא מתחילה למכור מניות בשוק המניות, חנות גדולה לחתיכות של חברות. Anthropic, שבונה את Claude, עשתה את זה ב־19 בנובמבר. כל מניה עלתה בהתחלה 83 דולר. אנשים קונים מניות בתקווה שהחברה תגדל והחתיכה שלהם תהיה שווה יותר. זה יכול גם לרדת!",
+       "fr": "Quand une entreprise « entre en Bourse », elle commence à vendre des actions sur un marché, une grande boutique de morceaux d'entreprises. Anthropic, qui fait Claude, l'a fait le 19 novembre. Au début, une action coûtait 83 dollars. Les gens achètent en espérant que l'entreprise grandisse et que leur morceau vaille plus. Ça peut aussi baisser !"
+      },
+      "teen": {
+       "en": "Anthropic listed on Nasdaq as ANT at $83 a share and raised about $79 billion to pay for the huge computers AI needs. The price jumped 17% on day one, then dropped about 10% the next day. That swing is normal for new stocks: buyers are guessing how big a company will get, and guesses change fast.",
+       "he": "Anthropic נכנסה לנאסד\"ק בסימול ANT ב־83 דולר למניה וגייסה כ־79 מיליארד דולר כדי לממן את המחשבים הענקיים שבינה מלאכותית צריכה. המחיר קפץ ב־17% ביום הראשון, ואז ירד בערך 10% למחרת. תנודה כזו רגילה במניות חדשות: הקונים מנחשים כמה החברה תגדל, והניחושים משתנים מהר.",
+       "fr": "Anthropic est cotée au Nasdaq sous le nom ANT à 83 dollars l'action et a levé environ 79 milliards de dollars pour payer les énormes ordinateurs dont l'IA a besoin. Le prix a bondi de 17 % le premier jour, puis a baissé d'environ 10 % le lendemain. C'est normal pour une nouvelle action : les acheteurs devinent jusqu'où l'entreprise grandira, et les paris changent vite."
+      },
+      "grown": {
+       "en": "Anthropic's IPO priced at $83, above its $70–78 range, valuing it near $1.5 trillion fully diluted, and raised about $79 billion. Revenue for the first nine months of 2026 was $33.2 billion, so investors are paying roughly 26 times annualised revenue: a bet that very fast growth continues. Not investment advice, and Soycatory is built with Claude, so read that with care.",
+       "he": "ההנפקה של Anthropic תומחרה ב־83 דולר, מעל הטווח של 70–78, בשווי של כ־1.5 טריליון דולר בדילול מלא, וגייסה כ־79 מיליארד דולר. ההכנסות בתשעת החודשים הראשונים של 2026 היו 33.2 מיליארד דולר, כך שהמשקיעים משלמים בערך פי 26 מההכנסה השנתית: הימור שהצמיחה המהירה תימשך. זה לא ייעוץ השקעות, ו־Soycatory נבנית עם Claude, אז קראו בזהירות.",
+       "fr": "L'introduction en Bourse d'Anthropic s'est faite à 83 dollars, au-dessus de la fourchette de 70–78, pour une valeur d'environ 1 500 milliards de dollars entièrement diluée, et a levé environ 79 milliards. Le chiffre d'affaires des neuf premiers mois de 2026 était de 33,2 milliards : les investisseurs paient environ 26 fois le revenu annualisé, en pariant que la croissance rapide continue. Ce n'est pas un conseil d'investissement, et Soycatory est fait avec Claude : lisez avec prudence."
+      },
+      "owner": {
+       "en": "Anthropic, the company behind the Claude assistant, started selling its shares to the public on 19 November at $83 each. That gave the company about $79 billion to spend, mostly on the giant computers AI runs on. The price jumped on day one and dipped the next day, which is normal for a new stock. In short: people are betting that AI keeps growing fast, and bets can go either way. Soycatory is built with Claude, so take our view with that in mind.",
+       "he": "Anthropic, החברה שמאחורי העוזר Claude, התחילה למכור את המניות שלה לציבור ב־19 בנובמבר ב־83 דולר למניה. כך היא קיבלה כ־79 מיליארד דולר, בעיקר בשביל המחשבים הענקיים שבינה מלאכותית רצה עליהם. המחיר קפץ ביום הראשון וירד קצת למחרת, וזה רגיל במניה חדשה. בקיצור: אנשים מהמרים שבינה מלאכותית תמשיך לגדול מהר, והימור יכול ללכת לשני הכיוונים. Soycatory נבנית עם Claude, אז קחו את הדעה שלנו בחשבון.",
+       "fr": "Anthropic, l'entreprise derrière l'assistant Claude, a commencé à vendre ses actions au public le 19 novembre, à 83 dollars l'une. Elle a ainsi obtenu environ 79 milliards de dollars, surtout pour les ordinateurs géants sur lesquels tourne l'IA. Le prix a bondi le premier jour puis baissé le lendemain, ce qui est normal pour une nouvelle action. En bref : les gens parient que l'IA va continuer à grandir vite, et un pari peut tourner dans les deux sens. Soycatory est fait avec Claude, gardez-le en tête."
+      }
+     },
+     "word": {
+      "term": {
+       "en": "Share",
+       "he": "מניה",
+       "fr": "Action"
+      },
+      "means": {
+       "en": "A tiny piece of a company that you can own.",
+       "he": "חתיכה קטנה של חברה שאפשר להיות הבעלים שלה.",
+       "fr": "Un tout petit morceau d'une entreprise que l'on peut posséder."
+      }
+     },
+     "quiz": {
+      "q": {
+       "en": "What is a share?",
+       "he": "מה זו מניה?",
+       "fr": "Qu'est-ce qu'une action ?"
+      },
+      "options": [
+       {
+        "en": "A tiny piece of a company",
+        "he": "חתיכה קטנה של חברה",
+        "fr": "Un petit morceau d'entreprise"
+       },
+       {
+        "en": "A kind of cat food",
+        "he": "סוג של אוכל לחתולים",
+        "fr": "Une sorte de croquettes"
+       },
+       {
+        "en": "A computer game",
+        "he": "משחק מחשב",
+        "fr": "Un jeu vidéo"
+       }
+      ],
+      "answer": 0
+     },
+     "talk": {
+      "en": "Ask: if you owned a tiny piece of a lemonade stand, what would make your piece worth more?",
+      "he": "שאלו: אם הייתה לכם חתיכה קטנה מדוכן לימונדה, מה היה גורם לה להיות שווה יותר?",
+      "fr": "Demandez : si tu possédais un petit morceau d'un stand de limonade, qu'est-ce qui le rendrait plus précieux ?"
+     },
+     "sources": [
+      {
+       "name": "Anthropic",
+       "url": "https://www.anthropic.com/news/anthropic-prices-initial-public-offering",
+       "tuna": 5,
+       "why": {
+        "en": "The company's own announcement: the best place for its own deal numbers, but it is talking about itself.",
+        "he": "ההודעה של החברה עצמה: המקום הכי טוב למספרים של העסקה שלה, אבל היא מדברת על עצמה.",
+        "fr": "L'annonce de l'entreprise elle-même : la meilleure source pour ses propres chiffres, mais elle parle d'elle."
+       }
+      },
+      {
+       "name": "Fortune",
+       "url": "https://fortune.com/2026/11/18/anthropic-prices-ipo-83-per-share-1-5-trillion/",
+       "tuna": 4,
+       "why": {
+        "en": "A big business magazine with editors who check facts.",
+        "he": "מגזין עסקים גדול עם עורכים שבודקים עובדות.",
+        "fr": "Un grand magazine économique avec des rédacteurs qui vérifient."
+       }
+      },
+      {
+       "name": "StockTitan",
+       "url": "https://www.stocktitan.net/articles/anthropic-ipo-live-ant-first-trading-day-2026",
+       "tuna": 2,
+       "why": {
+        "en": "A market news site that collects reports quickly; good for prices, less careful about checking.",
+        "he": "אתר חדשות שוק שאוסף דיווחים מהר; טוב למחירים, פחות זהיר בבדיקה.",
+        "fr": "Un site d'actualité boursière rapide ; bien pour les prix, moins prudent pour vérifier."
+       }
+      }
+     ],
+     "facts": [
+      {
+       "kind": "fact",
+       "text": {
+        "en": "Anthropic priced its shares at $83 and they began trading on Nasdaq as ANT on 19 November.",
+        "he": "Anthropic תמחרה את המניות ב־83 דולר והן החלו להיסחר בנאסד\"ק בסימול ANT ב־19 בנובמבר.",
+        "fr": "Anthropic a fixé le prix de ses actions à 83 dollars ; elles s'échangent au Nasdaq sous ANT depuis le 19 novembre."
+       },
+       "src": [
+        0,
+        1
+       ]
+      },
+      {
+       "kind": "fact",
+       "text": {
+        "en": "The company raised about $79 billion.",
+        "he": "החברה גייסה כ־79 מיליארד דולר.",
+        "fr": "L'entreprise a levé environ 79 milliards de dollars."
+       },
+       "src": [
+        0,
+        1
+       ]
+      },
+      {
+       "kind": "fact",
+       "text": {
+        "en": "The shares closed their first day 17% above $83.",
+        "he": "המניות סגרו את היום הראשון 17% מעל 83 דולר.",
+        "fr": "Les actions ont fini leur premier jour 17 % au-dessus de 83 dollars."
+       },
+       "src": [
+        2
+       ]
+      },
+      {
+       "kind": "inference",
+       "text": {
+        "en": "Buyers are paying a lot because they expect the company to keep growing very fast.",
+        "he": "הקונים משלמים הרבה כי הם מצפים שהחברה תמשיך לגדול מהר מאוד.",
+        "fr": "Les acheteurs paient cher parce qu'ils s'attendent à ce que l'entreprise continue de grandir très vite."
+       },
+       "src": null
+      },
+      {
+       "kind": "assumption",
+       "text": {
+        "en": "The price will keep jumping up and down for a while. Nobody knows where it ends up.",
+        "he": "המחיר ימשיך לקפוץ למעלה ולמטה עוד זמן מה. אף אחד לא יודע איפה הוא ייגמר.",
+        "fr": "Le prix va encore monter et descendre un moment. Personne ne sait où il finira."
+       },
+       "src": null
+      }
+     ]
+    },
+    {
+     "id": "chips",
+     "art": "chip",
+     "source": "https://www.cnbc.com/2026/11/17/nvidia-nvda-earnings-report-q3-2027.html",
+     "title": {
+      "en": "AI is hungry, and it eats chips",
+      "he": "הבינה המלאכותית רעבה, והיא אוכלת שבבים",
+      "fr": "L'IA a faim, et elle mange des puces"
+     },
+     "levels": {
+      "cub": {
+       "en": "A chip is a tiny flat brain inside a computer. AI needs lots and lots of them, like a cat needs lots of naps. A company called Nvidia makes these chips, and this week it said it sold more than ever before!",
+       "he": "שבב הוא מוח קטנטן ושטוח בתוך מחשב. בינה מלאכותית צריכה המון המון כאלה, כמו שחתול צריך המון תנומות. חברה בשם Nvidia מייצרת את השבבים האלה, והשבוע היא סיפרה שמכרה יותר מאי פעם!",
+       "fr": "Une puce, c'est un minuscule cerveau tout plat dans un ordinateur. L'IA en a besoin de plein, comme un chat a besoin de plein de siestes. Une entreprise appelée Nvidia fabrique ces puces, et cette semaine elle a dit en avoir vendu plus que jamais !"
+      },
+      "explorer": {
+       "en": "To learn, an AI reads a huge amount of text and pictures, and that takes millions of fast math steps every second. Special chips do that math. Nvidia sold $107.6 billion of chips for big computer buildings (data centers) in just three months, about twice as much as a year ago.",
+       "he": "כדי ללמוד, בינה מלאכותית קוראת כמות עצומה של טקסטים ותמונות, וזה דורש מיליוני צעדי חשבון מהירים בכל שנייה. שבבים מיוחדים עושים את החשבון הזה. Nvidia מכרה שבבים למבני מחשבים גדולים (מרכזי נתונים) ב־107.6 מיליארד דולר בשלושה חודשים בלבד, בערך פי שניים משנה שעברה.",
+       "fr": "Pour apprendre, une IA lit une énorme quantité de textes et d'images, ce qui demande des millions de calculs rapides chaque seconde. Des puces spéciales font ces calculs. Nvidia a vendu pour 107,6 milliards de dollars de puces pour de grands bâtiments d'ordinateurs (centres de données) en seulement trois mois, environ deux fois plus qu'il y a un an."
+      },
+      "teen": {
+       "en": "AI chips (GPUs) are good at doing many small calculations at the same time, which is exactly what training and running AI models needs. Nvidia's data center revenue hit a record $107.6 billion in a quarter, up 110% in a year. Most of the money flowing into AI right now ends up paying for this hardware.",
+       "he": "שבבי בינה מלאכותית (GPU) טובים בלעשות הרבה חישובים קטנים בבת אחת, וזה בדיוק מה שאימון והרצה של מודלים צריכים. ההכנסות של Nvidia ממרכזי נתונים הגיעו לשיא של 107.6 מיליארד דולר ברבעון, עלייה של 110% בשנה. רוב הכסף שזורם עכשיו לבינה מלאכותית בסוף משלם על החומרה הזו.",
+       "fr": "Les puces d'IA (GPU) savent faire plein de petits calculs en même temps, exactement ce qu'il faut pour entraîner et faire tourner des modèles. Le chiffre d'affaires des centres de données de Nvidia a atteint un record de 107,6 milliards de dollars sur un trimestre, +110 % en un an. La plupart de l'argent qui entre dans l'IA finit par payer ce matériel."
+      },
+      "grown": {
+       "en": "Nvidia reported record data center revenue of $107.6 billion, up 110% year on year and above analyst estimates. Parallel matrix maths makes GPUs the bottleneck for training and inference, so capital raised by AI labs (including Anthropic's IPO money) largely flows to chipmakers and cloud providers. Watch whether demand holds as export rules tighten.",
+       "he": "Nvidia דיווחה על שיא של 107.6 מיליארד דולר בהכנסות ממרכזי נתונים, עלייה של 110% משנה לשנה, מעל הערכות האנליסטים. חישובי מטריצות מקביליים הופכים את ה־GPU לצוואר הבקבוק באימון ובהרצה, ולכן הכסף שמעבדות בינה מלאכותית מגייסות (כולל כסף ההנפקה של Anthropic) זורם בעיקר ליצרני שבבים ולספקי ענן. כדאי לעקוב אם הביקוש יחזיק כשכללי הייצוא מחמירים.",
+       "fr": "Nvidia a annoncé un record de 107,6 milliards de dollars de revenus centres de données, +110 % sur un an, au-dessus des attentes. Le calcul matriciel parallèle fait des GPU le goulot d'étranglement de l'entraînement et de l'inférence : l'argent levé par les labos d'IA (dont celui de l'introduction d'Anthropic) va surtout aux fabricants de puces et aux clouds. À suivre : la demande tiendra-t-elle avec des règles d'exportation plus strictes ?"
+      },
+      "owner": {
+       "en": "Every AI answer is millions of tiny sums done at once. Special computer chips do those sums, and Nvidia makes most of them. It just sold a record $107.6 billion of chips for data centers in three months, double last year. That tells you where the AI money really goes: into hardware, electricity and buildings full of computers.",
+       "he": "כל תשובה של בינה מלאכותית היא מיליוני חישובים קטנים בבת אחת. שבבי מחשב מיוחדים עושים את החישובים האלה, ו־Nvidia מייצרת את רובם. היא מכרה עכשיו שבבים למרכזי נתונים בסכום שיא של 107.6 מיליארד דולר בשלושה חודשים, פי שניים משנה שעברה. זה מראה לאן הכסף של הבינה המלאכותית באמת הולך: לחומרה, לחשמל ולבניינים מלאים מחשבים.",
+       "fr": "Chaque réponse d'IA, ce sont des millions de petits calculs faits en même temps. Des puces spéciales font ces calculs, et Nvidia en fabrique la plupart. Elle vient de vendre un record de 107,6 milliards de dollars de puces pour centres de données en trois mois, le double de l'an dernier. Ça montre où va vraiment l'argent de l'IA : dans le matériel, l'électricité et des bâtiments remplis d'ordinateurs."
+      }
+     },
+     "word": {
+      "term": {
+       "en": "Chip",
+       "he": "שבב",
+       "fr": "Puce"
+      },
+      "means": {
+       "en": "A tiny flat piece inside a computer that does the thinking math.",
+       "he": "חתיכה קטנה ושטוחה בתוך מחשב שעושה את החשבון של החשיבה.",
+       "fr": "Un petit morceau plat dans l'ordinateur qui fait les calculs pour « penser »."
+      }
+     },
+     "quiz": {
+      "q": {
+       "en": "Why does AI need so many chips?",
+       "he": "למה בינה מלאכותית צריכה כל כך הרבה שבבים?",
+       "fr": "Pourquoi l'IA a-t-elle besoin d'autant de puces ?"
+      },
+      "options": [
+       {
+        "en": "To do lots of math very fast",
+        "he": "כדי לעשות המון חשבון מהר מאוד",
+        "fr": "Pour faire beaucoup de calculs très vite"
+       },
+       {
+        "en": "To look shiny",
+        "he": "כדי להיראות מבריקה",
+        "fr": "Pour briller"
+       },
+       {
+        "en": "To keep the computer warm",
+        "he": "כדי לחמם את המחשב",
+        "fr": "Pour garder l'ordinateur au chaud"
+       }
+      ],
+      "answer": 0
+     },
+     "talk": {
+      "en": "Ask: why might a computer that thinks need more electricity than one that just plays videos?",
+      "he": "שאלו: למה מחשב שחושב צריך יותר חשמל ממחשב שרק מנגן סרטונים?",
+      "fr": "Demandez : pourquoi un ordinateur qui réfléchit aurait-il besoin de plus d'électricité qu'un ordinateur qui passe des vidéos ?"
+     },
+     "sources": [
+      {
+       "name": "CNBC",
+       "url": "https://www.cnbc.com/2026/11/17/nvidia-nvda-earnings-report-q3-2027.html",
+       "tuna": 4,
+       "why": {
+        "en": "A large business news channel that reports company results the day they come out.",
+        "he": "ערוץ חדשות עסקים גדול שמדווח על תוצאות חברות ביום שהן יוצאות.",
+        "fr": "Une grande chaîne d'info économique qui publie les résultats le jour même."
+       }
+      }
+     ],
+     "facts": [
+      {
+       "kind": "fact",
+       "text": {
+        "en": "Nvidia sold $107.6 billion of data center chips in three months, 110% more than a year before.",
+        "he": "Nvidia מכרה שבבים למרכזי נתונים ב־107.6 מיליארד דולר בשלושה חודשים, 110% יותר משנה קודם.",
+        "fr": "Nvidia a vendu pour 107,6 milliards de dollars de puces pour centres de données en trois mois, 110 % de plus qu'un an avant."
+       },
+       "src": [
+        0
+       ]
+      },
+      {
+       "kind": "inference",
+       "text": {
+        "en": "Most of the money going into AI ends up paying for chips and computers.",
+        "he": "רוב הכסף שנכנס לבינה מלאכותית בסוף משלם על שבבים ומחשבים.",
+        "fr": "La plupart de l'argent investi dans l'IA finit par payer des puces et des ordinateurs."
+       },
+       "src": null
+      },
+      {
+       "kind": "assumption",
+       "text": {
+        "en": "Demand will stay this strong next year. New rules or cheaper chips could change that.",
+        "he": "הביקוש יישאר חזק כזה גם בשנה הבאה. כללים חדשים או שבבים זולים יותר יכולים לשנות את זה.",
+        "fr": "La demande restera aussi forte l'an prochain. De nouvelles règles ou des puces moins chères pourraient changer ça."
+       },
+       "src": null
+      }
+     ]
+    },
+    {
+     "id": "border",
+     "art": "border",
+     "source": "https://www.bloomberg.com/news/articles/2026-11-16/us-moves-to-limit-remote-access-to-advanced-ai-chips",
+     "title": {
+      "en": "Countries argue over who gets the best chips",
+      "he": "מדינות מתווכחות מי יקבל את השבבים הכי טובים",
+      "fr": "Les pays se disputent les meilleures puces"
+     },
+     "levels": {
+      "cub": {
+       "en": "Some countries are worried about who gets the strongest AI chips, like kids arguing over the best toy. America made new rules about where these chips can go, and Nvidia stopped sending them to China.",
+       "he": "יש מדינות שדואגות מי יקבל את שבבי הבינה המלאכותית הכי חזקים, כמו ילדים שרבים על הצעצוע הכי טוב. אמריקה קבעה כללים חדשים לאן השבבים יכולים להגיע, ו־Nvidia הפסיקה לשלוח אותם לסין.",
+       "fr": "Certains pays s'inquiètent de qui reçoit les puces d'IA les plus puissantes, comme des enfants qui se disputent le meilleur jouet. L'Amérique a fait de nouvelles règles sur l'endroit où ces puces peuvent aller, et Nvidia a arrêté de les envoyer en Chine."
+      },
+      "explorer": {
+       "en": "The United States doesn't want China to use America's best AI chips. Some companies tried a trick: renting computers with those chips in other countries. Now big computer buildings in five countries (Singapore, Malaysia, Thailand, Indonesia and Brazil) need special permission to get them.",
+       "he": "ארצות הברית לא רוצה שסין תשתמש בשבבי הבינה המלאכותית הכי טובים של אמריקה. כמה חברות ניסו טריק: לשכור מחשבים עם השבבים האלה במדינות אחרות. עכשיו מבני מחשבים גדולים בחמש מדינות (סינגפור, מלזיה, תאילנד, אינדונזיה וברזיל) צריכים אישור מיוחד כדי לקבל אותם.",
+       "fr": "Les États-Unis ne veulent pas que la Chine utilise leurs meilleures puces d'IA. Certaines entreprises ont essayé une astuce : louer des ordinateurs avec ces puces dans d'autres pays. Maintenant, les grands bâtiments d'ordinateurs de cinq pays (Singapour, Malaisie, Thaïlande, Indonésie et Brésil) ont besoin d'une autorisation spéciale pour les recevoir."
+      },
+      "teen": {
+       "en": "AI chips are treated like strategic resources, a bit like oil used to be. The US now requires a licence before advanced chips go to data centers in five countries, to close the \"rent it abroad\" loophole. Nvidia's interim CEO said it no longer ships its licensed data center chips to China, giving up about $2.4 billion a quarter.",
+       "he": "מתייחסים לשבבי בינה מלאכותית כמו למשאב אסטרטגי, קצת כמו שפעם התייחסו לנפט. ארצות הברית דורשת עכשיו רישיון לפני ששבבים מתקדמים מגיעים למרכזי נתונים בחמש מדינות, כדי לסגור את פרצת \"שוכרים בחו\"ל\". המנכ\"לית הזמנית של Nvidia אמרה שהחברה כבר לא שולחת לסין את שבבי מרכזי הנתונים שקיבלו רישיון, ומוותרת על כ־2.4 מיליארד דולר ברבעון.",
+       "fr": "Les puces d'IA sont traitées comme une ressource stratégique, un peu comme le pétrole autrefois. Les États-Unis exigent maintenant une licence avant d'envoyer des puces avancées vers les centres de données de cinq pays, pour fermer la faille « louer à l'étranger ». La directrice générale par intérim de Nvidia a dit ne plus envoyer ses puces sous licence en Chine, soit environ 2,4 milliards de dollars par trimestre en moins."
+      },
+      "grown": {
+       "en": "A US Commerce interim rule requires licences for advanced AI chips going to data centers in Singapore, Malaysia, Thailand, Indonesia and Brazil, targeting remote access by Chinese firms. Nvidia stopped shipping licensed Hopper data center products to China and excluded them from guidance; analysts trimmed 2027–28 estimates. The trade-off: national security goals versus Southeast Asia's data center boom.",
+       "he": "תקנת ביניים של משרד המסחר האמריקאי דורשת רישיון לשבבי בינה מלאכותית מתקדמים שמגיעים למרכזי נתונים בסינגפור, מלזיה, תאילנד, אינדונזיה וברזיל, ומכוונת לגישה מרחוק של חברות סיניות. Nvidia הפסיקה לשלוח לסין מוצרי Hopper ברישיון והוציאה אותם מהתחזית; אנליסטים הורידו את ההערכות ל־2027–28. הדילמה: ביטחון לאומי מול תנופת מרכזי הנתונים בדרום־מזרח אסיה.",
+       "fr": "Une règle provisoire du ministère américain du Commerce impose une licence pour les puces d'IA avancées destinées aux centres de données de Singapour, Malaisie, Thaïlande, Indonésie et Brésil, pour viser l'accès à distance par des entreprises chinoises. Nvidia a cessé d'expédier ses produits Hopper sous licence vers la Chine et les a retirés de ses prévisions ; des analystes ont réduit leurs estimations 2027–28. L'arbitrage : sécurité nationale contre essor des centres de données en Asie du Sud-Est."
+      },
+      "owner": {
+       "en": "The US treats top AI chips like a strategic resource and does not want China to get them. Some firms rented chips in other countries instead, so now data centers in five countries need a US licence first, and Nvidia has stopped shipping these chips to China. It is the same story as oil or steel in the past: who controls the key material gets power.",
+       "he": "ארצות הברית מתייחסת לשבבי בינה מלאכותית מתקדמים כמו למשאב אסטרטגי ולא רוצה שסין תקבל אותם. כמה חברות שכרו במקום זה שבבים במדינות אחרות, אז עכשיו מרכזי נתונים בחמש מדינות צריכים קודם רישיון אמריקאי, ו־Nvidia הפסיקה לשלוח את השבבים האלה לסין. זה אותו סיפור כמו נפט או פלדה בעבר: מי ששולט בחומר החשוב מקבל כוח.",
+       "fr": "Les États-Unis traitent les meilleures puces d'IA comme une ressource stratégique et ne veulent pas que la Chine les obtienne. Certaines entreprises louaient plutôt des puces dans d'autres pays ; désormais, les centres de données de cinq pays ont d'abord besoin d'une licence américaine, et Nvidia a cessé d'envoyer ces puces en Chine. C'est la même histoire que le pétrole ou l'acier autrefois : qui contrôle la matière clé a du pouvoir."
+      }
+     },
+     "word": {
+      "term": {
+       "en": "Licence",
+       "he": "רישיון",
+       "fr": "Licence"
+      },
+      "means": {
+       "en": "A permission slip from the government to do something.",
+       "he": "אישור מהממשלה לעשות משהו.",
+       "fr": "Une autorisation du gouvernement pour faire quelque chose."
+      }
+     },
+     "quiz": {
+      "q": {
+       "en": "What trick were some companies using?",
+       "he": "באיזה טריק השתמשו כמה חברות?",
+       "fr": "Quelle astuce certaines entreprises utilisaient-elles ?"
+      },
+      "options": [
+       {
+        "en": "Hiding chips in cat toys",
+        "he": "להחביא שבבים בצעצועים של חתולים",
+        "fr": "Cacher des puces dans des jouets pour chats"
+       },
+       {
+        "en": "Renting computers with the chips in other countries",
+        "he": "לשכור מחשבים עם השבבים במדינות אחרות",
+        "fr": "Louer des ordinateurs avec ces puces dans d'autres pays"
+       },
+       {
+        "en": "Drawing the chips by hand",
+        "he": "לצייר את השבבים ביד",
+        "fr": "Dessiner les puces à la main"
+       }
+      ],
+      "answer": 1
+     },
+     "talk": {
+      "en": "Ask: is it fair for one country to decide who can buy something? What would you do?",
+      "he": "שאלו: האם זה הוגן שמדינה אחת תחליט מי יכול לקנות משהו? מה אתם הייתם עושים?",
+      "fr": "Demandez : est-ce juste qu'un pays décide qui peut acheter quelque chose ? Toi, que ferais-tu ?"
+     },
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-16/us-moves-to-limit-remote-access-to-advanced-ai-chips",
+       "tuna": 5,
+       "why": {
+        "en": "One of the most careful business newsrooms in the world.",
+        "he": "אחד מחדרי החדשות העסקיים הזהירים בעולם.",
+        "fr": "L'une des rédactions économiques les plus rigoureuses au monde."
+       }
+      },
+      {
+       "name": "Bloomberg",
+       "url": "https://www.bloomberg.com/news/articles/2026-11-18/interim-nvidia-ceo-says-it-s-no-longer-sending-ai-chips-to-china",
+       "tuna": 5,
+       "why": {
+        "en": "One of the most careful business newsrooms in the world.",
+        "he": "אחד מחדרי החדשות העסקיים הזהירים בעולם.",
+        "fr": "L'une des rédactions économiques les plus rigoureuses au monde."
+       }
+      },
+      {
+       "name": "Al Jazeera",
+       "url": "https://www.aljazeera.com/economy/2026/11/17/us-moves-to-block-chinas-remote-access-to-ai-chips-amid-nvidia-scandal",
+       "tuna": 4,
+       "why": {
+        "en": "A large international newsroom; it has its own point of view on some topics, so compare with others.",
+        "he": "חדר חדשות בינלאומי גדול; יש לו נקודת מבט משלו בחלק מהנושאים, אז כדאי להשוות לאחרים.",
+        "fr": "Une grande rédaction internationale ; elle a son propre point de vue sur certains sujets, alors comparez."
+       }
+      },
+      {
+       "name": "CNBC",
+       "url": "https://www.cnbc.com/2026/11/18/nvidia-us-ai-chip-export-controls-data-centers-.html",
+       "tuna": 4,
+       "why": {
+        "en": "A large business news channel.",
+        "he": "ערוץ חדשות עסקים גדול.",
+        "fr": "Une grande chaîne d'info économique."
+       }
+      }
+     ],
+     "facts": [
+      {
+       "kind": "fact",
+       "text": {
+        "en": "The US now requires a licence before advanced AI chips go to data centers in Singapore, Malaysia, Thailand, Indonesia and Brazil.",
+        "he": "ארצות הברית דורשת עכשיו רישיון לפני ששבבי בינה מלאכותית מתקדמים מגיעים למרכזי נתונים בסינגפור, מלזיה, תאילנד, אינדונזיה וברזיל.",
+        "fr": "Les États-Unis exigent désormais une licence avant d'envoyer des puces d'IA avancées vers des centres de données à Singapour, en Malaisie, en Thaïlande, en Indonésie et au Brésil."
+       },
+       "src": [
+        0,
+        2,
+        3
+       ]
+      },
+      {
+       "kind": "fact",
+       "text": {
+        "en": "Nvidia's interim chief executive said it no longer ships its licensed data center chips to China.",
+        "he": "המנכ\"לית הזמנית של Nvidia אמרה שהחברה כבר לא שולחת לסין את שבבי מרכזי הנתונים שקיבלו רישיון.",
+        "fr": "La directrice générale par intérim de Nvidia a dit ne plus envoyer en Chine ses puces de centres de données sous licence."
+       },
+       "src": [
+        1
+       ]
+      },
+      {
+       "kind": "inference",
+       "text": {
+        "en": "AI chips are now treated like a precious resource, the way oil was.",
+        "he": "מתייחסים עכשיו לשבבי בינה מלאכותית כמו למשאב יקר, כמו שהתייחסו פעם לנפט.",
+        "fr": "Les puces d'IA sont maintenant traitées comme une ressource précieuse, comme le pétrole autrefois."
+       },
+       "src": null
+      },
+      {
+       "kind": "assumption",
+       "text": {
+        "en": "Other countries may make similar rules of their own.",
+        "he": "ייתכן שמדינות אחרות יקבעו כללים דומים משלהן.",
+        "fr": "D'autres pays pourraient faire des règles semblables."
+       },
+       "src": null
+      }
+     ]
+    },
+    {
+     "id": "helper",
+     "art": "helper",
+     "source": "https://bloomberg.com/news/articles/2026-11-19/apple-is-working-on-ai-agent-for-device-control-apps-browsing-and-coding",
+     "title": {
+      "en": "Phones may get a helper that does jobs for you",
+      "he": "לטלפונים אולי יהיה עוזר שעושה בשבילכם משימות",
+      "fr": "Les téléphones pourraient avoir un assistant qui fait des tâches pour vous"
+     },
+     "levels": {
+      "cub": {
+       "en": "Today you ask a phone a question and it answers. Soon some phones may also DO things for you, like open a game or find a picture. Apple seems to be building a helper like that. It's still a secret, so we're just guessing!",
+       "he": "היום שואלים את הטלפון שאלה והוא עונה. בקרוב אולי טלפונים גם יעשו דברים בשבילכם, כמו לפתוח משחק או למצוא תמונה. נראה ש־Apple בונה עוזר כזה. זה עדיין סוד, אז אנחנו רק מנחשים!",
+       "fr": "Aujourd'hui, on pose une question au téléphone et il répond. Bientôt, certains téléphones pourraient aussi FAIRE des choses pour vous, comme ouvrir un jeu ou trouver une photo. Apple semble construire un assistant comme ça. C'est encore secret, alors on devine !"
+      },
+      "explorer": {
+       "en": "An \"agent\" is an AI that doesn't just talk: it clicks, types and opens apps to finish a job. Bloomberg found Apple job ads asking for people to build an agent that can control apps, browse the web and write code on your device. Apple hasn't announced it, and there's no date yet.",
+       "he": "\"סוכן\" הוא בינה מלאכותית שלא רק מדברת: היא לוחצת, מקלידה ופותחת אפליקציות כדי לסיים משימה. Bloomberg מצאה מודעות דרושים של Apple שמחפשות אנשים לבנות סוכן שיכול להפעיל אפליקציות, לגלוש ולכתוב קוד במכשיר. Apple לא הודיעה על זה, ואין עדיין תאריך.",
+       "fr": "Un « agent », c'est une IA qui ne fait pas que parler : elle clique, tape et ouvre des applis pour finir une tâche. Bloomberg a trouvé des offres d'emploi d'Apple pour construire un agent capable de contrôler des applis, naviguer sur le web et écrire du code sur l'appareil. Apple ne l'a pas annoncé, et il n'y a pas encore de date."
+      },
+      "teen": {
+       "en": "Agents are the big trend of the year: coding tools now let several agents plan, build and test together, and Android Studio lets developers pick from over 40. Apple's job listings suggest it wants an agent built into its devices. Big question: how do you let software act for you without it doing something you didn't want?",
+       "he": "סוכנים הם הטרנד הגדול של השנה: כלי תכנות מאפשרים עכשיו לכמה סוכנים לתכנן, לבנות ולבדוק יחד, ו־Android Studio מאפשר למפתחים לבחור מתוך יותר מ־40. מודעות הדרושים של Apple מרמזות שהיא רוצה סוכן מובנה במכשירים שלה. השאלה הגדולה: איך נותנים לתוכנה לפעול בשמכם בלי שתעשה משהו שלא רציתם?",
+       "fr": "Les agents sont la grande tendance de l'année : des outils de code laissent maintenant plusieurs agents planifier, construire et tester ensemble, et Android Studio permet de choisir parmi plus de 40. Les offres d'emploi d'Apple suggèrent un agent intégré à ses appareils. Grande question : comment laisser un logiciel agir pour vous sans qu'il fasse ce que vous ne vouliez pas ?"
+      },
+      "grown": {
+       "en": "Bloomberg, reading Apple job listings, reports work on an on-device agent for app control, browsing and coding; AppleInsider reported the same, and Apple has said nothing. It fits a wider shift from chat to delegated action across GitHub Copilot, Replit and Android Studio. The hard parts are permissions, undo, and prompt injection from content the agent reads.",
+       "he": "Bloomberg, שקראה מודעות דרושים של Apple, מדווחת על עבודה על סוכן במכשיר להפעלת אפליקציות, גלישה ותכנות; גם AppleInsider דיווח על כך, ו־Apple לא אמרה דבר. זה משתלב במעבר רחב משיחה לביצוע משימות בשמכם ב־GitHub Copilot, ‏Replit ו־Android Studio. החלקים הקשים הם הרשאות, ביטול פעולות, והזרקת הוראות מתוך תוכן שהסוכן קורא.",
+       "fr": "Bloomberg, d'après des offres d'emploi d'Apple, rapporte un projet d'agent sur l'appareil pour piloter les applis, naviguer et coder ; AppleInsider dit la même chose, et Apple n'a rien annoncé. Cela s'inscrit dans le passage de la discussion à l'action déléguée chez GitHub Copilot, Replit et Android Studio. Les points difficiles : les permissions, l'annulation, et l'injection d'instructions par le contenu que l'agent lit."
+      },
+      "owner": {
+       "en": "Today's assistants mostly talk. The next step is \"agents\" that also act: open apps, fill in forms, write code. Apple is reportedly building one for its devices; we know this from its job ads, not an announcement. Useful, but the key question for families is permission: what is it allowed to do without asking you first?",
+       "he": "העוזרים של היום בעיקר מדברים. השלב הבא הוא \"סוכנים\" שגם פועלים: פותחים אפליקציות, ממלאים טפסים, כותבים קוד. לפי דיווח Apple בונה סוכן כזה למכשירים שלה; אנחנו יודעים את זה ממודעות דרושים, לא מהודעה רשמית. זה שימושי, אבל השאלה החשובה למשפחות היא הרשאות: מה מותר לו לעשות בלי לשאול אתכם קודם?",
+       "fr": "Les assistants d'aujourd'hui parlent surtout. L'étape suivante, ce sont des « agents » qui agissent aussi : ouvrir des applis, remplir des formulaires, écrire du code. Apple en construirait un pour ses appareils ; on le sait par ses offres d'emploi, pas par une annonce. Utile, mais la vraie question pour les familles, c'est la permission : qu'a-t-il le droit de faire sans vous demander ?"
+      }
+     },
+     "word": {
+      "term": {
+       "en": "Agent",
+       "he": "סוכן",
+       "fr": "Agent"
+      },
+      "means": {
+       "en": "An AI helper that does tasks, not just answers.",
+       "he": "עוזר בינה מלאכותית שעושה משימות, ולא רק עונה.",
+       "fr": "Un assistant d'IA qui fait des tâches, pas seulement des réponses."
+      }
+     },
+     "quiz": {
+      "q": {
+       "en": "What makes an agent different from a chat helper?",
+       "he": "מה שונה בסוכן לעומת עוזר שיחה?",
+       "fr": "Qu'est-ce qui différencie un agent d'un assistant de discussion ?"
+      },
+      "options": [
+       {
+        "en": "It only tells jokes",
+        "he": "הוא רק מספר בדיחות",
+        "fr": "Il raconte seulement des blagues"
+       },
+       {
+        "en": "It is always a robot dog",
+        "he": "הוא תמיד כלב רובוט",
+        "fr": "C'est toujours un chien robot"
+       },
+       {
+        "en": "It can actually do tasks, like opening apps",
+        "he": "הוא באמת עושה משימות, כמו לפתוח אפליקציות",
+        "fr": "Il peut vraiment faire des tâches, comme ouvrir des applis"
+       }
+      ],
+      "answer": 2
+     },
+     "talk": {
+      "en": "Ask: if a helper could tap buttons on your phone, which ones should it never press without asking?",
+      "he": "שאלו: אם עוזר היה יכול ללחוץ על כפתורים בטלפון, על אילו הוא אף פעם לא צריך ללחוץ בלי לשאול?",
+      "fr": "Demandez : si un assistant pouvait appuyer sur les boutons de ton téléphone, lesquels ne devrait-il jamais toucher sans demander ?"
+     },
+     "sources": [
+      {
+       "name": "Bloomberg",
+       "url": "https://bloomberg.com/news/articles/2026-11-19/apple-is-working-on-ai-agent-for-device-control-apps-browsing-and-coding",
+       "tuna": 5,
+       "why": {
+        "en": "One of the most careful business newsrooms. Here it is reading job ads, not an Apple announcement.",
+        "he": "אחד מחדרי החדשות העסקיים הזהירים. כאן הוא קורא מודעות דרושים, לא הודעה של Apple.",
+        "fr": "L'une des rédactions les plus rigoureuses. Ici, elle lit des offres d'emploi, pas une annonce d'Apple."
+       }
+      },
+      {
+       "name": "AppleInsider",
+       "url": "https://appleinsider.com/articles/26/11/19/apple-ai-agents-are-coming-to-help-you-code-browse-perform-tasks",
+       "tuna": 3,
+       "why": {
+        "en": "A site that follows Apple closely; it often repeats what bigger newsrooms found.",
+        "he": "אתר שעוקב אחרי Apple מקרוב; הוא חוזר לא פעם על מה שחדרי חדשות גדולים מצאו.",
+        "fr": "Un site qui suit Apple de près ; il reprend souvent ce que de plus grandes rédactions ont trouvé."
+       }
+      }
+     ],
+     "facts": [
+      {
+       "kind": "fact",
+       "text": {
+        "en": "Bloomberg found Apple job ads for building an agent that controls apps, browses the web and writes code.",
+        "he": "Bloomberg מצאה מודעות דרושים של Apple לבניית סוכן שמפעיל אפליקציות, גולש ברשת וכותב קוד.",
+        "fr": "Bloomberg a trouvé des offres d'emploi d'Apple pour construire un agent qui pilote les applis, navigue sur le web et écrit du code."
+       },
+       "src": [
+        0,
+        1
+       ]
+      },
+      {
+       "kind": "fact",
+       "text": {
+        "en": "Apple has not announced it.",
+        "he": "Apple לא הודיעה על זה.",
+        "fr": "Apple ne l'a pas annoncé."
+       },
+       "src": [
+        0
+       ]
+      },
+      {
+       "kind": "inference",
+       "text": {
+        "en": "Phone helpers are moving from only talking to also doing things.",
+        "he": "העוזרים בטלפון עוברים מרק לדבר לגם לעשות דברים.",
+        "fr": "Les assistants des téléphones passent de « parler » à « faire »."
+       },
+       "src": null
+      },
+      {
+       "kind": "assumption",
+       "text": {
+        "en": "A helper like this will ask before doing anything big, like paying or deleting.",
+        "he": "עוזר כזה ישאל לפני שהוא עושה משהו גדול, כמו לשלם או למחוק.",
+        "fr": "Un tel assistant demandera avant de faire quelque chose d'important, comme payer ou supprimer."
+       },
+       "src": null
+      }
+     ]
+    },
+    {
+     "id": "label",
+     "art": "label",
+     "source": "https://casrai.org/news/eu-ai-act-2-december-2026-obligations-article-50",
+     "title": {
+      "en": "In Europe, AI pictures must wear a name tag",
+      "he": "באירופה, תמונות של בינה מלאכותית חייבות לענוד תג שם",
+      "fr": "En Europe, les images d'IA doivent porter une étiquette"
+     },
+     "levels": {
+      "cub": {
+       "en": "Some pictures and voices are made by computers, not people. From 2 December, in Europe, AI that makes them must add a hidden name tag that says \"a computer made this\". That way nobody gets tricked!",
+       "he": "יש תמונות וקולות שמחשב יצר, לא בן אדם. מ־2 בדצמבר, באירופה, בינה מלאכותית שיוצרת אותם צריכה להוסיף תג שם נסתר שאומר \"מחשב עשה את זה\". ככה אף אחד לא יתבלבל!",
+       "fr": "Certaines images et voix sont faites par des ordinateurs, pas par des gens. À partir du 2 décembre, en Europe, l'IA qui les fabrique doit ajouter une étiquette cachée qui dit « c'est un ordinateur qui l'a fait ». Comme ça, personne ne se fait avoir !"
+      },
+      "explorer": {
+       "en": "Europe has a big rulebook for AI called the AI Act. A new part starts on 2 December 2026: AI tools that make pictures, sound or text must mark what they make, so other computers can tell it's AI-made. New bans also start, against AI that makes hurtful fake pictures of real people.",
+       "he": "לאירופה יש ספר חוקים גדול לבינה מלאכותית שנקרא חוק הבינה המלאכותית. חלק חדש מתחיל ב־2 בדצמבר 2026: כלים שיוצרים תמונות, קול או טקסט צריכים לסמן את מה שהם יוצרים, כדי שמחשבים אחרים יזהו שזה נוצר בבינה מלאכותית. מתחילים גם איסורים חדשים על בינה מלאכותית שיוצרת תמונות מזויפות ופוגעות של אנשים אמיתיים.",
+       "fr": "L'Europe a un grand livre de règles pour l'IA appelé AI Act. Une nouvelle partie commence le 2 décembre 2026 : les outils d'IA qui font des images, du son ou du texte doivent marquer ce qu'ils créent, pour que d'autres ordinateurs sachent que c'est fait par l'IA. De nouvelles interdictions commencent aussi, contre les IA qui font de fausses images blessantes de vraies personnes."
+      },
+      "teen": {
+       "en": "Under the EU AI Act, generative AI already on the market must machine-mark its output by 2 December 2026 (think invisible watermarks or metadata). Bans start the same day on AI that makes non-consensual intimate images or child abuse material. The bigger \"high-risk\" rules were pushed back to December 2027. These details come from a compliance site, so check the EU's own pages.",
+       "he": "לפי חוק הבינה המלאכותית של האיחוד האירופי, בינה מלאכותית יוצרת שכבר בשוק צריכה לסמן את התוצרים שלה בצורה שמחשב קורא עד 2 בדצמבר 2026 (כמו סימני מים נסתרים או מטא־דאטה). באותו יום נכנסים איסורים על בינה מלאכותית שיוצרת תמונות אינטימיות בלי הסכמה או חומר של פגיעה בילדים. הכללים הגדולים של \"סיכון גבוה\" נדחו לדצמבר 2027. הפרטים מגיעים מאתר ציות, אז כדאי לבדוק באתר של האיחוד.",
+       "fr": "Selon l'AI Act européen, l'IA générative déjà sur le marché doit marquer ses productions de façon lisible par machine d'ici le 2 décembre 2026 (filigranes invisibles ou métadonnées). Le même jour commencent des interdictions sur l'IA qui crée des images intimes sans consentement ou des contenus d'abus sur enfants. Les grandes règles « à haut risque » sont repoussées à décembre 2027. Ces détails viennent d'un site de conformité : vérifiez sur les pages de l'UE."
+      },
+      "grown": {
+       "en": "Reported: from 2 December 2026, Article 50(2) machine-readable marking applies to generative systems placed on the EU market before 2 August 2026, alongside new Article 5 prohibitions on AI generating non-consensual intimate imagery or CSAM; Annex III high-risk obligations moved to 2 December 2027 via the Digital Omnibus. Sources are secondary, so confirm dates with the Commission before acting.",
+       "he": "דיווח: מ־2 בדצמבר 2026, חובת הסימון הקריא למכונה לפי סעיף 50(2) חלה על מערכות יוצרות שהוצבו בשוק האירופי לפני 2 באוגוסט 2026, לצד איסורים חדשים לפי סעיף 5 על בינה מלאכותית שיוצרת תמונות אינטימיות בלי הסכמה או חומר פגיעה בילדים; חובות הסיכון הגבוה של נספח III נדחו ל־2 בדצמבר 2027 דרך ה־Digital Omnibus. המקורות משניים, אז כדאי לאמת את התאריכים מול הנציבות לפני שפועלים.",
+       "fr": "Rapporté : à partir du 2 décembre 2026, le marquage lisible par machine de l'article 50(2) s'applique aux systèmes génératifs mis sur le marché de l'UE avant le 2 août 2026, avec de nouvelles interdictions de l'article 5 sur l'IA générant des images intimes non consenties ou des contenus pédocriminels ; les obligations « haut risque » de l'annexe III passent au 2 décembre 2027 via l'Omnibus numérique. Sources secondaires : confirmez les dates auprès de la Commission avant d'agir."
+      },
+      "owner": {
+       "en": "AI can now make pictures, voices and text that look real. From 2 December, Europe requires AI tools to hide a machine-readable mark in what they make, so other software can tell it was AI-made. New bans also start on AI that makes harmful fake images of real people. It will not catch everything, so the old rule still helps: check who made it before you believe it.",
+       "he": "בינה מלאכותית יכולה היום ליצור תמונות, קולות וטקסטים שנראים אמיתיים. מ־2 בדצמבר אירופה דורשת מכלי בינה מלאכותית להטמיע סימון נסתר שמחשב יכול לקרוא, כדי שתוכנות אחרות יזהו שזה נוצר בבינה מלאכותית. נכנסים גם איסורים חדשים על בינה מלאכותית שיוצרת תמונות מזויפות ומזיקות של אנשים אמיתיים. זה לא יתפוס הכול, אז הכלל הישן עדיין עוזר: בודקים מי יצר משהו לפני שמאמינים לו.",
+       "fr": "L'IA peut maintenant créer des images, des voix et des textes qui ont l'air vrais. À partir du 2 décembre, l'Europe exige que les outils d'IA cachent une marque lisible par machine dans ce qu'ils créent, pour que d'autres logiciels sachent que c'est fait par l'IA. De nouvelles interdictions commencent aussi contre les IA qui fabriquent de fausses images nuisibles de vraies personnes. Ça n'attrapera pas tout, alors la vieille règle aide toujours : vérifiez qui l'a fait avant d'y croire."
+      }
+     },
+     "word": {
+      "term": {
+       "en": "Watermark",
+       "he": "סימן מים",
+       "fr": "Filigrane"
+      },
+      "means": {
+       "en": "A hidden mark that shows where something came from.",
+       "he": "סימן נסתר שמראה מאיפה משהו הגיע.",
+       "fr": "Une marque cachée qui montre d'où vient quelque chose."
+      }
+     },
+     "quiz": {
+      "q": {
+       "en": "Why add a hidden tag to AI pictures?",
+       "he": "למה להוסיף תג נסתר לתמונות של בינה מלאכותית?",
+       "fr": "Pourquoi ajouter une étiquette cachée aux images d'IA ?"
+      },
+      "options": [
+       {
+        "en": "So people aren't tricked into thinking they're real",
+        "he": "כדי שאנשים לא יחשבו בטעות שהן אמיתיות",
+        "fr": "Pour que personne ne croie qu'elles sont vraies"
+       },
+       {
+        "en": "To make them load faster",
+        "he": "כדי שייטענו מהר יותר",
+        "fr": "Pour qu'elles chargent plus vite"
+       },
+       {
+        "en": "So cats can read them",
+        "he": "כדי שחתולים יוכלו לקרוא אותן",
+        "fr": "Pour que les chats puissent les lire"
+       }
+      ],
+      "answer": 0
+     },
+     "talk": {
+      "en": "Ask: how could you tell if a funny video of a famous person is real or made by a computer?",
+      "he": "שאלו: איך אפשר לדעת אם סרטון מצחיק של אדם מפורסם הוא אמיתי או שמחשב יצר אותו?",
+      "fr": "Demandez : comment savoir si une vidéo drôle d'une célébrité est vraie ou fabriquée par un ordinateur ?"
+     },
+     "sources": [
+      {
+       "name": "European Commission",
+       "url": "https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai",
+       "tuna": 5,
+       "why": {
+        "en": "The official page of the people who wrote the law.",
+        "he": "הדף הרשמי של מי שכתבו את החוק.",
+        "fr": "La page officielle de ceux qui ont écrit la loi."
+       }
+      },
+      {
+       "name": "CASRAI",
+       "url": "https://casrai.org/news/eu-ai-act-2-december-2026-obligations-article-50",
+       "tuna": 2,
+       "why": {
+        "en": "A small site that explains rules; useful, but check the dates on the official page.",
+        "he": "אתר קטן שמסביר כללים; שימושי, אבל כדאי לבדוק את התאריכים בדף הרשמי.",
+        "fr": "Un petit site qui explique les règles ; utile, mais vérifiez les dates sur la page officielle."
+       }
+      }
+     ],
+     "facts": [
+      {
+       "kind": "fact",
+       "text": {
+        "en": "Europe's AI Act has rules that AI-made content must be marked.",
+        "he": "בחוק הבינה המלאכותית של אירופה יש כללים שתוכן שבינה מלאכותית יצרה חייב להיות מסומן.",
+        "fr": "L'AI Act européen prévoit que les contenus faits par l'IA doivent être marqués."
+       },
+       "src": [
+        0
+       ]
+      },
+      {
+       "kind": "fact",
+       "text": {
+        "en": "From 2 December 2026, AI tools already on the market must mark what they make. Only a small site says this date, so check the official page.",
+        "he": "מ־2 בדצמבר 2026 כלי בינה מלאכותית שכבר בשוק חייבים לסמן את מה שהם יוצרים. רק אתר קטן מציין את התאריך הזה, אז כדאי לבדוק בדף הרשמי.",
+        "fr": "À partir du 2 décembre 2026, les outils d'IA déjà sur le marché doivent marquer ce qu'ils créent. Seul un petit site donne cette date : vérifiez sur la page officielle."
+       },
+       "src": [
+        1
+       ]
+      },
+      {
+       "kind": "inference",
+       "text": {
+        "en": "Hidden marks help computers spot AI pictures, but people still need to check who made something.",
+        "he": "סימונים נסתרים עוזרים למחשבים לזהות תמונות של בינה מלאכותית, אבל אנשים עדיין צריכים לבדוק מי יצר משהו.",
+        "fr": "Les marques cachées aident les ordinateurs à repérer les images d'IA, mais les gens doivent toujours vérifier qui a créé quelque chose."
+       },
+       "src": null
+      },
+      {
+       "kind": "assumption",
+       "text": {
+        "en": "Other countries will copy Europe's rule.",
+        "he": "מדינות אחרות יעתיקו את הכלל של אירופה.",
+        "fr": "D'autres pays copieront la règle européenne."
+       },
+       "src": null
+      }
+     ]
     }
-  ]
+   ]
+  }
+ ]
 }
