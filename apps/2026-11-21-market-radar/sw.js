@@ -1,7 +1,7 @@
 /* Soya Market Radar service worker. Scope: this folder only. Research notes come from another address and are
    not cached here; the app keeps its own last copy so the list still shows offline.
    Bump VERSION (soyaradar-YYYYMMDDHHMMSS) whenever a cached file changes. */
-const VERSION = 'soyaradar-20261121190000';
+const VERSION = 'soyaradar-20261121200000';
 
 const PRECACHE = [
   './',
@@ -16,8 +16,6 @@ const PRECACHE = [
   'icons/radar-apple-180.png',
   'assets/soycatory-mark.jpg',
   'assets/soya-glasses.svg',
-  'assets/soya-wow.svg',
-  'assets/soya-happy.svg',
 ];
 
 self.addEventListener('install', (event) => {
