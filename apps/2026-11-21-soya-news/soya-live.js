@@ -24,6 +24,7 @@
     if (!el) return;
     var w = window.innerWidth, size = el.offsetWidth || 88, left = f > 1 ? w + 10 : Math.max(8, Math.min(w - size - 8, f * (w - size)));
     el.style.transitionDuration = (ms || 0) + 'ms'; el.style.left = left + 'px';
+    el.classList.toggle('side-r', f > 0.5); el.classList.toggle('side-l', f <= 0.5);
   }
 
   /* Walk to a spot (0 = left edge, 1 = right edge), then sit. */

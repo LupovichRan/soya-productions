@@ -6,7 +6,7 @@
   'use strict';
 
   var K = { lang: 'soya-news-lang', age: 'soya-news-age', mood: 'soya-news-mood', nick: 'soya-news-nick', seen: 'soya-news-seen', quiz: 'soya-news-quiz', rate: 'soya-news-rate', gender: 'soya-news-gender' };
-  var VERSION = '2026-11-21.4';
+  var VERSION = '2026-11-21.5';
   var LANGS = ['en', 'he', 'fr'];
   var BANDS = [{ id: 'cub', from: 6, to: 8, pose: 'bell' }, { id: 'explorer', from: 9, to: 12, pose: 'wow' }, { id: 'teen', from: 13, to: 17, pose: 'glasses' }, { id: 'grown', from: 18, to: 25, pose: 'crown' }, { id: 'owner', from: 26, to: 66, pose: 'sit' }];
   var MAX_AGE = 66;
@@ -24,6 +24,8 @@
       kindNote: { fact: 'It is written in a source you can open.', inference: 'Soya worked it out from the facts.', assumption: 'It might be wrong. Nobody knows yet.' },
       sources: 'Sources', tunaKey: 'Tuna = how much we trust a source. 5 tuna: the official source or a careful big newsroom. 1 tuna: an unknown site.', tuna: function (n) { return n + ' of 5 tuna'; }, from: 'from',
       callMe: 'I am', genders: { m: 'a boy cat', f: 'a girl cat', x: 'just a cat' },
+      hint: 'Tap something flying around me to jump to its story!',
+      stageLabel: 'Soya in his 3D newsroom, with this week\'s stories flying around him. Tap one to read it.',
       small: 'Big things, explained for small cats', live: 'Soya moves around', liveOpts: { on: 'Yes', calm: 'Calm, he sits still' },
       read: 'Soya, read it to me', stopRead: 'Stop reading', reading: 'Soya is reading...', noVoice: 'This browser cannot read aloud.', catLabel: 'Soya the cat. Tap him.',
       taps: ['Meow! That tickles.', 'Did you know cats sleep about 15 hours a day?', 'Keep reading, I am watching!', 'Purr. Good question.', 'I am a reporter, not a pillow!'],
@@ -60,6 +62,8 @@
       kindNote: { fact: 'זה כתוב במקור שאפשר לפתוח.', inference: 'סויה הסיק את זה מהעובדות.', assumption: 'זה יכול להיות לא נכון. אף אחד עוד לא יודע.' },
       sources: 'מקורות', tunaKey: 'טונה = כמה אנחנו סומכים על מקור. 5 טונות: המקור הרשמי או חדר חדשות גדול וזהיר. טונה אחת: אתר לא מוכר.', tuna: function (n) { return n + ' מתוך 5 טונות'; }, from: 'מתוך',
       callMe: 'אני', genders: { m: 'חתול', f: 'חתולה', x: 'לא משנה' },
+      hint: 'לחצו על משהו שעף סביבי כדי לקפוץ לכתבה שלו!',
+      stageLabel: 'סויה בחדר החדשות התלת־ממדי שלו, והכתבות של השבוע עפות סביבו. לוחצים על אחת כדי לקרוא.',
       small: 'דברים גדולים, מוסברים לחתולים קטנים', live: 'סויה מסתובב באתר', liveOpts: { on: 'כן', calm: 'רגוע, הוא יושב במקום' },
       read: 'סויה, תקריא לי', stopRead: 'מפסיקים להקריא', reading: 'סויה מקריא...', noVoice: 'הדפדפן הזה לא יודע להקריא בקול.', catLabel: 'סויה החתול. אפשר ללחוץ עליו.',
       taps: ['מיאו! זה מדגדג.', 'ידעתם שחתולים ישנים בערך 15 שעות ביום?', 'תמשיכו לקרוא, אני מסתכל!', 'פררר. שאלה טובה.', 'אני כתב, לא כרית!'],
@@ -96,6 +100,8 @@
       kindNote: { fact: "C'est écrit dans une source que tu peux ouvrir.", inference: "Soya l'a déduit des faits.", assumption: "Ça peut être faux. Personne ne le sait encore." },
       sources: 'Sources', tunaKey: "Thon = notre confiance dans une source. 5 thons : la source officielle ou une grande rédaction rigoureuse. 1 thon : un site inconnu.", tuna: function (n) { return n + ' thons sur 5'; }, from: 'source',
       callMe: 'Je suis', genders: { m: 'un chat', f: 'une minette', x: 'peu importe' },
+      hint: "Touche un objet qui vole autour de moi pour aller à son histoire !",
+      stageLabel: 'Soya dans sa salle de rédaction en 3D, avec les histoires de la semaine qui volent autour de lui. Touche-en une pour la lire.',
       small: 'Les grandes choses, expliquées aux petits chats', live: 'Soya se promène', liveOpts: { on: 'Oui', calm: 'Calme, il reste assis' },
       read: 'Soya, lis-moi ça', stopRead: 'Arrêter la lecture', reading: 'Soya lit...', noVoice: 'Ce navigateur ne sait pas lire à voix haute.', catLabel: 'Soya le chat. Touche-le.',
       taps: ['Miaou ! Ça chatouille.', 'Tu savais que les chats dorment environ 15 heures par jour ?', 'Continue à lire, je te regarde !', 'Ronron. Bonne question.', 'Je suis reporter, pas un coussin !'],
@@ -281,7 +287,7 @@
     var m = MOODS[mood][lang] || MOODS[mood].en, b = band();
     var html = '';
     if (notice) html += '<p class="new" role="status">' + esc(notice) + '</p>';
-    html += '<section class="hero">' + cat(MOOD_POSE[mood], 120, 'hello') + '<div class="bubble"><p>' + esc(m.hi(nick)) + '</p></div></section>' +
+    html += '<div class="stage" id="stage"></div><section class="hero">' + cat(MOOD_POSE[mood], 120, 'hello') + '<div class="bubble"><p>' + esc(m.hi(nick)) + '</p></div></section>' +
       '<p class="tagline">' + esc(t('small')) + '</p><p class="mute">' + esc(t('tagline')) + '</p>' +
       '<h1>' + esc(L(issue.headline)) + '</h1><p class="mute">' + esc(t('week')) + ' · ' + esc(L(issue.week)) + '</p>' +
       '<section class="panel age"><label for="age"><b>' + esc(ageQ()) + '</b></label>' +
@@ -321,14 +327,15 @@
     nk.addEventListener('change', function () { nick = nk.value.replace(/[<>]/g, '').trim().slice(0, 20); put(K.nick, nick); keepPlace(render); });
     app.querySelectorAll('.opt').forEach(function (bt) {
       bt.addEventListener('click', function () {
-        var qid = bt.getAttribute('data-q'), o = +bt.getAttribute('data-o');
+        var qid = bt.getAttribute('data-q'), o = +bt.getAttribute('data-o'), br = bt.getBoundingClientRect();
         quiz[issueId + '|' + qid] = o; put(K.quiz, JSON.stringify(quiz)); keepPlace(render, qid);
         var st = ((data.issues || []).filter(function (x) { return x.id === issueId; })[0] || { stories: [] }).stories.filter(function (x) { return x.id === qid; })[0], S = window.SoyaLive;
-        if (S && st) { if (o === st.quiz.answer) { S.smile(2000); S.hop(); S.say(pick(t('cheer'))); } else { S.wow(1600); S.say(pick(t('oops'))); } }
+        if (S && st) { if (o === st.quiz.answer) { S.smile(2000); S.hop(); S.say(pick(t('cheer'))); if (window.Soya3D) { window.Soya3D.burst(br.left + br.width / 2, br.top + br.height / 2); if (window.Soya3D.stage) window.Soya3D.stage.smile(); } } else { S.wow(1600); S.say(pick(t('oops'))); } }
       });
     });
     document.getElementById('notify-btn').addEventListener('click', subscribe);
     wireLive(app);
+    attach3d();
     app.querySelectorAll('[data-facts]').forEach(function (bt) { bt.addEventListener('click', function () { var id = bt.getAttribute('data-facts'); openFacts[id] = !openFacts[id]; keepPlace(render, id); var again = document.querySelector('[data-facts="' + id + '"]'); if (again) again.focus({ preventScroll: true }); }); });
     app.querySelectorAll('[data-gender]').forEach(function (bt) { bt.addEventListener('click', function () { gender = bt.getAttribute('data-gender'); put(K.gender, gender); keepPlace(render); }); });
     app.querySelectorAll('[data-rate]').forEach(function (bt) {
@@ -374,7 +381,7 @@
     S.setEnabled(live === 'on');
     if (firstPaint) {
       firstPaint = false;
-      S.init({ hello: m.hi(nick), label: t('catLabel'), onTap: function () { S.say(pick(t('taps'))); } });
+      S.init({ hello: t('hint'), label: t('catLabel'), onTap: function () { S.say(pick(t('taps'))); } });
       S.arrange(app.querySelectorAll('.story'));
     }
     if (storyWatch) storyWatch.disconnect();
@@ -403,6 +410,22 @@
     app.querySelectorAll('[data-live]').forEach(function (bt) { bt.addEventListener('click', function () { live = bt.getAttribute('data-live'); put('soya-news-live', live); keepPlace(render); }); });
   }
   var reading = '';
+  /* The 3D stage (soya-3d.js, a module that loads after this file). */
+  function attach3d() {
+    var D = window.Soya3D, host = document.getElementById('stage'); if (!D || !host || !data) return;
+    D.setEnabled(live === 'on');
+    if (D.stage) { D.stage.attach(host); return; }
+    var issue = (data.issues || [])[0]; if (!issue) return;
+    D.mount(issue.stories.map(function (x) { return { id: x.id, art: x.art }; }), {
+      label: t('stageLabel'),
+      onPick: function (id) {
+        var el = document.getElementById('s-' + id); if (!el) return;
+        el.scrollIntoView({ behavior: window.SoyaLive && window.SoyaLive.reduced() ? 'auto' : 'smooth', block: 'start' });
+      },
+      onSoya: function () { if (window.SoyaLive) window.SoyaLive.say(pick(t('taps'))); }
+    }).then(function (st) { var h = document.getElementById('stage'); if (st && h) st.attach(h); }).catch(function () {});
+  }
+  document.addEventListener('soya3d-ready', attach3d);
   document.addEventListener('soya-speak', function (e) {
     if (e.detail.speaking) return;
     document.querySelectorAll('[data-read]').forEach(function (b) { b.textContent = t('read'); }); reading = '';

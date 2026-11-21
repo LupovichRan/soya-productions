@@ -15,6 +15,10 @@ Soya the cat explains the world to kids, truthfully and in plain words, and to t
 
 "Big things, explained for small cats": the reader is the small cat. The reader chooses חתול or חתולה (a boy cat, a girl cat, or just a cat) for the Hebrew and French titles; Soya himself is always a male cat.
 
+## The 3D stage
+
+`soya-3d.js` (three.js 0.170, MIT licence, stored in `vendor/` so nothing is loaded from another site and it works offline) draws Soya's night-sky newsroom at the top: Soya sits on a round rug under twinkling stars while cartoon 3D objects for the week's stories orbit him (a chart with a coin, a chip, a globe with a ring, a phone with a paw, a picture with a name tag). He blinks, and the camera follows the finger a little. Tapping an object makes it jump and spin, Soya says wow, and the page goes to that story. A right quiz answer throws 3D confetti. It only draws while the stage is on screen and the tab is visible; for reduced motion or Calm it draws one still picture and no confetti; without WebGL the flat picture of Soya stays.
+
 ## Adding an issue
 
 Put a new issue at the top of `issues.json` (same shape as the existing one: `id` is the date, `week`, `headline`, and five `stories`, each with `title`, five `levels` (`cub`, `explorer`, `teen`, `grown`, `owner`), a `talk` question for parents, a `word`, a `quiz`, `sources` (name, url, `tuna` 1 to 5, `why`) and `facts` (each with `kind` fact, inference or assumption, `text`, and `src`, the indexes of its sources)). Write all three languages; Soya is male in Hebrew (סויה הוא, מסביר) and in French (il). Mark anything that has only one secondary source as reported. Then bump `VERSION` in `sw.js`.
