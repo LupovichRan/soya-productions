@@ -11,7 +11,8 @@
     fr: { reading: 'Soya lit', paused: 'En pause', pause: 'Pause', resume: 'Continuer', stop: 'Arrêter', settings: 'Réglages de la voix', voice: 'Voix', auto: 'La meilleure pour cette langue', speed: 'Vitesse', pitch: 'Hauteur', test: 'Essayer', sample: 'Salut, je suis Soya. Voilà ma voix.', none: 'Ce navigateur ne sait pas lire à voix haute.', close: 'Fermer', page: 'Soya, lis cette page', selection: 'Soya, lis ce que j\'ai sélectionné' }
   };
   var CODE = { en: 'en-US', he: 'he-IL', fr: 'fr-FR' };
-  function lang() { var l = (root.lang || 'en').slice(0, 2); return T[l] ? l : 'en'; }
+  var forced = null;   /* readText(text, 'en') reads one part of a two-language page in that part's language */
+  function lang() { var l = (forced || root.lang || 'en').slice(0, 2); return T[l] ? l : 'en'; }
   function t(k) { return T[lang()][k]; }
   var P = { voice: '', rate: 0.95, pitch: 1.15 };
   try { var s = JSON.parse(localStorage.getItem(KEY) || '{}'); if (typeof s.voice === 'string') P.voice = s.voice; if (s.rate > 0) P.rate = +s.rate; if (s.pitch > 0) P.pitch = +s.pitch; } catch (e) { /* defaults */ }
@@ -105,9 +106,9 @@
     });
     return out;
   }
-  function readPage() { return start(pageItems()); }
+  function readPage() { forced = null; return start(pageItems()); }
   function readSelection() { var s = String(window.getSelection ? window.getSelection() : '').trim(); return s ? start([{ el: null, text: s }]) : readPage(); }
-  function readText(text) { return start([{ el: null, text: text }]); }
+  function readText(text, l) { forced = l || null; return start([{ el: null, text: text }]); }
 
   var dlg;
   function openSettings() {
