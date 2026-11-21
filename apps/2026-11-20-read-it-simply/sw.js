@@ -1,6 +1,6 @@
 /* Read It Simply service worker. Scope: this folder only.
    Bump VERSION (readsimply-YYYYMMDDHHMMSS) whenever a cached file changes. */
-const VERSION = 'readsimply-20261121170955';
+const VERSION = 'readsimply-20261121173452';
 
 const PRECACHE = [
   './',

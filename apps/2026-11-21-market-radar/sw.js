@@ -1,7 +1,7 @@
 /* Soya Market Radar service worker. Scope: this folder only. Research notes come from another address and are
    not cached here; the app keeps its own last copy so the list still shows offline.
    Bump VERSION (soyaradar-YYYYMMDDHHMMSS) whenever a cached file changes. */
-const VERSION = 'soyaradar-20261121170955';
+const VERSION = 'soyaradar-20261121173452';
 
 const PRECACHE = [
   './',
