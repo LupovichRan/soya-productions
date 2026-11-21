@@ -55,8 +55,8 @@ textarea{min-height:150px;resize:vertical}
 .ok{color:var(--fact)}
 .links{display:flex;flex-wrap:wrap;gap:8px}
 .links a{display:inline-flex;align-items:center;min-height:var(--tap);padding:6px 14px;border-radius:999px;border:2px solid var(--line);text-decoration:none;font-weight:500}
-.watch-add{display:grid;grid-template-columns:1fr 130px;gap:8px}
-.watch-add .ghost{grid-column:1/-1}
+.watch-add{display:flex;flex-direction:column;gap:8px}
+.watch-add .ghost{align-self:flex-start}
 .watch-item{display:flex;flex-direction:column;gap:8px}
 .watch-item .row{justify-content:space-between}
 .empty{border-style:dashed}
@@ -65,3 +65,24 @@ details summary{cursor:pointer;min-height:var(--tap);display:flex;align-items:ce
 .foot img{border-radius:12px}
 .noscript{padding:16px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* Calm layout (2026-11-21): one short banner, few tabs, notes folded until "More". */
+.warn{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;padding:6px 14px}
+.linkish{min-height:var(--tap);padding:0 4px;border:0;background:none;color:inherit;font:inherit;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.foot-links{display:flex;flex-wrap:wrap;gap:4px 18px;justify-content:center;color:var(--sonar)}
+.between{justify-content:space-between}
+.intro{display:flex;gap:12px;align-items:center}
+.intro img{flex:none}
+.hint{width:100%;margin:0 0 4px;color:var(--sonar);font-size:15px}
+.snack{display:inline-flex;align-items:center;gap:8px;font-weight:600}
+.snack svg{width:40px;height:24px;flex:none}
+.snack.r5 b{color:var(--banner)}
+.note h3{font-size:19px}
+.more{align-self:flex-start}
+.detail{display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--line);padding-top:12px}
+.count{display:inline-block;min-width:1.6em;padding:0 6px;border-radius:999px;background:var(--bad);color:#2A0E0E;font-size:15px;text-align:center}
+.ladder{list-style:none;padding:0}
+.gate{align-items:flex-start}
+.gate .row{gap:12px}
+.past summary{color:var(--mute)}
+.past .note{margin-top:12px}
