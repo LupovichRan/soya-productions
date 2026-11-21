@@ -6,6 +6,20 @@
      url:    'https://…'         anywhere else */
 window.SOYA_APPS = [
   {
+    number: 9,
+    date: '2026-11-21',
+    folder: '2026-11-21-soya-news',
+    mascot: 'cat',
+    en: {
+      title: 'Soya News',
+      line: 'A weekly AI newspaper for curious kids. Soya the cat reporter tells each story at the reader\'s age, from 6 to 26, in English, Hebrew or French, with a word of the week and a quiz.'
+    },
+    he: {
+      title: 'החדשות של סויה',
+      line: 'עיתון שבועי על בינה מלאכותית לילדים סקרנים. סויה הכתב החתול מספר כל כתבה בגיל של הקורא, מ־6 עד 26, באנגלית, בעברית או בצרפתית, עם מילה של השבוע וחידון.'
+    }
+  },
+  {
     number: 8,
     date: '2026-11-20',
     folder: '2026-11-20-kafka-check',

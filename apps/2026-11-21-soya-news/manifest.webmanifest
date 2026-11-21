@@ -1,0 +1,16 @@
+{
+  "id": "soya-news",
+  "name": "Soya News",
+  "short_name": "Soya News",
+  "description": "AI news for curious kids, by Soya the cat reporter.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "theme_color": "#0F1424",
+  "background_color": "#0F1424",
+  "icons": [
+    { "src": "icons/news-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/news-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/news-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

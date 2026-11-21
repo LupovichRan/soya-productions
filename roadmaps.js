@@ -299,5 +299,44 @@ window.SOYA_ROADMAPS = /*JSON-START*/{
       ],
       "ask": "איזו הגדרה בקפקא נשכה אתכם בייצור?"
     }
+  },
+  "2026-11-21-soya-news": {
+    "slug": "soya-news",
+    "en": {
+      "works": [
+        "Five stories a week, each told at four levels from age 6 to 26",
+        "English, Hebrew and French, with a word of the week and a quiz per story",
+        "Soya's mood (curious, silly or calm) and a nickname, kept on the device",
+        "Add it to the home screen; on supported browsers it tells you when a new issue is out"
+      ],
+      "next": [
+        "Soya reads the story aloud",
+        "A picture glossary of every word so far",
+        "Real push alerts on every phone"
+      ],
+      "later": [
+        "A class mode for teachers",
+        "Readers vote on next week's topics"
+      ],
+      "ask": "What should Soya explain next?"
+    },
+    "he": {
+      "works": [
+        "חמש כתבות בשבוע, כל אחת בארבע רמות מגיל 6 עד 26",
+        "אנגלית, עברית וצרפתית, עם מילה של השבוע וחידון לכל כתבה",
+        "מצב הרוח של סויה (סקרן, מצחיק או רגוע) וכינוי, נשמרים במכשיר",
+        "מוסיפים למסך הבית; בדפדפנים שתומכים היא מודיעה כשיוצא גיליון חדש"
+      ],
+      "next": [
+        "סויה מקריא את הכתבה בקול",
+        "מילון תמונות של כל המילים עד עכשיו",
+        "התראות אמיתיות בכל טלפון"
+      ],
+      "later": [
+        "מצב כיתה למורים",
+        "הקוראים מצביעים על הנושאים של השבוע הבא"
+      ],
+      "ask": "מה סויה צריך להסביר בפעם הבאה?"
+    }
   }
 }/*JSON-END*/;
