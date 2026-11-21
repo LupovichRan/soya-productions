@@ -103,3 +103,25 @@ input[type=date],input[type=number]{max-width:100%}
 .news-item .more p{margin:0}
 .news-item .meta{margin:0}
 .news-item .useful button:disabled{opacity:.6}
+
+/* Dark theme: follows the device unless the accessibility menu sets light or dark (a11y.js) */
+@media (prefers-color-scheme:dark){
+:root:not([data-theme=light]){--paper:#0F1424;--card:#1A2135;--ink:#F2F4FA;--mute:#A9B2C8;--accent:#5EE0C1;--accent-soft:#16302C;--line:#323C5C;--line-strong:#4A5578;color-scheme:dark}
+:root:not([data-theme=light]) button,:root:not([data-theme=light]) .button,:root:not([data-theme=light]) a.button{background:var(--accent);border-color:var(--accent);color:#0F1424}
+:root:not([data-theme=light]) .button:hover{background:#7CEBD2}
+:root:not([data-theme=light]) input[type=email],:root:not([data-theme=light]) input[type=text],:root:not([data-theme=light]) textarea,:root:not([data-theme=light]) select{background:#0F1424;color:var(--ink)}
+:root:not([data-theme=light]) button.ghost.wide,:root:not([data-theme=light]) .news-item .useful button{background:var(--card);color:var(--ink);border-color:var(--line-strong)}
+:root:not([data-theme=light]) .top .ghost{background:transparent;color:#C9D0DA;border-color:#334155}
+:root:not([data-theme=light]) .banner{background:#3A2E12;color:#FFE6A8;border-color:#6B5520}
+:root:not([data-theme=light]) .banner.soft{background:#1E2746;color:#D6DEFF;border-color:#34406E}
+:root:not([data-theme=light]) .banner.ok{background:#12332C;color:#BFF5E6;border-color:#245C50}
+}
+:root[data-theme=dark]{--paper:#0F1424;--card:#1A2135;--ink:#F2F4FA;--mute:#A9B2C8;--accent:#5EE0C1;--accent-soft:#16302C;--line:#323C5C;--line-strong:#4A5578;color-scheme:dark}
+:root[data-theme=dark] button,:root[data-theme=dark] .button,:root[data-theme=dark] a.button{background:var(--accent);border-color:var(--accent);color:#0F1424}
+:root[data-theme=dark] .button:hover{background:#7CEBD2}
+:root[data-theme=dark] input[type=email],:root[data-theme=dark] input[type=text],:root[data-theme=dark] textarea,:root[data-theme=dark] select{background:#0F1424;color:var(--ink)}
+:root[data-theme=dark] button.ghost.wide,:root[data-theme=dark] .news-item .useful button{background:var(--card);color:var(--ink);border-color:var(--line-strong)}
+:root[data-theme=dark] .top .ghost{background:transparent;color:#C9D0DA;border-color:#334155}
+:root[data-theme=dark] .banner{background:#3A2E12;color:#FFE6A8;border-color:#6B5520}
+:root[data-theme=dark] .banner.soft{background:#1E2746;color:#D6DEFF;border-color:#34406E}
+:root[data-theme=dark] .banner.ok{background:#12332C;color:#BFF5E6;border-color:#245C50}
