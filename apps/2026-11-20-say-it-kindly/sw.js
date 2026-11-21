@@ -1,6 +1,6 @@
 /* Say It Kindly service worker. Scope: this folder only.
    Bump VERSION (sayitkindly-YYYYMMDDHHMMSS) whenever a cached file changes. */
-const VERSION = 'sayitkindly-20261121170955';
+const VERSION = 'sayitkindly-20261121173452';
 
 const PRECACHE = [
   './',
