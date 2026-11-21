@@ -6,7 +6,7 @@
   'use strict';
 
   var K = { lang: 'soya-news-lang', age: 'soya-news-age', mood: 'soya-news-mood', nick: 'soya-news-nick', seen: 'soya-news-seen', quiz: 'soya-news-quiz', rate: 'soya-news-rate', gender: 'soya-news-gender' };
-  var VERSION = '2026-11-21.6';
+  var VERSION = '2026-11-21.7';
   var LANGS = ['en', 'he', 'fr'];
   var BANDS = [{ id: 'cub', from: 6, to: 8, pose: 'bell' }, { id: 'explorer', from: 9, to: 12, pose: 'wow' }, { id: 'teen', from: 13, to: 17, pose: 'glasses' }, { id: 'grown', from: 18, to: 25, pose: 'crown' }, { id: 'owner', from: 26, to: 66, pose: 'sit' }];
   var MAX_AGE = 66;
@@ -32,7 +32,7 @@
       cheer: ['Yes! You got it!', 'Clever cat!', 'Purr-fect!'], oops: ['Oops! Try to remember it.', 'Almost! Now you know.'], rateQ: 'How clear was this?', rateThanks: 'Thanks! Soya will use this to explain better.', stars: function (n) { return n + ' of 5'; },
       bugTitle: 'Something wrong or confusing?', bugLabel: 'What happened?', bugSend: 'Send the report', bugAdds: function (v) { return 'We also send the app version (' + v + '), the language and the age level, nothing else.'; }, bugThanks: 'Thank you. We will look at it.', bugGithub: 'Grown-ups can also report it on GitHub',
       aboutTitle: 'Meet my human', about: 'This is Ran, my human. Every morning he goes to work so that I always have tuna in my bowl. At work he is the chief technology officer of a software company, where he fixes big, tricky computer systems. At home he is the proud dad of a smart 9-year-old, and he made Soya News so small cats and big cats can understand the world together. If you like it, share it with your kids!',
-      treatTitle: "Soya's treat box", treat: 'Buy Soya a tuna can', treatNote: 'Soya News is free and has no ads. If it helps your family, a grown-up can buy Soya a treat. It keeps the stories coming.', treatSoon: "Soya's treat box opens soon.", grownups: 'For grown-ups', ranAlt: 'Ran, Soya\'s human', share: 'Share Soya News', shared: 'Link copied. Thank you for sharing!', shareText: 'Soya the cat explains the world to kids, at their age.',
+      treatTitle: "Soya's treat box", treat: 'Buy Soya a tuna can', treatNote: 'Soya News is free and has no ads. If it helps your family, a grown-up can buy Soya a treat. It keeps the stories coming.', treatSoon: "Soya's treat box opens soon.", bio: "Ran's bio on LinkedIn", fullPhoto: 'Tap to see the full photo', close: 'Close', grownups: 'For grown-ups', ranAlt: 'Ran, Soya\'s human', share: 'Share Soya News', shared: 'Link copied. Thank you for sharing!', shareText: 'Soya the cat explains the world to kids, at their age.',
       word: 'Word of the week', quiz: 'Quick quiz', right: 'Yes!', wrong: 'Not quite. The answer is:', source: 'Where this came from',
       mood: "Soya's mood", moods: { curious: 'Curious', silly: 'Silly', calm: 'Calm' },
       nick: 'What should Soya call you?', nickHint: 'A nickname only. It stays on this device.',
@@ -71,7 +71,7 @@
       cheer: ['כן! צדקתם!', 'חתול חכם!', 'מושלם!'], oops: ['אופס! תזכרו את זה.', 'כמעט! עכשיו אתם יודעים.'], rateQ: 'כמה זה היה ברור?', rateThanks: 'תודה! סויה ישתמש בזה כדי להסביר טוב יותר.', stars: function (n) { return n + ' מתוך 5'; },
       bugTitle: 'משהו לא עובד או לא ברור?', bugLabel: 'מה קרה?', bugSend: 'שולחים את הדיווח', bugAdds: function (v) { return 'אנחנו שולחים גם את גרסת האפליקציה (' + v + '), את השפה ואת רמת הגיל, ולא שום דבר אחר.'; }, bugThanks: 'תודה. נבדוק את זה.', bugGithub: 'מבוגרים יכולים לדווח גם ב־GitHub',
       aboutTitle: 'תכירו את הבן אדם שלי', about: 'זה רן, הבן אדם שלי. כל בוקר הוא הולך לעבודה כדי שתמיד תהיה לי טונה בקערה. בעבודה הוא מנהל הטכנולוגיה של חברת תוכנה, ומתקן שם מערכות מחשב גדולות ומסובכות. בבית הוא אבא גאה לילד חכם בן 9, והוא יצר את החדשות של סויה כדי שחתולים קטנים וחתולים גדולים יבינו את העולם יחד. אם אהבתם, שתפו עם הילדים שלכם!',
-      treatTitle: 'קופת הפינוקים של סויה', treat: 'קונים לסויה קופסת טונה', treatNote: 'החדשות של סויה בחינם ובלי פרסומות. אם זה עוזר למשפחה שלכם, מבוגר יכול לקנות לסויה פינוק. ככה הכתבות ממשיכות להגיע.', treatSoon: 'קופת הפינוקים של סויה נפתחת בקרוב.', grownups: 'למבוגרים', ranAlt: 'רן, הבן אדם של סויה', share: 'משתפים את החדשות של סויה', shared: 'הקישור הועתק. תודה ששיתפתם!', shareText: 'סויה החתול מסביר את העולם לילדים, בגובה העיניים שלהם.',
+      treatTitle: 'קופת הפינוקים של סויה', treat: 'קונים לסויה קופסת טונה', treatNote: 'החדשות של סויה בחינם ובלי פרסומות. אם זה עוזר למשפחה שלכם, מבוגר יכול לקנות לסויה פינוק. ככה הכתבות ממשיכות להגיע.', treatSoon: 'קופת הפינוקים של סויה נפתחת בקרוב.', bio: 'הביוגרפיה של רן בלינקדאין', fullPhoto: 'לוחצים כדי לראות את התמונה המלאה', close: 'סוגרים', grownups: 'למבוגרים', ranAlt: 'רן, הבן אדם של סויה', share: 'משתפים את החדשות של סויה', shared: 'הקישור הועתק. תודה ששיתפתם!', shareText: 'סויה החתול מסביר את העולם לילדים, בגובה העיניים שלהם.',
       word: 'המילה של השבוע', quiz: 'חידון קצר', right: 'נכון!', wrong: 'כמעט. התשובה היא:', source: 'מאיפה זה הגיע',
       mood: 'מצב הרוח של סויה', moods: { curious: 'סקרן', silly: 'מצחיק', calm: 'רגוע' },
       nick: 'איך סויה יקרא לכם?', nickHint: 'רק כינוי. הוא נשאר במכשיר הזה.',
@@ -110,7 +110,7 @@
       cheer: ['Oui ! Bravo !', 'Chat malin !', 'Parfait !'], oops: ['Oups ! Retiens-le bien.', 'Presque ! Maintenant tu sais.'], rateQ: 'C\'était clair ?', rateThanks: 'Merci ! Soya s\'en servira pour mieux expliquer.', stars: function (n) { return n + ' sur 5'; },
       bugTitle: 'Quelque chose ne va pas ou n\'est pas clair ?', bugLabel: 'Que s\'est-il passé ?', bugSend: 'Envoyer le signalement', bugAdds: function (v) { return 'Nous envoyons aussi la version de l\'appli (' + v + '), la langue et le niveau d\'âge, rien d\'autre.'; }, bugThanks: 'Merci. Nous allons regarder.', bugGithub: 'Les adultes peuvent aussi le signaler sur GitHub',
       aboutTitle: 'Voici mon humain', about: 'Voici Ran, mon humain. Chaque matin, il va au travail pour que j\'aie toujours du thon dans ma gamelle. Au travail, il est directeur technique d\'une entreprise de logiciels et répare de gros systèmes informatiques compliqués. À la maison, c\'est le papa fier d\'un enfant de 9 ans très malin, et il a créé Les Nouvelles de Soya pour que les petits chats et les grands chats comprennent le monde ensemble. Si tu aimes, partage avec tes enfants !',
-      treatTitle: 'La boîte à friandises de Soya', treat: 'Offrir une boîte de thon à Soya', treatNote: "Les Nouvelles de Soya sont gratuites et sans pub. Si elles aident ta famille, un adulte peut offrir une friandise à Soya. Ça fait venir les prochaines histoires.", treatSoon: 'La boîte à friandises de Soya ouvre bientôt.', grownups: 'Pour les adultes', ranAlt: 'Ran, l\'humain de Soya', share: 'Partager Les Nouvelles de Soya', shared: 'Lien copié. Merci de partager !', shareText: 'Soya le chat explique le monde aux enfants, à leur hauteur.',
+      treatTitle: 'La boîte à friandises de Soya', treat: 'Offrir une boîte de thon à Soya', treatNote: "Les Nouvelles de Soya sont gratuites et sans pub. Si elles aident ta famille, un adulte peut offrir une friandise à Soya. Ça fait venir les prochaines histoires.", treatSoon: 'La boîte à friandises de Soya ouvre bientôt.', bio: 'La bio de Ran sur LinkedIn', fullPhoto: 'Touche pour voir la photo entière', close: 'Fermer', grownups: 'Pour les adultes', ranAlt: 'Ran, l\'humain de Soya', share: 'Partager Les Nouvelles de Soya', shared: 'Lien copié. Merci de partager !', shareText: 'Soya le chat explique le monde aux enfants, à leur hauteur.',
       word: 'Le mot de la semaine', quiz: 'Petit quiz', right: 'Oui !', wrong: 'Presque. La réponse est :', source: "D'où ça vient",
       mood: "L'humeur de Soya", moods: { curious: 'Curieux', silly: 'Rigolo', calm: 'Calme' },
       nick: "Comment Soya doit-il t'appeler ?", nickHint: 'Juste un surnom. Il reste sur cet appareil.',
@@ -266,10 +266,14 @@
     return html + '<p><a href="' + esc(GITHUB) + '" target="_blank" rel="noopener">' + esc(t('bugGithub')) + '</a></p></section>';
   }
   /* Soya introduces his human (photo from Ran's company page, with his permission), then the treat box. */
+  var BIO = 'https://www.linkedin.com/in/ranlupovich';
   function aboutBox() {
     var link = window.SOYA_TREATS && /^https:\/\//.test(window.SOYA_TREATS.url || '') ? window.SOYA_TREATS.url : '';
-    return '<section class="panel about"><div class="meet">' + cat('happy', 72, 'meet-cat') + '<img class="ran" src="assets/ran.jpg" width="96" height="96" alt="' + esc(t('ranAlt')) + '"></div>' +
+    return '<section class="panel about"><div class="meet">' + cat('happy', 72, 'meet-cat') + '<button type="button" class="ran-btn" id="ran-photo" aria-label="' + esc(t('fullPhoto')) + '"><img class="ran" src="assets/ran.jpg" width="120" height="120" alt="' + esc(t('ranAlt')) + '"></button></div>' +
       '<h2>' + esc(t('aboutTitle')) + '</h2><p class="said">' + esc(t('about')) + '</p>' +
+      '<p><a class="bio" href="' + BIO + '" target="_blank" rel="noopener">' + esc(t('bio')) + '</a></p>' +
+      '<dialog class="photo-box" id="ran-dialog" aria-label="' + esc(t('ranAlt')) + '"><img src="assets/ran-full.jpg" width="669" height="1024" alt="' + esc(t('ranAlt')) + '">' +
+      '<div class="photo-actions"><a class="bio" href="' + BIO + '" target="_blank" rel="noopener">' + esc(t('bio')) + '</a><button type="button" class="ghost" id="ran-close">' + esc(t('close')) + '</button></div></dialog>' +
       '<button type="button" class="ghost" id="share">' + esc(t('share')) + '</button><p class="note" id="share-note" role="status" hidden></p></section>' +
       '<section class="panel treat"><div class="treat-row"><svg class="can" viewBox="0 0 64 56" width="64" height="56" aria-hidden="true"><ellipse cx="32" cy="44" rx="28" ry="9" fill="#8A93AD"/><rect x="4" y="18" width="56" height="26" fill="#B9C1D6"/><rect x="4" y="24" width="56" height="13" fill="#5EE0C1"/><path d="M16 30.5c5-6 15-7 24-3l6-4v14l-6-4c-9 4-19 3-24-3z" fill="#FF9E7A"/><ellipse cx="32" cy="18" rx="28" ry="9" fill="#D8DEEC"/><ellipse cx="32" cy="18" rx="20" ry="5.5" fill="#B9C1D6"/></svg>' +
       '<div><p class="label">' + esc(t('grownups')) + '</p><h2>' + esc(t('treatTitle')) + '</h2></div></div><p>' + esc(t('treatNote')) + '</p>' +
@@ -364,6 +368,12 @@
       if (text.length < 3) return say(t('ideaShort'));
       send({ kind: 'bug', text: text.slice(0, 500), version: VERSION, level: band(), issue: issueId || '' }).then(function () { box.value = ''; say(t('bugThanks')); }, function () { say(t('ideaFailed')); });
     });
+    var dlg = document.getElementById('ran-dialog'), opener = document.getElementById('ran-photo');
+    if (dlg && opener) {
+      opener.addEventListener('click', function () { if (dlg.showModal) dlg.showModal(); else window.open('assets/ran-full.jpg', '_blank'); });
+      document.getElementById('ran-close').addEventListener('click', function () { dlg.close(); opener.focus(); });
+      dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+    }
     document.getElementById('share').addEventListener('click', function () {
       var url = new URL('./', location.href).href, note = document.getElementById('share-note');
       function done() { note.hidden = false; note.textContent = t('shared'); }

@@ -21,7 +21,7 @@ Soya the cat explains the world to kids, truthfully and in plain words, and to t
 
 ## Meet my human, and the treat box
 
-At the end, Soya introduces Ran in his own voice ("Every morning he goes to work so that I always have tuna in my bowl"), with Ran's photo (`assets/ran.jpg`, cropped from his company's management page, at his request) beside a smiling Soya. Below it, a treat box marked "For grown-ups" has a "Buy Soya a tuna can" button. It opens the donation page set in `donate.js` (`window.SOYA_TREATS.url`, an https link to a page Ran owns, such as Buy Me a Coffee, Ko-fi or PayPal.me). While the link is empty, the box says it opens soon. No payment passes through the app.
+At the end, Soya introduces Ran in his own voice ("Every morning he goes to work so that I always have tuna in my bowl"), with Ran's photo (`assets/ran.jpg`, head and shoulders, from his company's management page, at his request) beside a smiling Soya. Tapping the photo opens the full picture (`assets/ran-full.jpg`) with a link to his LinkedIn bio, which is also linked under the text. Below it, a treat box marked "For grown-ups" has a "Buy Soya a tuna can" button. It opens the donation page set in `donate.js` (`window.SOYA_TREATS.url`, an https link to a page Ran owns, such as Buy Me a Coffee, Ko-fi or PayPal.me). While the link is empty, the box says it opens soon. No payment passes through the app.
 
 ## Adding an issue
 

@@ -148,7 +148,13 @@ main{padding-bottom:140px}
 .buddy.side-l .buddy-say::after{left:30px;margin-left:0}
 /* Meet my human, and the treat box */
 .meet{display:flex;align-items:flex-end;gap:4px}
-.meet .ran{width:96px;height:96px;border-radius:50%;object-fit:cover;border:3px solid var(--sun);background:#E9EAEC}
+.ran-btn{padding:0;border:0;background:none;border-radius:22px;cursor:zoom-in;line-height:0}
+.meet .ran{width:120px;height:120px;border-radius:22px;object-fit:cover;border:3px solid var(--sun);background:#E9EAEC}
+.bio{display:inline-flex;align-items:center;min-height:var(--tap);font-weight:600;color:var(--sky)}
+.photo-box{border:0;padding:12px;border-radius:var(--r);background:var(--card);color:var(--ink);max-width:min(92vw,420px);max-height:92vh}
+.photo-box::backdrop{background:rgba(5,8,18,.8)}
+.photo-box img{display:block;width:100%;height:auto;max-height:72vh;object-fit:contain;border-radius:16px;background:#E9EAEC}
+.photo-actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-top:10px}
 .said{font-size:17px}
 .treat-row{display:flex;align-items:center;gap:12px}
 .treat-row h2{margin-top:2px}
