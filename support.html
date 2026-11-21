@@ -18,10 +18,10 @@
   .langs{display:flex;gap:10px;flex-wrap:wrap}
   .langs a{display:inline-flex;align-items:center;min-height:48px}
   .support hr{border:0;border-top:1px solid var(--line);margin:18px 0}
-  .soya{display:flex;gap:14px;align-items:center}
-  .soya img{width:84px;height:84px;border-radius:50%;object-fit:cover;flex:none}
   .treat{display:flex;flex-direction:column;gap:12px;align-items:flex-start;padding:16px;border:1px solid var(--line);border-radius:16px;background:var(--card,transparent)}
   .qr{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .qr-link{display:inline-block;border-radius:12px;line-height:0}
+  .qr-link:hover img{box-shadow:0 0 0 3px var(--accent)}
   .qr img{width:148px;height:148px;background:#fff;border-radius:10px;padding:6px}
   .qr p{flex:1;min-width:180px;margin:0}
 </style>
@@ -31,13 +31,14 @@
   <p class="langs"><a href="#he" lang="he">עברית</a><a href="#en" lang="en">English</a></p>
 
   <section id="he" lang="he" dir="rtl">
-    <div class="soya"><img src="assets/soycatory-cat.jpg" alt="סויה, חתלתול שחור עם עיניים ירוקות" width="84" height="84"><h1>עוזרים לבן אדם שלי לקנות לי פינוקים</h1></div>
+    <h1>עוזרים לבן אדם שלי לקנות לי פינוקים</h1>
+    <div class="scene" data-lang="he"></div>
     <p>שלום, אני סויה. אני בן חצי שנה, ואני מגדל בן אדם בשם רן. הוא בונה בשבילכם אפליקציות קטנות, בחינם, בלי פרסומות ובלי מעקב: אפליקציה אחת ביום, עד שמשהו תופס. אני מפקח. העבודה קשה, הטונה נגמרת מהר.</p>
     <div class="treat">
       <h2>קונים לסויה קופסת טונה</h2>
       <p>למבוגרים בלבד. הכפתור פותח את Bit, אפליקציית התשלומים, עם תשלום לרן לופוביץ'. כל סכום משמח, גם קטן. התשלום עובר ישירות ב־Bit; שום פרט של תשלום או כרטיס לא עובר דרך Soycatory, ואנחנו לא סופרים מי לחץ.</p>
       <a class="button treat-link" href="https://www.bitpay.co.il/app/me/113FEA75-B4C3-FAB2-6261-A04F072BBA47107B" target="_blank" rel="noopener">משלמים ב־Bit</a>
-      <div class="qr"><img src="assets/treats-bit-qr.svg" alt="קוד QR לתשלום ב־Bit לרן לופוביץ'" width="148" height="148"><p>במחשב? סורקים את הקוד עם מצלמת הטלפון. Bit עובד עם חשבון בנק ישראלי.</p></div>
+      <div class="qr"><a class="treat-link qr-link" href="https://www.bitpay.co.il/app/me/113FEA75-B4C3-FAB2-6261-A04F072BBA47107B" target="_blank" rel="noopener" aria-label="תשלום ב־Bit לרן לופוביץ'"><img src="assets/treats-bit-qr.svg" alt="" width="148" height="148"></a><p>לוחצים על הקוד בטלפון, או סורקים אותו ממחשב עם מצלמת הטלפון. Bit עובד עם חשבון בנק ישראלי.</p></div>
     </div>
     <h2>דרכים לעזור בחינם (אני אוהב גם אותן)</h2>
     <ol>
@@ -53,13 +54,14 @@
   <hr>
 
   <section id="en" lang="en" dir="ltr">
-    <div class="soya"><img src="assets/soycatory-cat.jpg" alt="Soya, a black kitten with green eyes" width="84" height="84"><h1>Help my human buy me treats</h1></div>
+    <h1>Help my human buy me treats</h1>
+    <div class="scene" data-lang="en"></div>
     <p>Hi, I'm Soya. I'm six months old, and I'm raising a human called Ran. He builds small apps for you, free, with no ads and no tracking: one app a day, until something catches. I supervise. It is hard work, and the tuna runs out fast.</p>
     <div class="treat">
       <h2>Buy Soya a tuna can</h2>
       <p>For grown-ups only. The button opens Bit, the Israeli payment app, with a payment to Ran Lupovich. Any amount makes me happy, even a small one. The payment happens in Bit itself; no payment or card details pass through Soycatory, and we do not count who presses it.</p>
       <a class="button treat-link" href="https://www.bitpay.co.il/app/me/113FEA75-B4C3-FAB2-6261-A04F072BBA47107B" target="_blank" rel="noopener">Pay with Bit</a>
-      <div class="qr"><img src="assets/treats-bit-qr.svg" alt="QR code for a Bit payment to Ran Lupovich" width="148" height="148"><p>On a computer? Scan the code with your phone's camera. Bit works with an Israeli bank account.</p></div>
+      <div class="qr"><a class="treat-link qr-link" href="https://www.bitpay.co.il/app/me/113FEA75-B4C3-FAB2-6261-A04F072BBA47107B" target="_blank" rel="noopener" aria-label="Pay Ran Lupovich with Bit"><img src="assets/treats-bit-qr.svg" alt="" width="148" height="148"></a><p>Tap the code on your phone, or scan it from a computer with your phone's camera. Bit works with an Israeli bank account.</p></div>
     </div>
     <h2>Free ways to help (I like these too)</h2>
     <ol>
@@ -75,5 +77,21 @@
 </main>
 <script src="soya-reader.js"></script>
 <script src="a11y.js"></script>
+<script src="shared/soya-buddy.js"></script>
+<script>
+(function () {
+  var MAIL = 'mailto:ranlupovich@gmail.com?subject=Soycatory%20idea%20or%20cat%20issue';
+  var T = {
+    he: { hello: 'מיאו! אני סויה. לוחצים עליי?', catLabel: 'סויה. לוחצים כדי שידבר', lines: ['טונה, בבקשה! עם קצת שמנת.', 'הבן אדם שלי עובד קשה. אני מפקח.', 'אפליקציה אחת ביום, עד שמשהו תופס.', 'אם תלחצו על Bit, אני אגרגר.', 'העכבר הזה? הוא אחראי על הרעיונות.'], mouseLabel: 'שולחים רעיון או תקלת חתול', mouseSay: 'העכבר לוקח רעיונות ותקלות חתול. לוחצים עליו.', readLabel: 'סויה, תקריא לי', stopLabel: 'עוצרים', thanks: 'תודה! מסיבת טונה!' },
+    en: { hello: "Meow! I'm Soya. Tap me?", catLabel: 'Soya. Tap him to talk', lines: ['Tuna, please! With a little cream.', 'My human works hard. I supervise.', 'One app a day, until something catches.', "Press Bit and I'll purr.", "That mouse? He's in charge of ideas."], mouseLabel: 'Send an idea or a cat issue', mouseSay: 'The mouse takes ideas and cat issues. Tap him.', readLabel: 'Soya, read it to me', stopLabel: 'Stop', thanks: 'Thank you! Tuna party!' }
+  };
+  document.querySelectorAll('.scene').forEach(function (el) {
+    var l = el.getAttribute('data-lang'), w = T[l], sec = el.closest('section');
+    var buddy = window.SoyaBuddy.mount(el, { svg: 'apps/2026-11-21-soya-news/assets/soya-sit.svg', hello: w.hello, catLabel: w.catLabel, lines: w.lines,
+      mouseLabel: w.mouseLabel, mouseSay: w.mouseSay, mouseHref: MAIL, readLabel: w.readLabel, stopLabel: w.stopLabel, readTarget: sec, lang: l });
+    sec.querySelectorAll('.treat-link').forEach(function (a) { a.addEventListener('click', function () { buddy.party(w.thanks); }); });
+  });
+})();
+</script>
 </body>
 </html>
