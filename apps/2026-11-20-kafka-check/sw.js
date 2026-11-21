@@ -1,6 +1,6 @@
 /* Kafka Check service worker. Scope: this folder only.
    Bump VERSION (kafkacheck-YYYYMMDDHHMMSS) whenever a cached file changes. */
-const VERSION = 'kafkacheck-20261121060000';
+const VERSION = 'kafkacheck-20261121170955';
 
 const PRECACHE = [
   './',

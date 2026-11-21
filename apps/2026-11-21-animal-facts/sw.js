@@ -1,6 +1,6 @@
 /* Soya's Animal Facts service worker. Scope: this folder only.
    Bump VERSION (soyaanimals-YYYYMMDDHHMMSS) whenever a cached file changes. */
-const VERSION = 'soyaanimals-20261121210000';
+const VERSION = 'soyaanimals-20261121170955';
 
 const PRECACHE = [
   './',

@@ -1,6 +1,6 @@
 /* Soya's Games service worker. Scope: this folder only.
    Bump VERSION (soyagames-YYYYMMDDHHMMSS) whenever a cached file changes. */
-const VERSION = 'soyagames-20261121050000';
+const VERSION = 'soyagames-20261121170955';
 
 const PRECACHE = [
   './',
