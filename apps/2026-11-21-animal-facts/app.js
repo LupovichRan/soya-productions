@@ -7,21 +7,21 @@
   var KEY = 'soya-animals-lang', LANGS = ['en', 'he', 'fr'];
   var I18N = {
     en: { name: "Soya's Animal Facts", tagline: 'A new true animal fact every day', today: function (d) { return 'Fact of the day, ' + d; },
-      more: 'Tell me more', less: 'Show less', another: 'Another fact', source: 'Where this came from', tuna: function (n) { return n + ' of 5 tuna'; },
+      more: 'Tell me more', less: 'Show less', read: 'Soya, read it to me', another: 'Another fact', source: 'Where this came from', tuna: function (n) { return n + ' of 5 tuna'; },
       tunaKey: 'Tuna = how much we trust a source. 5 tuna: the official source or a careful scientist. 3 tuna: a good start; check its sources.',
       quizTitle: 'True or false?', yes: 'True', no: 'False', right: 'You got it!', wrong: 'Not quite!', nextQ: 'Next one', all: 'All the facts so far',
       hi: ['Hi! I am Soya. Here is something amazing.', 'Meow! I checked this one twice.', 'Ready? This one surprised me too.'],
       note: 'Soya is a cartoon cat. Every fact was checked against its source; tap the source to see it yourself.', privacy: 'No ads. Nothing is counted. Your language choice stays on this device.',
       home: 'All apps', credit: 'Made by Soycatory', other: { en: 'English', he: 'עברית', fr: 'Français' } },
     he: { name: 'העובדות של סויה על חיות', tagline: 'עובדה אמיתית חדשה על חיות בכל יום', today: function (d) { return 'העובדה של היום, ' + d; },
-      more: 'ספרו לי עוד', less: 'פחות', another: 'עוד עובדה', source: 'מאיפה זה הגיע', tuna: function (n) { return n + ' מתוך 5 טונות'; },
+      more: 'ספרו לי עוד', less: 'פחות', read: 'סויה, תקריא לי', another: 'עוד עובדה', source: 'מאיפה זה הגיע', tuna: function (n) { return n + ' מתוך 5 טונות'; },
       tunaKey: 'טונה = כמה אנחנו סומכים על מקור. 5 טונות: המקור הרשמי או מדען זהיר. 3 טונות: התחלה טובה; כדאי לבדוק את המקורות שלו.',
       quizTitle: 'נכון או לא נכון?', yes: 'נכון', no: 'לא נכון', right: 'צדקתם!', wrong: 'כמעט!', nextQ: 'עוד אחת', all: 'כל העובדות עד עכשיו',
       hi: ['היי! אני סויה. הנה משהו מדהים.', 'מיאו! את זה בדקתי פעמיים.', 'מוכנים? גם אותי זה הפתיע.'],
       note: 'סויה הוא חתול מצויר. כל עובדה נבדקה מול המקור שלה; לחצו על המקור כדי לראות בעצמכם.', privacy: 'בלי פרסומות. שום דבר לא נספר. בחירת השפה נשארת במכשיר.',
       home: 'כל האפליקציות', credit: 'נוצר על ידי Soycatory', other: { en: 'English', he: 'עברית', fr: 'Français' } },
     fr: { name: 'Les animaux de Soya', tagline: 'Un vrai fait sur les animaux, chaque jour', today: function (d) { return 'Le fait du jour, ' + d; },
-      more: 'Raconte-moi plus', less: 'Moins', another: 'Un autre fait', source: "D'où ça vient", tuna: function (n) { return n + ' thons sur 5'; },
+      more: 'Raconte-moi plus', less: 'Moins', read: 'Soya, lis-moi ça', another: 'Un autre fait', source: "D'où ça vient", tuna: function (n) { return n + ' thons sur 5'; },
       tunaKey: 'Thon = notre confiance dans une source. 5 thons : la source officielle ou un scientifique rigoureux. 3 thons : un bon début ; vérifie ses sources.',
       quizTitle: 'Vrai ou faux ?', yes: 'Vrai', no: 'Faux', right: 'Bravo !', wrong: 'Presque !', nextQ: 'Suivant', all: 'Tous les faits',
       hi: ['Salut ! Je suis Soya. Voici quelque chose d\'incroyable.', 'Miaou ! J\'ai vérifié celui-ci deux fois.', 'Prêt ? Celui-ci m\'a surpris aussi.'],
@@ -62,7 +62,7 @@
       '<div class="fact-head"><span class="emoji" aria-hidden="true">' + f.emoji + '</span><h1>' + esc(L(f.animal)) + '</h1></div>' +
       '<p class="big">' + esc(L(f.fact)) + '</p>' +
       (openMore ? '<p class="more">' + esc(L(f.more)) + '</p>' : '') +
-      '<button type="button" class="ghost" id="more" aria-expanded="' + openMore + '">' + esc(openMore ? t('less') : t('more')) + '</button>' +
+      '<div class="two"><button type="button" class="ghost" id="more" aria-expanded="' + openMore + '">' + esc(openMore ? t('less') : t('more')) + '</button>' + (window.SoyaReader ? '<button type="button" class="ghost" id="read">' + esc(t('read')) + '</button>' : '') + '</div>' +
       '<div class="src"><a href="' + esc(f.url) + '" target="_blank" rel="noopener">' + esc(t('source')) + ': Wikipedia</a> ' + tunaRow(src.tuna) + '<small class="mute">' + esc(L(src.why)) + '</small></div>' +
       '<button type="button" class="primary" id="another">' + esc(t('another')) + '</button></article>';
     var m = data.myths[mythAt % data.myths.length];
@@ -80,6 +80,7 @@
   }
 
   function wire() {
+    var rd = document.getElementById('read'); if (rd) rd.addEventListener('click', function () { var f = data.facts[shown]; pose = 'wow'; window.SoyaReader.readText(L(f.animal) + '. ' + L(f.fact) + ' ' + L(f.more)); });
     document.getElementById('more').addEventListener('click', function () { openMore = !openMore; render(); document.getElementById('more').focus(); });
     document.getElementById('another').addEventListener('click', function () {
       var n = data.facts.length, i; do { i = Math.floor(Math.random() * n); } while (n > 1 && i === shown);

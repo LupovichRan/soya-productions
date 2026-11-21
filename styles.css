@@ -125,3 +125,5 @@ input[type=date],input[type=number]{max-width:100%}
 :root[data-theme=dark] .banner{background:#3A2E12;color:#FFE6A8;border-color:#6B5520}
 :root[data-theme=dark] .banner.soft{background:#1E2746;color:#D6DEFF;border-color:#34406E}
 :root[data-theme=dark] .banner.ok{background:#12332C;color:#BFF5E6;border-color:#245C50}
+.intro-video video{display:block;width:100%;height:auto;aspect-ratio:16/9;border-radius:12px;background:#0F172A}
+.intro-video p{margin:10px 0 0}

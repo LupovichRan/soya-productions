@@ -1,0 +1,105 @@
+{
+  "slug": "soycatory-intro",
+  "title": {
+    "en": "Meet Soycatory",
+    "he": "תכירו את Soycatory"
+  },
+  "description": {
+    "en": "Soya the cat introduces Soycatory: a small factory that makes one friendly app a day for everyday people, in plain words, with no ads and no tracking. About 50 seconds.",
+    "he": "סויה החתול מציג את Soycatory: מפעל קטן שמכין אפליקציה ידידותית אחת ביום לכל אחד, במילים פשוטות, בלי פרסומות ובלי מעקב. בערך 50 שניות."
+  },
+  "scenes": [
+    {
+      "show": {
+        "type": "title",
+        "kicker": "SOYCATORY",
+        "title": "Small apps for everyday people"
+      },
+      "en": "Hi. I'm Soya, a cat. And this is Soycatory: a small factory that makes friendly apps for everyday people.",
+      "he": "היי. אני סויה, חתול. וזה Soycatory: מפעל קטן שמכין אפליקציות ידידותיות לכל אחד."
+    },
+    {
+      "show": {
+        "type": "big",
+        "line1": "ONE APP A DAY",
+        "line2": "until something catches"
+      },
+      "en": "The idea is simple. One small app a day, until something catches.",
+      "he": "הרעיון פשוט. אפליקציה קטנה אחת ביום, עד שמשהו תופס."
+    },
+    {
+      "show": {
+        "type": "list",
+        "head": "Made for people, not for techies",
+        "items": [
+          "Plain words",
+          "English and Hebrew",
+          "No ads, no tracking"
+        ],
+        "foot": "Works on your phone."
+      },
+      "en": "Every app speaks plain words, in English and Hebrew. No ads. No tracking. It just works on your phone.",
+      "he": "כל אפליקציה מדברת במילים פשוטות, באנגלית ובעברית. בלי פרסומות. בלי מעקב. פשוט עובד בטלפון."
+    },
+    {
+      "show": {
+        "type": "chains",
+        "labels": [
+          "For small cats",
+          "For big cats"
+        ],
+        "rows": [
+          [
+            "Soya News",
+            "Animal Facts",
+            "Games"
+          ],
+          [
+            "Read It Simply",
+            "Plain Steps",
+            "Kafka Check"
+          ]
+        ]
+      },
+      "en": "There are apps for small cats, like Soya News and Animal Facts. And apps for big cats, like Read It Simply and Kafka Check.",
+      "he": "יש אפליקציות לחתולים קטנים, כמו החדשות של סויה והעובדות על חיות. ויש לחתולים גדולים, כמו קוראים בפשטות ובדיקת קפקא."
+    },
+    {
+      "show": {
+        "type": "loop",
+        "center": "you",
+        "nodes": [
+          "TRY",
+          "TELL US",
+          "WE BUILD"
+        ]
+      },
+      "en": "And you are part of it. Try an app, tell us what you would add, and the factory builds it.",
+      "he": "ואתם חלק מזה. מנסים אפליקציה, מספרים לנו מה הייתם מוסיפים, והמפעל בונה את זה."
+    },
+    {
+      "show": {
+        "type": "list",
+        "head": "People stay in charge",
+        "items": [
+          "AI helps build",
+          "People review",
+          "Facts have sources"
+        ],
+        "foot": "Every claim links to where it came from."
+      },
+      "en": "AI helps build the apps. But people review every one, and every fact links to its source.",
+      "he": "בינה מלאכותית עוזרת לבנות את האפליקציות. אבל אנשים בודקים כל אחת, וכל עובדה מקושרת למקור שלה."
+    },
+    {
+      "show": {
+        "type": "outro",
+        "line1": "Try the apps",
+        "line2": "Tell us what you'd add",
+        "url": "lupovichran.github.io/soya-productions"
+      },
+      "en": "So come and try them. And tell me what you would add. Meow.",
+      "he": "אז בואו לנסות. ותגידו לי מה הייתם מוסיפים. מיאו."
+    }
+  ]
+}
