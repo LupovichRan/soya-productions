@@ -105,9 +105,10 @@ function soyaNews_(p, kind, lang) {
       r.appendRow([when, issue, slug_(p.story), paws, level, p.first === 'yes' ? 'yes' : 'no', lang]);
     } else {
       var body = String(p.text || '').trim().slice(0, 500); if (body.length < 3) return text_({ ok: false });
-      var b = tab_(ss, 'soya-news bugs', ['When (UTC)', 'What happened', 'App version', 'Issue', 'Age level', 'Language']);
+      var type = ['bug', 'idea', 'fix'].indexOf(String(p.type)) >= 0 ? String(p.type) : 'bug';
+      var b = tab_(ss, 'soya-news bugs', ['When (UTC)', 'What happened', 'App version', 'Issue', 'Age level', 'Language', 'Kind']);
       if (b.getLastRow() >= MAX_ROWS) return text_({ ok: false });
-      b.appendRow([when, safe_(body), String(p.version || '').replace(/[^0-9a-z.\-]/gi, '').slice(0, 20), issue, level, lang]);
+      b.appendRow([when, safe_(body), String(p.version || '').replace(/[^0-9a-z.\-]/gi, '').slice(0, 20), issue, level, lang, type]);
     }
     return text_({ ok: true });
   } finally { lock.releaseLock(); }
