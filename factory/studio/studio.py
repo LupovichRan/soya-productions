@@ -73,7 +73,7 @@ def urls(b):
 
 def post_text(b):
     app, one = urls(b); r = b['roadmap']['en']
-    works = '; '.join(x.rstrip('.').lower() if i else x.rstrip('.') for i, x in enumerate(r['works'][:2]))
+    works = '; '.join(x.rstrip('.') for i, x in enumerate(r['works'][:2]))
     return '\n'.join([PHRASE, '', 'Day %d: %s%s.' % (b['day'], b['title']['en'], KINDS[b['kind']]), '', b['line']['en'].strip(), '',
                       'What works today: %s.' % works, 'What it cannot do yet: %s' % b['limit'].strip(), '',
                       'Try it: ' + app, 'The road map, and a question for you: ' + one, '', r['ask'].strip(), '',

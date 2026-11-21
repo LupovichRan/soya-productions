@@ -3,7 +3,7 @@
  * One tab per app and kind: "<app> waitlist" and "<app> requests". It runs as you, writes only to that one Sheet,
  * and holds no key. Setup is in infra/waitlist/README.md.
  */
-var APPS = ['soycatory', 'roundtable', 'read-it-simply', 'say-it-kindly', 'plain-steps', 'idea-room', 'cat-factory', 'soya-games', 'kafka-check'];
+var APPS = ['soycatory', 'roundtable', 'read-it-simply', 'say-it-kindly', 'plain-steps', 'idea-room', 'cat-factory', 'soya-games', 'kafka-check', 'soya-news'];
 var MAX_ROWS = 5000, MAX_METRIC_ROWS = 100000;
 var METRIC_EVENTS = ['play', 'q25', 'q50', 'q75', 'q100', 'pause', 'seek', 'leave'];
 var READ_EVENTS = ['view', 'seen', 'more', 'source', 'useful-yes', 'useful-no', 'end', 'leave'];
@@ -14,7 +14,7 @@ function doGet() { return text_({ ok: true, name: 'Soycatory waiting list' }); }
 function doPost(e) {
   var p = (e && e.parameter) || {};
   if (p.website) return text_({ ok: true });                       // a robot filled the hidden field: say nothing
-  var app = String(p.app || ''), kind = String(p.kind || ''), lang = p.lang === 'he' ? 'he' : 'en';
+  var app = String(p.app || ''), kind = String(p.kind || ''), lang = p.lang === 'he' ? 'he' : p.lang === 'fr' ? 'fr' : 'en';
   if (kind === 'metric' || kind === 'comment') return video_(p, kind, lang);   // video watch counts and comments
   if (kind === 'read' || kind === 'suggest') return news_(p, kind, lang);      // newsletter reading counts and topic requests
   if (APPS.indexOf(app) < 0) return text_({ ok: false });
