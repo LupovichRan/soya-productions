@@ -23,7 +23,7 @@
       app: 'App',
       open: 'Open',
       none: 'No apps yet. Come back soon.',
-      meetTitle: 'Meet Soycatory', meetLine: 'Soya the cat explains the factory in under a minute. Captions in English and Hebrew; the voice is a computer voice.', cvLine: "Ran's CV, told your way", roadTitle: 'Road map for each app', onePage: 'One page', videosTitle: 'Soya explains', videosLine: 'Short videos where Soya the cat explains AI and software.', newsTitle: "Soya's AI week", newsLine: 'What happened in AI this week, in plain words, with sources.',
+      meetTitle: 'Meet Soycatory', meetLine: 'Soya the cat explains the factory in under a minute. Captions in English and Hebrew; the voice is a computer voice.', cvLine: "Ran's CV, told your way", treatTitle: "Soya's treat box", treatLine: 'Help my human buy me treats, or help for free.', roadTitle: 'Road map for each app', onePage: 'One page', videosTitle: 'Soya explains', videosLine: 'Short videos where Soya the cat explains AI and software.', newsTitle: "Soya's AI week", newsLine: 'What happened in AI this week, in plain words, with sources.',
       howTitle: 'How the factory works',
       how: ['It reads what is new in AI and software.', 'It picks the idea that would help an everyday person most.', 'It builds a small app, checks it, and asks Ran to look before anything goes live.'],
       promise: 'No accounts, no ads, no tracking.'
@@ -36,7 +36,7 @@
       app: 'אפליקציה',
       open: 'פתיחה',
       none: 'אין עדיין אפליקציות. חזרו בקרוב.',
-      meetTitle: 'תכירו את Soycatory', meetLine: 'סויה החתול מסביר את המפעל בפחות מדקה. כתוביות באנגלית ובעברית; הקול הוא קול של מחשב.', cvLine: 'קורות החיים של רן, בדרך שלכם', roadTitle: 'מפת דרכים לכל אפליקציה', onePage: 'עמוד אחד', videosTitle: 'סויה מסביר', videosLine: 'סרטונים קצרים שבהם סויה החתול מסביר בינה מלאכותית ותוכנה.', newsTitle: 'השבוע של סויה בבינה מלאכותית', newsLine: 'מה קרה השבוע בבינה מלאכותית, במילים פשוטות, עם מקורות.',
+      meetTitle: 'תכירו את Soycatory', meetLine: 'סויה החתול מסביר את המפעל בפחות מדקה. כתוביות באנגלית ובעברית; הקול הוא קול של מחשב.', cvLine: 'קורות החיים של רן, בדרך שלכם', treatTitle: 'קופת הפינוקים של סויה', treatLine: 'עוזרים לבן אדם שלי לקנות לי פינוקים, או עוזרים בחינם.', roadTitle: 'מפת דרכים לכל אפליקציה', onePage: 'עמוד אחד', videosTitle: 'סויה מסביר', videosLine: 'סרטונים קצרים שבהם סויה החתול מסביר בינה מלאכותית ותוכנה.', newsTitle: 'השבוע של סויה בבינה מלאכותית', newsLine: 'מה קרה השבוע בבינה מלאכותית, במילים פשוטות, עם מקורות.',
       howTitle: 'איך המפעל עובד',
       how: ['הוא קורא מה חדש בבינה מלאכותית ובתוכנה.', 'הוא בוחר את הרעיון שהכי יעזור לאדם רגיל.', 'הוא בונה אפליקציה קטנה, בודק אותה, ומבקש מרן להסתכל לפני שמשהו עולה לאוויר.'],
       promise: 'בלי חשבון, בלי פרסומות, בלי מעקב.'
@@ -113,6 +113,7 @@
     }
     html += '<h2>' + esc(t('videosTitle')) + '</h2><a class="row" href="videos.html">' + mascot('cat', 40) + '<span><b>' + esc(t('videosTitle')) + '</b><small>' + esc(t('videosLine')) + '</small></span></a>';
     html += '<a class="row" href="cv/">' + mascot('cat', 40) + '<span><b>Ran Lupovich</b><small>' + esc(t('cvLine')) + '</small></span></a>';
+    html += '<a class="row" href="support.html">' + mascot('cat', 40) + '<span><b>' + esc(t('treatTitle')) + '</b><small>' + esc(t('treatLine')) + '</small></span></a>';
     html += '<a class="row" href="newsletter.html">' + mascot('owl', 40) + '<span><b>' + esc(t('newsTitle')) + '</b><small>' + esc(t('newsLine')) + '</small></span></a>';
     if (list.length) {
       html += '<h2>' + esc(t('roadTitle')) + '</h2>' + list.map(function (f) {
