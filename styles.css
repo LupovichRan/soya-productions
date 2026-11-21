@@ -91,3 +91,15 @@ select{font:inherit;width:100%;padding:12px;border:1px solid var(--line-strong);
 code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em}
 .two > div{min-width:0}.two input,.two select{min-width:0;width:100%}
 input[type=date],input[type=number]{max-width:100%}
+/* Soya's AI week */
+.news-item .tag{display:inline-block;padding:2px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-weight:600;font-size:13px}
+.news-item .status{font-size:13px;font-weight:600}
+.news-item .status.confirmed{color:var(--accent)}
+.news-item .status.reported{color:#8A5A00}
+.news-item .useful{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-block:8px}
+.news-item .useful button{min-height:var(--tap);min-width:64px;background:#fff;color:var(--ink);border-color:var(--line-strong)}
+.news-item h2{font-size:19px;line-height:1.35;color:var(--ink);margin:8px 0 6px}
+.news-item .more{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.news-item .more p{margin:0}
+.news-item .meta{margin:0}
+.news-item .useful button:disabled{opacity:.6}

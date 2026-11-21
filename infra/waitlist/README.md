@@ -1,4 +1,4 @@
-# Waiting lists, requests, video watch counts and comments
+# Waiting lists, requests, video watch counts, newsletter reads and comments
 
 Each app's one-pager (`one-pager.html?app=…`) has two small forms: **What would you add?** and **Tell me when it is ready**. They send what the person typed, and the app's name, to a small Google Apps Script that adds a row to a Google Sheet. One tab per app and kind, for example `idea-room waitlist` and `idea-room requests`. No server of ours, no database, no key in the repository.
 
@@ -21,6 +21,8 @@ To check it works: open a one-pager, join the waiting list with your own email, 
 The same script also receives, from `videos.html`: **watch counts** (tab `video metrics`) and **comments** (tab `video comments`). A count is a row such as "software-factory, play" or "software-factory, leave at 41 seconds": the video, the event (`play`, `q25`, `q50`, `q75`, `q100`, `pause`, `seek`, `leave`), the position, the length, the language, the time, and a **random number made for that one visit**. The number is held in memory and never stored in the browser, so it is not an identifier of a person or a device; it only joins a few events from one viewing. Nothing else is sent: no cookies, no address, no browser details. A browser that sends Do Not Track or Global Privacy Control is not counted at all. The page tells viewers what is counted.
 
 The tab `video summary` (in the Sheet) turns the rows into views, how many reached each quarter, how many finished, and a count of where people stopped in each ten seconds. For a new video, copy its row in `video summary` and change the name in column A. Comments hold the comment, the moment it was written about, and the email only if the person gave one. They are not shown on the site.
+
+It also receives, from `newsletter.html` ("Soya's AI week"): **reading counts** (tab `newsletter reads`) and **topic requests** (tab `newsletter requests`). A count is the issue date, the event (`view`, `seen` when half an item has been on screen, `more` for "Read more", `source` for opening the source link, `useful-yes`, `useful-no`, `end` for reaching the bottom, `leave` with the deepest item reached), the item, its position, the language, the time, and the same kind of one-visit random number. The same rules apply: no cookies, nothing stored in the browser, nothing from Do Not Track or Global Privacy Control, and the page says what is counted. The tab `newsletter summary` shows, for the issue date in B1, how many people saw each item, opened "Read more", opened the source, and answered Yes or No. For a new issue, change B1 and the item names in column A.
 
 ## What it keeps, and why
 
