@@ -6,6 +6,20 @@
      url:    'https://…'         anywhere else */
 window.SOYA_APPS = [
   {
+    number: 11,
+    date: '2026-11-21',
+    folder: '2026-11-21-market-radar',
+    mascot: 'owl',
+    en: {
+      title: 'Soya Market Radar',
+      line: 'Research notes on Tel Aviv and US stocks, each backed by an official filing, with what would prove it wrong. Check a hot tip from Telegram or X for warning signs, and keep your own watch list. Not investment advice.'
+    },
+    he: {
+      title: 'הרדאר של סויה',
+      line: 'הערות מחקר על מניות בתל אביב ובארה"ב, כל אחת עם דיווח רשמי ועם מה יוכיח שהיא לא נכונה. בודקים טיפ חם מטלגרם או מ־X לסימני אזהרה, ושומרים רשימת מעקב משלכם. לא ייעוץ השקעות.'
+    }
+  },
+  {
     number: 10,
     date: '2026-11-21',
     folder: '2026-11-21-animal-facts',
