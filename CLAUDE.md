@@ -13,7 +13,7 @@ This repository is Soycatory, the Soya Software Factory, and its front page. The
 8. The list of apps is `apps.js`, newest first. Adding an app is one entry there, with English and Hebrew text.
 9. Interface strings live in `I18N` in `app.js`, in English and Hebrew. Hebrew is right-to-left.
 10. Only the language choice is stored: `localStorage` key `soycatory-lang`.
-11. One filled button on the page (open the newest app). Tap targets at least 48px. No looping motion. Plain words, no jargon.
+11. One filled button on the page (open the newest app). Tap targets at least 48px. No looping motion, with one exception Ran asked for on 2026-11-21: live Soya in Soya News (`soya-live.js`, and the three.js stage in `soya-3d.js` with its library stored in `vendor/`) may walk, blink, wag, smile, orbit, throw confetti and move his mouth while reading aloud; he sits still for anyone whose device asks for reduced motion, and readers can switch him to Calm. Plain words, no jargon.
 12. **Writing rule from Ran (2026-11-21), for every bot and run:** never use bullet points, in emails, reports, pull requests, posts, docs or app text. Use numbered lists (1. 2. 3.) or plain sentences. In HTML use `<ol>`, never `<ul>`.
 13. Same colour tokens as the apps; see `styles.css`.
 14. Before every push: scan for secrets and for real customer or bank names.
