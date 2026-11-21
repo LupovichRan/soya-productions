@@ -6,6 +6,20 @@
      url:    'https://…'         anywhere else */
 window.SOYA_APPS = [
   {
+    number: 10,
+    date: '2026-11-21',
+    folder: '2026-11-21-animal-facts',
+    mascot: 'cat',
+    en: {
+      title: 'Soya\'s Animal Facts',
+      line: 'A new true animal fact every day, told by Soya the cat, with its source and a tuna rating for trust, plus a true-or-false game that busts animal myths. English, Hebrew and French.'
+    },
+    he: {
+      title: 'העובדות של סויה על חיות',
+      line: 'עובדה אמיתית חדשה על חיות בכל יום, מפי סויה החתול, עם המקור ודירוג טונה לאמינות, ומשחק נכון או לא נכון שמנפץ מיתוסים. אנגלית, עברית וצרפתית.'
+    }
+  },
+  {
     number: 9,
     date: '2026-11-21',
     folder: '2026-11-21-soya-news',

@@ -338,5 +338,44 @@ window.SOYA_ROADMAPS = /*JSON-START*/{
       ],
       "ask": "מה סויה צריך להסביר בפעם הבאה?"
     }
+  },
+  "2026-11-21-animal-facts": {
+    "slug": "animal-facts",
+    "en": {
+      "works": [
+        "A new fact every day, the same for everyone on that date",
+        "Each fact links to its source with a tuna rating for trust",
+        "True or false? busts common animal myths",
+        "English, Hebrew and French, dark cartoon look, works offline"
+      ],
+      "next": [
+        "New checked facts every week",
+        "Soya reads the fact aloud",
+        "Facts from more careful sources, such as museums and zoos"
+      ],
+      "later": [
+        "A picture for every animal",
+        "Readers send an animal they want to know about"
+      ],
+      "ask": "Which animal should Soya find a fact about next?"
+    },
+    "he": {
+      "works": [
+        "עובדה חדשה בכל יום, אותה עובדה לכולם באותו תאריך",
+        "לכל עובדה קישור למקור עם דירוג טונה לאמינות",
+        "נכון או לא נכון? מנפץ מיתוסים נפוצים על חיות",
+        "אנגלית, עברית וצרפתית, מראה מצויר כהה, עובד גם בלי רשת"
+      ],
+      "next": [
+        "עובדות בדוקות חדשות בכל שבוע",
+        "סויה מקריא את העובדה בקול",
+        "עובדות ממקורות זהירים יותר, כמו מוזיאונים וגני חיות"
+      ],
+      "later": [
+        "תמונה לכל חיה",
+        "הקוראים שולחים חיה שהם רוצים לדעת עליה"
+      ],
+      "ask": "על איזו חיה סויה צריך למצוא עובדה בפעם הבאה?"
+    }
   }
 }/*JSON-END*/;

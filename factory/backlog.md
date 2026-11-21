@@ -22,6 +22,7 @@ Candidate apps, highest score first. Scores are 1–5 each; see `FACTORY.md`. A 
 | 7 | Soya's Games (three small games for young children) | 2026-11-20 | `apps/2026-11-20-soya-games/` (chosen by Ran) |
 | 8 | Kafka Check (a config checker for message loss, repeats and reordering; browser and command line) | 2026-11-20 | `apps/2026-11-20-kafka-check/` (chosen by Ran) |
 | 9 | Soya News (a weekly AI newspaper for kids, ages 6 to 26, in English, Hebrew and French) | 2026-11-21 | `apps/2026-11-21-soya-news/` (chosen by Ran) |
+| 10 | Soya's Animal Facts (a true animal fact every day, with sources and a myth quiz; English, Hebrew and French) | 2026-11-21 | `apps/2026-11-21-animal-facts/` (chosen by Ran) |
 | — | Decision Maker (POC 2, a tool, not an app) | 2026-11-20 | `factory/decision-maker/` |
 
 ## Set aside
