@@ -160,3 +160,8 @@ main{padding-bottom:140px}
 .treat-row h2{margin-top:2px}
 .can{flex:none}
 .treat-btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;align-self:flex-start;border-color:var(--sun);color:var(--sun);font-weight:600}
+.contact{display:flex;flex-direction:column;gap:4px;background:var(--card2);border-radius:16px;padding:12px 14px}
+.contact-list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column}
+.contact-list li{display:grid;grid-template-columns:72px minmax(0,1fr);align-items:center;gap:10px}
+.contact-list span{color:var(--mute);font-size:15px}
+.contact-list a{display:inline-flex;align-items:center;min-height:var(--tap);color:var(--sky);font-weight:500;overflow-wrap:anywhere;justify-self:start}
