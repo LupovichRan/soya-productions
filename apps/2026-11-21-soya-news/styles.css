@@ -146,3 +146,22 @@ main{padding-bottom:140px}
 .buddy.side-r .buddy-say::after{left:auto;right:30px;margin-left:0}
 .buddy.side-l .buddy-say{left:-4px;transform:none}
 .buddy.side-l .buddy-say::after{left:30px;margin-left:0}
+/* Meet my human, and the treat box */
+.meet{display:flex;align-items:flex-end;gap:4px}
+.ran-btn{padding:0;border:0;background:none;border-radius:22px;cursor:zoom-in;line-height:0}
+.meet .ran{width:120px;height:120px;border-radius:22px;object-fit:cover;border:3px solid var(--sun);background:#E9EAEC}
+.bio{display:inline-flex;align-items:center;min-height:var(--tap);font-weight:600;color:var(--sky)}
+.photo-box{border:0;padding:12px;border-radius:var(--r);background:var(--card);color:var(--ink);max-width:min(92vw,420px);max-height:92vh}
+.photo-box::backdrop{background:rgba(5,8,18,.8)}
+.photo-box img{display:block;width:100%;height:auto;max-height:72vh;object-fit:contain;border-radius:16px;background:#E9EAEC}
+.photo-actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-top:10px}
+.said{font-size:17px}
+.treat-row{display:flex;align-items:center;gap:12px}
+.treat-row h2{margin-top:2px}
+.can{flex:none}
+.treat-btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;align-self:flex-start;border-color:var(--sun);color:var(--sun);font-weight:600}
+.contact{display:flex;flex-direction:column;gap:4px;background:var(--card2);border-radius:16px;padding:12px 14px}
+.contact-list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column}
+.contact-list li{display:grid;grid-template-columns:72px minmax(0,1fr);align-items:center;gap:10px}
+.contact-list span{color:var(--mute);font-size:15px}
+.contact-list a{display:inline-flex;align-items:center;min-height:var(--tap);color:var(--sky);font-weight:500;overflow-wrap:anywhere;justify-self:start}

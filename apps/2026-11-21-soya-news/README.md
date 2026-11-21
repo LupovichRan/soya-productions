@@ -1,6 +1,6 @@
 # Soya News
 
-Soya the cat explains the world to kids, truthfully and in plain words, and to their grown-ups too. Each story is told at the reader's level, from 6 to 66, in English, Hebrew or French, with a word of the week, a short quiz, a paw rating and a link to its source. Made by Ran Lupovich, proud father of a smart 9-year-old.
+Soya the cat explains the world to kids, truthfully and in plain words, and to their grown-ups too. Each story is told at the reader's level, from 6 to 66, in English, Hebrew or French, with a word of the week, a short quiz, a paw rating and a link to its source. Made by Ran Lupovich, proud father of a smart 9-year-old girl.
 
 1. **Ages.** A slider from 6 to 66 picks one of five levels, each with its own Soya pose: Kitten 6–8 (bell), Curious cat 9–12 (wide eyes), Cool cat 13–17 (glasses), Top cat 18–25 (crown), Cat owner 26–66. The facts are the same at every level; only how they are told changes. At Cat owner level each story adds a question to ask your kid.
 2. **Soya's drawing** comes from Ran's annabelle-games (`soya.html`): the same fluffy black cat with green eyes, saved as still SVG poses in `assets/soya-*.svg` with the tail wag turned off (no looping motion).
@@ -18,6 +18,10 @@ Soya the cat explains the world to kids, truthfully and in plain words, and to t
 ## The 3D stage
 
 `soya-3d.js` (three.js 0.170, MIT licence, stored in `vendor/` so nothing is loaded from another site and it works offline) draws Soya's night-sky newsroom at the top: Soya sits on a round rug under twinkling stars while cartoon 3D objects for the week's stories orbit him (a chart with a coin, a chip, a globe with a ring, a phone with a paw, a picture with a name tag). He blinks, and the camera follows the finger a little. Tapping an object makes it jump and spin, Soya says wow, and the page goes to that story. A right quiz answer throws 3D confetti. It only draws while the stage is on screen and the tab is visible; for reduced motion or Calm it draws one still picture and no confetti; without WebGL the flat picture of Soya stays.
+
+## Meet my human, and the treat box
+
+At the end, Soya tells, in his own funny voice, how he is raising his human ("I'm only 6 months old, and I'm already raising a human. His name is Ran."). Soya's age counts up by itself from his birthday, about 21 May 2026 (`soyaMonths()` in `app.js`), with Ran's photo (`assets/ran.jpg`, head and shoulders, from his company's management page, at his request) beside a smiling Soya. Tapping the photo opens the full picture (`assets/ran-full.jpg`) with a link to his LinkedIn bio, which is also linked under the text. Under it, "Contact Ran" (for grown-ups) lists his LinkedIn and his email, ranlupovich@gmail.com, at his request. Below it, a treat box marked "For grown-ups" has a "Buy Soya a tuna can" button. It opens the donation page set in `donate.js` (`window.SOYA_TREATS.url`, an https link to a page Ran owns, such as Buy Me a Coffee, Ko-fi or PayPal.me). While the link is empty, the box says it opens soon. No payment passes through the app.
 
 ## Adding an issue
 
