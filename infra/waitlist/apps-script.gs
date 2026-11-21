@@ -6,6 +6,7 @@
 var APPS = ['soycatory', 'roundtable', 'read-it-simply', 'say-it-kindly', 'plain-steps', 'idea-room', 'cat-factory', 'soya-games', 'kafka-check'];
 var MAX_ROWS = 5000, MAX_METRIC_ROWS = 100000;
 var METRIC_EVENTS = ['play', 'q25', 'q50', 'q75', 'q100', 'pause', 'seek', 'leave'];
+var READ_EVENTS = ['view', 'seen', 'more', 'source', 'useful-yes', 'useful-no', 'end', 'leave'];
 function slug_(v) { return /^[a-z0-9-]{3,60}$/.test(String(v || '')) ? String(v) : ''; }
 
 function doGet() { return text_({ ok: true, name: 'Soycatory waiting list' }); }
@@ -15,6 +16,7 @@ function doPost(e) {
   if (p.website) return text_({ ok: true });                       // a robot filled the hidden field: say nothing
   var app = String(p.app || ''), kind = String(p.kind || ''), lang = p.lang === 'he' ? 'he' : 'en';
   if (kind === 'metric' || kind === 'comment') return video_(p, kind, lang);   // video watch counts and comments
+  if (kind === 'read' || kind === 'suggest') return news_(p, kind, lang);      // newsletter reading counts and topic requests
   if (APPS.indexOf(app) < 0) return text_({ ok: false });
   var lock = LockService.getScriptLock(); lock.waitLock(20000);
   try {
@@ -58,6 +60,30 @@ function video_(p, kind, lang) {
       var c = tab_(ss, 'video comments', ['When (UTC)', 'Video', 'At (s)', 'Comment', 'Email (optional)', 'Language']);
       if (c.getLastRow() >= MAX_ROWS) return text_({ ok: false });
       c.appendRow([when, video, pos, safe_(body), safe_(mail), lang]);
+    }
+    return text_({ ok: true });
+  } finally { lock.releaseLock(); }
+}
+
+/** Newsletter reading counts (which items get "Read more", which sources get opened, Yes/No, how far people read) and topic requests. */
+function news_(p, kind, lang) {
+  var issue = /^\d{4}-\d{2}-\d{2}$/.test(String(p.issue || '')) ? String(p.issue) : ''; if (!issue) return text_({ ok: false });
+  var lock = LockService.getScriptLock(); lock.waitLock(20000);
+  try {
+    var ss = SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty('SHEET_ID')), when = new Date().toISOString();
+    if (kind === 'read') {
+      if (p.website || READ_EVENTS.indexOf(String(p.event)) < 0) return text_({ ok: true });
+      var item = p.item ? slug_(p.item) : '', pos = p.position === '' || p.position == null ? '' : Math.max(0, Math.min(100, Math.floor(Number(p.position) || 0)));
+      var r = tab_(ss, 'newsletter reads', ['When (UTC)', 'Issue', 'View', 'Event', 'Item', 'Position', 'Language']);
+      if (r.getLastRow() >= MAX_METRIC_ROWS) return text_({ ok: false });
+      r.appendRow([when, issue, String(p.view || '').replace(/[^a-z0-9]/gi, '').slice(0, 12), String(p.event), item, pos, lang]);
+    } else {
+      if (p.website) return text_({ ok: true });
+      var body = String(p.text || '').trim().slice(0, 300), mail = String(p.email || '').trim().toLowerCase();
+      if (body.length < 3 || (mail && (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(mail) || mail.length > 254))) return text_({ ok: false });
+      var q = tab_(ss, 'newsletter requests', ['When (UTC)', 'Issue', 'What should Soya look into?', 'Email (optional)', 'Language']);
+      if (q.getLastRow() >= MAX_ROWS) return text_({ ok: false });
+      q.appendRow([when, issue, safe_(body), safe_(mail), lang]);
     }
     return text_({ ok: true });
   } finally { lock.releaseLock(); }
