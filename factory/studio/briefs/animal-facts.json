@@ -1,0 +1,31 @@
+{
+  "slug": "animal-facts",
+  "folder": "2026-11-21-animal-facts",
+  "number": 10,
+  "day": 10,
+  "date": "2026-11-21",
+  "post_date": "2026-11-29",
+  "mascot": "cat",
+  "kind": "app",
+  "title": { "en": "Soya's Animal Facts", "he": "העובדות של סויה על חיות" },
+  "line": {
+    "en": "A new true animal fact every day, told by Soya the cat, with its source and a tuna rating for trust, plus a true-or-false game that busts animal myths. English, Hebrew and French.",
+    "he": "עובדה אמיתית חדשה על חיות בכל יום, מפי סויה החתול, עם המקור ודירוג טונה לאמינות, ומשחק נכון או לא נכון שמנפץ מיתוסים. אנגלית, עברית וצרפתית."
+  },
+  "limit": "It has 13 facts and 4 myths so far, all checked against Wikipedia; new ones are added each week.",
+  "roadmap": {
+    "en": {
+      "works": ["A new fact every day, the same for everyone on that date", "Each fact links to its source with a tuna rating for trust", "True or false? busts common animal myths", "English, Hebrew and French, dark cartoon look, works offline"],
+      "next": ["New checked facts every week", "Soya reads the fact aloud", "Facts from more careful sources, such as museums and zoos"],
+      "later": ["A picture for every animal", "Readers send an animal they want to know about"],
+      "ask": "Which animal should Soya find a fact about next?"
+    },
+    "he": {
+      "works": ["עובדה חדשה בכל יום, אותה עובדה לכולם באותו תאריך", "לכל עובדה קישור למקור עם דירוג טונה לאמינות", "נכון או לא נכון? מנפץ מיתוסים נפוצים על חיות", "אנגלית, עברית וצרפתית, מראה מצויר כהה, עובד גם בלי רשת"],
+      "next": ["עובדות בדוקות חדשות בכל שבוע", "סויה מקריא את העובדה בקול", "עובדות ממקורות זהירים יותר, כמו מוזיאונים וגני חיות"],
+      "later": ["תמונה לכל חיה", "הקוראים שולחים חיה שהם רוצים לדעת עליה"],
+      "ask": "על איזו חיה סויה צריך למצוא עובדה בפעם הבאה?"
+    }
+  },
+  "explainer": null
+}

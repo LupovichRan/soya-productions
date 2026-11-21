@@ -1,0 +1,357 @@
+{
+ "sources": {
+  "wikipedia": {
+   "tuna": 3,
+   "why": {
+    "en": "A good place to start. Anyone can edit it, so check the sources it lists.",
+    "he": "מקום טוב להתחיל בו. כל אחד יכול לערוך, אז כדאי לבדוק את המקורות שהוא מביא.",
+    "fr": "Un bon point de départ. Tout le monde peut la modifier, alors vérifie ses sources."
+   }
+  }
+ },
+ "facts": [
+  {
+   "id": "octopus",
+   "emoji": "🐙",
+   "url": "https://en.wikipedia.org/wiki/Octopus",
+   "src": "wikipedia",
+   "animal": {
+    "en": "Octopus",
+    "he": "תמנון",
+    "fr": "Pieuvre"
+   },
+   "fact": {
+    "en": "An octopus has three hearts and blue blood.",
+    "he": "לתמנון יש שלושה לבבות ודם כחול.",
+    "fr": "La pieuvre a trois cœurs et du sang bleu."
+   },
+   "more": {
+    "en": "Two hearts pump blood through the gills and one pumps it around the body. The blood is blue because it carries oxygen with copper, not iron like ours.",
+    "he": "שני לבבות מזרימים דם דרך הזימים, ואחד מזרים אותו לכל הגוף. הדם כחול כי הוא נושא חמצן בעזרת נחושת, ולא ברזל כמו אצלנו.",
+    "fr": "Deux cœurs envoient le sang dans les branchies et un dans tout le corps. Le sang est bleu car il transporte l'oxygène grâce au cuivre, et non au fer comme nous."
+   }
+  },
+  {
+   "id": "cat-sleep",
+   "emoji": "🐈‍⬛",
+   "url": "https://en.wikipedia.org/wiki/Cat",
+   "src": "wikipedia",
+   "animal": {
+    "en": "Cat",
+    "he": "חתול",
+    "fr": "Chat"
+   },
+   "fact": {
+    "en": "Cats usually sleep 12 to 16 hours a day.",
+    "he": "חתולים ישנים בדרך כלל 12 עד 16 שעות ביום.",
+    "fr": "Les chats dorment en général de 12 à 16 heures par jour."
+   },
+   "more": {
+    "en": "Sleeping saves energy for short bursts of hunting. Older cats sleep even more. Soya says he is not lazy, he is charging.",
+    "he": "השינה חוסכת אנרגיה לפרצי ציד קצרים. חתולים מבוגרים ישנים אפילו יותר. סויה אומר שהוא לא עצלן, הוא בטעינה.",
+    "fr": "Dormir garde de l'énergie pour de courtes chasses. Les chats âgés dorment encore plus. Soya dit qu'il n'est pas paresseux, il se recharge."
+   }
+  },
+  {
+   "id": "cat-sweet",
+   "emoji": "🍬",
+   "url": "https://en.wikipedia.org/wiki/Cat",
+   "src": "wikipedia",
+   "animal": {
+    "en": "Cat",
+    "he": "חתול",
+    "fr": "Chat"
+   },
+   "fact": {
+    "en": "Cats cannot taste sweet things.",
+    "he": "חתולים לא מרגישים טעם מתוק.",
+    "fr": "Les chats ne sentent pas le goût sucré."
+   },
+   "more": {
+    "en": "A gene for the sweet taste receptor does not work in cats. They eat meat, so sugar never mattered to them.",
+    "he": "הגן של קולטן הטעם המתוק לא עובד אצל חתולים. הם אוכלים בשר, אז סוכר אף פעם לא היה חשוב להם.",
+    "fr": "Chez le chat, le gène du récepteur du sucré ne fonctionne pas. Il mange de la viande, alors le sucre ne lui a jamais servi."
+   }
+  },
+  {
+   "id": "bees",
+   "emoji": "🐝",
+   "url": "https://en.wikipedia.org/wiki/Waggle_dance",
+   "src": "wikipedia",
+   "animal": {
+    "en": "Honeybee",
+    "he": "דבורת דבש",
+    "fr": "Abeille"
+   },
+   "fact": {
+    "en": "Honeybees dance to tell each other where the flowers are.",
+    "he": "דבורי דבש רוקדות כדי לספר זו לזו איפה הפרחים.",
+    "fr": "Les abeilles dansent pour se dire où sont les fleurs."
+   },
+   "more": {
+    "en": "In the waggle dance, the angle of the dance shows the direction compared with the sun, and how long the bee waggles shows how far away the food is.",
+    "he": "בריקוד הכשכוש, הזווית של הריקוד מראה את הכיוון ביחס לשמש, ומשך הכשכוש מראה כמה רחוק האוכל.",
+    "fr": "Dans la danse frétillante, l'angle indique la direction par rapport au soleil, et la durée du frétillement indique la distance."
+   }
+  },
+  {
+   "id": "blue-whale",
+   "emoji": "🐋",
+   "url": "https://en.wikipedia.org/wiki/Blue_whale",
+   "src": "wikipedia",
+   "animal": {
+    "en": "Blue whale",
+    "he": "לווייתן כחול",
+    "fr": "Baleine bleue"
+   },
+   "fact": {
+    "en": "The blue whale is the biggest animal alive today.",
+    "he": "הלווייתן הכחול הוא החיה הגדולה ביותר שחיה היום.",
+    "fr": "La baleine bleue est le plus grand animal vivant aujourd'hui."
+   },
+   "more": {
+    "en": "It can be about 30 metres long, as long as two and a half buses. Most scientists think it is also the biggest animal that ever lived, even bigger than dinosaurs.",
+    "he": "הוא יכול להגיע לאורך של כ־30 מטר, כמו שניים וחצי אוטובוסים. רוב המדענים חושבים שהוא גם החיה הגדולה ביותר שחיה אי פעם, אפילו יותר מהדינוזאורים.",
+    "fr": "Elle peut mesurer environ 30 mètres, comme deux bus et demi. La plupart des scientifiques pensent que c'est aussi le plus grand animal ayant jamais vécu, plus grand que les dinosaures."
+   }
+  },
+  {
+   "id": "hummingbird",
+   "emoji": "🐦",
+   "url": "https://en.wikipedia.org/wiki/Hummingbird",
+   "src": "wikipedia",
+   "animal": {
+    "en": "Hummingbird",
+    "he": "יונק הדבש",
+    "fr": "Colibri"
+   },
+   "fact": {
+    "en": "Hummingbirds can hover in one place, like a tiny helicopter.",
+    "he": "יונקי דבש יכולים לרחף במקום אחד, כמו מסוק קטנטן.",
+    "fr": "Les colibris peuvent rester sur place en vol, comme un mini hélicoptère."
+   },
+   "more": {
+    "en": "Their wings sweep in a figure-of-eight shape, which lets them fly in any direction and hang in the air in front of a flower while they drink.",
+    "he": "הכנפיים שלהם נעות בצורת שמונה, וזה מאפשר להם לעוף לכל כיוון ולעמוד באוויר מול פרח בזמן שהם שותים.",
+    "fr": "Leurs ailes dessinent un huit, ce qui leur permet de voler dans toutes les directions et de rester immobiles devant une fleur pendant qu'ils boivent."
+   }
+  },
+  {
+   "id": "wombat",
+   "emoji": "🟫",
+   "url": "https://en.wikipedia.org/wiki/Wombat",
+   "src": "wikipedia",
+   "animal": {
+    "en": "Wombat",
+    "he": "וומבט",
+    "fr": "Wombat"
+   },
+   "fact": {
+    "en": "Wombat poop is shaped like little cubes.",
+    "he": "הקקי של הוומבט בצורת קוביות קטנות.",
+    "fr": "Le caca du wombat a la forme de petits cubes."
+   },
+   "more": {
+    "en": "Its gut shapes the poop into cubes. Wombats arrange them on rocks and logs to mark their territory, and the cubes do not roll away.",
+    "he": "המעיים שלו מעצבים את הקקי לקוביות. וומבטים מסדרים אותן על סלעים וגזעים כדי לסמן את השטח שלהם, והקוביות לא מתגלגלות.",
+    "fr": "Son intestin façonne le caca en cubes. Les wombats les disposent sur des rochers et des troncs pour marquer leur territoire, et les cubes ne roulent pas."
+   }
+  },
+  {
+   "id": "axolotl",
+   "emoji": "🦎",
+   "url": "https://en.wikipedia.org/wiki/Axolotl",
+   "src": "wikipedia",
+   "animal": {
+    "en": "Axolotl",
+    "he": "אקסולוטל",
+    "fr": "Axolotl"
+   },
+   "fact": {
+    "en": "An axolotl can grow back a lost leg.",
+    "he": "אקסולוטל יכול לגדל מחדש רגל שאיבד.",
+    "fr": "Un axolotl peut faire repousser une patte perdue."
+   },
+   "more": {
+    "en": "This smiling salamander from Mexico can regrow its legs and tail, and even repair parts of its heart, eyes and brain. Scientists study it to learn how healing works.",
+    "he": "הסלמנדרה המחייכת הזאת ממקסיקו יכולה לגדל מחדש רגליים וזנב, ואפילו לתקן חלקים מהלב, מהעיניים ומהמוח. מדענים חוקרים אותה כדי להבין איך ריפוי עובד.",
+    "fr": "Cette salamandre souriante du Mexique peut faire repousser ses pattes et sa queue, et même réparer des parties de son cœur, de ses yeux et de son cerveau. Les scientifiques l'étudient pour comprendre la guérison."
+   }
+  },
+  {
+   "id": "sloth",
+   "emoji": "🦥",
+   "url": "https://en.wikipedia.org/wiki/Sloth",
+   "src": "wikipedia",
+   "animal": {
+    "en": "Sloth",
+    "he": "עצלן",
+    "fr": "Paresseux"
+   },
+   "fact": {
+    "en": "Sloths move so slowly that green algae grow in their fur.",
+    "he": "עצלנים זזים כל כך לאט שאצות ירוקות גדלות בפרווה שלהם.",
+    "fr": "Les paresseux bougent si lentement que des algues vertes poussent dans leur fourrure."
+   },
+   "more": {
+    "en": "The green tint helps them hide among the leaves. Moving slowly saves energy, because leaves give them very little.",
+    "he": "הגוון הירוק עוזר להם להסתתר בין העלים. התנועה האיטית חוסכת אנרגיה, כי עלים נותנים להם מעט מאוד.",
+    "fr": "La couleur verte les aide à se cacher dans les feuilles. Bouger lentement économise l'énergie, car les feuilles en donnent très peu."
+   }
+  },
+  {
+   "id": "owl",
+   "emoji": "🦉",
+   "url": "https://en.wikipedia.org/wiki/Owl",
+   "src": "wikipedia",
+   "animal": {
+    "en": "Owl",
+    "he": "ינשוף",
+    "fr": "Hibou"
+   },
+   "fact": {
+    "en": "An owl can turn its head about 270 degrees.",
+    "he": "ינשוף יכול לסובב את הראש בערך 270 מעלות.",
+    "fr": "Un hibou peut tourner la tête d'environ 270 degrés."
+   },
+   "more": {
+    "en": "Its eyes cannot move inside its head, so the whole head turns instead. Its neck has twice as many bones as ours.",
+    "he": "העיניים שלו לא זזות בתוך הראש, אז כל הראש מסתובב במקומן. בצוואר שלו יש פי שניים חוליות מאשר אצלנו.",
+    "fr": "Ses yeux ne bougent pas dans sa tête, alors c'est toute la tête qui tourne. Son cou a deux fois plus d'os que le nôtre."
+   }
+  },
+  {
+   "id": "tardigrade",
+   "emoji": "🔬",
+   "url": "https://en.wikipedia.org/wiki/Tardigrade",
+   "src": "wikipedia",
+   "animal": {
+    "en": "Tardigrade (water bear)",
+    "he": "טרדיגרד (דוב מים)",
+    "fr": "Tardigrade (ourson d'eau)"
+   },
+   "fact": {
+    "en": "Tiny water bears have survived being out in space.",
+    "he": "דובי מים זעירים שרדו שהייה בחלל החיצון.",
+    "fr": "De minuscules oursons d'eau ont survécu à un séjour dans l'espace."
+   },
+   "more": {
+    "en": "They are smaller than a grain of sand. In 2007 scientists put dried-out water bears outside a spacecraft. Empty space did not hurt them much, but very few survived the strong sunlight up there.",
+    "he": "הם קטנים מגרגר חול. ב־2007 מדענים הוציאו דובי מים מיובשים אל מחוץ לחללית. הריק של החלל כמעט לא פגע בהם, אבל רק מעטים שרדו את אור השמש החזק שם.",
+    "fr": "Ils sont plus petits qu'un grain de sable. En 2007, des scientifiques ont placé des oursons d'eau séchés à l'extérieur d'un vaisseau. Le vide ne leur a presque rien fait, mais très peu ont survécu au soleil très fort là-haut."
+   }
+  },
+  {
+   "id": "giraffe",
+   "emoji": "🦒",
+   "url": "https://en.wikipedia.org/wiki/Giraffe",
+   "src": "wikipedia",
+   "animal": {
+    "en": "Giraffe",
+    "he": "ג'ירפה",
+    "fr": "Girafe"
+   },
+   "fact": {
+    "en": "A giraffe has the same number of neck bones as you: seven.",
+    "he": "לג'ירפה יש אותו מספר חוליות צוואר כמו לכם: שבע.",
+    "fr": "La girafe a le même nombre d'os dans le cou que toi : sept."
+   },
+   "more": {
+    "en": "Each of its neck bones is just much longer: some are more than 25 centimetres, longer than a pencil.",
+    "he": "פשוט כל חוליה בצוואר שלה ארוכה הרבה יותר: חלקן יותר מ־25 סנטימטר, ארוכות מעיפרון.",
+    "fr": "Chacun de ses os du cou est simplement bien plus long : certains dépassent 25 centimètres, plus longs qu'un crayon."
+   }
+  },
+  {
+   "id": "dolphin",
+   "emoji": "🐬",
+   "url": "https://en.wikipedia.org/wiki/Bottlenose_dolphin",
+   "src": "wikipedia",
+   "animal": {
+    "en": "Bottlenose dolphin",
+    "he": "דולפינן מצוי",
+    "fr": "Grand dauphin"
+   },
+   "fact": {
+    "en": "Dolphins have their own whistle that works like a name.",
+    "he": "לדולפינים יש שריקה משלהם שעובדת כמו שם.",
+    "fr": "Les dauphins ont leur propre sifflement qui fonctionne comme un prénom."
+   },
+   "more": {
+    "en": "Each bottlenose dolphin has its own signature whistle, a sound that is only its own and works like a name.",
+    "he": "לכל דולפינן יש שריקה אישית, צליל שרק שלו, שעובד כמו שם.",
+    "fr": "Chaque grand dauphin a son propre sifflement signature, un son qui n'appartient qu'à lui et fonctionne comme un prénom."
+   }
+  }
+ ],
+ "myths": [
+  {
+   "id": "goldfish",
+   "emoji": "🐠",
+   "url": "https://en.wikipedia.org/wiki/Goldfish",
+   "src": "wikipedia",
+   "true": false,
+   "claim": {
+    "en": "Goldfish only remember things for three seconds.",
+    "he": "דגי זהב זוכרים דברים רק לשלוש שניות.",
+    "fr": "Les poissons rouges ne se souviennent de rien après trois secondes."
+   },
+   "answer": {
+    "en": "False! Goldfish can remember things for months, and can even learn to come when a sound plays at feeding time.",
+    "he": "לא נכון! דגי זהב זוכרים דברים במשך חודשים, ואפילו לומדים להגיע כשמשמיעים צליל בזמן האכלה.",
+    "fr": "Faux ! Les poissons rouges se souviennent pendant des mois, et apprennent même à venir quand un son annonce le repas."
+   }
+  },
+  {
+   "id": "bats",
+   "emoji": "🦇",
+   "url": "https://en.wikipedia.org/wiki/Bat",
+   "src": "wikipedia",
+   "true": false,
+   "claim": {
+    "en": "Bats are blind.",
+    "he": "עטלפים עיוורים.",
+    "fr": "Les chauves-souris sont aveugles."
+   },
+   "answer": {
+    "en": "False! Bats can see. Many also use echoes of their own calls to find their way in the dark.",
+    "he": "לא נכון! עטלפים רואים. רבים מהם גם משתמשים בהד של הקריאות שלהם כדי למצוא את הדרך בחושך.",
+    "fr": "Faux ! Les chauves-souris voient. Beaucoup utilisent aussi l'écho de leurs cris pour se repérer dans le noir."
+   }
+  },
+  {
+   "id": "ostrich",
+   "emoji": "🪶",
+   "url": "https://en.wikipedia.org/wiki/Ostrich",
+   "src": "wikipedia",
+   "true": false,
+   "claim": {
+    "en": "Ostriches bury their heads in the sand when they are scared.",
+    "he": "יענים טומנות את הראש בחול כשהן מפחדות.",
+    "fr": "Les autruches enfouissent la tête dans le sable quand elles ont peur."
+   },
+   "answer": {
+    "en": "False! They lie flat to hide, or run away fast. From far away, a lying ostrich can look as if its head is in the sand.",
+    "he": "לא נכון! הן נשכבות שטוח כדי להסתתר, או בורחות מהר. מרחוק, יען שוכבת יכולה להיראות כאילו הראש שלה בחול.",
+    "fr": "Faux ! Elles se couchent à plat pour se cacher, ou s'enfuient vite. De loin, une autruche couchée semble avoir la tête dans le sable."
+   }
+  },
+  {
+   "id": "octopus-hearts",
+   "emoji": "🐙",
+   "url": "https://en.wikipedia.org/wiki/Octopus",
+   "src": "wikipedia",
+   "true": true,
+   "claim": {
+    "en": "An octopus has more than one heart.",
+    "he": "לתמנון יש יותר מלב אחד.",
+    "fr": "La pieuvre a plus d'un cœur."
+   },
+   "answer": {
+    "en": "True! It has three hearts.",
+    "he": "נכון! יש לו שלושה לבבות.",
+    "fr": "Vrai ! Elle en a trois."
+   }
+  }
+ ]
+}
