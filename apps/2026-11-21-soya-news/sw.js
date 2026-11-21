@@ -3,7 +3,7 @@
    It also checks for a new issue about once a day where the browser allows it (periodic background sync on an
    installed app), and shows a notification if one appears. Soycatory runs no push server; the 'push' handler is
    here for when one exists. Nothing is sent from here. */
-const VERSION = 'soyanews-20261121160000';
+const VERSION = 'soyanews-20261121190000';
 const META = 'soyanews-meta';
 
 const PRECACHE = [
