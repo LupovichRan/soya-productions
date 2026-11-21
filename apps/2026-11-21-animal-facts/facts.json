@@ -11,6 +11,27 @@
  },
  "facts": [
   {
+   "id": "tiger",
+   "emoji": "🐅",
+   "url": "https://en.wikipedia.org/wiki/Tiger",
+   "src": "wikipedia",
+   "animal": {
+    "en": "Tiger",
+    "he": "טיגריס",
+    "fr": "Tigre"
+   },
+   "fact": {
+    "en": "No two tigers have the same stripes.",
+    "he": "אין שני טיגריסים עם אותם פסים.",
+    "fr": "Il n'existe pas deux tigres avec les mêmes rayures."
+   },
+   "more": {
+    "en": "Each tiger's stripe pattern is its own, a bit like a fingerprint. Tigers are also powerful swimmers: they cross wide rivers and lie in the water to cool off on hot days.",
+    "he": "לכל טיגריס יש דוגמת פסים משלו, קצת כמו טביעת אצבע. טיגריסים גם שחיינים חזקים: הם חוצים נהרות רחבים ושוכבים במים כדי להתקרר בימים חמים.",
+    "fr": "Chaque tigre a son propre motif de rayures, un peu comme une empreinte digitale. Les tigres sont aussi de puissants nageurs : ils traversent de larges rivières et se couchent dans l'eau pour se rafraîchir quand il fait chaud."
+   }
+  },
+  {
    "id": "octopus",
    "emoji": "🐙",
    "url": "https://en.wikipedia.org/wiki/Octopus",

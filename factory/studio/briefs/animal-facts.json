@@ -12,7 +12,7 @@
     "en": "A new true animal fact every day, told by Soya the cat, with its source and a tuna rating for trust, plus a true-or-false game that busts animal myths. English, Hebrew and French.",
     "he": "עובדה אמיתית חדשה על חיות בכל יום, מפי סויה החתול, עם המקור ודירוג טונה לאמינות, ומשחק נכון או לא נכון שמנפץ מיתוסים. אנגלית, עברית וצרפתית."
   },
-  "limit": "It has 13 facts and 4 myths so far, all checked against Wikipedia; new ones are added each week.",
+  "limit": "It has 14 facts and 4 myths so far, all checked against Wikipedia; new ones are added each week.",
   "roadmap": {
     "en": {
       "works": ["A new fact every day, the same for everyone on that date", "Each fact links to its source with a tuna rating for trust", "True or false? busts common animal myths", "English, Hebrew and French, dark cartoon look, works offline"],

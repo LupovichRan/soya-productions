@@ -37,7 +37,9 @@
 
   var data = null, shown = -1, openMore = false, mythAt = 0, answered = null, pose = 'happy';
   /* The fact of the day changes at local midnight, the same for everyone on the same date. */
-  function dayIndex(n) { var d = new Date(); var days = Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 86400000); return ((days % n) + n) % n; }
+  /* The list starts on launch day (21 November 2026) with the tiger, then goes in order, one fact a day, and starts again. */
+  var START = Date.UTC(2026, 10, 21) / 86400000;
+  function dayIndex(n) { var d = new Date(); var days = Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 86400000) - START; return ((days % n) + n) % n; }
   function dateText() { try { return new Date().toLocaleDateString(lang === 'he' ? 'he-IL' : lang === 'fr' ? 'fr-FR' : 'en-GB', { day: 'numeric', month: 'long' }); } catch (e) { return ''; } }
   function cat(p, size) { return '<img class="cat" src="assets/soya-' + p + '.svg" width="' + size + '" height="' + Math.round(size * 1.1) + '" alt="">'; }
   function tunaRow(n) {
