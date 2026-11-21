@@ -6,7 +6,7 @@
   'use strict';
 
   var K = { lang: 'soya-news-lang', age: 'soya-news-age', mood: 'soya-news-mood', nick: 'soya-news-nick', seen: 'soya-news-seen', quiz: 'soya-news-quiz', rate: 'soya-news-rate', gender: 'soya-news-gender' };
-  var VERSION = '2026-11-21.10';
+  var VERSION = '2026-11-21.11';
   var LANGS = ['en', 'he', 'fr'];
   var BANDS = [{ id: 'cub', from: 6, to: 8, pose: 'bell' }, { id: 'explorer', from: 9, to: 12, pose: 'wow' }, { id: 'teen', from: 13, to: 17, pose: 'glasses' }, { id: 'grown', from: 18, to: 25, pose: 'crown' }, { id: 'owner', from: 26, to: 66, pose: 'sit' }];
   var MAX_AGE = 66;
@@ -436,7 +436,7 @@
   function wireLive(app) {
     var S = window.SoyaLive; if (!S) return;
     var issue = (data.issues || []).filter(function (x) { return x.id === issueId; })[0] || {}, m = MOODS[mood][lang] || MOODS[mood].en;
-    S.setEnabled(live === 'on');
+    S.setEnabled(live === 'on' && !stillByMenu());
     if (firstPaint) {
       firstPaint = false;
       S.init({ hello: t('hint'), label: t('catLabel'), onTap: function () { S.say(pick(t('taps'))); } });
@@ -468,10 +468,17 @@
     app.querySelectorAll('[data-live]').forEach(function (bt) { bt.addEventListener('click', function () { live = bt.getAttribute('data-live'); put('soya-news-live', live); keepPlace(render); }); });
   }
   var reading = '';
+  /* The site's accessibility menu (../../a11y.js) can stop all movement; then Soya sits still and the 3D stage pauses. */
+  function stillByMenu() { return !!(window.SoyaA11y && window.SoyaA11y.still()); }
+  document.addEventListener('soya-a11y', function () {
+    var on = live === 'on' && !stillByMenu();
+    if (window.SoyaLive) window.SoyaLive.setEnabled(on);
+    if (window.Soya3D) window.Soya3D.setEnabled(on);
+  });
   /* The 3D stage (soya-3d.js, a module that loads after this file). */
   function attach3d() {
     var D = window.Soya3D, host = document.getElementById('stage'); if (!D || !host || !data) return;
-    D.setEnabled(live === 'on');
+    D.setEnabled(live === 'on' && !stillByMenu());
     if (D.stage) { D.stage.attach(host); return; }
     var issue = (data.issues || [])[0]; if (!issue) return;
     D.mount(issue.stories.map(function (x) { return { id: x.id, art: x.art }; }), {
