@@ -1,0 +1,69 @@
+/* Ran's CV in the Soycatory / Soya News style: dark, cartoon, friendly. One filled button (Contact Ran). Taps 48px. */
+:root{
+  --bg:#0F1424;--card:#1A2135;--card2:#222B44;--ink:#F2F4FA;--mute:#A9B2C8;--line:#323C5C;
+  --sun:#FFC94D;--pink:#FF8FB1;--mint:#5EE0C1;--sky:#7AA7FF;--tap:48px;--r:22px;
+  --head:"Fredoka","Rubik",system-ui,sans-serif;--body:"Rubik","Heebo",system-ui,sans-serif;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 var(--body)}
+a{color:var(--sky)}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.top{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px max(16px,env(safe-area-inset-right)) 10px max(16px,env(safe-area-inset-left));background:rgba(15,20,36,.94);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;min-height:var(--tap)}
+.brand img{border-radius:12px}.brand b{display:block;font:600 19px/1.1 var(--head)}.brand small{color:var(--mute);font-size:12px}
+.ghost{min-height:var(--tap);padding:8px 16px;border-radius:999px;border:2px solid var(--line);background:transparent;color:var(--ink);font-weight:500}
+.primary{display:inline-flex;align-items:center;justify-content:center;min-height:56px;padding:12px 24px;border-radius:999px;background:var(--sun);color:#1B2032;font:600 19px var(--head);text-decoration:none;box-shadow:0 4px 0 #C9962A}
+main{max-width:720px;margin:0 auto;padding:18px max(16px,env(safe-area-inset-right)) 40px max(16px,env(safe-area-inset-left));display:flex;flex-direction:column;gap:16px}
+h1{font:700 34px/1.15 var(--head);margin:0}
+h2{font:600 22px/1.3 var(--head);margin:0 0 8px}
+p{margin:0}
+.mute{color:var(--mute)}.small{font-size:15px}
+.label{font:600 14px var(--head);color:var(--sun);letter-spacing:.03em;text-transform:uppercase}
+[lang=he] .label{letter-spacing:0;text-transform:none}
+.hero{display:flex;align-items:center;gap:18px}
+.photo{padding:0;border:0;background:none;border-radius:24px;cursor:zoom-in;line-height:0;flex:none}
+.photo img{width:132px;height:132px;border-radius:24px;object-fit:cover;border:3px solid var(--sun);background:#E9EAEC}
+.title{font:500 18px/1.4 var(--head);color:var(--mint);margin:4px 0}
+@media (max-width:480px){.hero{flex-direction:column;align-items:flex-start}}
+.soya-says{display:flex;align-items:center;gap:10px}
+.cat{flex:none;background:radial-gradient(circle at 50% 58%,#3B4670 0 56%,transparent 57%);border-radius:50%}
+.bubble{background:var(--card2);border:2px solid var(--line);border-radius:18px;padding:10px 14px;font:500 16px/1.4 var(--head)}
+.card{background:var(--card);border:2px solid var(--line);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:10px}
+.lead{font-size:18px}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{min-height:var(--tap);padding:8px 16px;border-radius:999px;border:2px solid var(--line);background:var(--card2)}
+.seg button.on{border-color:var(--pink);background:rgba(255,143,177,.16)}
+ol.plain,ol.skills,ol.jobs,ol.lines,ol.links{margin:0;padding-inline-start:1.4em;display:flex;flex-direction:column;gap:8px}
+ol.skills li{display:flex;flex-direction:column}
+ol.skills b{font-family:var(--head);font-weight:600}
+ol.jobs{padding:0;list-style:none;gap:16px}
+.job{border-inline-start:4px solid var(--line);padding-inline-start:12px}
+.role{font:600 18px/1.3 var(--head)}
+.org{color:var(--mute)}
+ol.lines{margin-top:6px}
+.dim{opacity:.4}
+.hit{color:var(--ink);background:rgba(94,224,193,.12);border-radius:8px;outline:2px solid rgba(94,224,193,.5);outline-offset:2px}
+.kid li{font-size:18px}
+.contact .primary{align-self:flex-start}
+ol.links{list-style:none;padding:0}
+ol.links li{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+ol.links span{min-width:72px;color:var(--mute);font-size:15px}
+ol.links a{display:inline-flex;align-items:center;min-height:var(--tap);overflow-wrap:anywhere}
+.small-btn{min-height:var(--tap);padding:4px 14px;font-size:15px}
+.note{background:var(--card2);border-radius:14px;padding:8px 12px}
+.home{display:inline-flex;align-items:center;min-height:var(--tap)}
+.photo-box{border:0;padding:12px;border-radius:var(--r);background:var(--card);color:var(--ink);max-width:min(92vw,420px);max-height:92vh}
+.photo-box::backdrop{background:rgba(5,8,18,.8)}
+.photo-box img{display:block;width:100%;height:auto;max-height:72vh;object-fit:contain;border-radius:16px;background:#E9EAEC}
+.photo-actions{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px}
+.photo-actions a{display:inline-flex;align-items:center;min-height:var(--tap)}
+.foot{text-align:center;color:var(--mute);padding:20px 16px 36px}
+.noscript{padding:24px}
+/* Printing (Save as PDF): plain light page, no controls */
+@media print{
+  :root{--bg:#fff;--card:#fff;--card2:#f3f4f6;--ink:#111;--mute:#444;--line:#ccc;--mint:#14532d;--sky:#1d4ed8}
+  .top,.controls,.soya-says,.foot,#print,#copy,.home,.primary{display:none!important}
+  .card{border:0;padding:0 0 10px}
+  .dim{opacity:1}.hit{outline:0;background:none}
+  body{font-size:12pt}
+}
