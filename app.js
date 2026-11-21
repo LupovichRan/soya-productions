@@ -23,7 +23,7 @@
       app: 'App',
       open: 'Open',
       none: 'No apps yet. Come back soon.',
-      roadTitle: 'Road map for each app', onePage: 'One page', videosTitle: 'Soya explains', videosLine: 'Short videos where Soya the cat explains AI and software.', newsTitle: "Soya's AI week", newsLine: 'What happened in AI this week, in plain words, with sources.',
+      meetTitle: 'Meet Soycatory', meetLine: 'Soya the cat explains the factory in under a minute. Captions in English and Hebrew; the voice is a computer voice.', cvLine: "Ran's CV, told your way", roadTitle: 'Road map for each app', onePage: 'One page', videosTitle: 'Soya explains', videosLine: 'Short videos where Soya the cat explains AI and software.', newsTitle: "Soya's AI week", newsLine: 'What happened in AI this week, in plain words, with sources.',
       howTitle: 'How the factory works',
       how: ['It reads what is new in AI and software.', 'It picks the idea that would help an everyday person most.', 'It builds a small app, checks it, and asks Ran to look before anything goes live.'],
       promise: 'No accounts, no ads, no tracking.'
@@ -36,7 +36,7 @@
       app: 'אפליקציה',
       open: 'פתיחה',
       none: 'אין עדיין אפליקציות. חזרו בקרוב.',
-      roadTitle: 'מפת דרכים לכל אפליקציה', onePage: 'עמוד אחד', videosTitle: 'סויה מסביר', videosLine: 'סרטונים קצרים שבהם סויה החתול מסביר בינה מלאכותית ותוכנה.', newsTitle: 'השבוע של סויה בבינה מלאכותית', newsLine: 'מה קרה השבוע בבינה מלאכותית, במילים פשוטות, עם מקורות.',
+      meetTitle: 'תכירו את Soycatory', meetLine: 'סויה החתול מסביר את המפעל בפחות מדקה. כתוביות באנגלית ובעברית; הקול הוא קול של מחשב.', cvLine: 'קורות החיים של רן, בדרך שלכם', roadTitle: 'מפת דרכים לכל אפליקציה', onePage: 'עמוד אחד', videosTitle: 'סויה מסביר', videosLine: 'סרטונים קצרים שבהם סויה החתול מסביר בינה מלאכותית ותוכנה.', newsTitle: 'השבוע של סויה בבינה מלאכותית', newsLine: 'מה קרה השבוע בבינה מלאכותית, במילים פשוטות, עם מקורות.',
       howTitle: 'איך המפעל עובד',
       how: ['הוא קורא מה חדש בבינה מלאכותית ובתוכנה.', 'הוא בוחר את הרעיון שהכי יעזור לאדם רגיל.', 'הוא בונה אפליקציה קטנה, בודק אותה, ומבקש מרן להסתכל לפני שמשהו עולה לאוויר.'],
       promise: 'בלי חשבון, בלי פרסומות, בלי מעקב.'
@@ -92,6 +92,11 @@
     var list = (window.SOYA_APPS || []).slice().sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : b.number - a.number; });
     var app = document.getElementById('app');
     var html = '';
+    /* The Soycatory intro video (factory/videos/scripts/soycatory-intro.json), with captions in both languages. */
+    var V = 'assets/videos/soycatory-intro';
+    html += '<h2>' + esc(t('meetTitle')) + '</h2><section class="card intro-video"><video controls playsinline preload="none" poster="' + V + '.jpg" width="1280" height="720"><source src="' + V + '.mp4" type="video/mp4">' +
+      '<track kind="subtitles" src="' + V + '.en.vtt" srclang="en" label="English"' + (lang === 'en' ? ' default' : '') + '><track kind="subtitles" src="' + V + '.he.vtt" srclang="he" label="עברית"' + (lang === 'he' ? ' default' : '') + '></video>' +
+      '<p class="mute">' + esc(t('meetLine')) + '</p></section>';
     if (!list.length) html += '<h2>' + esc(t('latest')) + '</h2><p class="mute">' + esc(t('none')) + '</p>';
     else {
       var first = list[0], w = words(first);
@@ -107,6 +112,7 @@
       }
     }
     html += '<h2>' + esc(t('videosTitle')) + '</h2><a class="row" href="videos.html">' + mascot('cat', 40) + '<span><b>' + esc(t('videosTitle')) + '</b><small>' + esc(t('videosLine')) + '</small></span></a>';
+    html += '<a class="row" href="cv/">' + mascot('cat', 40) + '<span><b>Ran Lupovich</b><small>' + esc(t('cvLine')) + '</small></span></a>';
     html += '<a class="row" href="newsletter.html">' + mascot('owl', 40) + '<span><b>' + esc(t('newsTitle')) + '</b><small>' + esc(t('newsLine')) + '</small></span></a>';
     if (list.length) {
       html += '<h2>' + esc(t('roadTitle')) + '</h2>' + list.map(function (f) {

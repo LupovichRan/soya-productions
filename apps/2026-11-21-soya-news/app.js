@@ -6,7 +6,7 @@
   'use strict';
 
   var K = { lang: 'soya-news-lang', age: 'soya-news-age', mood: 'soya-news-mood', nick: 'soya-news-nick', seen: 'soya-news-seen', quiz: 'soya-news-quiz', rate: 'soya-news-rate', gender: 'soya-news-gender' };
-  var VERSION = '2026-11-21.11';
+  var VERSION = '2026-11-21.12';
   var LANGS = ['en', 'he', 'fr'];
   var BANDS = [{ id: 'cub', from: 6, to: 8, pose: 'bell' }, { id: 'explorer', from: 9, to: 12, pose: 'wow' }, { id: 'teen', from: 13, to: 17, pose: 'glasses' }, { id: 'grown', from: 18, to: 25, pose: 'crown' }, { id: 'owner', from: 26, to: 66, pose: 'sit' }];
   var MAX_AGE = 66;
@@ -345,7 +345,7 @@
       '<p class="mute small">' + esc(t('install')) + '</p></section>';
     html += '<section class="panel"><h2>' + esc(t('settings')) + '</h2>' +
       '<p class="label">' + esc(t('mood')) + '</p><div class="seg">' + Object.keys(MOODS).map(function (k) { return '<button type="button" data-mood="' + k + '" aria-pressed="' + (k === mood) + '"' + (k === mood ? ' class="on"' : '') + '>' + esc(t('moods')[k]) + '</button>'; }).join('') + '</div>' +
-      '<p class="label">' + esc(t('callMe')) + '</p><div class="seg">' + ['m', 'f', 'x'].map(function (k) { return '<button type="button" data-gender="' + k + '" aria-pressed="' + (k === gender) + '"' + (k === gender ? ' class="on"' : '') + '>' + esc(t('genders')[k]) + '</button>'; }).join('') + '</div><p class="label">' + esc(t('live')) + '</p><div class="seg">' + ['on', 'calm'].map(function (k) { return '<button type="button" data-live="' + k + '" aria-pressed="' + (k === live) + '"' + (k === live ? ' class="on"' : '') + '>' + esc(t('liveOpts')[k]) + '</button>'; }).join('') + '</div><p class="label">' + esc(t('lang')) + '</p><div class="seg">' + LANGS.map(function (k) { return '<button type="button" data-lang="' + k + '" lang="' + k + '" aria-pressed="' + (k === lang) + '"' + (k === lang ? ' class="on"' : '') + '>' + { en: 'English', he: 'עברית', fr: 'Français' }[k] + '</button>'; }).join('') + '</div>' +
+      '<p class="label">' + esc(t('callMe')) + '</p><div class="seg">' + ['m', 'f', 'x'].map(function (k) { return '<button type="button" data-gender="' + k + '" aria-pressed="' + (k === gender) + '"' + (k === gender ? ' class="on"' : '') + '>' + esc(t('genders')[k]) + '</button>'; }).join('') + '</div><p class="label">' + esc(t('live')) + '</p><div class="seg">' + ['on', 'calm'].map(function (k) { return '<button type="button" data-live="' + k + '" aria-pressed="' + (k === live) + '"' + (k === live ? ' class="on"' : '') + '>' + esc(t('liveOpts')[k]) + '</button>'; }).join('') + '</div>' + (window.SoyaReader ? '<p class="label">' + esc(window.SoyaReader.label('settings')) + '</p><div class="seg"><button type="button" id="voice-set">' + esc(window.SoyaReader.label('settings')) + '</button></div>' : '') + '<p class="label">' + esc(t('lang')) + '</p><div class="seg">' + LANGS.map(function (k) { return '<button type="button" data-lang="' + k + '" lang="' + k + '" aria-pressed="' + (k === lang) + '"' + (k === lang ? ' class="on"' : '') + '>' + { en: 'English', he: 'עברית', fr: 'Français' }[k] + '</button>'; }).join('') + '</div>' +
       '<label for="nick" class="label">' + esc(t('nick')) + '</label><input id="nick" maxlength="20" autocomplete="off" dir="' + boxDir() + '" value="' + esc(nick) + '"><p class="mute small">' + esc(t('nickHint')) + '</p></section>';
     html += ideaBox() + bugBox() + aboutBox();
     if (issues.length > 1) html += '<section class="panel"><h2>' + esc(t('older')) + '</h2><div class="seg wrap">' + issues.map(function (x) { return '<button type="button" data-issue="' + esc(x.id) + '"' + (x.id === issueId ? ' class="on" aria-pressed="true"' : ' aria-pressed="false"') + '>' + esc(L(x.week)) + '</button>'; }).join('') + '</div></section>';
@@ -378,6 +378,7 @@
     });
     document.getElementById('notify-btn').addEventListener('click', subscribe);
     wireLive(app);
+    var vs = document.getElementById('voice-set'); if (vs) vs.addEventListener('click', function () { window.SoyaReader.settings(); });
     attach3d();
     app.querySelectorAll('[data-facts]').forEach(function (bt) { bt.addEventListener('click', function () { var id = bt.getAttribute('data-facts'); openFacts[id] = !openFacts[id]; keepPlace(render, id); var again = document.querySelector('[data-facts="' + id + '"]'); if (again) again.focus({ preventScroll: true }); }); });
     app.querySelectorAll('[data-gender]').forEach(function (bt) { bt.addEventListener('click', function () { gender = bt.getAttribute('data-gender'); put(K.gender, gender); keepPlace(render); }); });

@@ -83,8 +83,8 @@
   function speak(text, code, label) {
     if (!canSpeak()) return false;
     stopSpeak();
-    var u = new SpeechSynthesisUtterance(text), v = pickVoice(code);
-    u.lang = code; if (v) u.voice = v; u.rate = 0.95; u.pitch = 1.15;
+    var R = window.SoyaReader, u = new SpeechSynthesisUtterance(text), v = R ? R.pickVoice(code) : pickVoice(code);
+    u.lang = code; if (v) u.voice = v; u.rate = R ? R.prefs().rate : 0.95; u.pitch = R ? R.prefs().pitch : 1.15;   /* the site's voice settings (../../soya-reader.js) */
     speaking = true; setPose('sit'); face(x > 0.5 ? -1 : 1);
     if (label) { bubble.textContent = label; bubble.hidden = false; }
     var open = false;

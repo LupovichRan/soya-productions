@@ -3,6 +3,39 @@
    To add one: render it, then copy an entry to the top of this list. */
 window.SOYA_VIDEOS = [
   {
+    "slug": "soycatory-intro",
+    "date": "2026-11-21",
+    "seconds": 47,
+    "title": {
+      "en": "Meet Soycatory",
+      "he": "תכירו את Soycatory"
+    },
+    "description": {
+      "en": "Soya the cat introduces Soycatory: a small factory that makes one friendly app a day for everyday people, in plain words, with no ads and no tracking. About 50 seconds.",
+      "he": "סויה החתול מציג את Soycatory: מפעל קטן שמכין אפליקציה ידידותית אחת ביום לכל אחד, במילים פשוטות, בלי פרסומות ובלי מעקב. בערך 50 שניות."
+    },
+    "transcript": {
+      "en": [
+        "Hi. I'm Soya, a cat. And this is Soycatory: a small factory that makes friendly apps for everyday people.",
+        "The idea is simple. One small app a day, until something catches.",
+        "Every app speaks plain words, in English and Hebrew. No ads. No tracking. It just works on your phone.",
+        "There are apps for small cats, like Soya News and Animal Facts. And apps for big cats, like Read It Simply and Kafka Check.",
+        "And you are part of it. Try an app, tell us what you would add, and the factory builds it.",
+        "AI helps build the apps. But people review every one, and every fact links to its source.",
+        "So come and try them. And tell me what you would add. Meow."
+      ],
+      "he": [
+        "היי. אני סויה, חתול. וזה Soycatory: מפעל קטן שמכין אפליקציות ידידותיות לכל אחד.",
+        "הרעיון פשוט. אפליקציה קטנה אחת ביום, עד שמשהו תופס.",
+        "כל אפליקציה מדברת במילים פשוטות, באנגלית ובעברית. בלי פרסומות. בלי מעקב. פשוט עובד בטלפון.",
+        "יש אפליקציות לחתולים קטנים, כמו החדשות של סויה והעובדות על חיות. ויש לחתולים גדולים, כמו קוראים בפשטות ובדיקת קפקא.",
+        "ואתם חלק מזה. מנסים אפליקציה, מספרים לנו מה הייתם מוסיפים, והמפעל בונה את זה.",
+        "בינה מלאכותית עוזרת לבנות את האפליקציות. אבל אנשים בודקים כל אחת, וכל עובדה מקושרת למקור שלה.",
+        "אז בואו לנסות. ותגידו לי מה הייתם מוסיפים. מיאו."
+      ]
+    }
+  },
+  {
     "slug": "software-factory",
     "date": "2026-11-20",
     "seconds": 76,

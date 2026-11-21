@@ -8,9 +8,9 @@
   var KEY = 'soya-a11y', root = document.documentElement;
   var base = (document.currentScript && document.currentScript.src) ? document.currentScript.src.replace(/a11y\.js(\?.*)?$/, '') : '/';
   var T = {
-    en: { open: 'Accessibility', title: 'Accessibility', theme: 'Theme', auto: 'Auto', light: 'Light', dark: 'Dark', text: 'Text size', contrast: 'High contrast', font: 'Readable font', links: 'Underline links', still: 'Stop movement', space: 'More spacing', reset: 'Reset', close: 'Close', statement: 'Accessibility statement', skip: 'Skip to content', on: 'On', off: 'Off' },
-    he: { open: 'נגישות', title: 'תפריט נגישות', theme: 'ערכת צבעים', auto: 'אוטומטי', light: 'בהיר', dark: 'כהה', text: 'גודל טקסט', contrast: 'ניגודיות גבוהה', font: 'גופן קריא', links: 'קו תחתון לקישורים', still: 'עצירת תנועה', space: 'ריווח גדול', reset: 'איפוס', close: 'סגירה', statement: 'הצהרת נגישות', skip: 'דילוג לתוכן', on: 'מופעל', off: 'כבוי' },
-    fr: { open: 'Accessibilité', title: 'Accessibilité', theme: 'Thème', auto: 'Auto', light: 'Clair', dark: 'Sombre', text: 'Taille du texte', contrast: 'Contraste élevé', font: 'Police lisible', links: 'Souligner les liens', still: 'Arrêter le mouvement', space: 'Plus d\'espace', reset: 'Réinitialiser', close: 'Fermer', statement: 'Déclaration d\'accessibilité', skip: 'Aller au contenu', on: 'Activé', off: 'Désactivé' }
+    en: { open: 'Accessibility', title: 'Accessibility', theme: 'Theme', auto: 'Auto', light: 'Light', dark: 'Dark', text: 'Text size', contrast: 'High contrast', font: 'Readable font', links: 'Underline links', still: 'Stop movement', space: 'More spacing', reset: 'Reset', close: 'Close', statement: 'Accessibility statement', skip: 'Skip to content', on: 'On', off: 'Off', read: 'Soya reads aloud', page: 'This page', sel: 'What I selected', voice: 'Voice' },
+    he: { open: 'נגישות', title: 'תפריט נגישות', theme: 'ערכת צבעים', auto: 'אוטומטי', light: 'בהיר', dark: 'כהה', text: 'גודל טקסט', contrast: 'ניגודיות גבוהה', font: 'גופן קריא', links: 'קו תחתון לקישורים', still: 'עצירת תנועה', space: 'ריווח גדול', reset: 'איפוס', close: 'סגירה', statement: 'הצהרת נגישות', skip: 'דילוג לתוכן', on: 'מופעל', off: 'כבוי', read: 'סויה מקריא', page: 'העמוד הזה', sel: 'מה שסימנתי', voice: 'קול' },
+    fr: { open: 'Accessibilité', title: 'Accessibilité', theme: 'Thème', auto: 'Auto', light: 'Clair', dark: 'Sombre', text: 'Taille du texte', contrast: 'Contraste élevé', font: 'Police lisible', links: 'Souligner les liens', still: 'Arrêter le mouvement', space: 'Plus d\'espace', reset: 'Réinitialiser', close: 'Fermer', statement: 'Déclaration d\'accessibilité', skip: 'Aller au contenu', on: 'Activé', off: 'Désactivé', read: 'Soya lit à voix haute', page: 'Cette page', sel: 'Ma sélection', voice: 'Voix' }
   };
   function lang() { var l = (root.lang || 'en').slice(0, 2); return T[l] ? l : 'en'; }
   function t(k) { return T[lang()][k]; }
@@ -66,7 +66,8 @@
     document.head.appendChild(st);
   }
 
-  var btn, dlg;
+  var btn, dlg, lastSel = '';
+  function grabSel() { try { var x = String(window.getSelection ? window.getSelection() : '').trim(); if (x) lastSel = x.slice(0, 4000); } catch (e) { /* fine */ } }
   function seg(key, values, labels) {
     return '<div class="grp" role="group">' + values.map(function (v, i) { return '<button type="button" data-k="' + key + '" data-v="' + v + '" aria-pressed="' + (String(S[key]) === String(v)) + '">' + labels[i] + '</button>'; }).join('') + '</div>';
   }
@@ -75,6 +76,7 @@
     var th = themes(), rows = [];
     if (th.length > 1) rows.push('<li><span>' + t('theme') + '</span>' + seg('theme', ['auto', 'light', 'dark'], [t('auto'), t('light'), t('dark')]) + '</li>');
     rows.push('<li><span>' + t('text') + '</span>' + seg('text', [0, 1, 2, 3], ['A', 'A+', 'A++', 'A+++']) + '</li>');
+    if (window.SoyaReader) rows.unshift('<li><span>' + t('read') + '</span><div class="grp"><button type="button" id="a11y-read-page">' + t('page') + '</button>' + (lastSel ? '<button type="button" id="a11y-read-sel">' + t('sel') + '</button>' : '') + '<button type="button" id="a11y-voice">' + t('voice') + '</button></div></li>');
     ['contrast', 'font', 'links', 'still', 'space'].forEach(function (k) { rows.push('<li><span>' + t(k) + '</span>' + toggle(k) + '</li>'); });
     return '<h2 id="a11y-h">' + t('title') + '</h2><ol>' + rows.join('') + '</ol><div class="row-end"><a href="' + base + 'accessibility.html">' + t('statement') + '</a><span class="grp"><button type="button" id="a11y-reset">' + t('reset') + '</button><button type="button" id="a11y-close">' + t('close') + '</button></span></div>';
   }
@@ -89,6 +91,10 @@
     });
     dlg.querySelector('#a11y-reset').addEventListener('click', function () { S = { theme: 'auto', text: 0, contrast: false, font: false, links: false, still: false, space: false }; save(); apply(); draw(); });
     dlg.querySelector('#a11y-close').addEventListener('click', function () { dlg.close(); btn.focus(); });
+    var rp = dlg.querySelector('#a11y-read-page'), rs = dlg.querySelector('#a11y-read-sel'), rv = dlg.querySelector('#a11y-voice');
+    if (rp) rp.addEventListener('click', function () { dlg.close(); window.SoyaReader.readPage(); });
+    if (rs) rs.addEventListener('click', function () { var x = lastSel; dlg.close(); window.SoyaReader.readText(x); });
+    if (rv) rv.addEventListener('click', function () { dlg.close(); window.SoyaReader.settings(); });
   }
   function relabel() { if (btn) { btn.setAttribute('aria-label', t('open')); btn.title = t('open'); } var sk = document.querySelector('.a11y-skip'); if (sk) sk.textContent = t('skip'); }
 
@@ -100,6 +106,8 @@
     btn.innerHTML = '<svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true" fill="currentColor"><circle cx="12" cy="4" r="2.2"/><path d="M4 7.6c2.6.8 5.2 1.2 8 1.2s5.4-.4 8-1.2l.6 1.9c-2.1.7-4.2 1.1-6.4 1.3V13l2.2 7.6-1.9.6L12.3 15h-.6l-2.2 6.2-1.9-.6L9.8 13v-2.2c-2.2-.2-4.3-.6-6.4-1.3z"/></svg>';
     dlg = document.createElement('dialog'); dlg.className = 'a11y-panel'; dlg.setAttribute('aria-labelledby', 'a11y-h');
     document.body.appendChild(btn); document.body.appendChild(dlg);
+    btn.addEventListener('pointerdown', grabSel); btn.addEventListener('keydown', grabSel);
+    document.addEventListener('selectionchange', function () { var x = String(window.getSelection ? window.getSelection() : '').trim(); if (x) lastSel = x.slice(0, 4000); });
     btn.addEventListener('click', function () { draw(); if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', ''); var f = dlg.querySelector('button'); if (f) f.focus(); });
     dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
     relabel();
