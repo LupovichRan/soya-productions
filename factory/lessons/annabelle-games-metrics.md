@@ -17,7 +17,7 @@ Source: Ran's repository LupovichRan/annabelle-games (`telemetry.js`, `feedback.
 
 ## What we found while reading (for Ran)
 
-1. **The dashboards count mostly test traffic.** The four `stats_*` views read the raw `events` table, not `events_real`. Of 3,614 event rows so far, 2,806 are `qa` (668 test devices) and 808 are real (`prod`, 15 devices). So `stats_daily` and the others show about 4.5 times the real activity. The fix is to point the four views at `events_real`. Not changed: it is Ran's other project, and he did not ask for a change there.
+1. **The dashboards count mostly test traffic.** The four `stats_*` views read the raw `events` table, not `events_real`. Of 3,614 event rows so far, 2,806 are `qa` (668 test devices) and 808 are real (`prod`, 15 devices). So `stats_daily` and the others show about 4.5 times the real activity. **Fixed on 2026-11-21 with Ran's yes:** the four views now read `events_real` (migration `stats_views_read_real_players_only`, same columns, same access, still running with the caller's rights). Across all days the dashboard went from 769 sessions and 503 game starts to 55 sessions and 68 game starts by 16 real children.
 2. **Access is safe.** The tables have row-level security with INSERT-only rules for the public key. The `stats_*` views are visible to the public key but run with the caller's rights, so the public key sees no rows through them.
 
 ## What Soycatory takes
