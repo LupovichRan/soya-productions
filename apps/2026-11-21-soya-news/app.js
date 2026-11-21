@@ -6,7 +6,7 @@
   'use strict';
 
   var K = { lang: 'soya-news-lang', age: 'soya-news-age', mood: 'soya-news-mood', nick: 'soya-news-nick', seen: 'soya-news-seen', quiz: 'soya-news-quiz', rate: 'soya-news-rate', gender: 'soya-news-gender' };
-  var VERSION = '2026-11-21.12';
+  var VERSION = '2026-11-21.13';
   var LANGS = ['en', 'he', 'fr'];
   var BANDS = [{ id: 'cub', from: 6, to: 8, pose: 'bell' }, { id: 'explorer', from: 9, to: 12, pose: 'wow' }, { id: 'teen', from: 13, to: 17, pose: 'glasses' }, { id: 'grown', from: 18, to: 25, pose: 'crown' }, { id: 'owner', from: 26, to: 66, pose: 'sit' }];
   var MAX_AGE = 66;
@@ -282,7 +282,8 @@
   function bugBox() {
     var html = '<button type="button" class="mouse-btn" id="mouse-btn" aria-label="' + esc(t('mouse')) + '" title="' + esc(t('mouse')) + '">' + MOUSE + '</button>' +
       '<dialog class="bug-dlg" id="bug-dlg" aria-labelledby="bug-h"><div class="bug-head">' + MOUSE.replace('width="40" height="24"', 'width="64" height="38"') + '<h2 id="bug-h">' + esc(t('tellUs')) + '</h2></div>';
-    if (canSend()) html += '<form id="bug-form" novalidate><div class="seg" role="group" aria-label="' + esc(t('bugTitle')) + '">' + ['bug', 'idea', 'fix'].map(function (k) { return '<button type="button" data-kind="' + k + '" aria-pressed="' + (k === bugKind) + '"' + (k === bugKind ? ' class="on"' : '') + '>' + esc(t('kindsBug')[k]) + '</button>'; }).join('') + '</div>' +
+    /* Bug reports go to Ran's inbox through ../../shared/soya-mouse.js (no name or email); the receiver is only a fallback. */
+    if (canSend() || 'fetch' in window) html += '<form id="bug-form" novalidate><div class="seg" role="group" aria-label="' + esc(t('bugTitle')) + '">' + ['bug', 'idea', 'fix'].map(function (k) { return '<button type="button" data-kind="' + k + '" aria-pressed="' + (k === bugKind) + '"' + (k === bugKind ? ' class="on"' : '') + '>' + esc(t('kindsBug')[k]) + '</button>'; }).join('') + '</div>' +
       '<label for="bug-text">' + esc(t('bugLabel')) + '</label><textarea id="bug-text" maxlength="500" autocomplete="off" dir="' + boxDir() + '"></textarea>' +
       '<p class="mute small">' + esc(t('ideaSafe')) + ' ' + esc(t('bugAdds')(VERSION)) + '</p><div class="hp" aria-hidden="true"><label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>' +
       '<p class="note" role="status" hidden></p><button type="submit" class="ghost">' + esc(t('bugSend')) + '</button></form>';
@@ -406,6 +407,14 @@
       function say(x) { note.hidden = false; note.textContent = x; }
       if (trap && trap.value) return;
       if (text.length < 3) return say(t('ideaShort'));
+      if (window.SoyaMouse) {
+        window.SoyaMouse.send({ kind: bugKind, text: text.slice(0, 500) + '\n(level ' + band() + (issueId ? ', issue ' + issueId : '') + ')', app: 'soya-news', ver: VERSION }).then(function (r) {
+          if (r.fail) return say(t('ideaFailed'));
+          box.value = ''; say(t('bugThanks') + ' #' + r.rid);
+        });
+        return;
+      }
+      if (!canSend()) return say(t('boxSoon'));
       send({ kind: 'bug', type: bugKind, text: text.slice(0, 500), version: VERSION, level: band(), issue: issueId || '' }).then(function () { box.value = ''; say(t('bugThanks')); }, function () { say(t('ideaFailed')); });
     });
     var dlg = document.getElementById('ran-dialog'), opener = document.getElementById('ran-photo');

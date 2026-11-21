@@ -1,6 +1,6 @@
 /* Cat Factory service worker. Scope: this folder only.
    Bump VERSION (catfactory-YYYYMMDDHHMMSS) whenever a cached file changes. */
-const VERSION = 'catfactory-20261121040000';
+const VERSION = 'catfactory-20261121170955';
 
 const PRECACHE = [
   './',

@@ -1,6 +1,6 @@
 /* Plain Steps service worker. Scope: this folder only.
    Bump VERSION (plainsteps-YYYYMMDDHHMMSS) whenever a cached file changes. */
-const VERSION = 'plainsteps-20261120210000';
+const VERSION = 'plainsteps-20261121170955';
 
 const PRECACHE = [
   './',
