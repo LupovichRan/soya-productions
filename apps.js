@@ -12,11 +12,11 @@ window.SOYA_APPS = [
     mascot: 'cat',
     en: {
       title: 'Soya News',
-      line: 'A weekly AI newspaper for curious kids. Soya the cat reporter tells each story at the reader\'s age, from 6 to 26, in English, Hebrew or French, with a word of the week and a quiz.'
+      line: 'Soya the cat explains the world in plain, true words. A slider from 6 to 66 tells each story at your level, from Kitten to Cat owner, in English, Hebrew or French, with a quiz and a question for parents.'
     },
     he: {
       title: 'החדשות של סויה',
-      line: 'עיתון שבועי על בינה מלאכותית לילדים סקרנים. סויה הכתב החתול מספר כל כתבה בגיל של הקורא, מ־6 עד 26, באנגלית, בעברית או בצרפתית, עם מילה של השבוע וחידון.'
+      line: 'סויה החתול מסביר את העולם במילים פשוטות ואמיתיות. מחוון מ־6 עד 66 מספר כל כתבה ברמה שלכם, מגור חתולים ועד בעלי חתול, באנגלית, בעברית או בצרפתית, עם חידון ושאלה להורים.'
     }
   },
   {
