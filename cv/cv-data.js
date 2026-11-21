@@ -105,3 +105,32 @@ window.RAN_CV = {
   more: { en: 'Also: IBM Db2 / z/OS, PostgreSQL, MongoDB Atlas, Amazon Aurora, Redis, Splunk, REST APIs, WSO2 / API Gateway, Confluent REST Proxy, Linux, Windows.', he: 'גם: IBM Db2 / z/OS, PostgreSQL, MongoDB Atlas, Amazon Aurora, Redis, Splunk, REST APIs, WSO2 / API Gateway, Confluent REST Proxy, Linux, Windows.' },
   languages: { en: 'Hebrew (native) · English (fluent) · French (basic)', he: 'עברית (שפת אם) · אנגלית (שוטפת) · צרפתית (בסיסית)' }
 };
+
+/* One CV per position. Same facts; each version changes the title, the opening, which skills come first and what is
+   highlighted. Modelled on Ran's tailored CVs. Share a version with ?role=<id>. */
+window.RAN_CV.roles = [
+  { id: 'principal', tag: 'all', order: ['l', 'g', 'c', 'd'],
+    name: { en: 'Principal Architect', he: 'ארכיטקט ראשי' },
+    title: { en: 'Principal Architect · GenAI, Cloud & Data Platforms', he: 'ארכיטקט ראשי · GenAI, ענן ופלטפורמות דאטה' },
+    pitch: { en: 'Hands-on architect who takes data, cloud and GenAI work from requirements to production and stays for the handover: a major bank\'s Kafka platform from the ground up, a data lake move with hundreds of dbt models, and the backend and agent pipelines of a conversational AI platform.', he: 'ארכיטקט מעשי שלוקח עבודת דאטה, ענן ו־GenAI מהדרישות ועד הייצור, ונשאר עד ההעברה: פלטפורמת הקפקא של בנק גדול מאפס, העברת אגם נתונים עם מאות מודלי dbt, וה־backend וצינורות הסוכנים של פלטפורמת בינה מלאכותית שיחתית.' } },
+  { id: 'data-architect', tag: 'd', order: ['d', 'l', 'c', 'g'],
+    name: { en: 'Data Architect', he: 'ארכיטקט דאטה' },
+    title: { en: 'Data Architect · Data Platforms, Streaming & Governance', he: 'ארכיטקט דאטה · פלטפורמות דאטה, סטרימינג וממשל נתונים' },
+    pitch: { en: 'Data architect with 15+ years from database internals to cloud data platforms: built a major bank\'s enterprise Kafka platform, co-led a SQL Server data lake move to BigQuery with hundreds of dbt models (recognised by the client), and built privacy layers for masking, lineage and regional access.', he: 'ארכיטקט דאטה עם יותר מ־15 שנה, מהקרביים של מסדי נתונים ועד פלטפורמות דאטה בענן: בנה את פלטפורמת הקפקא הארגונית של בנק גדול, הוביל יחד העברת אגם נתונים מ־SQL Server ל־BigQuery עם מאות מודלי dbt (בהוקרת הלקוח), ובנה שכבות פרטיות למיסוך, שושלת נתונים וגישה לפי אזור.' } },
+  { id: 'genai', tag: 'g', order: ['g', 'l', 'c', 'd'],
+    name: { en: 'GenAI Architect', he: 'ארכיטקט GenAI' },
+    title: { en: 'GenAI Architect · RAG, Agents & LLM Platforms', he: 'ארכיטקט GenAI · RAG, סוכנים ופלטפורמות מודלי שפה' },
+    pitch: { en: 'GenAI architect who ships: first technical lead on the ground of a conversational AI startup for US veterans, building its backend team, RAG pipelines, LLM integrations and agent orchestration. Two years of running AI coding agents with clear rules, security review and cost control, on a base of 15 years of reliable data systems.', he: 'ארכיטקט GenAI שמספק: ראש הצוות הטכני הראשון בשטח של סטארט־אפ בינה מלאכותית שיחתית לוותיקי צבא אמריקאים, שבנה את צוות ה־backend, צינורות RAG, שילובי מודלי שפה ותזמור סוכנים. שנתיים של הפעלת סוכני קוד לפי כללים ברורים, עם סקירת אבטחה ובקרת עלויות, על בסיס של 15 שנה של מערכות דאטה אמינות.' } },
+  { id: 'data-eng-lead', tag: 'd', order: ['d', 'c', 'l', 'g'],
+    name: { en: 'Data Engineering Lead', he: 'ראש צוות הנדסת דאטה' },
+    title: { en: 'Data Engineering Lead · BigQuery, dbt, Airflow & Kafka', he: 'ראש צוות הנדסת דאטה · BigQuery, dbt, Airflow וקפקא' },
+    pitch: { en: 'Data engineering leader who has led teams and still builds: co-led a data lake move from SQL Server and SSIS to BigQuery, dbt and Airflow with Kafka pipelines and hundreds of models, led a bank\'s DBA team, and set streaming standards for mission-critical workloads.', he: 'מוביל הנדסת דאטה שהוביל צוותים ועדיין בונה: הוביל יחד העברת אגם נתונים מ־SQL Server ו־SSIS ל־BigQuery, dbt ו־Airflow עם צינורות קפקא ומאות מודלים, הוביל את צוות ה־DBA של בנק, וקבע תקני סטרימינג לעומסים קריטיים.' } },
+  { id: 'ai-engineer', tag: 'g', order: ['g', 'd', 'c', 'l'],
+    name: { en: 'AI Software Engineer', he: 'מהנדס תוכנה AI' },
+    title: { en: 'Senior AI Software Engineer · Backend, RAG & Agents', he: 'מהנדס תוכנה AI בכיר · Backend, RAG וסוכנים' },
+    pitch: { en: 'Hands-on engineer who writes backend services and AI pipelines himself: RAG, LLM integrations and agent orchestration for a conversational AI platform, Python and SQL data pipelines, and daily work with Claude Code, Codex, Cursor and Gemini under strict review and testing.', he: 'מהנדס מעשי שכותב בעצמו שירותי backend וצינורות בינה מלאכותית: RAG, שילובי מודלי שפה ותזמור סוכנים לפלטפורמה שיחתית, צינורות דאטה ב־Python וב־SQL, ועבודה יומיומית עם Claude Code, Codex, Cursor ו־Gemini תחת סקירה ובדיקות קפדניות.' } },
+  { id: 'solutions', tag: 'c', order: ['c', 'l', 'd', 'g'],
+    name: { en: 'Solutions Architect / TAM', he: 'ארכיטקט פתרונות / TAM' },
+    title: { en: 'Solutions Architect · Customer-facing Data, Cloud & AI', he: 'ארכיטקט פתרונות · דאטה, ענן ו־AI מול לקוחות' },
+    pitch: { en: 'Customer-facing architect who turns business needs into working systems: built a self-service cloud migration path adopted by about 100 customers and trained the client\'s support team, runs consulting for financial, cybersecurity, healthcare and technology clients, and knows production from years on call for a bank.', he: 'ארכיטקט מול לקוחות שהופך צרכים עסקיים למערכות עובדות: בנה מסלול מעבר לענן בשירות עצמי שכ־100 לקוחות אימצו והכשיר את צוות התמיכה של הלקוח, מייעץ ללקוחות בפיננסים, סייבר, בריאות וטכנולוגיה, ומכיר ייצור משנים של כוננות בבנק.' } }
+];

@@ -67,3 +67,5 @@ ol.links a{display:inline-flex;align-items:center;min-height:var(--tap);overflow
   .dim{opacity:1}.hit{outline:0;background:none}
   body{font-size:12pt}
 }
+.version{display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line);padding-top:12px}
+@media print{.version,.controls{display:none!important}}
