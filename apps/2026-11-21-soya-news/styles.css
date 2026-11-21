@@ -146,3 +146,11 @@ main{padding-bottom:140px}
 .buddy.side-r .buddy-say::after{left:auto;right:30px;margin-left:0}
 .buddy.side-l .buddy-say{left:-4px;transform:none}
 .buddy.side-l .buddy-say::after{left:30px;margin-left:0}
+/* Meet my human, and the treat box */
+.meet{display:flex;align-items:flex-end;gap:4px}
+.meet .ran{width:96px;height:96px;border-radius:50%;object-fit:cover;border:3px solid var(--sun);background:#E9EAEC}
+.said{font-size:17px}
+.treat-row{display:flex;align-items:center;gap:12px}
+.treat-row h2{margin-top:2px}
+.can{flex:none}
+.treat-btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;align-self:flex-start;border-color:var(--sun);color:var(--sun);font-weight:600}
